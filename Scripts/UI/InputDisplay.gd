@@ -3,14 +3,14 @@ class_name InputDisplay
 extends Node
 
 
-@onready var left:JsonSprite2D = $"Left"
-@onready var down:JsonSprite2D = $"Down"
-@onready var up:JsonSprite2D = $"Up"
-@onready var right:JsonSprite2D = $"Right"
-@onready var jump:JsonSprite2D = $"Jump"
-@onready var shoot:JsonSprite2D = $"Shoot"
-@onready var strafe:JsonSprite2D = $"Strafe"
-@onready var gravity:JsonSprite2D = $"Gravity"
+@export var left:SnailySprite2D
+@export var down:SnailySprite2D
+@export var up:SnailySprite2D
+@export var right:SnailySprite2D
+@export var jump:SnailySprite2D
+@export var shoot:SnailySprite2D
+@export var strafe:SnailySprite2D
+@export var gravity:SnailySprite2D
 
 
 func _process(_delta: float) -> void:
@@ -18,50 +18,33 @@ func _process(_delta: float) -> void:
 		return
 	
 	if SInput.check_input(SInput.Inputs.LEFT, false):
-		if left.action != "left_press":
-			left.action = "left_press"
-	else:
-		if left.action != "left_idle":
-			left.action = "left_idle"
+		if left.animation == "default": left.play("press")
+	elif left.animation == "press": left.play("default")
+	
 	if SInput.check_input(SInput.Inputs.DOWN, false):
-		if down.action != "down_press":
-			down.action = "down_press"
-	else:
-		if down.action != "down_idle":
-			down.action = "down_idle"
+		if down.animation == "default": down.play("press")
+	elif down.animation == "press": down.play("default")
+	
 	if SInput.check_input(SInput.Inputs.UP, false):
-		if up.action != "up_press":
-			up.action = "up_press"
-	else:
-		if up.action != "up_idle":
-			up.action = "up_idle"
+		if up.animation == "default": up.play("press")
+	elif up.animation == "press": up.play("default")
+	
 	if SInput.check_input(SInput.Inputs.RIGHT, false):
-		if right.action != "right_press":
-			right.action = "right_press"
-	else:
-		if right.action != "right_idle":
-			right.action = "right_idle"
+		if right.animation == "default": right.play("press")
+	elif right.animation == "press": right.play("default")
+	
 	if SInput.check_input(SInput.Inputs.JUMP, false):
-		if jump.action != "jump_press":
-			jump.action = "jump_press"
-	else:
-		if jump.action != "jump_idle":
-			jump.action = "jump_idle"
+		if jump.animation == "default": jump.play("press")
+	elif jump.animation == "press": jump.play("default")
+	
 	if SInput.check_input(SInput.Inputs.SHOOT, false):
-		if shoot.action != "shoot_press":
-			shoot.action = "shoot_press"
-	else:
-		if shoot.action != "shoot_idle":
-			shoot.action = "shoot_idle"
+		if shoot.animation == "default": shoot.play("press")
+	elif shoot.animation == "press": shoot.play("default")
+	
 	if SInput.check_input(SInput.Inputs.STRAFE, false):
-		if strafe.action != "strafe_press":
-			strafe.action = "strafe_press"
-	else:
-		if strafe.action != "strafe_idle":
-			strafe.action = "strafe_idle"
+		if strafe.animation == "default": strafe.play("press")
+	elif strafe.animation == "press": strafe.play("default")
+	
 	if SInput.check_input(SInput.Inputs.GRAVITY, false):
-		if gravity.action != "gravity_press":
-			gravity.action = "gravity_press"
-	else:
-		if gravity.action != "gravity_idle":
-			gravity.action = "gravity_idle"
+		if gravity.animation == "default": gravity.play("press")
+	elif gravity.animation == "press": gravity.play("default")

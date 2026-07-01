@@ -2443,5 +2443,5 @@ sprite_frames = SubResource("SpriteFrames_wkouj")
 animation = &"a_loop"
 script = ExtResource("1_ha3te")
 meta_info = [28, 28, 24, 28, 24, 24, 28, 24, 6, 24, 24, 6, 32, 24, 28, 28, 28, 24, 25, 24, 28, 24, 32, 32, 28, 25]
-start_all_on_random = true
+start_all_on_random_frame = true
 metadata/_custom_type_script = "uid://boee2837la0pr"

@@ -1,120 +1,344 @@
 [gd_scene format=3 uid="uid://wmn05t8atr6"]
 
-[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="1_k7lrv"]
 [ext_resource type="Script" uid="uid://c5dps66xy2ucs" path="res://Scripts/UI/InputDisplay.gd" id="1_p4hb2"]
 [ext_resource type="Texture2D" uid="uid://b2kd06qn8b4jk" path="res://Assets/Images/UI/DebugKey.png" id="3_ct6f5"]
-[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="4_cv0em"]
+[ext_resource type="Script" uid="uid://boee2837la0pr" path="res://Scripts/Classes/SnailySprite.gd" id="3_mobn0"]
 
-[node name="InputDisplay" type="Node2D" unique_id=368493357]
+[sub_resource type="AtlasTexture" id="AtlasTexture_p4hb2"]
+atlas = ExtResource("3_ct6f5")
+region = Rect2(0, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ct6f5"]
+atlas = ExtResource("3_ct6f5")
+region = Rect2(0, 8, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cv0em"]
+atlas = ExtResource("3_ct6f5")
+region = Rect2(0, 16, 8, 8)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wkouj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p4hb2")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ct6f5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cv0em")
+}],
+"loop": 0,
+"name": &"press",
+"speed": 30.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k4hv1"]
+atlas = ExtResource("3_ct6f5")
+region = Rect2(8, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ryidx"]
+atlas = ExtResource("3_ct6f5")
+region = Rect2(8, 8, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tktsd"]
+atlas = ExtResource("3_ct6f5")
+region = Rect2(8, 16, 8, 8)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_qf1is"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k4hv1")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ryidx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tktsd")
+}],
+"loop": 0,
+"name": &"press",
+"speed": 30.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hxm35"]
+atlas = ExtResource("3_ct6f5")
+region = Rect2(16, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_74x7h"]
+atlas = ExtResource("3_ct6f5")
+region = Rect2(16, 8, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m6kq6"]
+atlas = ExtResource("3_ct6f5")
+region = Rect2(16, 16, 8, 8)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tbte1"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hxm35")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_74x7h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m6kq6")
+}],
+"loop": 0,
+"name": &"press",
+"speed": 30.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4a0qy"]
+atlas = ExtResource("3_ct6f5")
+region = Rect2(24, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vbktk"]
+atlas = ExtResource("3_ct6f5")
+region = Rect2(24, 8, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a6fco"]
+atlas = ExtResource("3_ct6f5")
+region = Rect2(24, 16, 8, 8)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_sdxjp"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4a0qy")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vbktk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a6fco")
+}],
+"loop": 0,
+"name": &"press",
+"speed": 30.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_76pnl"]
+atlas = ExtResource("3_ct6f5")
+region = Rect2(32, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8vn53"]
+atlas = ExtResource("3_ct6f5")
+region = Rect2(32, 8, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_evn0v"]
+atlas = ExtResource("3_ct6f5")
+region = Rect2(32, 16, 8, 8)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ehwsg"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_76pnl")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8vn53")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_evn0v")
+}],
+"loop": 0,
+"name": &"press",
+"speed": 30.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ewpnh"]
+atlas = ExtResource("3_ct6f5")
+region = Rect2(40, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0fgm1"]
+atlas = ExtResource("3_ct6f5")
+region = Rect2(40, 8, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jy8un"]
+atlas = ExtResource("3_ct6f5")
+region = Rect2(40, 16, 8, 8)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_yiqpt"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ewpnh")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0fgm1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jy8un")
+}],
+"loop": 0,
+"name": &"press",
+"speed": 30.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ne0q5"]
+atlas = ExtResource("3_ct6f5")
+region = Rect2(48, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8bya7"]
+atlas = ExtResource("3_ct6f5")
+region = Rect2(48, 8, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_be7vu"]
+atlas = ExtResource("3_ct6f5")
+region = Rect2(48, 16, 8, 8)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ws1ey"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ne0q5")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8bya7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_be7vu")
+}],
+"loop": 0,
+"name": &"press",
+"speed": 30.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kol2l"]
+atlas = ExtResource("3_ct6f5")
+region = Rect2(56, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_opehn"]
+atlas = ExtResource("3_ct6f5")
+region = Rect2(56, 8, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h7d5k"]
+atlas = ExtResource("3_ct6f5")
+region = Rect2(56, 16, 8, 8)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_gpeg5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kol2l")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_opehn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h7d5k")
+}],
+"loop": 0,
+"name": &"press",
+"speed": 30.0
+}]
+
+[node name="InputDisplay" type="Node2D" unique_id=368493357 node_paths=PackedStringArray("left", "down", "up", "right", "jump", "shoot", "strafe", "gravity")]
 script = ExtResource("1_p4hb2")
+left = NodePath("Left")
+down = NodePath("Down")
+up = NodePath("Up")
+right = NodePath("Right")
+jump = NodePath("Jump")
+shoot = NodePath("Shoot")
+strafe = NodePath("Strafe")
+gravity = NodePath("Gravity")
 
-[node name="Left" type="Sprite2D" parent="." unique_id=770494412]
+[node name="Left" type="AnimatedSprite2D" parent="." unique_id=1852109488]
 position = Vector2(4, -4)
-script = ExtResource("1_k7lrv")
-texture_path = "res://Assets/Images/UI/DebugKey.json"
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
+sprite_frames = SubResource("SpriteFrames_wkouj")
+autoplay = "default"
+script = ExtResource("3_mobn0")
+metadata/_custom_type_script = "uid://boee2837la0pr"
 
-[node name="MarkerSprite" type="Sprite2D" parent="Left" unique_id=646726118]
-texture = ExtResource("3_ct6f5")
-hframes = 8
-vframes = 3
-script = ExtResource("4_cv0em")
-metadata/_custom_type_script = "uid://b63lo60i7kt7f"
-
-[node name="Down" type="Sprite2D" parent="." unique_id=1977085838]
+[node name="Down" type="AnimatedSprite2D" parent="." unique_id=913358230]
 position = Vector2(13, -4)
-script = ExtResource("1_k7lrv")
-texture_path = "res://Assets/Images/UI/DebugKey.json"
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
+sprite_frames = SubResource("SpriteFrames_qf1is")
+autoplay = "default"
+script = ExtResource("3_mobn0")
+metadata/_custom_type_script = "uid://boee2837la0pr"
 
-[node name="MarkerSprite" type="Sprite2D" parent="Down" unique_id=1514578655]
-texture = ExtResource("3_ct6f5")
-hframes = 8
-vframes = 3
-frame = 1
-script = ExtResource("4_cv0em")
-metadata/_custom_type_script = "uid://b63lo60i7kt7f"
-
-[node name="Up" type="Sprite2D" parent="." unique_id=1874480387]
+[node name="Up" type="AnimatedSprite2D" parent="." unique_id=2096960590]
 position = Vector2(13, -13)
-script = ExtResource("1_k7lrv")
-texture_path = "res://Assets/Images/UI/DebugKey.json"
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
+sprite_frames = SubResource("SpriteFrames_tbte1")
+autoplay = "default"
+script = ExtResource("3_mobn0")
+metadata/_custom_type_script = "uid://boee2837la0pr"
 
-[node name="MarkerSprite" type="Sprite2D" parent="Up" unique_id=769011175]
-texture = ExtResource("3_ct6f5")
-hframes = 8
-vframes = 3
-frame = 2
-script = ExtResource("4_cv0em")
-metadata/_custom_type_script = "uid://b63lo60i7kt7f"
-
-[node name="Right" type="Sprite2D" parent="." unique_id=1719297979]
+[node name="Right" type="AnimatedSprite2D" parent="." unique_id=949336410]
 position = Vector2(22, -4)
-script = ExtResource("1_k7lrv")
-texture_path = "res://Assets/Images/UI/DebugKey.json"
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
+sprite_frames = SubResource("SpriteFrames_sdxjp")
+autoplay = "default"
+script = ExtResource("3_mobn0")
+metadata/_custom_type_script = "uid://boee2837la0pr"
 
-[node name="MarkerSprite" type="Sprite2D" parent="Right" unique_id=2134047572]
-texture = ExtResource("3_ct6f5")
-hframes = 8
-vframes = 3
-frame = 3
-script = ExtResource("4_cv0em")
-metadata/_custom_type_script = "uid://b63lo60i7kt7f"
-
-[node name="Jump" type="Sprite2D" parent="." unique_id=247337447]
+[node name="Jump" type="AnimatedSprite2D" parent="." unique_id=181981036]
 position = Vector2(31, -4)
-script = ExtResource("1_k7lrv")
-texture_path = "res://Assets/Images/UI/DebugKey.json"
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
+sprite_frames = SubResource("SpriteFrames_ehwsg")
+autoplay = "default"
+script = ExtResource("3_mobn0")
+metadata/_custom_type_script = "uid://boee2837la0pr"
 
-[node name="MarkerSprite" type="Sprite2D" parent="Jump" unique_id=1565719440]
-texture = ExtResource("3_ct6f5")
-hframes = 8
-vframes = 3
-frame = 4
-script = ExtResource("4_cv0em")
-metadata/_custom_type_script = "uid://b63lo60i7kt7f"
-
-[node name="Shoot" type="Sprite2D" parent="." unique_id=1367102660]
+[node name="Shoot" type="AnimatedSprite2D" parent="." unique_id=1478527309]
 position = Vector2(31, -13)
-script = ExtResource("1_k7lrv")
-texture_path = "res://Assets/Images/UI/DebugKey.json"
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
+sprite_frames = SubResource("SpriteFrames_yiqpt")
+autoplay = "default"
+script = ExtResource("3_mobn0")
+metadata/_custom_type_script = "uid://boee2837la0pr"
 
-[node name="MarkerSprite" type="Sprite2D" parent="Shoot" unique_id=1318218210]
-texture = ExtResource("3_ct6f5")
-hframes = 8
-vframes = 3
-frame = 5
-script = ExtResource("4_cv0em")
-metadata/_custom_type_script = "uid://b63lo60i7kt7f"
-
-[node name="Strafe" type="Sprite2D" parent="." unique_id=1171156798]
+[node name="Strafe" type="AnimatedSprite2D" parent="." unique_id=1865119763]
 position = Vector2(40, -13)
-script = ExtResource("1_k7lrv")
-texture_path = "res://Assets/Images/UI/DebugKey.json"
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
+sprite_frames = SubResource("SpriteFrames_ws1ey")
+autoplay = "default"
+script = ExtResource("3_mobn0")
+metadata/_custom_type_script = "uid://boee2837la0pr"
 
-[node name="MarkerSprite" type="Sprite2D" parent="Strafe" unique_id=20079549]
-texture = ExtResource("3_ct6f5")
-hframes = 8
-vframes = 3
-frame = 6
-script = ExtResource("4_cv0em")
-metadata/_custom_type_script = "uid://b63lo60i7kt7f"
-
-[node name="Gravity" type="Sprite2D" parent="." unique_id=909633891]
+[node name="Gravity" type="AnimatedSprite2D" parent="." unique_id=1062289254]
 position = Vector2(40, -4)
-script = ExtResource("1_k7lrv")
-texture_path = "res://Assets/Images/UI/DebugKey.json"
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
-
-[node name="MarkerSprite" type="Sprite2D" parent="Gravity" unique_id=1461645490]
-texture = ExtResource("3_ct6f5")
-hframes = 8
-vframes = 3
-frame = 7
-script = ExtResource("4_cv0em")
-metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+sprite_frames = SubResource("SpriteFrames_gpeg5")
+autoplay = "default"
+script = ExtResource("3_mobn0")
+metadata/_custom_type_script = "uid://boee2837la0pr"

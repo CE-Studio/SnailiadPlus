@@ -46,7 +46,7 @@ static var instance:UICore
 @onready var cam:CamControl = $"Camera2D"
 @onready var heart_group:Node2D = $"TL/Hearts"
 @onready var color_cover:ColorCover = $"ColorCover"
-@onready var save_icon:JsonSprite2D = $"BR/SaveIcon"
+@onready var save_icon:SnailySprite2D = $"BR/SaveIcon"
 @onready var bestiary_icon:JsonSprite2D = $"BR/BestiaryIcon"
 @onready var minimap:Minimap = $"TR/Minimap"
 @onready var border:JsonSprite2D = $"Border"
@@ -264,7 +264,7 @@ func get_cam_movement_this_tick() -> Vector2:
 
 func play_save_anim() -> void:
 	save_icon.visible = true
-	save_icon.action = "anim"
+	save_icon.play("default")
 
 
 func play_bestiary_anim() -> void:

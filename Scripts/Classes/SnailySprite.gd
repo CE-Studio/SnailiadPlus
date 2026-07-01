@@ -15,7 +15,7 @@ func _ready() -> void:
 	connect("animation_changed", _on_anim_changed)
 	connect("animation_finished", _on_anim_finished)
 	if autoplay != "":
-		if (start_all_on_random_frame or start_on_random_frame.has(autoplay)):
+		if start_all_on_random_frame or start_on_random_frame.has(autoplay):
 			_set_random_frame()
 		else:
 			frame = 0

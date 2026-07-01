@@ -11,9 +11,9 @@ static var suppress_menuing:bool = false
 
 @onready var cam:UICore = UICore.instance
 @onready var game:GameCore = GameCore.instance
-@onready var menu_scene:PackedScene = preload("res://Scenes/IngameMenuScene.tscn")
-@onready var subscreen_scene:PackedScene = preload("res://Scenes/UI/Subscreen.tscn")
-@onready var debug_scene:PackedScene = preload("res://Scenes/UI/DebugMenu.tscn")
+@onready var menu_scene:PackedScene = preload("uid://c84sydpddlb6c")
+@onready var subscreen_scene:PackedScene = preload("uid://dpfe8sxp7e2kp")
+@onready var debug_scene:PackedScene = preload("uid://c0jv4y1p8dri1")
 #endregion
 
 
