@@ -9,14 +9,15 @@ const SPEED:float = 128.0
 
 @export var move_group:Node2D
 @export var cell_mask:Sprite2D
-@export var map:JsonSprite2D
-@export var p_marker:JsonSprite2D
+@export var map:Sprite2D
+@export var p_marker:SnailySprite2D
 @export var marker_group:Node2D
 @export var ctrl_text:SnailyText
-@export var arrow_u:JsonSprite2D
-@export var arrow_d:JsonSprite2D
-@export var arrow_l:JsonSprite2D
-@export var arrow_r:JsonSprite2D
+@export var arrow_u:SnailySprite2D
+@export var arrow_d:SnailySprite2D
+@export var arrow_l:SnailySprite2D
+@export var arrow_r:SnailySprite2D
+@onready var marker_scene:PackedScene = preload("uid://dlaal46coilv7")
 
 
 func _ready() -> void:
@@ -30,18 +31,25 @@ func init(minimap:Minimap) -> void:
 	
 	cell_mask.texture = minimap.cell_mask.texture
 	p_marker.position = minimap.player_marker.position * 2.0
-	p_marker.action = minimap.player_marker.action
+	p_marker.play(minimap.player_marker.animation)
 	
 	for this_marker in minimap.active_markers:
 		var draw_marker:bool = true
 		if this_marker.type == minimap.MarkerTypes.ITEM:
 			draw_marker = not minimap.empty_locations.has(this_marker.data[0])
 		if draw_marker and this_marker.modulate.a == 1.0:
-			var new_sprite:JsonSprite2D = JsonSprite2D.new()
-			new_sprite.texture_path = MARKER_PATH
-			marker_group.add_child(new_sprite)
-			new_sprite.action = this_marker.sprite.action
-			new_sprite.position = this_marker.position * 2.0
+			var new_marker:MapMarker = marker_scene.instantiate()
+			new_marker.type = this_marker.type
+			marker_group.add_child(new_marker)
+			new_marker.sprite.play("zoom_" + this_marker.sprite.animation)
+			new_marker.position = this_marker.position * 2.0
+	for this_marker in minimap.player_marker_sprites:
+		if this_marker != null:
+			var new_marker:MapMarker = marker_scene.instantiate()
+			new_marker.type = this_marker.type
+			marker_group.add_child(new_marker)
+			new_marker.sprite.play("zoom_marker")
+			new_marker.position = this_marker.position * 2.0
 
 
 func _process(delta: float) -> void:

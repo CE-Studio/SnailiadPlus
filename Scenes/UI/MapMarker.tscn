@@ -1,22 +1,159 @@
 [gd_scene format=3 uid="uid://dlaal46coilv7"]
 
-[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="1_bonff"]
 [ext_resource type="Script" uid="uid://cgjq2efrk1wfq" path="res://Scripts/UI/MapMarker.gd" id="1_s3jip"]
 [ext_resource type="Texture2D" uid="uid://7agakwirr6k0" path="res://Assets/Images/UI/MinimapIcons.png" id="2_s3jip"]
-[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_xrdwr"]
+[ext_resource type="Texture2D" uid="uid://bi2b4dg4t6tdx" path="res://Assets/Images/Blank8x8.png" id="3_s3jip"]
+[ext_resource type="Texture2D" uid="uid://b00si7wi86blt" path="res://Assets/Images/UI/MinimapIconsZoomed.png" id="4_gbkv1"]
+[ext_resource type="Script" uid="uid://boee2837la0pr" path="res://Scripts/Classes/SnailySprite.gd" id="4_xrdwr"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gbkv1"]
+atlas = ExtResource("2_s3jip")
+region = Rect2(24, 8, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rqij5"]
+atlas = ExtResource("3_s3jip")
+region = Rect2(0, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4q4v8"]
+atlas = ExtResource("2_s3jip")
+region = Rect2(8, 8, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1qeap"]
+atlas = ExtResource("2_s3jip")
+region = Rect2(40, 8, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5h87w"]
+atlas = ExtResource("2_s3jip")
+region = Rect2(0, 8, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_meo0f"]
+atlas = ExtResource("2_s3jip")
+region = Rect2(32, 8, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_glrhr"]
+atlas = ExtResource("4_gbkv1")
+region = Rect2(48, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_deqnu"]
+atlas = ExtResource("4_gbkv1")
+region = Rect2(16, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_grxww"]
+atlas = ExtResource("4_gbkv1")
+region = Rect2(80, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6uail"]
+atlas = ExtResource("4_gbkv1")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_octet"]
+atlas = ExtResource("4_gbkv1")
+region = Rect2(64, 16, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wkouj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gbkv1")
+}],
+"loop": 0,
+"name": &"boss",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rqij5")
+}],
+"loop": 0,
+"name": &"item_collected",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4q4v8")
+}],
+"loop": 0,
+"name": &"item_normal",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1qeap")
+}],
+"loop": 0,
+"name": &"marker",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5h87w")
+}],
+"loop": 0,
+"name": &"save",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_meo0f")
+}],
+"loop": 0,
+"name": &"unknown",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_glrhr")
+}],
+"loop": 0,
+"name": &"zoom_boss",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rqij5")
+}],
+"loop": 0,
+"name": &"zoom_item_collected",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_deqnu")
+}],
+"loop": 0,
+"name": &"zoom_item_normal",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_grxww")
+}],
+"loop": 0,
+"name": &"zoom_marker",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6uail")
+}],
+"loop": 0,
+"name": &"zoom_save",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_octet")
+}],
+"loop": 0,
+"name": &"zoom_unknown",
+"speed": 1.0
+}]
 
 [node name="MapMarker" type="Node2D" unique_id=1627086070]
 script = ExtResource("1_s3jip")
 
-[node name="JsonSprite2D" type="Sprite2D" parent="." unique_id=773577644]
-script = ExtResource("1_bonff")
-texture_path = "res://Assets/Images/UI/MinimapIcons.json"
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
-
-[node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D" unique_id=630208887]
-texture = ExtResource("2_s3jip")
-hframes = 6
-vframes = 2
-frame = 6
-script = ExtResource("3_xrdwr")
-metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+[node name="SnailySprite2D" type="AnimatedSprite2D" parent="." unique_id=57762679]
+sprite_frames = SubResource("SpriteFrames_wkouj")
+animation = &"save"
+script = ExtResource("4_xrdwr")
+metadata/_custom_type_script = "uid://boee2837la0pr"

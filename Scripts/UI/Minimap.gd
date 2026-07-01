@@ -90,30 +90,30 @@ var player_marker_sprites:Array = []
 #var subscreen_target_mod:float = 0.0
 #var edge_extension:int = 0
 
-@onready var panel:JsonSprite2D = $"Panel"
-@onready var panel_mask:Sprite2D = $"PanelMask"
-@onready var map_group:Node2D = $"MapGroup"
-@onready var cell_mask:Sprite2D = $"MapGroup/CellMask"
-@onready var map:JsonSprite2D = $"MapGroup/CellMask/Map"
-@onready var player_marker:JsonSprite2D = $"MapGroup/PlayerMarker"
-@onready var marker_group:Node2D = $"MapGroup/MarkerGroup"
-@onready var p_marker_group:Node2D = $"MapGroup/PlayerMarkerGroup"
-@onready var marker_scene:PackedScene = preload("res://Scenes/UI/MapMarker.tscn")
-@onready var name_text:SnailyText = $"SnailyText"
+@export var panel:Sprite2D
+@export var panel_mask:Sprite2D
+@export var map_group:Node2D
+@export var cell_mask:Sprite2D
+@export var map:Sprite2D
+@export var player_marker:SnailySprite2D
+@export var marker_group:Node2D
+@export var p_marker_group:Node2D
+@export var name_text:SnailyText
+@onready var marker_scene:PackedScene = preload("uid://dlaal46coilv7")
 #endregion
 
 
 func _ready() -> void:
 	if Statics.current_profile["map_tiles"].size() == 0:
 		Statics.current_profile["map_tiles"] = DEFAULT_MAP.duplicate()
-	panel.action = "idle"
-	map.action = "minimap"
-	player_marker.action = "player_normal"
+	#panel.action = "idle"
+	#map.action = "minimap"
+	player_marker.play("default")
 	create_cell_mask()
 	log_markers()
 	update_p_marker_layer()
 	if subscreen_mode:
-		map.action = "subscreen"
+		#map.action = "subscreen"
 		panel.queue_free()
 		name_text.queue_free()
 		room_offset = UICore.instance.minimap.room_offset
@@ -160,21 +160,21 @@ func log_markers() -> void:
 					MarkerTypes.ITEM:
 						new_marker.type = MarkerTypes.ITEM
 						new_marker.data.append(marker_positions[i][1])
-						new_marker.sprite.action = "item_normal"
+						new_marker.sprite.play("item_normal")
 						organized_markers["items"].append(new_marker)
 			else:
 				match marker_positions[i]:
 					MarkerTypes.SAVE:
 						new_marker.type = MarkerTypes.SAVE
-						new_marker.sprite.action = "save"
+						new_marker.sprite.play("save")
 						organized_markers["saves"].append(new_marker)
 					MarkerTypes.BOSS:
 						new_marker.type = MarkerTypes.BOSS
-						new_marker.sprite.action = "boss"
+						new_marker.sprite.play("boss")
 						organized_markers["bosses"].append(new_marker)
 					MarkerTypes.UNKNOWN:
 						new_marker.type = MarkerTypes.UNKNOWN
-						new_marker.sprite.action = "unknown"
+						new_marker.sprite.play("unknown")
 						organized_markers["unknowns"].append(new_marker)
 			marker_positions[i] = active_markers.size()
 			active_markers.append(new_marker)
@@ -208,13 +208,14 @@ func update_p_marker_layer() -> void:
 			p_marker_group.add_child(new_marker)
 			new_marker.position = cell_coords * 8
 			new_marker.type = MarkerTypes.P_MARKER
-			new_marker.sprite.action = "marker"
+			new_marker.sprite.play("marker")
 			organized_markers["p_markers"].append(new_marker)
 			player_marker_sprites[i] = new_marker
 		elif cur_map[i] < P_MARKER_ID_OFFSET - 1 and player_marker_sprites[i] != null:
 			var spr = player_marker_sprites[i]
 			organized_markers["p_markers"].remove_at(organized_markers["p_markers"].find(spr))
 			spr.queue_free()
+			player_marker_sprites[i] = null
 
 		cell_coords.x += 1
 		if cell_coords.x >= MAP_SIZE.x:
@@ -319,10 +320,10 @@ func tick_minimap(move_group_mode:int, tick_player:bool = true, force_update:boo
 					(not empty_locations.has(marker.data[0]) or not hide_empty_locations))):
 						highlight = true
 
-				if highlight and player_marker.action == "player_normal":
-					player_marker.action = "player_highlight"
-				elif not highlight and player_marker.action == "player_highlight":
-					player_marker.action = "player_normal"
+				if highlight and player_marker.animation == "default":
+					player_marker.play("highlight")
+				elif not highlight and player_marker.animation == "highlight":
+					player_marker.play("default")
 
 	if update_map or force_update:
 		if subscreen_mode:
@@ -410,10 +411,10 @@ func update_markers(target_cells:Array = []) -> void:
 			if marker.type == MarkerTypes.ITEM:
 				marker.visible = not empty_locations.has(marker.data[0]) or not hide_empty_locations
 				var collected:bool = Statics.check_location_collected(marker.data[0])
-				if marker.sprite.action == "item_normal" and collected:
-					marker.sprite.action = "item_collected"
-				elif marker.sprite.action == "item_collected" and not collected:
-					marker.sprite.action = "item_normal"
+				if marker.sprite.animation == "item_normal" and collected:
+					marker.sprite.play("item_collected")
+				elif marker.sprite.animation == "item_collected" and not collected:
+					marker.sprite.play("item_normal")
 
 		if player_marker_sprites[i]:
 			player_marker_sprites[i].modulate.a = 0.0

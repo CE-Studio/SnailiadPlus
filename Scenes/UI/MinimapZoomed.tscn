@@ -8,9 +8,152 @@
 [ext_resource type="Texture2D" uid="uid://3cgvd4c3gjym" path="res://Assets/Images/UI/MinimapZoomedFrame.png" id="4_n687f"]
 [ext_resource type="Texture2D" uid="uid://b00si7wi86blt" path="res://Assets/Images/UI/MinimapIconsZoomed.png" id="5_wguc4"]
 [ext_resource type="PackedScene" uid="uid://dke6r2335reau" path="res://Scenes/internals/SnailyText.tscn" id="7_iq3ic"]
+[ext_resource type="Script" uid="uid://boee2837la0pr" path="res://Scripts/Classes/SnailySprite.gd" id="8_vx1yi"]
 [ext_resource type="Texture2D" uid="uid://cac3dcskaen7v" path="res://Assets/Images/UI/MinimapZoomedArrow.png" id="9_v7w2u"]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_sadsa"]
+atlas = ExtResource("5_wguc4")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6wudo"]
+atlas = ExtResource("5_wguc4")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cintq"]
+atlas = ExtResource("5_wguc4")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_paj57"]
+atlas = ExtResource("5_wguc4")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6ksad"]
+atlas = ExtResource("5_wguc4")
+region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wkouj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sadsa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6wudo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cintq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cintq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6wudo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sadsa")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_paj57")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6ksad")
+}],
+"loop": 1,
+"name": &"highlight",
+"speed": 2.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vx1yi"]
+atlas = ExtResource("9_v7w2u")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8euwe"]
+atlas = ExtResource("9_v7w2u")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_bj8rp"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vx1yi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8euwe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8euwe")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 3.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_slymo"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vx1yi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8euwe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8euwe")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 3.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lwwe4"]
+atlas = ExtResource("9_v7w2u")
+region = Rect2(16, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s27cs"]
+atlas = ExtResource("9_v7w2u")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3nqg3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lwwe4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s27cs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s27cs")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 3.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_06pcd"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lwwe4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s27cs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s27cs")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 3.0
+}]
+
 [node name="MinimapZoomed" type="Node2D" unique_id=1431628628 node_paths=PackedStringArray("move_group", "cell_mask", "map", "p_marker", "marker_group", "ctrl_text", "arrow_u", "arrow_d", "arrow_l", "arrow_r")]
+z_index = 50
 script = ExtResource("1_n687f")
 move_group = NodePath("MoveGroup")
 cell_mask = NodePath("MoveGroup/CellMask")
@@ -45,47 +188,31 @@ metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 clip_children = 1
 scale = Vector2(8, 8)
 
-[node name="Map" type="Sprite2D" parent="MoveGroup/CellMask" unique_id=1640318839]
+[node name="Map" type="Sprite2D" parent="MoveGroup/CellMask" unique_id=840293481]
 scale = Vector2(0.125, 0.125)
-script = ExtResource("1_a3qsn")
-texture_path = "res://Assets/Images/UI/MinimapZoomed.json"
-load_autoplay = Array[String](["subscreen"])
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
-
-[node name="MarkerSprite" type="Sprite2D" parent="MoveGroup/CellMask/Map" unique_id=935098993]
 texture = ExtResource("2_0n3sp")
-script = ExtResource("3_wguc4")
-metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
 [node name="MarkerGroup" type="Node2D" parent="MoveGroup" unique_id=1476701216]
 position = Vector2(-200, -168)
 
-[node name="PlayerMarker" type="Sprite2D" parent="MoveGroup" unique_id=813400959]
-script = ExtResource("1_a3qsn")
-texture_path = "res://Assets/Images/UI/MinimapIconsZoomed.json"
-load_autoplay = Array[String](["player_normal"])
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
-
-[node name="MarkerSprite" type="Sprite2D" parent="MoveGroup/PlayerMarker" unique_id=126161138]
-texture = ExtResource("5_wguc4")
-hframes = 6
-vframes = 2
-frame = 2
-script = ExtResource("3_wguc4")
-metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+[node name="PlayerMarker" type="AnimatedSprite2D" parent="MoveGroup" unique_id=739000584]
+sprite_frames = SubResource("SpriteFrames_wkouj")
+animation = &"highlight"
+script = ExtResource("8_vx1yi")
+metadata/_custom_type_script = "uid://boee2837la0pr"
 
 [node name="TextBG" type="Sprite2D" parent="." unique_id=1673258853]
 modulate = Color(0, 0, 0, 0.6666667)
-position = Vector2(-176, 136)
+position = Vector2(-176, 128)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("1_lyu63")
 
 [node name="Controls" parent="." unique_id=1884031781 instance=ExtResource("7_iq3ic")]
 custom_minimum_size = Vector2(400, 0)
-offset_left = -208.0
-offset_top = 80.0
-offset_right = 192.0
-offset_bottom = 160.0
+offset_left = -192.0
+offset_top = 72.0
+offset_right = 208.0
+offset_bottom = 152.0
 theme_override_font_sizes/normal_font_size = 8
 text = "Pan - <V^>
 Hide markers - Z
@@ -94,62 +221,32 @@ text_scale = 1
 quick_load_text = "Pan - Move\\nHide markers - bind__UI_ACCEPT \\nReturn - bind__UI_BACK"
 border_scale = 1
 
-[node name="ArrowUp" type="Sprite2D" parent="." unique_id=1904589485]
+[node name="ArrowUp" type="AnimatedSprite2D" parent="." unique_id=1923613518]
 position = Vector2(0, -88)
-script = ExtResource("1_a3qsn")
-texture_path = "res://Assets/Images/UI/MinimapZoomedArrow.json"
-load_autoplay = Array[String](["U"])
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
+sprite_frames = SubResource("SpriteFrames_bj8rp")
+autoplay = "default"
+script = ExtResource("8_vx1yi")
+metadata/_custom_type_script = "uid://boee2837la0pr"
 
-[node name="MarkerSprite" type="Sprite2D" parent="ArrowUp" unique_id=415120417]
-texture = ExtResource("9_v7w2u")
-hframes = 2
-vframes = 2
-script = ExtResource("3_wguc4")
-metadata/_custom_type_script = "uid://b63lo60i7kt7f"
-
-[node name="ArrowDown" type="Sprite2D" parent="." unique_id=1927410389]
+[node name="ArrowDown" type="AnimatedSprite2D" parent="." unique_id=1382316958]
 position = Vector2(0, 88)
-script = ExtResource("1_a3qsn")
-texture_path = "res://Assets/Images/UI/MinimapZoomedArrow.json"
-load_autoplay = Array[String](["D"])
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
-
-[node name="MarkerSprite" type="Sprite2D" parent="ArrowDown" unique_id=46771263]
-texture = ExtResource("9_v7w2u")
+sprite_frames = SubResource("SpriteFrames_slymo")
+autoplay = "default"
 flip_v = true
-hframes = 2
-vframes = 2
-script = ExtResource("3_wguc4")
-metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+script = ExtResource("8_vx1yi")
+metadata/_custom_type_script = "uid://boee2837la0pr"
 
-[node name="ArrowLeft" type="Sprite2D" parent="." unique_id=805806948]
+[node name="ArrowLeft" type="AnimatedSprite2D" parent="." unique_id=375690541]
 position = Vector2(-168, 0)
-script = ExtResource("1_a3qsn")
-texture_path = "res://Assets/Images/UI/MinimapZoomedArrow.json"
-load_autoplay = Array[String](["L"])
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
-
-[node name="MarkerSprite" type="Sprite2D" parent="ArrowLeft" unique_id=1772980295]
-texture = ExtResource("9_v7w2u")
+sprite_frames = SubResource("SpriteFrames_3nqg3")
+autoplay = "default"
 flip_h = true
-hframes = 2
-vframes = 2
-frame = 2
-script = ExtResource("3_wguc4")
-metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+script = ExtResource("8_vx1yi")
+metadata/_custom_type_script = "uid://boee2837la0pr"
 
-[node name="ArrowRight" type="Sprite2D" parent="." unique_id=810657288]
+[node name="ArrowRight" type="AnimatedSprite2D" parent="." unique_id=1489777437]
 position = Vector2(168, 0)
-script = ExtResource("1_a3qsn")
-texture_path = "res://Assets/Images/UI/MinimapZoomedArrow.json"
-load_autoplay = Array[String](["R"])
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
-
-[node name="MarkerSprite" type="Sprite2D" parent="ArrowRight" unique_id=2012933666]
-texture = ExtResource("9_v7w2u")
-hframes = 2
-vframes = 2
-frame = 2
-script = ExtResource("3_wguc4")
-metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+sprite_frames = SubResource("SpriteFrames_06pcd")
+autoplay = "default"
+script = ExtResource("8_vx1yi")
+metadata/_custom_type_script = "uid://boee2837la0pr"

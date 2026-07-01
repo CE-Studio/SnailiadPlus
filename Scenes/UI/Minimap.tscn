@@ -1,27 +1,84 @@
 [gd_scene format=3 uid="uid://b20cdl7cicldv"]
 
 [ext_resource type="Script" uid="uid://fdcmfss42swv" path="res://Scripts/UI/Minimap.gd" id="1_itplw"]
-[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="1_lhiow"]
 [ext_resource type="Texture2D" uid="uid://g0pd5mkj75ci" path="res://Assets/Images/UI/MinimapPanel.png" id="2_6qi0o"]
-[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_a7d3d"]
 [ext_resource type="Texture2D" uid="uid://drmcos5pr1wle" path="res://Assets/Images/UI/Minimap.png" id="4_a7d3d"]
 [ext_resource type="Texture2D" uid="uid://b2vr3rng13j38" path="res://Assets/Images/UI/MinimapMask.png" id="5_gbsa2"]
 [ext_resource type="Texture2D" uid="uid://7agakwirr6k0" path="res://Assets/Images/UI/MinimapIcons.png" id="7_enhm3"]
-[ext_resource type="Script" uid="uid://oki7wxtma4x4" path="res://Scripts/UI/PlayerMarkerLayer.gd" id="7_n2mc3"]
+[ext_resource type="Script" uid="uid://boee2837la0pr" path="res://Scripts/Classes/SnailySprite.gd" id="7_q7g0h"]
 [ext_resource type="PackedScene" uid="uid://dke6r2335reau" path="res://Scenes/internals/SnailyText.tscn" id="8_q7g0h"]
 
-[node name="Minimap" type="Node2D" unique_id=104431523]
+[sub_resource type="AtlasTexture" id="AtlasTexture_n2mc3"]
+atlas = ExtResource("7_enhm3")
+region = Rect2(0, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_olocb"]
+atlas = ExtResource("7_enhm3")
+region = Rect2(8, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y3rru"]
+atlas = ExtResource("7_enhm3")
+region = Rect2(16, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nhven"]
+atlas = ExtResource("7_enhm3")
+region = Rect2(32, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d34em"]
+atlas = ExtResource("7_enhm3")
+region = Rect2(40, 0, 8, 8)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wkouj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n2mc3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_olocb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y3rru")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y3rru")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_olocb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n2mc3")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nhven")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d34em")
+}],
+"loop": 1,
+"name": &"highlight",
+"speed": 2.0
+}]
+
+[node name="Minimap" type="Node2D" unique_id=104431523 node_paths=PackedStringArray("panel", "panel_mask", "map_group", "cell_mask", "map", "player_marker", "marker_group", "p_marker_group", "name_text")]
 script = ExtResource("1_itplw")
+panel = NodePath("Panel")
+panel_mask = NodePath("PanelMask")
+map_group = NodePath("MapGroup")
+cell_mask = NodePath("MapGroup/CellMask")
+map = NodePath("MapGroup/CellMask/Map")
+player_marker = NodePath("MapGroup/PlayerMarker")
+marker_group = NodePath("MapGroup/MarkerGroup")
+p_marker_group = NodePath("MapGroup/PlayerMarkerGroup")
+name_text = NodePath("SnailyText")
 
-[node name="Panel" type="Sprite2D" parent="." unique_id=610785312]
-script = ExtResource("1_lhiow")
-texture_path = "res://Assets/Images/UI/MinimapPanel.json"
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
-
-[node name="MarkerSprite" type="Sprite2D" parent="Panel" unique_id=1146129260]
+[node name="Panel" type="Sprite2D" parent="." unique_id=1731692434]
 texture = ExtResource("2_6qi0o")
-script = ExtResource("3_a7d3d")
-metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
 [node name="PanelMask" type="Sprite2D" parent="." unique_id=1418538390]
 self_modulate = Color(1, 1, 1, 0)
@@ -33,39 +90,24 @@ texture = ExtResource("5_gbsa2")
 clip_children = 1
 scale = Vector2(8, 8)
 
-[node name="Map" type="Sprite2D" parent="MapGroup/CellMask" unique_id=976395460]
+[node name="Map" type="Sprite2D" parent="MapGroup/CellMask" unique_id=1878000164]
 scale = Vector2(0.125, 0.125)
-script = ExtResource("1_lhiow")
-texture_path = "res://Assets/Images/UI/Minimap.json"
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
-
-[node name="MarkerSprite" type="Sprite2D" parent="MapGroup/CellMask/Map" unique_id=1100317821]
 texture = ExtResource("4_a7d3d")
-script = ExtResource("3_a7d3d")
-metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
 [node name="MarkerGroup" type="Node2D" parent="MapGroup" unique_id=770304804]
 position = Vector2(-100, -84)
 
 [node name="PlayerMarkerGroup" type="Node2D" parent="MapGroup" unique_id=745670867]
 position = Vector2(-100, -84)
-script = ExtResource("7_n2mc3")
 
-[node name="PlayerMarker" type="Sprite2D" parent="MapGroup" unique_id=1341788155]
-script = ExtResource("1_lhiow")
-texture_path = "res://Assets/Images/UI/MinimapIcons.json"
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
-
-[node name="MarkerSprite" type="Sprite2D" parent="MapGroup/PlayerMarker" unique_id=584117732]
-texture = ExtResource("7_enhm3")
-hframes = 6
-vframes = 2
-frame = 2
-script = ExtResource("3_a7d3d")
-metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+[node name="PlayerMarker" type="AnimatedSprite2D" parent="MapGroup" unique_id=1626950887]
+sprite_frames = SubResource("SpriteFrames_wkouj")
+script = ExtResource("7_q7g0h")
+metadata/_custom_type_script = "uid://boee2837la0pr"
 
 [node name="SnailyText" parent="." unique_id=1605319444 instance=ExtResource("8_q7g0h")]
 custom_minimum_size = Vector2(100, 0)
+custom_maximum_size = Vector2(100, -1)
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
