@@ -1,10 +1,8 @@
 [gd_scene format=3 uid="uid://b1u1t0hvg2fob"]
 
-[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="1_a3qsn"]
 [ext_resource type="Texture2D" uid="uid://dmaptufh7rsw2" path="res://Assets/Images/UI/ScreenCover.png" id="1_lyu63"]
 [ext_resource type="Script" uid="uid://bu15bb60f6med" path="res://Scripts/UI/MinimapZoomed.gd" id="1_n687f"]
 [ext_resource type="Texture2D" uid="uid://be2rycrbaveew" path="res://Assets/Images/UI/MinimapZoomed.png" id="2_0n3sp"]
-[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_wguc4"]
 [ext_resource type="Texture2D" uid="uid://3cgvd4c3gjym" path="res://Assets/Images/UI/MinimapZoomedFrame.png" id="4_n687f"]
 [ext_resource type="Texture2D" uid="uid://b00si7wi86blt" path="res://Assets/Images/UI/MinimapIconsZoomed.png" id="5_wguc4"]
 [ext_resource type="PackedScene" uid="uid://dke6r2335reau" path="res://Scenes/internals/SnailyText.tscn" id="7_iq3ic"]
@@ -173,16 +171,8 @@ texture = ExtResource("1_lyu63")
 
 [node name="MoveGroup" type="Node2D" parent="." unique_id=1266186166]
 
-[node name="Frame" type="Sprite2D" parent="MoveGroup" unique_id=418883002]
-script = ExtResource("1_a3qsn")
-texture_path = "res://Assets/Images/UI/MinimapZoomedFrame.json"
-load_autoplay = Array[String](["anim"])
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
-
-[node name="MarkerSprite" type="Sprite2D" parent="MoveGroup/Frame" unique_id=1611523553]
+[node name="Frame" type="Sprite2D" parent="MoveGroup" unique_id=1687445957]
 texture = ExtResource("4_n687f")
-script = ExtResource("3_wguc4")
-metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
 [node name="CellMask" type="Sprite2D" parent="MoveGroup" unique_id=1705313669]
 clip_children = 1
