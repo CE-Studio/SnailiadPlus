@@ -47,7 +47,7 @@ enum MoveMode {
 var group_start_x:float = 0.0
 var elapsed:float = 0.0
 var selection_depth:int = -1
-var selectable_items:Array = [] # Formatting: [ JsonSprite2D, Int ]
+var selectable_items:Array = [] # Formatting: [ SnailySprite2D, Int ]
 var selection:int = -1
 var list_focused:bool = false
 var map_focused:bool = true
@@ -56,14 +56,13 @@ var map_sel_origin:Vector2i
 var map_selection:Vector2i = Vector2.ZERO
 var active:bool = true
 var exit_speed:float = 1.0
-var backing_visible:bool = false
 
 var zoomed_map:Node2D = null
 var map_zoomed:bool = false
 
-@export var separators:Array[JsonSprite2D] = []
-@export var body:JsonSprite2D
-@export var player_icon:JsonSprite2D
+@export var separators:Array[Sprite2D] = []
+@export var body:SnailySprite2D
+@export var player_icon:SnailySprite2D
 @export var header_name:SnailyText
 @export var name_box:HBoxContainer
 @export var name_text:SnailyText
@@ -76,19 +75,18 @@ var map_zoomed:bool = false
 @export var header_ability:SnailyText
 @export var slist_ability:Node2D
 @export var tlist_ability:VBoxContainer
+@export var list_sprite_frames:SpriteFrames
 @export var selector:Node2D
-@export var selector_spr:JsonSprite2D
-@export_file("*.json") var list_spr_json:String
+@export var selector_spr:SnailySprite2D
 @export var sfx_move:AudioStreamPlayer
 @export var sfx_select:AudioStreamPlayer
 @export var sfx_open:AudioStreamPlayer
 @export var sfx_close:AudioStreamPlayer
 @export var sel_target_name:Marker2D
 @export var sel_target_map:Marker2D
-#@export var map_target:Marker2D
 @export var map:Minimap
-@export var map_selector:JsonSprite2D
-@export var map_backing:JsonSprite2D
+@export var map_selector:SnailySprite2D
+@export var map_backing:Sprite2D
 @export var desc_name:SnailyText
 @export var desc_body:SnailyText
 @export var marker_text:SnailyText
@@ -99,25 +97,23 @@ var map_zoomed:bool = false
 @export var helix_count:SnailyText
 @export var radar:SnailyText
 
-@onready var zoomed_scn:PackedScene = preload("res://Scenes/UI/MinimapZoomed.tscn")
+@onready var zoomed_scn:PackedScene = preload("uid://b1u1t0hvg2fob")
 #endregion
 
 
 func _ready() -> void:
 	group_start_x = separators[0].position.x
 	var this_char = int(Statics.current_profile["character"])
-	body.action = str(this_char)
-	player_icon.action = str(this_char)
+	body.play(str(this_char))
+	player_icon.play(str(this_char))
 	name_text.set_snaily_text(GlobalText.get_player_name(this_char as Player.Players, true))
 	player_icon.position.x = name_box.position.x + name_text.get_width()
-	for sep in separators:
-		sep.action = "anim"
-	selector_spr.action = "anim"
 	selector_target = sel_target_map.position
 	selector.position = selector_target
 	map_selector.visible = false
 	map_sel_origin = Vector2i(map.position) + map.MARKER_ZERO
 	map_selection = UICore.instance.minimap.last_player_pos
+	map_backing.visible = false
 	_init_item_slots()
 	desc_name.set_snaily_text("")
 	desc_body.set_snaily_text("")
@@ -222,7 +218,7 @@ func _init_item_slots() -> void:
 	for i in ITEMS_SHELL:
 		var count:int = _get_item_count(i)
 		if count > 0:
-			var spr = _add_list_spr(slist_shell, i, "shell", spr_offset)
+			var spr = _add_list_spr(slist_shell, i, "body", spr_offset)
 			_add_list_text(tlist_shell, GlobalText.get_item_name(i, true))
 			spr_offset += LIST_SPRITE_OFFSET
 			_add_item_selectable(spr, i)
@@ -244,25 +240,25 @@ func _init_item_slots() -> void:
 		header_ability.set_snaily_text(tr(&"?????"))
 
 
-func _add_list_spr(_group:Node2D, _id:int, _action:String, _y:int) -> JsonSprite2D:
-	var new_spr:JsonSprite2D = JsonSprite2D.new()
-	new_spr.texture_path = list_spr_json
+func _add_list_spr(_group:Node2D, _id:int, _action:String, _y:int) -> SnailySprite2D:
+	var new_spr:SnailySprite2D = SnailySprite2D.new()
+	new_spr.sprite_frames = list_sprite_frames
 	_group.add_child(new_spr)
 	new_spr.name = str(_id)
-	new_spr.action = _action
+	new_spr.play(_action)
 	new_spr.position = Vector2(0, _y)
 	return new_spr
 
 
 func _add_list_text(_group:VBoxContainer, _text:String) -> void:
-	var new_text:SnailyText = SnailyText.new() #text_scn.instantiate()
+	var new_text:SnailyText = SnailyText.new()
 	new_text.shadow_scale = 1
 	new_text.text_scale = 1
 	_group.add_child(new_text)
 	new_text.set_snaily_text(_text, true)
 
 
-func _add_item_selectable(_sprite:JsonSprite2D, _item_id:int) -> void:
+func _add_item_selectable(_sprite:SnailySprite2D, _item_id:int) -> void:
 	selectable_items.append( [ _sprite, _item_id ] )
 
 
@@ -331,9 +327,7 @@ func _test_for_move_selection() -> void:
 			_set_desc(selectable_items[selection][1])
 			map.modulate = MAP_TRANSPARENT
 			map.marker_group.visible = false
-			if not backing_visible:
-				backing_visible = true
-				map_backing.action = "enabled"
+			map_backing.visible = true
 			marker_text.visible = false
 			select_text.set_snaily_text(tr(&"Scroll selection - bind__UP bind__DOWN"))
 		MoveMode.NAME:
@@ -341,9 +335,7 @@ func _test_for_move_selection() -> void:
 			_set_desc(-2)
 			map.modulate = MAP_TRANSPARENT
 			map.marker_group.visible = false
-			if not backing_visible:
-				backing_visible = true
-				map_backing.action = "enabled"
+			map_backing.visible = true
 			marker_text.visible = false
 			select_text.set_snaily_text(tr(&"Scroll selection - bind__UP bind__DOWN"))
 		MoveMode.MAP:
@@ -352,9 +344,7 @@ func _test_for_move_selection() -> void:
 			desc_body.set_snaily_text("")
 			map.modulate = Color.WHITE
 			map.marker_group.visible = true
-			if backing_visible:
-				backing_visible = false
-				map_backing.action = "disabled"
+			map_backing.visible = false
 			marker_text.visible = true
 			select_text.set_snaily_text(tr(&"Swap selection - bind__LEFT bind__RIGHT"))
 		MoveMode.GRID:
@@ -380,7 +370,6 @@ func _test_for_selection_events() -> void:
 				selection_depth += 1
 				sfx_select.play()
 				map_selector.visible = true
-				map_selector.action = "8"
 				map_selector.position = map_sel_origin + (map_selection * 8)
 				marker_text.set_snaily_text(tr(&"Place/remove marker - bind__UI_ACCEPT"))
 				select_text.set_snaily_text(tr(&"Return - bind__UI_BACK"))
@@ -391,7 +380,6 @@ func _test_for_selection_events() -> void:
 					map.update_p_marker_at_cell(map_selection)
 				elif SInput.check_input(SInput.Inputs.UI_BACK, true):
 					sfx_select.play()
-					map_selector.action = "8_disable"
 					selection_depth -= 1
 					marker_text.set_snaily_text(tr(&"Set markers - bind__UI_ACCEPT   Zoom - bind__STRAFE"))
 					select_text.set_snaily_text(tr(&"Swap selection - bind__LEFT bind__RIGHT"))
