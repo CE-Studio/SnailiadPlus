@@ -49,7 +49,7 @@ static var instance:UICore
 @onready var save_icon:SnailySprite2D = $"BR/SaveIcon"
 @onready var bestiary_icon:JsonSprite2D = $"BR/BestiaryIcon"
 @onready var minimap:Minimap = $"TR/Minimap"
-@onready var border:JsonSprite2D = $"Border"
+@onready var border:Sprite2D = $"Border"
 @onready var darkness_layer:DarknessLayer = $"DarknessLayer"
 @onready var popup_layer:Node2D = $"PopupLayer"
 @onready var pause_layer:PauseLayer = $"PauseLayer"
@@ -273,7 +273,7 @@ func play_bestiary_anim() -> void:
 
 
 func set_border_anim(anim_id:int) -> void:
-	border.action = str(anim_id)
+	border.frame = anim_id
 	border._process(0.0)
 
 

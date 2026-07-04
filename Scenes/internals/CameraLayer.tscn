@@ -328,21 +328,13 @@ modulate = Color(1, 1, 1, 0)
 position = Vector2(-200, -120)
 scale = Vector2(2, 2)
 
-[node name="Border" type="Sprite2D" parent="." unique_id=86311262]
+[node name="Border" type="Sprite2D" parent="." unique_id=1849696945]
 modulate = Color(0, 0, 0, 1)
 z_index = 10
 position = Vector2(200, 120)
-script = ExtResource("1_4o42s")
-texture_path = "res://Assets/Images/UI/ScreenBorder.json"
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
-
-[node name="MarkerSprite" type="Sprite2D" parent="Border" unique_id=1349930718]
-modulate = Color(1, 0.823529, 0.709804, 0.172549)
 texture = ExtResource("4_ygllc")
 hframes = 2
 vframes = 3
-script = ExtResource("3_vjeh6")
-metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
 [node name="PauseLayer" type="Node2D" parent="." unique_id=894734366]
 process_mode = 3
