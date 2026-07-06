@@ -169,13 +169,16 @@ func _on_player_entered(_body: Node2D) -> void:
 		match type:
 			ItemTypes.PEASHOOTER:
 				if Statics.stack_weapons or (GameCore.instance.player.selected_weapon < 2):
-					GameCore.instance.player._toggle_weapon(1)
+					if not Player.instance.is_equipped(1):
+						GameCore.instance.player._toggle_weapon(1)
 			ItemTypes.BOOMERANG:
 				if Statics.stack_weapons or (GameCore.instance.player.selected_weapon < 4):
-					GameCore.instance.player._toggle_weapon(2)
+					if not Player.instance.is_equipped(2):
+						GameCore.instance.player._toggle_weapon(2)
 			ItemTypes.RAINBOW_WAVE:
 				if Statics.stack_weapons or (GameCore.instance.player.selected_weapon < 8):
-					GameCore.instance.player._toggle_weapon(3)
+					if not Player.instance.is_equipped(3):
+						GameCore.instance.player._toggle_weapon(3)
 			#ItemTypes.DEVASTATOR:
 			#ItemTypes.HIGH_JUMP:
 			#ItemTypes.SHELL_SHIELD:
@@ -206,11 +209,13 @@ func _on_player_entered(_body: Node2D) -> void:
 				AchievementCore.instance.check_add(AchievementCore.Achievements.GRAVITY_SHOCK)
 			ItemTypes.SECRET_BOOMERANG:
 				if Statics.stack_weapons or (GameCore.instance.player.selected_weapon < 4):
-					GameCore.instance.player._toggle_weapon(2)
+					if not Player.instance.is_equipped(2):
+						GameCore.instance.player._toggle_weapon(2)
 				AchievementCore.instance.check_add(AchievementCore.Achievements.SECRET_BOOMERANG)
 			ItemTypes.DEBUG_WAVE:
 				if Statics.stack_weapons or (GameCore.instance.player.selected_weapon < 8):
-					GameCore.instance.player._toggle_weapon(3)
+					if not Player.instance.is_equipped(3):
+						GameCore.instance.player._toggle_weapon(3)
 			ItemTypes.HEART_CONTAINER:
 				if not Statics.is_in_boss_rush:
 					name_str = tr(&"Heart Container #%d") % Statics.check_item(Item.ItemTypes.HEART_CONTAINER)

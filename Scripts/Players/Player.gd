@@ -1585,6 +1585,10 @@ func _toggle_weapon(id:int, play_sound:bool = true) -> void:
 	UICore.instance.weapon_icons.update(play_sound)
 
 
+func is_equipped(id:int) -> bool:
+	return selected_weapon & (1 << id) > 0 
+
+
 func _shoot(_bullet_id:int, normalized_velocity:Vector2, pos:Vector2 = body.position) -> float:
 	if GameCore.instance.room_time < Statics.FRAC_32:
 		return 0.0
