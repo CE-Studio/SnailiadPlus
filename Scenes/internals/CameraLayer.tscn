@@ -253,22 +253,6 @@ region = Rect2(32, 128, 32, 32)
 atlas = ExtResource("9_umg6w")
 region = Rect2(64, 128, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_xfg40"]
-atlas = ExtResource("9_umg6w")
-region = Rect2(96, 128, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_nb43o"]
-atlas = ExtResource("9_umg6w")
-region = Rect2(128, 128, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ax1lv"]
-atlas = ExtResource("9_umg6w")
-region = Rect2(0, 160, 32, 32)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_puoxx"]
-atlas = ExtResource("9_umg6w")
-region = Rect2(32, 160, 32, 32)
-
 [sub_resource type="SpriteFrames" id="SpriteFrames_wkouj"]
 animations = [{
 "frames": [{
@@ -333,6 +317,9 @@ animations = [{
 "texture": SubResource("AtlasTexture_77dln")
 }, {
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_77dln")
+}, {
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_rmpqy")
 }, {
 "duration": 1.0,
@@ -342,20 +329,14 @@ animations = [{
 "texture": SubResource("AtlasTexture_awdhv")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_xfg40")
+"texture": SubResource("AtlasTexture_77dln")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_nb43o")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ax1lv")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_puoxx")
+"texture": SubResource("AtlasTexture_77dln")
 }],
 "loop": 0,
 "name": &"default",
-"speed": 16.0
+"speed": 12.0
 }]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wbo4q"]
@@ -649,10 +630,9 @@ hide_on_finish = true
 metadata/_custom_type_script = "uid://boee2837la0pr"
 
 [node name="BestiaryIcon" type="AnimatedSprite2D" parent="BR" unique_id=1798755364]
-visible = false
 position = Vector2(-16, -16)
 sprite_frames = SubResource("SpriteFrames_wkouj")
-frame = 26
+frame = 25
 frame_progress = 1.0
 script = ExtResource("15_cac8p")
 hide_on_finish = true
