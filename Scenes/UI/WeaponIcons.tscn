@@ -1,0 +1,171 @@
+[gd_scene format=3 uid="uid://cub8nls0k76t0"]
+
+[ext_resource type="Script" uid="uid://c3jbiyq2uga51" path="res://Scripts/UI/WeaponIcons.gd" id="1_wayua"]
+[ext_resource type="Texture2D" uid="uid://dced88awmkj47" path="res://Assets/Images/UI/WeaponIcons.png" id="2_wayua"]
+[ext_resource type="Script" uid="uid://boee2837la0pr" path="res://Scripts/Classes/SnailySprite.gd" id="3_omvxu"]
+[ext_resource type="AudioStream" uid="uid://dqy26ppv8a1wn" path="res://Assets/Sounds/Sfx/WeaponSelected0.ogg" id="4_hyxax"]
+[ext_resource type="AudioStream" uid="uid://bw58uw8lj3s7n" path="res://Assets/Sounds/Sfx/WeaponSelected1.ogg" id="5_xwlhf"]
+[ext_resource type="AudioStream" uid="uid://gmll1o5mkd6q" path="res://Assets/Sounds/Sfx/WeaponSelected2.ogg" id="6_jybpf"]
+[ext_resource type="AudioStream" uid="uid://c6a2m0gyyjklb" path="res://Assets/Sounds/Sfx/WeaponSelected3.ogg" id="7_x0u6d"]
+[ext_resource type="AudioStream" uid="uid://dvnmn1e5ywaof" path="res://Assets/Sounds/Sfx/WeaponSelected4.ogg" id="8_lv81w"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wayua"]
+atlas = ExtResource("2_wayua")
+region = Rect2(0, 0, 12, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5mprw"]
+atlas = ExtResource("2_wayua")
+region = Rect2(0, 12, 12, 12)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wkouj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wayua")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5mprw")
+}],
+"loop": 1,
+"name": &"selected",
+"speed": 1.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hyxax"]
+atlas = ExtResource("2_wayua")
+region = Rect2(12, 0, 12, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xwlhf"]
+atlas = ExtResource("2_wayua")
+region = Rect2(12, 12, 12, 12)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jybpf"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hyxax")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xwlhf")
+}],
+"loop": 1,
+"name": &"selected",
+"speed": 1.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x0u6d"]
+atlas = ExtResource("2_wayua")
+region = Rect2(24, 0, 12, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lv81w"]
+atlas = ExtResource("2_wayua")
+region = Rect2(24, 12, 12, 12)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_q1n33"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x0u6d")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lv81w")
+}],
+"loop": 1,
+"name": &"selected",
+"speed": 1.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_smyd6"]
+atlas = ExtResource("2_wayua")
+region = Rect2(36, 0, 12, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5s5dw"]
+atlas = ExtResource("2_wayua")
+region = Rect2(36, 12, 12, 12)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_lshbt"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_smyd6")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5s5dw")
+}],
+"loop": 1,
+"name": &"selected",
+"speed": 1.0
+}]
+
+[node name="WeaponIcons" type="Node2D" unique_id=1784227947 node_paths=PackedStringArray("icons", "sfx")]
+script = ExtResource("1_wayua")
+icons = [NodePath("Broom"), NodePath("Peashooter"), NodePath("Boomerang"), NodePath("RainbowWave")]
+sfx = [NodePath("Sel0"), NodePath("Sel1"), NodePath("Sel2"), NodePath("Sel3"), NodePath("Sel4")]
+
+[node name="Broom" type="AnimatedSprite2D" parent="." unique_id=650380553]
+position = Vector2(-64, 0)
+sprite_frames = SubResource("SpriteFrames_wkouj")
+autoplay = "default"
+script = ExtResource("3_omvxu")
+metadata/_custom_type_script = "uid://boee2837la0pr"
+
+[node name="Peashooter" type="AnimatedSprite2D" parent="." unique_id=82892272]
+position = Vector2(-50, 0)
+sprite_frames = SubResource("SpriteFrames_jybpf")
+autoplay = "default"
+script = ExtResource("3_omvxu")
+metadata/_custom_type_script = "uid://boee2837la0pr"
+
+[node name="Boomerang" type="AnimatedSprite2D" parent="." unique_id=516752421]
+position = Vector2(-36, 0)
+sprite_frames = SubResource("SpriteFrames_q1n33")
+autoplay = "default"
+script = ExtResource("3_omvxu")
+metadata/_custom_type_script = "uid://boee2837la0pr"
+
+[node name="RainbowWave" type="AnimatedSprite2D" parent="." unique_id=750289828]
+position = Vector2(-22, 0)
+sprite_frames = SubResource("SpriteFrames_lshbt")
+autoplay = "default"
+script = ExtResource("3_omvxu")
+metadata/_custom_type_script = "uid://boee2837la0pr"
+
+[node name="Sel0" type="AudioStreamPlayer" parent="." unique_id=654544805]
+stream = ExtResource("4_hyxax")
+bus = &"Sfx"
+
+[node name="Sel1" type="AudioStreamPlayer" parent="." unique_id=1905635889]
+stream = ExtResource("5_xwlhf")
+bus = &"Sfx"
+
+[node name="Sel2" type="AudioStreamPlayer" parent="." unique_id=732131135]
+stream = ExtResource("6_jybpf")
+bus = &"Sfx"
+
+[node name="Sel3" type="AudioStreamPlayer" parent="." unique_id=451770070]
+stream = ExtResource("7_x0u6d")
+bus = &"Sfx"
+
+[node name="Sel4" type="AudioStreamPlayer" parent="." unique_id=1579673439]
+stream = ExtResource("8_lv81w")
+bus = &"Sfx"

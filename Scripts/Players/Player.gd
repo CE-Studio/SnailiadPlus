@@ -1482,7 +1482,7 @@ func adjust_health(amount:int, ignore_defense:bool = false) -> bool:
 			amount = floori(amount * 0.5)
 	health += amount
 	health = clampi(health, 0, max_health)
-	UICore.instance.update_hearts()
+	UICore.instance.heart_group.update_hearts()
 	if health == 0:
 		tick_death(0.0)
 	elif amount < 0 or shielded:
@@ -1572,7 +1572,7 @@ func _on_respawn_timeout() -> void:
 
 
 #region Bullet functions
-func _toggle_weapon(id:int) -> void:
+func _toggle_weapon(id:int, play_sound:bool = true) -> void:
 	var shifted_id := 1 << id
 	if Statics.stack_weapons:
 		if selected_weapon & shifted_id > 0:
@@ -1582,7 +1582,7 @@ func _toggle_weapon(id:int) -> void:
 	else:
 		selected_weapon = shifted_id
 	Statics.current_profile["equipped_weapons"] = selected_weapon
-	UICore.instance.update_weapon_icons()
+	UICore.instance.weapon_icons.update(play_sound)
 
 
 func _shoot(_bullet_id:int, normalized_velocity:Vector2, pos:Vector2 = body.position) -> float:

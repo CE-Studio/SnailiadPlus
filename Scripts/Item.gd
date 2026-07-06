@@ -170,15 +170,12 @@ func _on_player_entered(_body: Node2D) -> void:
 			ItemTypes.PEASHOOTER:
 				if Statics.stack_weapons or (GameCore.instance.player.selected_weapon < 2):
 					GameCore.instance.player._toggle_weapon(1)
-				UICore.instance.update_weapon_icons(false)
 			ItemTypes.BOOMERANG:
 				if Statics.stack_weapons or (GameCore.instance.player.selected_weapon < 4):
 					GameCore.instance.player._toggle_weapon(2)
-				UICore.instance.update_weapon_icons(false)
 			ItemTypes.RAINBOW_WAVE:
 				if Statics.stack_weapons or (GameCore.instance.player.selected_weapon < 8):
 					GameCore.instance.player._toggle_weapon(3)
-				UICore.instance.update_weapon_icons(false)
 			#ItemTypes.DEVASTATOR:
 			#ItemTypes.HIGH_JUMP:
 			#ItemTypes.SHELL_SHIELD:
@@ -210,18 +207,16 @@ func _on_player_entered(_body: Node2D) -> void:
 			ItemTypes.SECRET_BOOMERANG:
 				if Statics.stack_weapons or (GameCore.instance.player.selected_weapon < 4):
 					GameCore.instance.player._toggle_weapon(2)
-				UICore.instance.update_weapon_icons(false)
 				AchievementCore.instance.check_add(AchievementCore.Achievements.SECRET_BOOMERANG)
 			ItemTypes.DEBUG_WAVE:
 				if Statics.stack_weapons or (GameCore.instance.player.selected_weapon < 8):
 					GameCore.instance.player._toggle_weapon(3)
-				UICore.instance.update_weapon_icons(false)
 			ItemTypes.HEART_CONTAINER:
 				if not Statics.is_in_boss_rush:
 					name_str = tr(&"Heart Container #%d") % Statics.check_item(Item.ItemTypes.HEART_CONTAINER)
 				GameCore.instance.player.max_health += Statics.HEALTH_PER_HEART[Statics.current_profile["difficulty"]]
 				GameCore.instance.player.health = GameCore.instance.player.max_health
-				UICore.instance.draw_new_hearts()
+				UICore.instance.heart_group.draw_new_hearts()
 			ItemTypes.HELIX_FRAGMENT:
 				if not Statics.is_in_boss_rush:
 					name_str = tr(&"Helix Fragment #%d") % Statics.check_item(Item.ItemTypes.HELIX_FRAGMENT)

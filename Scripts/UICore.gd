@@ -10,9 +10,6 @@ const BL_TEXT_OFFSETS:Vector2 = Vector2(0, -8)
 const BL_TEXT_OFFSETS_LARGE:Vector2 = Vector2(0, -20)
 const MINIMAL_SHAKE_MOD:float = 0.4
 
-var weapon_icons:Array = [ ]
-var weapon_icon_states:Array = [ ]
-
 var flashy_popup_scene:PackedScene
 var color_popup_scene:PackedScene
 var boss_bar:PackedScene
@@ -43,35 +40,29 @@ var igt_flash_col:Color = Statics.get_color(Vector2i(2, 4))
 
 static var instance:UICore
 
-@onready var cam:CamControl = $"Camera2D"
-@onready var heart_group:Node2D = $"TL/Hearts"
-@onready var color_cover:ColorCover = $"ColorCover"
-@onready var save_icon:SnailySprite2D = $"BR/SaveIcon"
-@onready var bestiary_icon:JsonSprite2D = $"BR/BestiaryIcon"
-@onready var minimap:Minimap = $"TR/Minimap"
-@onready var border:Sprite2D = $"Border"
-@onready var darkness_layer:DarknessLayer = $"DarknessLayer"
-@onready var popup_layer:Node2D = $"PopupLayer"
-@onready var pause_layer:PauseLayer = $"PauseLayer"
-@onready var particle_layer:Node2D = $"CamAlignedParticleLayer"
-@onready var achievement_core:AchievementCore = $"TL/AchivementPanel"
-@onready var weapon_icon_group:Node2D = $"BR/WeaponIcons"
-@onready var igt:HBoxContainer = $"BL/InGameTime"
-@onready var igt_text:SnailyText = $"BL/InGameTime/Text"
-@onready var fps:HBoxContainer = $"BL/Framerate"
-@onready var fps_text:SnailyText = $"BL/Framerate/Text"
-@onready var input_display:InputDisplay = $"BL/InputDisplay"
+@export var _tl:Node2D
+@export var _tr:Node2D
+@export var _bl:Node2D
+@export var _br:Node2D
 
-@onready var _tl:Node2D = $"TL"
-@onready var _tr:Node2D = $"TR"
-@onready var _bl:Node2D = $"BL"
-@onready var _br:Node2D = $"BR"
-
-@onready var sfx_weapon_0:AudioStreamPlayer = $"BR/WeaponIcons/Sel0"
-@onready var sfx_weapon_1:AudioStreamPlayer = $"BR/WeaponIcons/Sel1"
-@onready var sfx_weapon_2:AudioStreamPlayer = $"BR/WeaponIcons/Sel2"
-@onready var sfx_weapon_3:AudioStreamPlayer = $"BR/WeaponIcons/Sel3"
-@onready var sfx_weapon_4:AudioStreamPlayer = $"BR/WeaponIcons/Sel4"
+@export var cam:CamControl
+@export var heart_group:HeartGroup
+@export var color_cover:ColorCover
+@export var save_icon:SnailySprite2D
+@export var bestiary_icon:SnailySprite2D
+@export var minimap:Minimap
+@export var border:Sprite2D
+@export var darkness_layer:DarknessLayer
+@export var popup_layer:Node2D
+@export var pause_layer:PauseLayer
+@export var particle_layer:Node2D
+@export var achievement_core:AchievementCore
+@export var weapon_icons:WeaponIcons
+@export var igt:HBoxContainer
+@export var igt_text:SnailyText
+@export var fps:HBoxContainer
+@export var fps_text:SnailyText
+@export var input_display:InputDisplay
 #endregion
 
 
@@ -79,42 +70,19 @@ func instantiate() -> void:
 	instance = self
 	cam.instantiate()
 	
-	var icon_id = 0
-	for icon in weapon_icon_group.get_children():
-		if icon is JsonSprite2D:
-			weapon_icons.append(icon)
-			weapon_icon_states.append(0)
-			icon.position += Vector2(0, 8)
-			icon.action = str(icon_id) + "_off"
-			icon_id += 1
-	
-	draw_new_hearts()
+	heart_group.draw_new_hearts()
 	
 	save_icon.visible = false
 	bestiary_icon.visible = false
 	
-	flashy_popup_scene = preload("res://Scenes/UI/FlashyPopup.tscn")
-	color_popup_scene = preload("res://Scenes/UI/ColorPopup.tscn")
-	boss_bar = preload("res://Scenes/UI/BossHealthBar.tscn")
+	flashy_popup_scene = preload("uid://cst46kauimrf6")
+	color_popup_scene = preload("uid://b84helaw7ial0")
+	boss_bar = preload("uid://d0moh826bija1")
 	
 	set_all_visibility_from_settings.call_deferred()
 
 
 func _process(delta: float) -> void:
-	# Weapon icons
-	for i in range(len(weapon_icons)):
-		var target_y
-		match weapon_icon_states[i]:
-			0:
-				target_y = 8
-			1:
-				target_y = -8
-			2:
-				target_y = -12
-		var pos = weapon_icons[i].position
-		pos = pos.lerp(Vector2(pos.x, target_y), 10.0 * delta)
-		weapon_icons[i].position = pos
-	
 	# Framerate
 	var fps_int = int(Engine.get_frames_per_second())
 	var fps_setting = ProjectSettings.get_setting("game/visuals/frame_limit")
@@ -174,84 +142,7 @@ func set_all_visibility_from_settings() -> void:
 	
 	fps.visible = ProjectSettings.get_setting("game/ui/fps_counter")
 	
-	weapon_icon_group.visible = ProjectSettings.get_setting("game/ui/bottom_keys")
-
-
-func update_weapon_icons(play_sound:bool = true) -> void:
-	var active_weapons:int = 0
-	for i in range(len(weapon_icons)):
-		var has:bool = false
-		var equipped:bool = false
-		match i:
-			0:
-				has = Statics.check_item(Item.ItemTypes.BROOM)
-				equipped = Statics.player.selected_weapon & 1 > 0
-			1:
-				has = Statics.check_item(Item.ItemTypes.PEASHOOTER)
-				equipped = Statics.player.selected_weapon & 2 > 0
-			2:
-				has = (Statics.check_item(Item.ItemTypes.BOOMERANG) or
-				Statics.check_item(Item.ItemTypes.SECRET_BOOMERANG))
-				equipped = Statics.player.selected_weapon & 4 > 0
-			3:
-				has = (Statics.check_item(Item.ItemTypes.RAINBOW_WAVE) or
-				Statics.check_item(Item.ItemTypes.DEBUG_WAVE))
-				equipped = Statics.player.selected_weapon & 8 > 0
-		if equipped:
-			if weapon_icon_states[i] != 2:
-				weapon_icons[i].action = str(i) + "_on"
-			weapon_icon_states[i] = 2
-			active_weapons += 1
-		else:
-			if weapon_icon_states[i] == 2:
-				weapon_icons[i].action = str(i) + "_off"
-			weapon_icon_states[i] = 1 if has else 0
-	if play_sound:
-		match active_weapons:
-			0: sfx_weapon_0.play()
-			1: sfx_weapon_1.play()
-			2: sfx_weapon_2.play()
-			3: sfx_weapon_3.play()
-			4: sfx_weapon_4.play()
-
-
-func draw_new_hearts() -> void:
-	for heart in heart_group.get_children():
-		heart.reparent(instance)
-		heart.queue_free()
-	var max_hp = GameCore.instance.player.max_health
-	var health_per_heart = Statics.HEALTH_PER_HEART[Statics.current_profile["difficulty"]]
-	var running_total = 0
-	var heart_count = 0
-	var origin = Vector2(8, 8)
-	var spacing = Vector2(8, 8)
-	var hearts_per_row = 7
-	while running_total < max_hp:
-		var new_heart = JsonSprite2D.new()
-		new_heart.texture_path = "res://Assets/Images/UI/Heart.json"
-		heart_group.add_child(new_heart)
-		var pos = Vector2(origin.x + ((heart_count % hearts_per_row) * spacing.x),
-		origin.y + floori((heart_count / hearts_per_row) * spacing.y))
-		new_heart.position = pos
-		heart_count += 1
-		running_total += health_per_heart
-	call_deferred("update_hearts")
-
-
-func update_hearts() -> void:
-	var health = GameCore.instance.player.health
-	#var max_hp = GameCore.instance.player.max_health
-	var health_per_heart = Statics.HEALTH_PER_HEART[Statics.current_profile["difficulty"]]
-	var running_total = 0
-	for heart in heart_group.get_children():
-		var this_heart_value = clampi(health - running_total, 0, health_per_heart)
-		var anim_name:String
-		match int(Statics.current_profile["difficulty"]):
-			0: anim_name = "easy_"
-			1: anim_name = "normal_"
-			2: anim_name = "insane_"
-		heart.action = anim_name + str(this_heart_value)
-		running_total += health_per_heart
+	weapon_icons.visible = ProjectSettings.get_setting("game/ui/bottom_keys")
 
 
 func get_cam_center_pos() -> Vector2:
@@ -274,7 +165,6 @@ func play_bestiary_anim() -> void:
 
 func set_border_anim(anim_id:int) -> void:
 	border.frame = anim_id
-	border._process(0.0)
 
 
 func show_flashy_popup(text:String) -> void:

@@ -169,15 +169,15 @@ func _handle_scroll_cases(spr:Sprite2D) -> void:
 				"Peashooter":
 					if Player.instance.selected_weapon & 2 > 0:
 						Player.instance.selected_weapon -= 2
-					UICore.instance.update_weapon_icons(false)
+					UICore.instance.weapon_icons.update(false)
 				"Boomerang":
 					if Player.instance.selected_weapon & 4 > 0:
 						Player.instance.selected_weapon -= 4
-					UICore.instance.update_weapon_icons(false)
+					UICore.instance.weapon_icons.update(false)
 				"RainbowWave":
 					if Player.instance.selected_weapon & 8 > 0:
 						Player.instance.selected_weapon -= 8
-					UICore.instance.update_weapon_icons(false)
+					UICore.instance.weapon_icons.update(false)
 				"IceSnail":
 					Player.instance.quick_update_shell_displayed()
 				"GravitySnail":
@@ -187,12 +187,12 @@ func _handle_scroll_cases(spr:Sprite2D) -> void:
 				"Broom":
 					if Player.instance.selected_weapon & 1 > 0:
 						Player.instance.selected_weapon -= 1
-					UICore.instance.update_weapon_icons(false)
+					UICore.instance.weapon_icons.update(false)
 				"HeartContainer":
 					Player.instance.max_health = ((3 + Statics.check_item(item_case))
 						* Statics.HEALTH_PER_HEART[Statics.current_profile["difficulty"]])
 					Player.instance.health = Player.instance.max_health
-					UICore.instance.draw_new_hearts()
+					UICore.instance.heart_group.draw_new_hearts()
 		else:
 			scroll_value = Statics.check_item(item_case)
 	scrolling = not scrolling
