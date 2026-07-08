@@ -3,11 +3,11 @@ class_name SnailySprite2D
 extends AnimatedSprite2D
 
 
-var autoplay_next:String = ""
 
 @export var meta_info:Array = []
 @export var start_on_random_frame:Array[String] = []
 @export var start_all_on_random_frame:bool = false
+@export var autoplay_next:String = ""
 @export var hide_on_finish:bool = false
 
 

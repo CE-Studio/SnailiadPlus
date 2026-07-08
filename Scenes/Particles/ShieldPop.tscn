@@ -2,28 +2,63 @@
 
 [ext_resource type="Script" uid="uid://bjoxx2waxewlf" path="res://Scripts/Classes/Particle.gd" id="1_8w4kv"]
 [ext_resource type="Texture2D" uid="uid://4c21bfy532jn" path="res://Assets/Images/Particles/Shield.png" id="2_gtr3a"]
-[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_unfo8"]
-[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="4_u5lde"]
+[ext_resource type="Script" uid="uid://boee2837la0pr" path="res://Scripts/Classes/SnailySprite.gd" id="3_ofbjc"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8w4kv"]
+atlas = ExtResource("2_gtr3a")
+region = Rect2(0, 96, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gtr3a"]
+atlas = ExtResource("2_gtr3a")
+region = Rect2(32, 96, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_unfo8"]
+atlas = ExtResource("2_gtr3a")
+region = Rect2(64, 96, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u5lde"]
+atlas = ExtResource("2_gtr3a")
+region = Rect2(96, 96, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wkouj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8w4kv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gtr3a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_unfo8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_unfo8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u5lde")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u5lde")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 24.0
+}]
 
 [node name="Shield" type="Node2D" unique_id=1566101876 node_paths=PackedStringArray("sprite", "timer")]
 z_index = 1
 script = ExtResource("1_8w4kv")
-sprite = NodePath("JsonSprite2D")
-anim_name = "pop"
+sprite = NodePath("SnailySprite2D")
 timer = NodePath("Timer")
 
-[node name="MarkerSprite" type="Sprite2D" parent="." unique_id=805443343]
-texture = ExtResource("2_gtr3a")
-hframes = 4
-vframes = 4
-frame = 14
-script = ExtResource("3_unfo8")
-metadata/_custom_type_script = "uid://b63lo60i7kt7f"
-
-[node name="JsonSprite2D" type="Sprite2D" parent="." unique_id=414090433]
-script = ExtResource("4_u5lde")
-texture_path = "res://Assets/Images/Particles/Shield.json"
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
+[node name="SnailySprite2D" type="AnimatedSprite2D" parent="." unique_id=1832647012]
+sprite_frames = SubResource("SpriteFrames_wkouj")
+autoplay = "default"
+frame = 2
+script = ExtResource("3_ofbjc")
+hide_on_finish = true
+metadata/_custom_type_script = "uid://boee2837la0pr"
 
 [node name="Timer" type="Timer" parent="." unique_id=1487127292]
 autostart = true

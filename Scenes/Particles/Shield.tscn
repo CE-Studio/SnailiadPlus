@@ -2,24 +2,123 @@
 
 [ext_resource type="Script" uid="uid://bjoxx2waxewlf" path="res://Scripts/Classes/Particle.gd" id="1_fboqi"]
 [ext_resource type="Texture2D" uid="uid://4c21bfy532jn" path="res://Assets/Images/Particles/Shield.png" id="2_fboqi"]
-[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_3new5"]
-[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="4_xtx2w"]
+[ext_resource type="Script" uid="uid://boee2837la0pr" path="res://Scripts/Classes/SnailySprite.gd" id="4_rcnp4"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fboqi"]
+atlas = ExtResource("2_fboqi")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g0sum"]
+atlas = ExtResource("2_fboqi")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3new5"]
+atlas = ExtResource("2_fboqi")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xtx2w"]
+atlas = ExtResource("2_fboqi")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s3trb"]
+atlas = ExtResource("2_fboqi")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0w5mi"]
+atlas = ExtResource("2_fboqi")
+region = Rect2(32, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kvauf"]
+atlas = ExtResource("2_fboqi")
+region = Rect2(64, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_86gcb"]
+atlas = ExtResource("2_fboqi")
+region = Rect2(96, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pu8ql"]
+atlas = ExtResource("2_fboqi")
+region = Rect2(0, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rskit"]
+atlas = ExtResource("2_fboqi")
+region = Rect2(32, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_76o0q"]
+atlas = ExtResource("2_fboqi")
+region = Rect2(64, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gyu6v"]
+atlas = ExtResource("2_fboqi")
+region = Rect2(96, 64, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wkouj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fboqi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g0sum")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3new5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xtx2w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s3trb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0w5mi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kvauf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_86gcb")
+}],
+"loop": 0,
+"name": &"default",
+"speed": 24.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pu8ql")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rskit")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_76o0q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gyu6v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gyu6v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_76o0q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rskit")
+}],
+"loop": 1,
+"name": &"loop",
+"speed": 24.0
+}]
 
 [node name="Shield" type="Node2D" unique_id=630816073 node_paths=PackedStringArray("sprite")]
 z_index = 10
 script = ExtResource("1_fboqi")
-sprite = NodePath("JsonSprite2D")
-anim_name = "shield"
+sprite = NodePath("SnailySprite2D")
 
-[node name="MarkerSprite" type="Sprite2D" parent="." unique_id=250415517]
-texture = ExtResource("2_fboqi")
-hframes = 4
-vframes = 4
+[node name="SnailySprite2D" type="AnimatedSprite2D" parent="." unique_id=1758595427]
+sprite_frames = SubResource("SpriteFrames_wkouj")
+autoplay = "default"
 frame = 3
-script = ExtResource("3_3new5")
-metadata/_custom_type_script = "uid://b63lo60i7kt7f"
-
-[node name="JsonSprite2D" type="Sprite2D" parent="." unique_id=1805252754]
-script = ExtResource("4_xtx2w")
-texture_path = "res://Assets/Images/Particles/Shield.json"
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
+script = ExtResource("4_rcnp4")
+autoplay_next = "loop"
+metadata/_custom_type_script = "uid://boee2837la0pr"

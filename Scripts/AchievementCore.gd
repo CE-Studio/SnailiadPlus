@@ -78,8 +78,8 @@ func _process(delta: float) -> void:
 		timer.start()
 	if currently_displaying:
 		time_open += delta
-	if Input.is_key_pressed(KEY_P):
-		_add_to_queue(randi_range(0, 24))
+	#if Input.is_key_pressed(KEY_P):
+	#	_add_to_queue(randi_range(0, 24))
 
 
 ## Checks if the given achievement has been earned, and adds it to the queue if not
