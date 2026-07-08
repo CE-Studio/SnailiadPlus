@@ -1,41 +1,118 @@
 [gd_scene format=3 uid="uid://coram7y7g81vt"]
 
 [ext_resource type="Script" uid="uid://ca4f0vo6hlxs3" path="res://Scripts/AchievementCore.gd" id="1_5odts"]
-[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="2_n4aaf"]
+[ext_resource type="Script" uid="uid://boee2837la0pr" path="res://Scripts/Classes/SnailySprite.gd" id="3_5odts"]
 [ext_resource type="Texture2D" uid="uid://cojpb3bh2ptau" path="res://Assets/Images/UI/AchievementPanel.png" id="3_noias"]
-[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="4_ppi6p"]
 [ext_resource type="Texture2D" uid="uid://p7n0mc1vnka6" path="res://Assets/Images/UI/AchievementIcons.png" id="5_3wt4e"]
 [ext_resource type="PackedScene" uid="uid://dke6r2335reau" path="res://Scenes/internals/SnailyText.tscn" id="6_3q0xp"]
 [ext_resource type="AudioStream" uid="uid://cnw03mudywpjk" path="res://Assets/Sounds/Music/AchievementJingle.ogg" id="7_n4aaf"]
 
-[node name="AchivementPanel" type="Node2D" unique_id=1297532291]
+[sub_resource type="AtlasTexture" id="AtlasTexture_n4aaf"]
+atlas = ExtResource("3_noias")
+region = Rect2(400, 0, 80, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_noias"]
+atlas = ExtResource("3_noias")
+region = Rect2(320, 0, 80, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ppi6p"]
+atlas = ExtResource("3_noias")
+region = Rect2(240, 0, 80, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3wt4e"]
+atlas = ExtResource("3_noias")
+region = Rect2(160, 0, 80, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3q0xp"]
+atlas = ExtResource("3_noias")
+region = Rect2(80, 0, 80, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jeck5"]
+atlas = ExtResource("3_noias")
+region = Rect2(0, 0, 80, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wandb"]
+atlas = ExtResource("3_noias")
+region = Rect2(480, 0, 80, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wkouj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n4aaf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_noias")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ppi6p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3wt4e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3q0xp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jeck5")
+}],
+"loop": 0,
+"name": &"close",
+"speed": 24.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wandb")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 24.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jeck5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3q0xp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3wt4e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ppi6p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_noias")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n4aaf")
+}],
+"loop": 0,
+"name": &"open",
+"speed": 24.0
+}]
+
+[node name="AchivementPanel" type="Node2D" unique_id=1297532291 node_paths=PackedStringArray("panel", "icon", "header", "jingle", "timer")]
 process_mode = 3
+z_index = 100
 script = ExtResource("1_5odts")
+panel = NodePath("Panel")
+icon = NodePath("Icon")
+header = NodePath("Header")
+jingle = NodePath("Jingle")
+timer = NodePath("Timer")
 
-[node name="Panel" type="Sprite2D" parent="." unique_id=1200857230]
-script = ExtResource("2_n4aaf")
-texture_path = "res://Assets/Images/UI/AchievementPanel.json"
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
+[node name="Panel" type="AnimatedSprite2D" parent="." unique_id=208075080]
+sprite_frames = SubResource("SpriteFrames_wkouj")
+script = ExtResource("3_5odts")
+hide_on_finish = true
+metadata/_custom_type_script = "uid://boee2837la0pr"
 
-[node name="MarkerSprite" type="Sprite2D" parent="Panel" unique_id=1160034327]
-texture = ExtResource("3_noias")
-hframes = 7
-frame = 6
-script = ExtResource("4_ppi6p")
-metadata/_custom_type_script = "uid://b63lo60i7kt7f"
-
-[node name="Icon" type="Sprite2D" parent="." unique_id=1484863116]
+[node name="Icon" type="Sprite2D" parent="." unique_id=498146357]
 position = Vector2(0, 3)
-script = ExtResource("2_n4aaf")
-texture_path = "res://Assets/Images/UI/AchievementIcons.json"
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
-
-[node name="MarkerSprite" type="Sprite2D" parent="Icon" unique_id=1702780703]
 texture = ExtResource("5_3wt4e")
 hframes = 5
 vframes = 6
-script = ExtResource("4_ppi6p")
-metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
 [node name="Header" parent="." unique_id=687921380 instance=ExtResource("6_3q0xp")]
 offset_left = -34.0

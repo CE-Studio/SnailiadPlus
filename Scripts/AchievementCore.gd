@@ -35,25 +35,27 @@ enum Achievements {
 
 ## Array of achievements that have been queued up to show as earned. As long as there are
 ## achievements in the queue, the popup will remain active
-var queue:Array[String] = []
+var queue:Array[int] = []
 ## Will be set to [code]true[/code] if the popup is currently visible
 var currently_open:bool = false
 ## Will be set to [code]true[/code] if the icon of the earliest queued achievement is being displayed
 var currently_displaying:bool = false
+## Tracks how long the achievement popup has been open for
+var time_open:float = 0.0
 
 ## The active instance of this script
 static var instance:AchievementCore
 
 ## Main background component of the popup
-@onready var panel:JsonSprite2D = $"Panel"
+@export var panel:SnailySprite2D
 ## Achievement icon component of the popup
-@onready var icon:JsonSprite2D = $"Icon"
+@export var icon:Sprite2D
 ## Text component at the top of the popup
-@onready var header:SnailyText = $"Header"
+@export var header:SnailyText
 ## Sound played when the popup first appears
-@onready var jingle:AudioStreamPlayer = $"Jingle"
+@export var jingle:AudioStreamPlayer
 ## Timer that controls how long achievements should remain visible in the popup
-@onready var timer:Timer = $"Timer"
+@export var timer:Timer
 #endregion
 
 
@@ -62,16 +64,22 @@ func _ready() -> void:
 	panel.visible = false
 	icon.visible = false
 	header.visible = false
-	header.set_snaily_text(&"Achievement!!")
+	header.set_snaily_text(tr(&"Achievement!!"))
+	header.set_default_flashy(2)
+	header.enable_rainbow_scroll()
 
 
-func _process(_delta: float) -> void:
-	if panel.action == "idle" and currently_open and not currently_displaying:
+func _process(delta: float) -> void:
+	if panel.animation == "default" and currently_open and not currently_displaying:
 		currently_displaying = true
 		icon.visible = true
-		icon.action = queue[0]
+		icon.frame = queue[0] + 1
 		header.visible = true
 		timer.start()
+	if currently_displaying:
+		time_open += delta
+	if Input.is_key_pressed(KEY_P):
+		_add_to_queue(randi_range(0, 24))
 
 
 ## Checks if the given achievement has been earned, and adds it to the queue if not
@@ -84,29 +92,33 @@ func check_add(id:Achievements) -> bool:
 
 ## Adds the given achievement to the queue
 func _add_to_queue(id:Achievements) -> void:
-	var ach_str:String = Achievements.keys()[id]
-	ach_str = ach_str.to_camel_case()
-	queue.append(ach_str)
+	queue.append(id as int)
 	if not currently_open:
 		currently_open = true
+		currently_displaying = false
 		jingle.play()
 		panel.visible = true
-		panel.action = "open"
-		header.set_snaily_text(tr("Achievement!!"))
+		panel.play("open")
+		panel.autoplay_next = "default"
+		time_open = 0.0
 
 
 ## Called when the icon display timer times out, and either restarts the timer with the next
 ## achievement in the queue or closes the popup if the queue is empty
 func _on_timer_timeout() -> void:
+	if time_open < 0.25:
+		timer.start()
+		return
 	if queue.size() == 0 or not currently_open:
 		return
 	queue.remove_at(0)
 	if queue.size() == 0:
 		icon.visible = false
 		header.visible = false
-		panel.action = "close"
+		panel.play("close")
 		currently_displaying = false
 		currently_open = false
+		time_open = 0.0
 	else:
-		icon.action = queue[0]
+		icon.frame = queue[0] + 1
 		timer.start()

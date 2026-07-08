@@ -127,16 +127,7 @@ func _ready() -> void:
 		var ratio:Vector2i = Statics.get_area_item_ratio(GameCore.instance.current_area)
 		radar.set_snaily_text(tr(&"Area items found: %d/%d") %  [ratio.x, ratio.y])
 		if ratio.x == ratio.y and ratio.y != 0:
-			radar.overwrite_rainbow([
-				Statics.get_color(Vector2i(0, 1)),
-				Statics.get_color(Vector2i(0, 1)),
-				Statics.get_color(Vector2i(3, 3)),
-				Statics.get_color(Vector2i(3, 3)),
-				Statics.get_color(Vector2i(3, 13)),
-				Statics.get_color(Vector2i(3, 13)),
-				Statics.get_color(Vector2i(3, 7)),
-				Statics.get_color(Vector2i(3, 7)),
-			])
+			radar.set_default_flashy(2)
 			radar.enable_rainbow_scroll()
 	else:
 		radar.visible = false
