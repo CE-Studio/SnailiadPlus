@@ -304,7 +304,7 @@ func _input(event: InputEvent) -> void:
 			var mouse_pos:Vector2 = get_viewport().get_mouse_position()
 			var last_check_pos:Vector2 = Vector2.ZERO
 			for text in list_items:
-				var check_pos:Vector2 = text.global_position + (Vector2.DOWN * 12)
+				var check_pos:Vector2 = text.global_position + (Vector2.DOWN * 12) - (global_position - Vector2(200, 120))
 				if closest_item == null:
 					closest_item = text
 				elif check_pos.distance_to(mouse_pos) < last_check_pos.distance_to(mouse_pos):
