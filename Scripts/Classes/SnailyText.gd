@@ -348,6 +348,16 @@ func reset_rainbow() -> void:
 	]
 
 
+## Sets the rainbow to the default "flashy" color cycle
+func set_default_flashy(rate:int) -> void:
+	rainbow_colors.clear()
+	rate = clampi(rate, 0, 32)
+	for i in range(rate): rainbow_colors.append(Statics.get_color(Vector2i(0, 1)))
+	for i in range(rate): rainbow_colors.append(Statics.get_color(Vector2i(3, 3)))
+	for i in range(rate): rainbow_colors.append(Statics.get_color(Vector2i(3, 13)))
+	for i in range(rate): rainbow_colors.append(Statics.get_color(Vector2i(3, 7)))
+
+
 ## Applies a rainbow scroll to the visible text
 func apply_rainbow_scroll() -> void:
 	var this_i:int = rainbow_index
