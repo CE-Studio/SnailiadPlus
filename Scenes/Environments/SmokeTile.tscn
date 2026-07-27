@@ -1,18 +1,41 @@
 [gd_scene format=3 uid="uid://cumw0kogpvr1s"]
 
-[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="1_63qo2"]
 [ext_resource type="Texture2D" uid="uid://c811rv1q1vj5l" path="res://Assets/Images/Environments/Smoke.png" id="2_63qo2"]
-[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_ibj8a"]
+[ext_resource type="Script" uid="uid://boee2837la0pr" path="res://Scripts/Classes/SnailySprite.gd" id="2_c8n8e"]
 
-[node name="SmokeTile" type="Sprite2D" unique_id=220289154]
+[sub_resource type="AtlasTexture" id="AtlasTexture_63qo2"]
+atlas = ExtResource("2_63qo2")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vosg5"]
+atlas = ExtResource("2_63qo2")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ibj8a"]
+atlas = ExtResource("2_63qo2")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wkouj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_63qo2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vosg5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ibj8a")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 3.0
+}]
+
+[node name="SmokeTile" type="AnimatedSprite2D" unique_id=648253476]
 z_index = 10
-script = ExtResource("1_63qo2")
-texture_path = "res://Assets/Images/Environments/Smoke.json"
-load_autoplay = Array[String](["smoke"])
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
-
-[node name="MarkerSprite" type="Sprite2D" parent="." unique_id=1549980497]
-texture = ExtResource("2_63qo2")
-hframes = 3
-script = ExtResource("3_ibj8a")
-metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+sprite_frames = SubResource("SpriteFrames_wkouj")
+autoplay = "default"
+script = ExtResource("2_c8n8e")
+start_all_on_random_frame = true
+metadata/_custom_type_script = "uid://boee2837la0pr"

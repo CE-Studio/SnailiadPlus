@@ -7,14 +7,19 @@ extends AnimatedSprite2D
 @export var meta_info:Array = []
 @export var start_on_random_frame:Array[String] = []
 @export var start_all_on_random_frame:bool = false
+@export var autoplay_any_on_spawn:bool = false
 @export var autoplay_next:String = ""
+@export var spawn_speed_variance:Vector2 = Vector2.ONE
 @export var hide_on_finish:bool = false
 
 
 func _ready() -> void:
 	connect("animation_changed", _on_anim_changed)
 	connect("animation_finished", _on_anim_finished)
-	if autoplay != "":
+	set_speed(spawn_speed_variance.x, spawn_speed_variance.y)
+	if autoplay != "" or autoplay_any_on_spawn:
+		if autoplay_any_on_spawn:
+			play_any_random()
 		if start_all_on_random_frame or start_on_random_frame.has(autoplay):
 			_set_random_frame()
 		else:
@@ -26,6 +31,8 @@ func play_random(anims:PackedStringArray) -> void:
 	var rand_i:int = randi_range(0, anims.size() - 1)
 	var rand_anim:String = anims[rand_i]
 	play(rand_anim)
+	if start_on_random_frame.has(rand_anim):
+		_set_random_frame()
 
 
 ## Selects a random animation to play out of all animations tied to this sprite
@@ -52,7 +59,10 @@ func _on_anim_changed() -> void:
 ## the animation is finished, as well as to check for queued autoplay animations
 func _on_anim_finished() -> void:
 	if autoplay_next != "":
-		play(autoplay_next)
+		if autoplay_next.to_lower() == "__any__":
+			play_any_random()
+		else:
+			play(autoplay_next)
 		autoplay_next = ""
 	elif hide_on_finish: visible = false
 

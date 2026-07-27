@@ -417,7 +417,7 @@ func _spawn_entities_from_layer(layer:int) -> void:
 				grass.spawn(Grass.GrassTypes.POWER, Statics.DirsSurface.FLOOR)
 
 			Vector2i(15, 1): # Smoke effect tile
-				var smoke_tile:JsonSprite2D = _load(&"res://Scenes/Environments/SmokeTile.tscn").instantiate()
+				var smoke_tile:SnailySprite2D = _load(&"res://Scenes/Environments/SmokeTile.tscn").instantiate()
 				smoke_tile.position = _tile_coords_to_vector_pos(tile)
 				layer_fg2.add_child(smoke_tile)
 
@@ -789,7 +789,7 @@ func _spawn_entities_from_layer(layer:int) -> void:
 				pea_tile.spawn(tile, Breakable.TileTypes.PEASHOOTER, false)
 
 			Vector2i(3, 31): # Water surface effect tile
-				var surface_tile:JsonSprite2D = _load(&"res://Scenes/Environments/WaterSurfaceTile.tscn").instantiate()
+				var surface_tile:SnailySprite2D = _load(&"res://Scenes/Environments/WaterSurfaceTile.tscn").instantiate()
 				surface_tile.position = _tile_coords_to_vector_pos(tile) + Vector2(0, -1)
 				layer_fg2.add_child(surface_tile)
 

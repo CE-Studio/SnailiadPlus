@@ -1,18 +1,200 @@
 [gd_scene format=3 uid="uid://be7ub8315wtem"]
 
-[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="1_oh6ol"]
+[ext_resource type="Script" uid="uid://boee2837la0pr" path="res://Scripts/Classes/SnailySprite.gd" id="1_0slrk"]
 [ext_resource type="Texture2D" uid="uid://oufyw1ml7qmd" path="res://Assets/Images/Environments/WaterSurface.png" id="2_0slrk"]
-[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_wwl8c"]
 
-[node name="WaterSurfaceTile" type="Sprite2D" unique_id=806924680]
+[sub_resource type="AtlasTexture" id="AtlasTexture_0slrk"]
+atlas = ExtResource("2_0slrk")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wwl8c"]
+atlas = ExtResource("2_0slrk")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a8cid"]
+atlas = ExtResource("2_0slrk")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mqf4o"]
+atlas = ExtResource("2_0slrk")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0tsvf"]
+atlas = ExtResource("2_0slrk")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mafky"]
+atlas = ExtResource("2_0slrk")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wj30s"]
+atlas = ExtResource("2_0slrk")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f577k"]
+atlas = ExtResource("2_0slrk")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3vwp6"]
+atlas = ExtResource("2_0slrk")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yw5xl"]
+atlas = ExtResource("2_0slrk")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k6r5h"]
+atlas = ExtResource("2_0slrk")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vs61f"]
+atlas = ExtResource("2_0slrk")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7e1ur"]
+atlas = ExtResource("2_0slrk")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_edfrv"]
+atlas = ExtResource("2_0slrk")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4ntvy"]
+atlas = ExtResource("2_0slrk")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7gve8"]
+atlas = ExtResource("2_0slrk")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rejkq"]
+atlas = ExtResource("2_0slrk")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aawtr"]
+atlas = ExtResource("2_0slrk")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r5tby"]
+atlas = ExtResource("2_0slrk")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_86p85"]
+atlas = ExtResource("2_0slrk")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6cfu8"]
+atlas = ExtResource("2_0slrk")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x0nhs"]
+atlas = ExtResource("2_0slrk")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ggdyx"]
+atlas = ExtResource("2_0slrk")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jomog"]
+atlas = ExtResource("2_0slrk")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wkouj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0slrk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wwl8c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a8cid")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mqf4o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0tsvf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mafky")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wj30s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f577k")
+}],
+"loop": 1,
+"name": &"0",
+"speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3vwp6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yw5xl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k6r5h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vs61f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7e1ur")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_edfrv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4ntvy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7gve8")
+}],
+"loop": 1,
+"name": &"1",
+"speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rejkq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aawtr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r5tby")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_86p85")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6cfu8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x0nhs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ggdyx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jomog")
+}],
+"loop": 1,
+"name": &"2",
+"speed": 4.0
+}]
+
+[node name="WaterSurfaceTile" type="AnimatedSprite2D" unique_id=1176152100]
 z_index = 10
-script = ExtResource("1_oh6ol")
-texture_path = "res://Assets/Images/Environments/WaterSurface.json"
-load_autoplay = Array[String](["anim0", "anim1", "anim2"])
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
-
-[node name="MarkerSprite" type="Sprite2D" parent="." unique_id=40347264]
-texture = ExtResource("2_0slrk")
-hframes = 4
-script = ExtResource("3_wwl8c")
-metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+sprite_frames = SubResource("SpriteFrames_wkouj")
+animation = &"2"
+script = ExtResource("1_0slrk")
+start_all_on_random_frame = true
+autoplay_any_on_spawn = true
+spawn_speed_variance = Vector2(0.75, 1.25)
+metadata/_custom_type_script = "uid://boee2837la0pr"

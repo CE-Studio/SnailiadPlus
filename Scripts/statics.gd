@@ -717,7 +717,7 @@ static func play_sfx_limited(sound:AudioStream, sound_name:String, vol:float = 1
 static func spawn_particle(name:String, layer:Room.Layers, pos:Vector2, data:Array = []) -> Particle:
 	if active_room == null:
 		return null
-	if not particle_table.has(name):
+	if not particle_table.has(name): # Add singular explosion scene
 		particle_table.append(name)
 		particle_cache.append(load("res://Scenes/Particles/%s.tscn" % name))
 	var new_particle:Particle = particle_cache[particle_table.find(name)].instantiate()
