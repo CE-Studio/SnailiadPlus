@@ -27,4 +27,10 @@ func _spawn(_data:Array) -> void:
 	var step:String = "0"
 	if _data.size() > 0 and _data[0] is int:
 		step = str(abs(_data[0]) % 4)
-	sprite.action = ".".join([character, direction, power, step])
+	var anim_name:String = ".".join([character, direction, power, step])
+	if not sprite.sprite_frames.has_animation(anim_name):
+		anim_name = ".".join([character, "down", power, step])
+	sprite.play(anim_name)
+	if character == "leggy":
+		if direction == "left": sprite.flip_h = true
+		elif direction == "down": sprite.flip_v = true

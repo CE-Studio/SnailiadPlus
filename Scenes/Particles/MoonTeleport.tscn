@@ -2,28 +2,85 @@
 
 [ext_resource type="Script" uid="uid://bjoxx2waxewlf" path="res://Scripts/Classes/Particle.gd" id="1_7foew"]
 [ext_resource type="Texture2D" uid="uid://diyle5b2qvp1v" path="res://Assets/Images/Particles/MoonTeleport.png" id="2_d6ho7"]
-[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_xqeo3"]
-[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="4_ureov"]
+[ext_resource type="Script" uid="uid://boee2837la0pr" path="res://Scripts/Classes/SnailySprite.gd" id="3_hbhwn"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r2c7b"]
+atlas = ExtResource("2_d6ho7")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cjedc"]
+atlas = ExtResource("2_d6ho7")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8o311"]
+atlas = ExtResource("2_d6ho7")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o71fe"]
+atlas = ExtResource("2_d6ho7")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ajagq"]
+atlas = ExtResource("2_d6ho7")
+region = Rect2(0, 48, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jki4b"]
+atlas = ExtResource("2_d6ho7")
+region = Rect2(48, 48, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vf8g8"]
+atlas = ExtResource("2_d6ho7")
+region = Rect2(96, 48, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_scua3"]
+atlas = ExtResource("2_d6ho7")
+region = Rect2(144, 48, 48, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wkouj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r2c7b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cjedc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8o311")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o71fe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ajagq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jki4b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vf8g8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_scua3")
+}],
+"loop": 0,
+"name": &"default",
+"speed": 20.0
+}]
 
 [node name="MoonTeleport" type="Node2D" unique_id=139135886 node_paths=PackedStringArray("sprite", "timer")]
 z_index = 99
 script = ExtResource("1_7foew")
-sprite = NodePath("JsonSprite2D")
-anim_name = "anim"
+sprite = NodePath("SnailySprite2D")
 timer = NodePath("Timer")
 
-[node name="MarkerSprite" type="Sprite2D" parent="." unique_id=693572842]
-texture = ExtResource("2_d6ho7")
-hframes = 4
-vframes = 2
+[node name="SnailySprite2D" type="AnimatedSprite2D" parent="." unique_id=147487174]
+sprite_frames = SubResource("SpriteFrames_wkouj")
+autoplay = "default"
 frame = 3
-script = ExtResource("3_xqeo3")
-metadata/_custom_type_script = "uid://b63lo60i7kt7f"
-
-[node name="JsonSprite2D" type="Sprite2D" parent="." unique_id=64294929]
-script = ExtResource("4_ureov")
-texture_path = "res://Assets/Images/Particles/MoonTeleport.json"
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
+script = ExtResource("3_hbhwn")
+hide_on_finish = true
+metadata/_custom_type_script = "uid://boee2837la0pr"
 
 [node name="Timer" type="Timer" parent="." unique_id=921194533]
 wait_time = 2.0

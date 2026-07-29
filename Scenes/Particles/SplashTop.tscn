@@ -2,30 +2,94 @@
 
 [ext_resource type="Script" uid="uid://bjoxx2waxewlf" path="res://Scripts/Classes/Particle.gd" id="1_2xtg1"]
 [ext_resource type="Texture2D" uid="uid://df46u2idk70id" path="res://Assets/Images/Particles/Splash.png" id="2_10x3t"]
-[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_fdkvy"]
-[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="4_v2vya"]
+[ext_resource type="Script" uid="uid://boee2837la0pr" path="res://Scripts/Classes/SnailySprite.gd" id="3_u7422"]
 [ext_resource type="AudioStream" uid="uid://ckugq6vqmvkpm" path="res://Assets/Sounds/Sfx/Splash.ogg" id="5_10x3t"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_10x3t"]
+atlas = ExtResource("2_10x3t")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fdkvy"]
+atlas = ExtResource("2_10x3t")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v2vya"]
+atlas = ExtResource("2_10x3t")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oanud"]
+atlas = ExtResource("2_10x3t")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_plu14"]
+atlas = ExtResource("2_10x3t")
+region = Rect2(16, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nvlxw"]
+atlas = ExtResource("2_10x3t")
+region = Rect2(32, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_35nc4"]
+atlas = ExtResource("2_10x3t")
+region = Rect2(0, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o3eal"]
+atlas = ExtResource("2_10x3t")
+region = Rect2(16, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v8poq"]
+atlas = ExtResource("2_10x3t")
+region = Rect2(32, 32, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wkouj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_10x3t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fdkvy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v2vya")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oanud")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_plu14")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nvlxw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_35nc4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o3eal")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v8poq")
+}],
+"loop": 0,
+"name": &"default",
+"speed": 24.0
+}]
 
 [node name="SplashTop" type="Node2D" unique_id=206898807 node_paths=PackedStringArray("sprite", "sound", "timer")]
 z_index = 10
 script = ExtResource("1_2xtg1")
-sprite = NodePath("JsonSprite2D")
-anim_name = "top"
+sprite = NodePath("SnailySprite2D")
 sound = NodePath("AudioStreamPlayer")
 timer = NodePath("Timer")
 
-[node name="MarkerSprite" type="Sprite2D" parent="." unique_id=1740310715]
-texture = ExtResource("2_10x3t")
-hframes = 3
-vframes = 3
+[node name="SnailySprite2D" type="AnimatedSprite2D" parent="." unique_id=802886288]
+sprite_frames = SubResource("SpriteFrames_wkouj")
+autoplay = "default"
 frame = 3
-script = ExtResource("3_fdkvy")
-metadata/_custom_type_script = "uid://b63lo60i7kt7f"
-
-[node name="JsonSprite2D" type="Sprite2D" parent="." unique_id=863630319]
-script = ExtResource("4_v2vya")
-texture_path = "res://Assets/Images/Particles/Splash.json"
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
+script = ExtResource("3_u7422")
+hide_on_finish = true
+metadata/_custom_type_script = "uid://boee2837la0pr"
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1363312497]
 stream = ExtResource("5_10x3t")

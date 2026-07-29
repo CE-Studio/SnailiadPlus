@@ -2,28 +2,215 @@
 
 [ext_resource type="Script" uid="uid://bjoxx2waxewlf" path="res://Scripts/Classes/Particle.gd" id="1_m5mgb"]
 [ext_resource type="Texture2D" uid="uid://c7t2sr22rgwvv" path="res://Assets/Images/Particles/Parry.png" id="2_62ivl"]
-[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_vd60y"]
-[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="4_340f1"]
+[ext_resource type="Script" uid="uid://boee2837la0pr" path="res://Scripts/Classes/SnailySprite.gd" id="3_qid00"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_62ivl"]
+atlas = ExtResource("2_62ivl")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m5mgb"]
+atlas = ExtResource("2_62ivl")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wsvce"]
+atlas = ExtResource("2_62ivl")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vd60y"]
+atlas = ExtResource("2_62ivl")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_340f1"]
+atlas = ExtResource("2_62ivl")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_laxlk"]
+atlas = ExtResource("2_62ivl")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5rv5o"]
+atlas = ExtResource("2_62ivl")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4gj68"]
+atlas = ExtResource("2_62ivl")
+region = Rect2(32, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wemgg"]
+atlas = ExtResource("2_62ivl")
+region = Rect2(64, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ohimh"]
+atlas = ExtResource("2_62ivl")
+region = Rect2(96, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jr8kb"]
+atlas = ExtResource("2_62ivl")
+region = Rect2(128, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ibf6n"]
+atlas = ExtResource("2_62ivl")
+region = Rect2(160, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6hnfc"]
+atlas = ExtResource("2_62ivl")
+region = Rect2(0, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h53on"]
+atlas = ExtResource("2_62ivl")
+region = Rect2(32, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r4hpg"]
+atlas = ExtResource("2_62ivl")
+region = Rect2(64, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4obei"]
+atlas = ExtResource("2_62ivl")
+region = Rect2(96, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w0wsa"]
+atlas = ExtResource("2_62ivl")
+region = Rect2(128, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fv2hn"]
+atlas = ExtResource("2_62ivl")
+region = Rect2(160, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v1gsa"]
+atlas = ExtResource("2_62ivl")
+region = Rect2(0, 96, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qnen7"]
+atlas = ExtResource("2_62ivl")
+region = Rect2(32, 96, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nwlo3"]
+atlas = ExtResource("2_62ivl")
+region = Rect2(64, 96, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s6dbq"]
+atlas = ExtResource("2_62ivl")
+region = Rect2(96, 96, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nbl4y"]
+atlas = ExtResource("2_62ivl")
+region = Rect2(128, 96, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_msn8s"]
+atlas = ExtResource("2_62ivl")
+region = Rect2(160, 96, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_u7422"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_62ivl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m5mgb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wsvce")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vd60y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_340f1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_laxlk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5rv5o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4gj68")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wemgg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ohimh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jr8kb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ibf6n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6hnfc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h53on")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r4hpg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4obei")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w0wsa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fv2hn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wemgg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wemgg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wemgg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wemgg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wemgg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wemgg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v1gsa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qnen7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nwlo3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s6dbq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nbl4y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_msn8s")
+}],
+"loop": 0,
+"name": &"default",
+"speed": 24.0
+}]
 
 [node name="Parry" type="Node2D" unique_id=808283967 node_paths=PackedStringArray("sprite", "timer")]
 z_index = 275
 script = ExtResource("1_m5mgb")
-sprite = NodePath("JsonSprite2D")
-anim_name = "anim"
+sprite = NodePath("SnailySprite2D")
 timer = NodePath("Timer")
 
-[node name="MarkerSprite" type="Sprite2D" parent="." unique_id=1758689635]
-texture = ExtResource("2_62ivl")
-hframes = 6
-vframes = 4
+[node name="SnailySprite2D" type="AnimatedSprite2D" parent="." unique_id=1935848515]
+sprite_frames = SubResource("SpriteFrames_u7422")
+autoplay = "default"
 frame = 7
-script = ExtResource("3_vd60y")
-metadata/_custom_type_script = "uid://b63lo60i7kt7f"
-
-[node name="JsonSprite2D" type="Sprite2D" parent="." unique_id=623663304]
-script = ExtResource("4_340f1")
-texture_path = "res://Assets/Images/Particles/Parry.json"
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
+script = ExtResource("3_qid00")
+hide_on_finish = true
+metadata/_custom_type_script = "uid://boee2837la0pr"
 
 [node name="Timer" type="Timer" parent="." unique_id=246683095]
 wait_time = 3.0

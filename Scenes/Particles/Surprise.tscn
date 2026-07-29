@@ -2,28 +2,57 @@
 
 [ext_resource type="Script" uid="uid://bjoxx2waxewlf" path="res://Scripts/Classes/Particle.gd" id="1_xn0eq"]
 [ext_resource type="Texture2D" uid="uid://b3ms8iclo2adj" path="res://Assets/Images/Particles/Surprise.png" id="2_xn0eq"]
-[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_yf1so"]
-[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="4_0hnsm"]
+[ext_resource type="Script" uid="uid://boee2837la0pr" path="res://Scripts/Classes/SnailySprite.gd" id="3_xn0eq"]
 [ext_resource type="AudioStream" uid="uid://dimkvhpp0d7pf" path="res://Assets/Sounds/Sfx/CCSurprised.ogg" id="5_i0l1q"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i0l1q"]
+atlas = ExtResource("2_xn0eq")
+region = Rect2(0, 0, 12, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yf1so"]
+atlas = ExtResource("2_xn0eq")
+region = Rect2(12, 0, 12, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0hnsm"]
+atlas = ExtResource("2_xn0eq")
+region = Rect2(0, 0, 12, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4ufps"]
+atlas = ExtResource("2_xn0eq")
+region = Rect2(12, 0, 12, 12)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wkouj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i0l1q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yf1so")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0hnsm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4ufps")
+}],
+"loop": 0,
+"name": &"default",
+"speed": 6.0
+}]
 
 [node name="Surprise" type="Node2D" unique_id=233369952 node_paths=PackedStringArray("sprite", "sound")]
 z_index = 2
 script = ExtResource("1_xn0eq")
-sprite = NodePath("JsonSprite2D")
-anim_name = "idle"
+sprite = NodePath("SnailySprite2D")
 sound = NodePath("AudioStreamPlayer")
 
-[node name="MarkerSprite" type="Sprite2D" parent="." unique_id=265923861]
-texture = ExtResource("2_xn0eq")
-hframes = 2
+[node name="SnailySprite2D" type="AnimatedSprite2D" parent="." unique_id=197919773]
+sprite_frames = SubResource("SpriteFrames_wkouj")
+autoplay = "default"
 frame = 1
-script = ExtResource("3_yf1so")
-metadata/_custom_type_script = "uid://b63lo60i7kt7f"
-
-[node name="JsonSprite2D" type="Sprite2D" parent="." unique_id=32075940]
-script = ExtResource("4_0hnsm")
-texture_path = "res://Assets/Images/Particles/Surprise.json"
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
+script = ExtResource("3_xn0eq")
+metadata/_custom_type_script = "uid://boee2837la0pr"
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=898180382]
 stream = ExtResource("5_i0l1q")

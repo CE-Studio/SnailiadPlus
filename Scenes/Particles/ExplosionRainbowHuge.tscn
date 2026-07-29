@@ -2,30 +2,67 @@
 
 [ext_resource type="Script" uid="uid://bjoxx2waxewlf" path="res://Scripts/Classes/Particle.gd" id="1_bsfxx"]
 [ext_resource type="Texture2D" uid="uid://hwgs04edt07o" path="res://Assets/Images/Particles/Explosion.png" id="2_7xhk4"]
-[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_4la1w"]
-[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="4_xm68w"]
+[ext_resource type="Script" uid="uid://boee2837la0pr" path="res://Scripts/Classes/SnailySprite.gd" id="3_4dles"]
 [ext_resource type="AudioStream" uid="uid://jy74nugtx5w1" path="res://Assets/Sounds/Sfx/ShotHit.ogg" id="5_qgjij"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bsfxx"]
+atlas = ExtResource("2_7xhk4")
+region = Rect2(0, 448, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7xhk4"]
+atlas = ExtResource("2_7xhk4")
+region = Rect2(64, 448, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4la1w"]
+atlas = ExtResource("2_7xhk4")
+region = Rect2(128, 448, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xm68w"]
+atlas = ExtResource("2_7xhk4")
+region = Rect2(192, 448, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qgjij"]
+atlas = ExtResource("2_7xhk4")
+region = Rect2(256, 448, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_npenk"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bsfxx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7xhk4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4la1w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xm68w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qgjij")
+}],
+"loop": 0,
+"name": &"default",
+"speed": 30.0
+}]
 
 [node name="ExplosionRainbowHuge" type="Node2D" unique_id=2043498976 node_paths=PackedStringArray("sprite", "sound", "timer")]
 z_index = 15
 script = ExtResource("1_bsfxx")
-sprite = NodePath("JsonSprite2D")
-anim_name = "rainbow_huge"
+sprite = NodePath("SnailySprite2D")
 sound = NodePath("AudioStreamPlayer")
 timer = NodePath("Timer")
 
-[node name="MarkerSprite" type="Sprite2D" parent="." unique_id=2140693670]
-texture = ExtResource("2_7xhk4")
-hframes = 5
-vframes = 8
-frame = 37
-script = ExtResource("3_4la1w")
-metadata/_custom_type_script = "uid://b63lo60i7kt7f"
-
-[node name="JsonSprite2D" type="Sprite2D" parent="." unique_id=1011200084]
-script = ExtResource("4_xm68w")
-texture_path = "res://Assets/Images/Particles/Explosion.json"
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
+[node name="SnailySprite2D" type="AnimatedSprite2D" parent="." unique_id=507932136]
+sprite_frames = SubResource("SpriteFrames_npenk")
+autoplay = "default"
+frame = 2
+script = ExtResource("3_4dles")
+spawn_speed_variance = Vector2(0.9, 1.1)
+hide_on_finish = true
+metadata/_custom_type_script = "uid://boee2837la0pr"
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1921127384]
 stream = ExtResource("5_qgjij")

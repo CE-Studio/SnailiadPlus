@@ -2,24 +2,109 @@
 
 [ext_resource type="Script" uid="uid://bjoxx2waxewlf" path="res://Scripts/Classes/Particle.gd" id="1_1trfw"]
 [ext_resource type="Texture2D" uid="uid://5tfbanrh15tt" path="res://Assets/Images/Particles/ShockCharge.png" id="2_1trfw"]
-[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_7eh64"]
-[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="4_nxyei"]
+[ext_resource type="Script" uid="uid://boee2837la0pr" path="res://Scripts/Classes/SnailySprite.gd" id="3_c5es5"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1trfw"]
+atlas = ExtResource("2_1trfw")
+region = Rect2(0, 0, 20, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q0kru"]
+atlas = ExtResource("2_1trfw")
+region = Rect2(20, 0, 20, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7eh64"]
+atlas = ExtResource("2_1trfw")
+region = Rect2(40, 0, 20, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nxyei"]
+atlas = ExtResource("2_1trfw")
+region = Rect2(60, 20, 20, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_si03w"]
+atlas = ExtResource("2_1trfw")
+region = Rect2(0, 20, 20, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_10fwn"]
+atlas = ExtResource("2_1trfw")
+region = Rect2(20, 20, 20, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bm3pm"]
+atlas = ExtResource("2_1trfw")
+region = Rect2(40, 40, 20, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y72wr"]
+atlas = ExtResource("2_1trfw")
+region = Rect2(60, 40, 20, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qsk6m"]
+atlas = ExtResource("2_1trfw")
+region = Rect2(0, 40, 20, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q2i6c"]
+atlas = ExtResource("2_1trfw")
+region = Rect2(20, 60, 20, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rvmdr"]
+atlas = ExtResource("2_1trfw")
+region = Rect2(40, 60, 20, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iko1k"]
+atlas = ExtResource("2_1trfw")
+region = Rect2(60, 60, 20, 20)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wkouj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1trfw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q0kru")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7eh64")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nxyei")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_si03w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_10fwn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bm3pm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y72wr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qsk6m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q2i6c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rvmdr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iko1k")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 30.0
+}]
 
 [node name="GravShockCharge" type="Node2D" unique_id=1859381594 node_paths=PackedStringArray("sprite")]
 z_index = 15
 script = ExtResource("1_1trfw")
-sprite = NodePath("JsonSprite2D")
-anim_name = "charge"
+sprite = NodePath("SnailySprite2D")
 
-[node name="MarkerSprite" type="Sprite2D" parent="." unique_id=900488969]
-texture = ExtResource("2_1trfw")
-hframes = 4
-vframes = 4
+[node name="SnailySprite2D" type="AnimatedSprite2D" parent="." unique_id=1939088749]
+sprite_frames = SubResource("SpriteFrames_wkouj")
+autoplay = "default"
 frame = 4
-script = ExtResource("3_7eh64")
-metadata/_custom_type_script = "uid://b63lo60i7kt7f"
-
-[node name="JsonSprite2D" type="Sprite2D" parent="." unique_id=1850381516]
-script = ExtResource("4_nxyei")
-texture_path = "res://Assets/Images/Particles/ShockCharge.json"
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
+script = ExtResource("3_c5es5")
+start_all_on_random_frame = true
+metadata/_custom_type_script = "uid://boee2837la0pr"

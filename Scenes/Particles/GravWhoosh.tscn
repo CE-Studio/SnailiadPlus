@@ -2,7 +2,6 @@
 
 [ext_resource type="Script" uid="uid://cynaeratcvgdi" path="res://Scripts/Particles/GravWhoosh.gd" id="1_ewgc7"]
 [ext_resource type="Texture2D" uid="uid://cn22rscu7mik0" path="res://Assets/Images/Particles/GravWhoosh.png" id="2_ewgc7"]
-[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_tmd2l"]
 [ext_resource type="Script" uid="uid://boee2837la0pr" path="res://Scripts/Classes/SnailySprite.gd" id="4_ewgc7"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xy2x8"]
@@ -336,17 +335,10 @@ timer = NodePath("Timer")
 anim_speed_min = 0.5
 anim_speed_max = 1.5
 
-[node name="MarkerSprite" type="Sprite2D" parent="." unique_id=336118010]
-texture = ExtResource("2_ewgc7")
-hframes = 8
-vframes = 5
-frame = 8
-script = ExtResource("3_tmd2l")
-metadata/_custom_type_script = "uid://b63lo60i7kt7f"
-
 [node name="SnailySprite2D" type="AnimatedSprite2D" parent="." unique_id=1913414362]
 sprite_frames = SubResource("SpriteFrames_wkouj")
 animation = &"v0"
+frame = 1
 script = ExtResource("4_ewgc7")
 hide_on_finish = true
 metadata/_custom_type_script = "uid://boee2837la0pr"

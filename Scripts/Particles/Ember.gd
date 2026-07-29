@@ -28,5 +28,5 @@ func _process(delta: float) -> void:
 	theta += delta * amplitude
 	speed -= deceleration * delta
 	super._process(delta)
-	if sprite.action == "__NONE__":
+	if not sprite.visible:
 		queue_free()

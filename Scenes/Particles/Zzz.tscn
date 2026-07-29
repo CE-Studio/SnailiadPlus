@@ -2,22 +2,37 @@
 
 [ext_resource type="Script" uid="uid://bjoxx2waxewlf" path="res://Scripts/Classes/Particle.gd" id="1_710nm"]
 [ext_resource type="Texture2D" uid="uid://bcy5wqyee2npo" path="res://Assets/Images/Particles/Zzz.png" id="2_710nm"]
-[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_jbgqq"]
-[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="4_vy02w"]
+[ext_resource type="Script" uid="uid://boee2837la0pr" path="res://Scripts/Classes/SnailySprite.gd" id="3_hsyvb"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_710nm"]
+atlas = ExtResource("2_710nm")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mkuh5"]
+atlas = ExtResource("2_710nm")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wkouj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_710nm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mkuh5")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 2.0
+}]
 
 [node name="Zzz" type="Node2D" unique_id=1575304498 node_paths=PackedStringArray("sprite")]
 z_index = 2
 script = ExtResource("1_710nm")
-sprite = NodePath("JsonSprite2D")
-anim_name = "idle"
+sprite = NodePath("SnailySprite2D")
 
-[node name="MarkerSprite" type="Sprite2D" parent="." unique_id=926683021]
-texture = ExtResource("2_710nm")
-hframes = 2
-script = ExtResource("3_jbgqq")
-metadata/_custom_type_script = "uid://b63lo60i7kt7f"
-
-[node name="JsonSprite2D" type="Sprite2D" parent="." unique_id=5064490]
-script = ExtResource("4_vy02w")
-texture_path = "res://Assets/Images/Particles/Zzz.json"
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
+[node name="SnailySprite2D" type="AnimatedSprite2D" parent="." unique_id=1327249853]
+sprite_frames = SubResource("SpriteFrames_wkouj")
+autoplay = "default"
+script = ExtResource("3_hsyvb")
+metadata/_custom_type_script = "uid://boee2837la0pr"
