@@ -2,12 +2,14 @@
 
 [ext_resource type="Script" uid="uid://r66i16n7lmrf" path="res://Scripts/Bullets/Player/PlayerBulletAfterimage.gd" id="1_jo1nt"]
 [ext_resource type="AudioStream" uid="uid://ci2wulxf6x53r" path="res://Assets/Sounds/Sfx/Bullets/Player/ShotBD.ogg" id="2_0p3iw"]
-[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="3_uxr8c"]
+[ext_resource type="Script" uid="uid://boee2837la0pr" path="res://Scripts/Classes/SnailySprite.gd" id="3_jo1nt"]
 [ext_resource type="Texture2D" uid="uid://ddtm7h56jq1k4" path="res://Assets/Images/Bullets/Player/PlayerBulletBD.png" id="4_tolka"]
 [ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="5_wprjy"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0nsho"]
 size = Vector2(32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wkouj"]
 
 [node name="PlayerBulletAfterimage" type="Node2D" unique_id=404536079]
 z_index = 149
@@ -41,11 +43,10 @@ bus = &"Sfx"
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=2038255685]
 scale = Vector2(1.6, 1.6)
 
-[node name="JsonSprite2D" type="Sprite2D" parent="." unique_id=355798183]
-visible = false
-script = ExtResource("3_uxr8c")
-texture_path = "res://Assets/Images/Bullets/Player/PlayerBulletBD.json"
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
+[node name="SnailySprite2D" type="AnimatedSprite2D" parent="." unique_id=903725186]
+sprite_frames = SubResource("SpriteFrames_wkouj")
+script = ExtResource("3_jo1nt")
+metadata/_custom_type_script = "uid://boee2837la0pr"
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=364663306]
 

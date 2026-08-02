@@ -7,6 +7,7 @@ extends Node2D
 
 #region Variables
 const TICKS_BETWEEN_AFTERIMAGES:int = 4
+const ANGLE_DEADZONE:float = 0.3827
 
 @export_flags("Broom", "Peashooter", "Boomerang", "Rainbow Wave") var type:int = 0
 @export var damage:int = 0
@@ -39,7 +40,7 @@ var velocity_init:float = 0.0
 var afterimage_tick:int = 0
 
 ## The sprite component of the bullet
-@onready var sprite:JsonSprite2D = $"JsonSprite2D"
+@onready var sprite:SnailySprite2D = $"SnailySprite2D"
 ## The main area component of the bullet
 @onready var area:Area2D = $"Area2D"
 ## The hitbox shape used for normal bullets
@@ -53,9 +54,9 @@ var afterimage_tick:int = 0
 ## The area used to detect if this bullet is on-screen
 @onready var vis:VisibleOnScreenNotifier2D = $"VisibleOnScreenNotifier2D"
 ## The sound played when this bullet despawns after a collision with an entity or world geometry
-@onready var sfx_despawn:AudioStream = preload("res://Assets/Sounds/Sfx/ShotHit.ogg")
+@onready var sfx_despawn:AudioStream = preload("uid://jy74nugtx5w1")
 ## Persistent reference to the [PlayerBulletAfterimage] scene
-@onready var afterimage:PackedScene = preload("res://Scenes/Entities/Bullets/Player/PlayerBulletAfterimage.tscn")
+@onready var afterimage:PackedScene = preload("uid://dpwnugjso664")
 #endregion
 
 
@@ -75,6 +76,21 @@ func _spawn(dir:Vector2, rapid_shot:float, power_shot:bool) -> float:
 		UICore.instance.darkness_layer.add_source(self, light_radius)
 	afterimage_tick = randi_range(0, TICKS_BETWEEN_AFTERIMAGES - 1)
 	return cooldown / rapid_mult
+
+
+func _infer_direction_anim() -> void:
+	var anim_name = ""
+	if normalized_dir.y < -ANGLE_DEADZONE:
+		anim_name += "U"
+	elif normalized_dir.y > ANGLE_DEADZONE:
+		anim_name += "D"
+	if normalized_dir.x < -ANGLE_DEADZONE:
+		anim_name += "L"
+	elif normalized_dir.x > ANGLE_DEADZONE:
+		anim_name += "R"
+	if powered:
+		anim_name += "_power"
+	sprite.play(anim_name)
 
 
 func _physics_process(delta: float) -> void:

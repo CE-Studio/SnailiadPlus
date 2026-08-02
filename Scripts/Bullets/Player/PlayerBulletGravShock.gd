@@ -31,5 +31,9 @@ func _spawn(dir:Vector2, rapid_shot:float, power_shot:bool) -> float:
 		Player.Players.LEGGY: color = "red" if powered else "yellow"
 		Player.Players.BLOBBY: color = "red" if powered else "white"
 		Player.Players.LEECHY: color = "white" if powered else "green"
-	sprite.action = anim_name + color
+	sprite.play(anim_name + color)
+	if dir == Vector2.LEFT:
+		sprite.flip_h = true
+	if dir == Vector2.UP:
+		sprite.flip_v = true
 	return 0.0

@@ -23,8 +23,11 @@ func _spawn(dir:Vector2, rapid_shot:float, power_shot:bool) -> float:
 	var anim_name = "_".join([anim_surface, anim_dir])
 	if powered:
 		anim_name += "_power"
-	sprite.action = anim_name
-	sprite._process(0.0)
+	sprite.play(anim_name)
+	if anim_dir == "L" or anim_surface == "lwall":
+		sprite.flip_h = true
+	if anim_dir == "U" or anim_surface == "ceiling":
+		sprite.flip_v = true
 	#endregion
 	return cooldown
 

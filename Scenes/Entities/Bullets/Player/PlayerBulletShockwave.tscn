@@ -1,15 +1,161 @@
 [gd_scene format=3 uid="uid://l7g3jlavks84"]
 
 [ext_resource type="Script" uid="uid://dnh1vfw3oo0tp" path="res://Scripts/Bullets/Player/PlayerBulletShockwave.gd" id="1_0n8u1"]
-[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="2_kwikd"]
 [ext_resource type="Texture2D" uid="uid://c5wxs3b06gcs8" path="res://Assets/Images/Bullets/Player/PlayerBulletShockwave.png" id="3_0n8u1"]
-[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="4_t2t3g"]
+[ext_resource type="Script" uid="uid://boee2837la0pr" path="res://Scripts/Classes/SnailySprite.gd" id="5_kwikd"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0nsho"]
 size = Vector2(16, 16)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xq3d5"]
 size = Vector2(24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kwikd"]
+atlas = ExtResource("3_0n8u1")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_muesm"]
+atlas = ExtResource("3_0n8u1")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t2t3g"]
+atlas = ExtResource("3_0n8u1")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5g0g8"]
+atlas = ExtResource("3_0n8u1")
+region = Rect2(16, 16, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_kwikd"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kwikd")
+}],
+"loop": 1,
+"name": &"ceiling_L",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_muesm")
+}],
+"loop": 1,
+"name": &"ceiling_L_power",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kwikd")
+}],
+"loop": 1,
+"name": &"ceiling_R",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_muesm")
+}],
+"loop": 1,
+"name": &"ceiling_R_power",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kwikd")
+}],
+"loop": 1,
+"name": &"floor_L",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_muesm")
+}],
+"loop": 1,
+"name": &"floor_L_power",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kwikd")
+}],
+"loop": 1,
+"name": &"floor_R",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_muesm")
+}],
+"loop": 1,
+"name": &"floor_R_power",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t2t3g")
+}],
+"loop": 1,
+"name": &"lwall_D",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5g0g8")
+}],
+"loop": 1,
+"name": &"lwall_D_power",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t2t3g")
+}],
+"loop": 1,
+"name": &"lwall_U",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5g0g8")
+}],
+"loop": 1,
+"name": &"lwall_U_power",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t2t3g")
+}],
+"loop": 1,
+"name": &"rwall_D",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5g0g8")
+}],
+"loop": 1,
+"name": &"rwall_D_power",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t2t3g")
+}],
+"loop": 1,
+"name": &"rwall_U",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5g0g8")
+}],
+"loop": 1,
+"name": &"rwall_U_power",
+"speed": 1.0
+}]
 
 [node name="PlayerBulletShockwave" type="Node2D" unique_id=479333128]
 z_index = 150
@@ -53,14 +199,9 @@ bus = &"Sfx"
 scale = Vector2(1.6, 1.6)
 rect = Rect2(-9.999999, -9.999999, 19.999998, 19.999998)
 
-[node name="JsonSprite2D" type="Sprite2D" parent="." unique_id=2009501991]
-script = ExtResource("2_kwikd")
-texture_path = "res://Assets/Images/Bullets/Player/PlayerBulletShockwave.json"
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
-
-[node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D" unique_id=525362207]
-texture = ExtResource("3_0n8u1")
-hframes = 2
-vframes = 2
-script = ExtResource("4_t2t3g")
-metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+[node name="SnailySprite2D" type="AnimatedSprite2D" parent="." unique_id=1662979827]
+sprite_frames = SubResource("SpriteFrames_kwikd")
+animation = &"floor_R"
+script = ExtResource("5_kwikd")
+start_all_on_random_frame = true
+metadata/_custom_type_script = "uid://boee2837la0pr"
