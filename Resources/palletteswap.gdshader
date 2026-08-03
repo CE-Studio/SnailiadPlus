@@ -1,7 +1,7 @@
 shader_type canvas_item;
 
 uniform sampler2D palettes;
-instance uniform int npc_id;
+instance uniform int palette_id;
 
 uniform float color_compliance = 0.01;
 uniform float alpha_cutoff = 0.1;
@@ -27,7 +27,7 @@ void fragment() {
             vec3 diff = current_color.rgb - base_color.rgb;
             
             if (dot(diff, diff) < max_dist_sq) {
-                vec4 new_color = texelFetch(palettes, ivec2(i,npc_id),0);
+                vec4 new_color = texelFetch(palettes, ivec2(i,palette_id + 1),0);
                 final_color = new_color;
                 break; 
             }

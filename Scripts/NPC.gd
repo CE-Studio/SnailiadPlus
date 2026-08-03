@@ -14,16 +14,22 @@ const TALK_COOLDOWN:float = 0.15
 const FLOAT_SPEED:float = 0.5
 const FLOAT_AMPLITUDE:float = 5.0
 
-@export var my_id:int
+@export var my_id:int:
+	set(value):
+		my_id = value
+		set_palette()
 @export_enum("Left", "Right", "Face player:-1") var face_mode:int = -1
 @export_enum("Floor", "Left wall", "Right wall", "Ceiling") var surface:int = 0
 @export_enum("Floor", "Left wall", "Right wall", "Ceiling") var fall_direction:int = 0
 @export var floating:bool = false
 @export_enum(
 	"Snail", "Slug", "Cone-shell snail", "Spikey shell snail",
-	"Spikey cone-shell snail", "Large-shelled snail", "Turtle",
-	"Detect from ID:-1"
-) var animation_set:int = 0
+	"Spikey cone-shell snail", "Large-shelled snail", "Turtle"
+) var animation_set:int = 0:
+	set(value):
+		animation_set = value
+		if Engine.is_editor_hint():
+			$"SnailySprite2D/MarkerSprite".frame_coords.y = value
 @export var inventory:Array[int] = []
 
 var facing_left:bool = false
@@ -45,7 +51,7 @@ var cc_glide_elapsed:float = 0.0
 var cc_lookat_node:Node2D = null
 var cc_lookat_pos:Vector2 = Vector2.ZERO
 
-@onready var sprite:JsonSprite2D = $"JsonSprite2D"
+@onready var sprite:SnailySprite2D = $"SnailySprite2D"
 @onready var body:CharacterBody2D = $"CharacterBody2D"
 @onready var sfx_jump:AudioStreamPlayer = $"Jump"
 @onready var bubble:SpeechBubble = $"SpeechBubble"
@@ -87,7 +93,6 @@ func spawn() -> void:
 				facing_left = cc_lookat_node.position.x > position.x
 	body.position = position
 	play_anim("idle")
-	sprite._process(0.0)
 	UICore.instance.darkness_layer.add_source(self, 32)
 	bubble.set_direction(surface)
 	float_cycle = randf() * TAU
@@ -104,31 +109,31 @@ func _process(_delta: float) -> void:
 		Statics.DirsSurface.FLOOR:
 			if facing_left and lookat_pos.x > position.x:
 				facing_left = false
-				play_anim("shell" if shelled else "turnground")
+				play_anim("shell" if shelled else "idle")
 			elif not facing_left and lookat_pos.x < position.x:
 				facing_left = true;
-				play_anim("shell" if shelled else "turnground")
+				play_anim("shell" if shelled else "idle")
 		Statics.DirsSurface.LWALL:
 			if facing_left and lookat_pos.y > position.y:
 				facing_left = false
-				play_anim("shell" if shelled else "turnground")
+				play_anim("shell" if shelled else "idle")
 			elif not facing_left and lookat_pos.y < position.y:
 				facing_left = true;
-				play_anim("shell" if shelled else "turnground")
+				play_anim("shell" if shelled else "idle")
 		Statics.DirsSurface.RWALL:
 			if facing_left and lookat_pos.y < position.y:
 				facing_left = false
-				play_anim("shell" if shelled else "turnground")
+				play_anim("shell" if shelled else "idle")
 			elif not facing_left and lookat_pos.y > position.y:
 				facing_left = true;
-				play_anim("shell" if shelled else "turnground")
+				play_anim("shell" if shelled else "idle")
 		Statics.DirsSurface.CEILING:
 			if facing_left and lookat_pos.x < position.x:
 				facing_left = false
-				play_anim("shell" if shelled else "turnground")
+				play_anim("shell" if shelled else "idle")
 			elif not facing_left and lookat_pos.x > position.x:
 				facing_left = true;
-				play_anim("shell" if shelled else "turnground")
+				play_anim("shell" if shelled else "idle")
 
 	if Room.instance.cutscene_script:
 		var player:Player = GameCore.instance.player
@@ -195,7 +200,17 @@ func play_anim(state:String) -> void:
 		Statics.DirsSurface.CEILING: anim += "ceiling."
 	anim += "left." if facing_left else "right."
 	anim += state
-	sprite.action = anim
+	sprite.play(anim)
+	if (surface == Statics.DirsSurface.LWALL or 
+	(surface == Statics.DirsSurface.FLOOR and facing_left) or
+	(surface == Statics.DirsSurface.CEILING and not facing_left)):
+		sprite.flip_h = true
+	else: sprite.flip_h = false
+	if (surface == Statics.DirsSurface.CEILING or
+	(surface == Statics.DirsSurface.LWALL and facing_left) or
+	(surface == Statics.DirsSurface.RWALL and not facing_left)):
+		sprite.flip_v = true
+	else: sprite.flip_v = false
 
 
 func look_left() -> void:
@@ -232,6 +247,12 @@ func set_gravity(new_dir:Statics.DirsSurface) -> void:
 			body.set_deferred("rotation_degrees", 180.0)
 			body.up_direction = Vector2.DOWN
 	bubble.set_direction(new_dir)
+
+
+func set_palette(palette_id:int = my_id) -> void:
+	$"SnailySprite2D".set_instance_shader_parameter("palette_id", palette_id)
+	if Engine.is_editor_hint():
+		$"SnailySprite2D/MarkerSprite".set_instance_shader_parameter("palette_id", palette_id)
 
 
 #region Cutscene functions
@@ -336,7 +357,7 @@ func perform_action(_action:String, _force:bool) -> bool:
 	match _action:
 		"turn_around":
 			facing_left = not facing_left
-			play_anim("shell" if shelled else "turnground")
+			play_anim("shell" if shelled else "idle")
 			return true
 		"toggle_shell":
 			shelled = not shelled

@@ -4,25 +4,20 @@ extends Node2D
 
 
 #region Variables
-var direction:String = "floor"
+var direction:String = "D"
 var text_delay:float = 0.375
 var elapsed:float = 0.0
 var shown:bool = false
 var text_shown:bool = false
 
-@onready var sprite:JsonSprite2D = $"JsonSprite2D"
-@onready var text:SnailyText = $"SnailyText"
+@export var sprite:SnailySprite2D
+@export var text:SnailyText
 #endregion
 
 
 func _ready() -> void:
 	sprite.visible = false
 	text.visible = false
-	if sprite.meta.size() > 0:
-		if sprite.meta.keys().has("icon_delay"):
-			var new_delay = sprite.meta["icon_delay"]
-			if Statics.is_number(new_delay, true):
-				text_delay = clampf(new_delay, 0.0, 0.75)
 
 
 func _process(delta: float) -> void:
@@ -39,7 +34,8 @@ func show_bubble() -> void:
 	shown = true
 	sprite.visible = true
 	text.visible = false
-	sprite.action = direction + "_open"
+	sprite.play(direction + "_opening")
+	sprite.autoplay_next = direction + "_open"
 	elapsed = 0.0
 
 
@@ -49,27 +45,32 @@ func hide_bubble() -> void:
 	shown = false
 	text_shown = false
 	text.visible = false
-	sprite.action = direction + "_close"
+	sprite.play(direction + "_closing")
+	sprite.autoplay_next = direction + "_closed"
 
 
 func _update_text() -> void:
-	#text.text = SInput.get_icon_as_bbcode(SInput.Inputs.SPEAK)
 	text.set_snaily_text(SInput.get_icon_as_bbcode(SInput.Inputs.SPEAK))
+
+
+func _on_sprite_anim_updated() -> void:
+	if sprite.animation == direction + "_open":
+		text.visible = true
 
 
 func set_direction(new_dir:Statics.DirsSurface, distance:int = 24) -> void:
 	match new_dir:
 		Statics.DirsSurface.FLOOR:
-			direction = "floor"
+			direction = "D"
 			position = Vector2.UP * distance
 		Statics.DirsSurface.LWALL:
-			direction = "lwall"
+			direction = "L"
 			position = Vector2.RIGHT * distance
 		Statics.DirsSurface.RWALL:
-			direction = "rwall"
+			direction = "R"
 			position = Vector2.LEFT * distance
 		Statics.DirsSurface.CEILING:
-			direction = "ceiling"
+			direction = "U"
 			position = Vector2.DOWN * distance
 	if shown:
-		sprite.action = direction + "_open"
+		sprite.play(direction + "_open")

@@ -1,0 +1,10 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://bafyehbpyjyxr"]
+
+[ext_resource type="Shader" uid="uid://cwc5th76g4sji" path="res://Resources/palletteswap.gdshader" id="1_7tr54"]
+[ext_resource type="Texture2D" uid="uid://brdpjjdtvruut" path="res://Assets/Images/Entities/NPCColor.png" id="2_7nwpf"]
+
+[resource]
+shader = ExtResource("1_7tr54")
+shader_parameter/palettes = ExtResource("2_7nwpf")
+shader_parameter/color_compliance = 0.01
+shader_parameter/alpha_cutoff = 0.1

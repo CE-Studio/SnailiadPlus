@@ -66,6 +66,7 @@ identifier = &"1"
 [node name="NPC2" parent="GroundLayer" unique_id=1217529020 instance=ExtResource("3_05b5u")]
 position = Vector2(176, 296)
 my_id = 2
+animation_set = 2
 identifier = &"2"
 
 [node name="NPC3" parent="GroundLayer" unique_id=2119914317 instance=ExtResource("3_05b5u")]
@@ -91,6 +92,7 @@ identifier = &"6"
 [node name="NPC14" parent="GroundLayer" unique_id=1422011705 instance=ExtResource("3_05b5u")]
 position = Vector2(160, 536)
 my_id = 14
+animation_set = 3
 identifier = &"14"
 
 [node name="NPC15" parent="GroundLayer" unique_id=1849896550 instance=ExtResource("3_05b5u")]
@@ -112,6 +114,7 @@ identifier = &"17"
 [node name="NPC25" parent="GroundLayer" unique_id=162899702 instance=ExtResource("3_05b5u")]
 position = Vector2(1056, 488)
 my_id = 25
+animation_set = 2
 identifier = &"25"
 
 [node name="FG1Layer" type="Parallax2D" parent="." unique_id=567450713]

@@ -11,8 +11,6 @@ var fade_time:float = MAX_LIFE_TIME
 ## A boolean inferred from the game settings that controls how opaque the afterimage is upon spawning
 var opaque:bool = ProjectSettings.get_setting("game/visuals/opaque_afterimages")
 
-@onready var _sprite:Sprite2D = $"Sprite2D"
-
 
 func _spawn_afterimage(_parent:PlayerBullet) -> void:
 	damage = floori(_parent.damage * DAMAGE_MULT)
@@ -21,15 +19,6 @@ func _spawn_afterimage(_parent:PlayerBullet) -> void:
 	box_power.shape.size = _parent.box_power.shape.size
 	box_power.disabled = not _parent.powered
 	vis.rect = _parent.vis.rect
-	#_sprite.texture = _parent.sprite.texture
-	#_sprite.hframes = parent.sprite.data["tiles"][0]
-	#_sprite.vframes = parent.sprite.data["tiles"][1]
-	#_sprite.flip_h = _parent.sprite.flip_h
-	#_sprite.flip_v = _parent.sprite.flip_v
-	#_sprite.frame_coords = Vector2i(
-	#	parent.sprite.frame_coords.x + int(parent.sprite.meta["afterimage_offset_x"]),
-	#	parent.sprite.frame_coords.y + int(parent.sprite.meta["afterimage_offset_y"])
-	#)
 	sprite.sprite_frames = _parent.sprite.sprite_frames
 	if _parent.sprite.sprite_frames.has_animation(_parent.sprite.animation + "_aftimg"):
 		sprite.play(_parent.sprite.animation + "_aftimg")
