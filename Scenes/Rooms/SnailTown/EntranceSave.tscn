@@ -64,6 +64,7 @@ characters_who_can_use_me = 4
 [node name="NPC7" parent="GroundLayer" unique_id=921815516 instance=ExtResource("4_yn82w")]
 position = Vector2(80, 136)
 my_id = 7
+animation_set = 1
 identifier = &"7"
 
 [node name="FG1Layer" type="Parallax2D" parent="." unique_id=2121629672]

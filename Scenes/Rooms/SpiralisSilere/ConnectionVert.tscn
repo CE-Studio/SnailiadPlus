@@ -62,6 +62,7 @@ tile_set = ExtResource("2_g6etq")
 [node name="NPC50" parent="GroundLayer" unique_id=142847645 instance=ExtResource("3_11vir")]
 position = Vector2(80, 344)
 my_id = 50
+animation_set = 1
 identifier = &"50"
 
 [node name="Door" parent="GroundLayer" unique_id=264139393 instance=ExtResource("4_p517w")]

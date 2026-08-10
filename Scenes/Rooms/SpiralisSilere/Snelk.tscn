@@ -65,6 +65,7 @@ position = Vector2(392, 24)
 position = Vector2(160, 72)
 my_id = 35
 surface = 3
+animation_set = 2
 identifier = &"35"
 
 [node name="Item" parent="GroundLayer" unique_id=660995383 instance=ExtResource("9_yqjip")]

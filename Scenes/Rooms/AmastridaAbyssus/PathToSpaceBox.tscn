@@ -83,9 +83,10 @@ lock_type = 3
 required_boss = 2
 rando_sphere = 2
 
-[node name="NPC" parent="GroundLayer" unique_id=1256490488 instance=ExtResource("5_6ib63")]
+[node name="NPC42" parent="GroundLayer" unique_id=1256490488 instance=ExtResource("5_6ib63")]
 position = Vector2(320, 136)
 my_id = 42
+animation_set = 2
 identifier = &"42"
 
 [node name="FG1Layer" type="Parallax2D" parent="." unique_id=1708007851]

@@ -66,6 +66,7 @@ location_id = 9
 [node name="NPC22" parent="GroundLayer" unique_id=1768951715 instance=ExtResource("4_08uyj")]
 position = Vector2(1376, 216)
 my_id = 22
+animation_set = 3
 identifier = &"22"
 
 [node name="NPC23" parent="GroundLayer" unique_id=1562548115 instance=ExtResource("4_08uyj")]

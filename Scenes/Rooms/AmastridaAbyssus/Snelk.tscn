@@ -61,6 +61,7 @@ tile_set = ExtResource("2_04gch")
 position = Vector2(496, 24)
 my_id = 47
 surface = 3
+animation_set = 2
 identifier = &"47"
 
 [node name="Item" parent="GroundLayer" unique_id=614403250 instance=ExtResource("4_clsdg")]

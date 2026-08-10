@@ -65,6 +65,7 @@ door_type = 1
 [node name="NPC29" parent="GroundLayer" unique_id=745936139 instance=ExtResource("4_wp8yv")]
 position = Vector2(224, 504)
 my_id = 29
+animation_set = 2
 identifier = &"29"
 
 [node name="FG1Layer" type="Parallax2D" parent="." unique_id=289274133]

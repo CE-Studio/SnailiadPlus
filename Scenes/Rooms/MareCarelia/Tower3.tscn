@@ -70,6 +70,7 @@ position = Vector2(392, 120)
 [node name="NPC20" parent="GroundLayer" unique_id=193289394 instance=ExtResource("4_3lwh1")]
 position = Vector2(128, 904)
 my_id = 20
+animation_set = 3
 identifier = &"20"
 
 [node name="FG1Layer" type="Parallax2D" parent="." unique_id=1443760216]

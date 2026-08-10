@@ -70,6 +70,7 @@ rando_sphere = 1
 [node name="NPC40" parent="GroundLayer" unique_id=1806155921 instance=ExtResource("4_07axt")]
 position = Vector2(272, 200)
 my_id = 40
+animation_set = 1
 identifier = &"40"
 
 [node name="SavePoint" parent="GroundLayer" unique_id=423566422 instance=ExtResource("5_2oa57")]

@@ -73,6 +73,7 @@ location_id = 22
 [node name="NPC21" parent="GroundLayer" unique_id=468838049 instance=ExtResource("5_1414l")]
 position = Vector2(688, 200)
 my_id = 21
+animation_set = 3
 identifier = &"21"
 
 [node name="FG1Layer" type="Parallax2D" parent="." unique_id=756516669]

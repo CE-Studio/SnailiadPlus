@@ -68,6 +68,7 @@ identifier = &"38"
 position = Vector2(688, 152)
 my_id = 39
 floating = true
+animation_set = 5
 identifier = &"39"
 
 [node name="FG1Layer" type="Parallax2D" parent="." unique_id=605789709]

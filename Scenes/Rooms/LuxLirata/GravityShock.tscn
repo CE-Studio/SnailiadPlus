@@ -61,6 +61,7 @@ door_type = 2
 [node name="NPC36" parent="GroundLayer" unique_id=904957949 instance=ExtResource("4_uhgrq")]
 position = Vector2(336, 152)
 my_id = 36
+animation_set = 4
 identifier = &"36"
 
 [node name="Item" parent="GroundLayer" unique_id=1070226222 instance=ExtResource("5_iy2d3")]
