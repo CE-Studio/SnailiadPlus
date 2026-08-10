@@ -348,6 +348,10 @@ func can_perform_action(_action:String) -> bool:
 			return true
 		"sleep":
 			return true
+		"hide":
+			return true
+		"show":
+			return true
 	return false
 
 
@@ -400,6 +404,13 @@ func perform_action(_action:String, _force:bool) -> bool:
 			shelled = true
 			play_anim("shell")
 			emote.zzz()
+			return true
+		"hide":
+			visible = false
+			return true
+		"show":
+			visible = true
+			return true
 	return false
 #endregion
 

@@ -1,8 +1,11 @@
 ~ start
 match CutsceneController.object_id:
 	when "Set38Shell"
+		do CutsceneController.set_actor("38")
+		if Statics.get_world_flag(Statics.WorldFlags.DEFEATED_BOSS4) != true:
+			do CutsceneController.perform_action("set_wont_talk", false)
+			do CutsceneController.perform_action("hide", false)
 		if Statics.check_item(Item.ItemTypes.HELIX_FRAGMENT) < 30
-			do CutsceneController.set_actor("38")
 			do CutsceneController.perform_action("face_right", false)
 			do CutsceneController.perform_action("sleep", false)
 			do CutsceneController.perform_action("set_wont_float", false)

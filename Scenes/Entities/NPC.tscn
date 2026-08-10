@@ -1523,7 +1523,6 @@ metadata/_custom_type_script = "uid://boee2837la0pr"
 
 [node name="MarkerSprite" type="Sprite2D" parent="SnailySprite2D" unique_id=1067611335]
 use_parent_material = true
-instance_shader_parameters/palette_id = 0
 texture = ExtResource("2_4a2w1")
 hframes = 8
 vframes = 7
