@@ -63,6 +63,7 @@ static var instance:UICore
 @export var fps:HBoxContainer
 @export var fps_text:SnailyText
 @export var input_display:InputDisplay
+@export var area_bookend_frames:SpriteFrames
 #endregion
 
 
@@ -210,10 +211,10 @@ func show_area_text(area_id:int) -> void:
 	if area_id < 6:
 		var text_width = area_label.text.get_width()
 		for i in range(2):
-			var bookend:JsonSprite2D = JsonSprite2D.new()
-			bookend.texture_path = "res://Assets/Images/UI/AreaLabelBorders.json"
+			var bookend:SnailySprite2D = SnailySprite2D.new()
+			bookend.sprite_frames = area_bookend_frames
 			area_label.add_child(bookend)
-			bookend.action = ("%d_left" if (i == 0) else "%d_right") % area_id
+			bookend.play(("%d_left" if (i == 0) else "%d_right") % area_id)
 			bookend.position = Vector2i(roundi(text_width * (-0.5 if (i == 0) else 0.5)) + 1, 3)
 		
 		if Statics.get_world_flag(Statics.WorldFlags.DEFEATED_BOSS4):

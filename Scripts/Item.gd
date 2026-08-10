@@ -44,7 +44,7 @@ var name_str:String = ""
 
 @onready var jingle_minor:AudioStream = load("res://Assets/Sounds/Music/MinorItemJingle.ogg")
 @onready var jingle_major:AudioStream = load("res://Assets/Sounds/Music/MajorItemJingle.ogg")
-@onready var sprite:JsonSprite2D
+@onready var sprite:SnailySprite2D = $"SnailySprite2D"
 @onready var box:CollisionShape2D = $"Area2D/CollisionShape2D"
 @onready var timer:Timer = $"CollectTimer"
 
@@ -65,74 +65,70 @@ func _ready() -> void:
 		queue_free()
 		return
 
-	var id_str
 	var character = int(Statics.current_profile["character"])
-	#name_str = get_name_str_from_id(type)
 	name_str = GlobalText.get_item_name(type)
+	var anim:String = "unknown"
 	match type:
 		ItemTypes.PEASHOOTER:
-			id_str = "Peashooter"
+			anim = "peashooter"
 		ItemTypes.BOOMERANG:
-			id_str = "Boomerang"
+			anim = "boomerang"
 		ItemTypes.RAINBOW_WAVE:
-			id_str = "RainbowWave"
+			anim = "rainbow+wave"
 		ItemTypes.DEVASTATOR:
-			id_str = "Devastator"
+			anim = "devastator"
 			box.shape.size = Vector2(44, 28)
 		ItemTypes.HIGH_JUMP:
-			id_str = "HighJump"
+			anim = "high_jump"
 			if character == Player.Players.BLOBBY:
-				id_str = "WallGrab"
+				anim = "wall_grab"
 		ItemTypes.SHELL_SHIELD:
-			id_str = "ShellShield"
+			anim = "shell_shield"
 			if character == Player.Players.BLOBBY:
-				id_str = "Shelmet"
+				anim = "shelmet"
 		ItemTypes.RAPID_FIRE:
-			id_str = "RapidFire"
+			anim = "rapid_fire"
 			if character == Player.Players.LEECHY:
-				id_str = "Backfire"
+				anim = "backfire"
 		ItemTypes.ICE_SHELL:
-			id_str = "IceSnail"
+			anim = "ice_shell"
 		ItemTypes.GRAVITY_SHELL:
 			match character:
 				Player.Players.UPSIDE:
-					id_str = "MagneticFoot"
+					anim = "magnetic_foot"
 				Player.Players.LEGGY:
-					id_str = "CorkscrewJump"
+					anim = "corkscrew_jump"
 				Player.Players.BLOBBY:
-					id_str = "AngelJump"
+					anim = "angel_jump"
 				_:
-					id_str = "GravitySnail"
+					anim = "gravity_shell"
 		ItemTypes.METAL_SHELL:
-			id_str = "FullMetalSnail"
+			anim = "full_metal_shell"
 		ItemTypes.GRAVITY_SHOCK:
-			id_str = "GravityShock"
+			anim = "gravity_shock"
 		ItemTypes.SECRET_BOOMERANG:
-			id_str = "Boomerang"
+			anim = "secret_boomerang"
 		ItemTypes.DEBUG_WAVE:
-			id_str = "RainbowWave"
+			anim = "debug_rainbow_wave"
 		ItemTypes.HEART_CONTAINER:
-			id_str = "HeartContainer"
+			anim = "heart_container"
 		ItemTypes.HELIX_FRAGMENT:
-			id_str = "HelixFragment"
+			anim = "helix_fragment"
 			box.shape.size = Vector2(12, 12)
 		#ItemTypes.RADAR_SHELL:
 		ItemTypes.WEAPON_LOCK_TRAP:
-			id_str = "TrapItem"
+			anim = "trap"
 		ItemTypes.GRAVITY_LOCK_TRAP:
-			id_str = "TrapItem"
+			anim = "trap"
 		ItemTypes.LULLABY_TRAP:
-			id_str = "TrapItem"
+			anim = "trap"
 		ItemTypes.SPIDER_TRAP:
-			id_str = "TrapItem"
+			anim = "trap"
 		ItemTypes.WARP_TRAP:
-			id_str = "TrapItem"
-		_:
-			id_str = "ItemBoundaryVisual"
-	sprite = JsonSprite2D.new()
-	sprite.texture_path = "res://Assets/Images/Items/" + id_str + ".json"
-	add_child.call_deferred(sprite)
-	sprite.action = "item"
+			anim = "trap"
+	if not sprite.sprite_frames.has_animation(anim):
+		anim = "unknown"
+	sprite.play(anim)
 
 	UICore.instance.darkness_layer.add_source(self, 48)
 
