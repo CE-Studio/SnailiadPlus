@@ -46,8 +46,6 @@ func _ready():
 	health_gain_from_parry = 4
 	light_radius = 32
 
-	sprite.action = "0.floor.right.idle"
-
 	corner_cast = $"CastGroup/RoundCornerCast"
 	ground_casts = [
 		$"CastGroup/Normal/GroundCast0",

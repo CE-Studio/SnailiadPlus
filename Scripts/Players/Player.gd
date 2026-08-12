@@ -249,7 +249,7 @@ static var player_species_plural:String:
 		return Statics.get_character_species_string(Statics.current_profile["character"], true)
 
 
-var sprite:JsonSprite2D
+var sprite:SnailySprite2D
 var body:CharacterBody2D
 var box_normal:CollisionShape2D
 var box_shell:CollisionShape2D
@@ -284,7 +284,7 @@ var debug_print_adjustments:bool = false
 # It's used here to initialize certain variables and node references
 func _ready():
 	instance = self
-	sprite = $"JsonSprite2D"
+	sprite = $"SnailySprite2D"
 	body = $"CharacterBody2D"
 	box_normal = $"CharacterBody2D/NormalRect"
 	box_shell = $"CharacterBody2D/ShellRect"
@@ -717,24 +717,25 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 		rel_vel.x = 0.0
 	if rel_axis.x != 0.0 and grounded and current_state != AnimStates.WALK:
 		current_state = AnimStates.WALK
-		_play_anim("walk")
+		_play_anim("idle")
 	if rel_axis.x == 0.0 and grounded and current_state == AnimStates.WALK:
 		current_state = AnimStates.IDLE
 		_play_anim("idle")
 	if ((rel_axis.x < 0.0 and not facing_left) or
 	(rel_axis.x > 0.0 and facing_left)):
 		_set_direction(remapped_dirs[Statics.DirsSurface.FLOOR], not facing_left)
-		match current_state:
-			AnimStates.IDLE:
-				_play_anim("turnground")
-			AnimStates.WALK:
-				_play_anim("turnground")
-			AnimStates.JUMP:
-				_play_anim("turnjump")
-			AnimStates.FALL:
-				_play_anim("turnfall")
-			AnimStates.SHELL:
-				_play_anim("turnshell")
+		_play_anim("idle")
+		#match current_state:
+		#	AnimStates.IDLE:
+		#		_play_anim("turnground")
+		#	AnimStates.WALK:
+		#		_play_anim("turnground")
+		#	AnimStates.JUMP:
+		#		_play_anim("turnjump")
+		#	AnimStates.FALL:
+		#		_play_anim("turnfall")
+		#	AnimStates.SHELL:
+		#		_play_anim("turnshell")
 
 	just_jumped = clampi(just_jumped - 1, 0, 10)
 	if grounded:
@@ -769,7 +770,8 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 			if (rel_vel.y > 0.0
 			and current_state != AnimStates.FALL and current_state != AnimStates.SHELL):
 				current_state = AnimStates.FALL
-				_play_anim("fall")
+				_play_anim("idle")
+				#_play_anim("fall")
 
 	if (shelled and (fire_mode or SInput.input_pressed(SInput.Inputs.STRAFE)
 	or (rel_axis.x != 0.0 and grounded) or aim_vector != Vector2.ZERO)):
@@ -802,7 +804,8 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 		if perform_flip:
 			_set_direction(new_dir, facing_left)
 			body.move_and_collide(_spin_vector_to_surface(adjustment, surface))
-			_play_anim("walk")
+			_play_anim("idle")
+			#_play_anim("walk")
 			current_state = AnimStates.WALK
 	elif not grounded:
 		if (_can_round_corner_outer()
@@ -815,7 +818,8 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 			_set_direction(new_dir, facing_left)
 			body.move_and_collide(_spin_vector_to_surface(adjustment, surface))
 			surface = new_dir
-			_play_anim("walk")
+			_play_anim("idle")
+			#_play_anim("walk")
 			current_state = AnimStates.WALK
 			grounded = true
 			outer_allowed = true
@@ -827,7 +831,8 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 				outer_allowed = true
 				force_full_jump = false
 				_set_direction(_get_dir_opposite(surface), not facing_left)
-				_play_anim("idle" if rel_axis.x == 0.0 else "walk")
+				#_play_anim("idle" if rel_axis.x == 0.0 else "walk")
+				_play_anim("idle")
 				current_state = AnimStates.IDLE if rel_axis.x == 0.0 else AnimStates.WALK
 		elif body.is_on_floor() and rel_vel.y >= 0:
 			grounded = true
@@ -842,7 +847,8 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 				rel_vel.x = 0.0
 			_set_direction(home_gravity, this_left)
 			if not shelled:
-				_play_anim("fall")
+				_play_anim("idle")
+				#_play_anim("fall")
 				current_state = AnimStates.FALL
 			coyote_time_counter = coyote_time
 			jump_buffer_counter = jump_buffer
@@ -906,7 +912,8 @@ func _jump() -> float:
 	grounded = false
 	sfx_jump.play()
 	current_state = AnimStates.JUMP
-	_play_anim("jump")
+	_play_anim("idle")
+	#_play_anim("jump")
 	jump_buffer_counter = jump_buffer
 	coyote_time_counter = coyote_time
 	#if Statics.get_shell_level() >= 2 and (who_i_is == Players.SNAILY
@@ -931,7 +938,8 @@ func _jump_and_reorient() -> float:
 		_play_anim("shell")
 	else:
 		current_state = AnimStates.FALL
-		_play_anim("fall")
+		_play_anim("idle")
+		#_play_anim("fall")
 	return 0.0
 
 
@@ -971,7 +979,8 @@ func _grav_jump(target_dir:Statics.DirsSurface = Statics.DirsSurface.NONE) -> vo
 				_play_anim("shell")
 			else:
 				current_state = AnimStates.JUMP
-				_play_anim("jump")
+				_play_anim("idle")
+				#_play_anim("jump")
 			Statics.spawn_particle("GravWhooshGroup", Room.Layers.GROUND, position, [gravity_dir, false])
 			just_flipped = true
 			UICore.instance.cam.reset_new_follow()
@@ -1218,7 +1227,8 @@ func _set_shell(state:bool):
 			shield_particle = Statics.spawn_particle("Shield", Room.Layers.GROUND, position)
 		time_since_shell = 0.0
 	else:
-		_play_anim("unshell")
+		#_play_anim("unshell")
+		_play_anim("idle")
 		if shield_particle:
 			Statics.spawn_particle("ShieldPop", Room.Layers.GROUND, shield_particle.position)
 			shield_particle.queue_free()
@@ -1283,26 +1293,35 @@ func _spin_vector_to_surface(input:Vector2, surface:Statics.DirsSurface) -> Vect
 
 
 # Takes an action name, considers the current state of the player, and sets the player's
-# JsonSprite2D animation appropriately
+# SnailySprite2D animation appropriately
 # Input  - the action to perform
 func _play_anim(action:String):
-	var full_action = str(shell_level_displayed) + "."
-
+	var full_action:String = "%02d." % shell_level_displayed
 	if action != "death":
 		match gravity_dir:
 			Statics.DirsSurface.FLOOR:
 				full_action += "floor."
+				sprite.flip_v = false
+				sprite.flip_h = facing_left
 			Statics.DirsSurface.LWALL:
 				full_action += "lwall."
+				sprite.flip_h = true
+				sprite.flip_v = facing_left
 			Statics.DirsSurface.RWALL:
 				full_action += "rwall."
+				sprite.flip_h = false
+				sprite.flip_v = not facing_left
 			Statics.DirsSurface.CEILING:
 				full_action += "ceiling."
+				sprite.flip_v = true
+				sprite.flip_h = not facing_left
+	else:
+		sprite.flip_v = false
+		sprite.flip_h = facing_left
 	full_action += "left." if facing_left else "right."
 
 	full_action += action
-	if sprite.action != full_action:
-		sprite.action = full_action
+	sprite.play(full_action)
 
 
 # Externally called; updates which animation set the player uses based on shell level
@@ -1472,7 +1491,7 @@ func adjust_health(amount:int, ignore_defense:bool = false) -> bool:
 			if grav_shock_charge:
 				grav_shock_charge.queue_free()
 				grav_shock_charge = null
-				_play_anim("fall")
+				#_play_anim("fall")
 		elif grav_shock_state == 2:
 			return false
 		elif shelled and Statics.check_item(Item.ItemTypes.SHELL_SHIELD) and not ignore_defense:
@@ -1494,7 +1513,7 @@ func adjust_health(amount:int, ignore_defense:bool = false) -> bool:
 				_push_from_wall()
 			_set_direction(home_gravity, facing_left)
 			outer_allowed = false
-			_play_anim("fall")
+			#_play_anim("fall")
 			body.velocity = Vector2.ZERO
 		stunned = true
 		stun_timer = MAX_STUN_TIMER
@@ -1756,7 +1775,7 @@ func perform_action(_action:String, _force:bool) -> bool:
 	match _action:
 		"turn_around":
 			facing_left = not facing_left
-			_play_anim("shell" if shelled else "turnground")
+			_play_anim("shell" if shelled else "idle")
 			return true
 		"toggle_shell":
 			_toggle_shell()
