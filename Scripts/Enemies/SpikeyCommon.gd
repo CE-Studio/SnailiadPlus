@@ -45,7 +45,7 @@ func _ready() -> void:
 	my_type = EnemyTypes.SPIKEY_COMMON
 	col = $"BodyBox"
 	hitbox = $"Area2D"
-	sprite = $"JsonSprite2D"
+	sprite = $"SnailySprite2D"
 	vis = $"VisibleOnScreenNotifier2D"
 	super.spawn()
 	
@@ -65,20 +65,7 @@ func _ready() -> void:
 		else:
 			set_dir(Statics.DirsSurface.FLOOR)
 			is_falling = true
-	var dir = "ccw" if ccw else "cw"
-	match direction:
-		Statics.DirsSurface.FLOOR:
-			sprite.action = "floor_" + dir
-		Statics.DirsSurface.LWALL:
-			sprite.action = "lwall_" + dir
-			cast_group.rotation_degrees = 90.0
-		Statics.DirsSurface.RWALL:
-			sprite.action = "rwall_" + dir
-			cast_group.rotation_degrees = -90.0
-		Statics.DirsSurface.CEILING:
-			sprite.action = "ceiling_" + dir
-			cast_group.rotation_degrees = 180.0
-	sprite._process(0.0)
+	play_anim()
 
 
 func _physics_process(delta: float) -> void:
@@ -120,7 +107,7 @@ func _physics_process(delta: float) -> void:
 					if real.is_on_wall():
 						if cast_center.is_colliding():
 							turn(ccw)
-							play_anim("_turnto_inner")
+							play_anim()
 						else:
 							turn_outer = true
 				if turn_outer:
@@ -131,7 +118,7 @@ func _physics_process(delta: float) -> void:
 						if is_corner_solid():
 							is_falling = false
 							grace_period = 0.4
-							play_anim("_turnto_outer")
+							play_anim()
 							match direction:
 								Statics.DirsSurface.FLOOR:
 									position.y = roundi(position.y * 0.25) * 4.0
@@ -194,7 +181,7 @@ func set_dir(new_dir:Statics.DirsSurface) -> void:
 		box.position = -real.up_direction
 
 
-func play_anim(modifier:String = "") -> void:
+func play_anim() -> void:
 	var new_action = ""
 	match direction:
 		Statics.DirsSurface.FLOOR:
@@ -206,5 +193,4 @@ func play_anim(modifier:String = "") -> void:
 		Statics.DirsSurface.CEILING:
 			new_action = "ceiling_"
 	new_action += "ccw" if ccw else "cw"
-	new_action += modifier
-	sprite.action = new_action
+	sprite.play(new_action)

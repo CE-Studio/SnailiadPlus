@@ -55,7 +55,7 @@ enum ElementTypes {
 @export var col:CollisionShape2D
 @export var body:CharacterBody2D
 @export var hitbox:Area2D
-@export var sprite:JsonSprite2D
+@export var sprite:SnailySprite2D
 @export var vis:VisibleOnScreenNotifier2D
 @export var environment:EnvironmentArea
 

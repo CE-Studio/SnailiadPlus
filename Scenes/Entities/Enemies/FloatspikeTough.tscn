@@ -1,18 +1,38 @@
 [gd_scene format=3 uid="uid://c8v6ec2os4sgf"]
 
 [ext_resource type="Script" uid="uid://cx5iqiw5vi50f" path="res://Scripts/Enemies/FloatspikeTough.gd" id="1_f88cf"]
-[ext_resource type="Material" uid="uid://bj1jqi3180tg5" path="res://Resources/EnemyFlashMat.tres" id="2_xqeni"]
-[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="3_1gkrn"]
-[ext_resource type="Shader" uid="uid://bday5amji1ndg" path="res://Resources/EntityFlash.tres" id="4_7e0vk"]
+[ext_resource type="Script" uid="uid://boee2837la0pr" path="res://Scripts/Classes/SnailySprite.gd" id="3_ln0yp"]
 [ext_resource type="Texture2D" uid="uid://bhedmx2gxb83y" path="res://Assets/Images/Entities/Floatspike2.png" id="5_f88cf"]
-[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="6_tkgoj"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_v2c1n"]
 size = Vector2(14, 14)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ojica"]
-shader = ExtResource("4_7e0vk")
-shader_parameter/flash_color = Color(0, 0, 0, 1)
+[sub_resource type="AtlasTexture" id="AtlasTexture_aule8"]
+atlas = ExtResource("5_f88cf")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c5702"]
+atlas = ExtResource("5_f88cf")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wkouj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aule8")
+}],
+"loop": 0,
+"name": &"blink",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c5702")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 1.0
+}]
 
 [node name="FloatspikeTough" type="Node2D" unique_id=1471602132]
 z_index = 103
@@ -35,14 +55,9 @@ debug_color = Color(0.976471, 0, 0.415686, 0.419608)
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=480760229]
 scale = Vector2(0.8, 0.8)
 
-[node name="JsonSprite2D" type="Sprite2D" parent="." unique_id=810686576]
-material = ExtResource("2_xqeni")
-script = ExtResource("3_1gkrn")
-texture_path = "res://Assets/Images/Entities/Floatspike2.json"
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
-
-[node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D" unique_id=391017533]
-material = SubResource("ShaderMaterial_ojica")
-texture = ExtResource("5_f88cf")
-script = ExtResource("6_tkgoj")
-metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+[node name="SnailySprite2D" type="AnimatedSprite2D" parent="." unique_id=1709326804]
+sprite_frames = SubResource("SpriteFrames_wkouj")
+animation = &"idle"
+autoplay = "idle"
+script = ExtResource("3_ln0yp")
+metadata/_custom_type_script = "uid://boee2837la0pr"

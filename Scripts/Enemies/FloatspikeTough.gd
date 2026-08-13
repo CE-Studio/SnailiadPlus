@@ -5,16 +5,16 @@ extends Enemy
 
 
 var theta = 0.0
+var blink_timeout:float = randf_range(1.2, 6.0)
 
 
 func _ready() -> void:
 	my_type = EnemyTypes.FLOATSPIKE
 	hitbox = $"Area2D"
-	sprite = $"JsonSprite2D"
+	sprite = $"SnailySprite2D"
 	vis = $"VisibleOnScreenNotifier2D"
 	super.spawn()
 
-	sprite.action = "idle"
 	if display_mode:
 		theta = randf() * TAU
 	else:
@@ -27,4 +27,9 @@ func _process(delta: float) -> void:
 		return
 
 	theta += delta
-	position.y = origin.y + sin(theta) * 1.8
+	sprite.position.y = sin(theta) * 1.8
+	blink_timeout -= delta
+	if blink_timeout <= 0:
+		blink_timeout = randf_range(1.2, 6.0)
+		sprite.play("blink")
+		sprite.autoplay_next = "idle"
