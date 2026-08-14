@@ -139,7 +139,7 @@ animations = [{
 }],
 "loop": 1,
 "name": &"ceiling_ccw",
-"speed": 5.0
+"speed": 6.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -156,7 +156,7 @@ animations = [{
 }],
 "loop": 1,
 "name": &"ceiling_cw",
-"speed": 5.0
+"speed": 6.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -207,7 +207,7 @@ animations = [{
 }],
 "loop": 1,
 "name": &"lwall_ccw",
-"speed": 5.0
+"speed": 6.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -224,7 +224,7 @@ animations = [{
 }],
 "loop": 1,
 "name": &"lwall_cw",
-"speed": 5.0
+"speed": 6.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -241,7 +241,7 @@ animations = [{
 }],
 "loop": 1,
 "name": &"rwall_ccw",
-"speed": 5.0
+"speed": 6.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -258,7 +258,7 @@ animations = [{
 }],
 "loop": 1,
 "name": &"rwall_cw",
-"speed": 5.0
+"speed": 6.0
 }]
 
 [node name="SpikeyCommon" type="CharacterBody2D" unique_id=2071010887]
