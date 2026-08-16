@@ -724,7 +724,7 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 	if ((rel_axis.x < 0.0 and not facing_left) or
 	(rel_axis.x > 0.0 and facing_left)):
 		_set_direction(remapped_dirs[Statics.DirsSurface.FLOOR], not facing_left)
-		_play_anim("idle")
+		_play_anim("shell" if shelled else "idle")
 		#match current_state:
 		#	AnimStates.IDLE:
 		#		_play_anim("turnground")

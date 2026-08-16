@@ -1,20 +1,221 @@
 [gd_scene format=3 uid="uid://s2yce3jaqjed"]
 
 [ext_resource type="Script" uid="uid://i20oatr6nmr1" path="res://Scripts/Enemies/Babyfish1.gd" id="1_b0nbo"]
-[ext_resource type="Shader" uid="uid://bday5amji1ndg" path="res://Resources/EntityFlash.tres" id="2_belrl"]
-[ext_resource type="Material" uid="uid://bj1jqi3180tg5" path="res://Resources/EnemyFlashMat.tres" id="2_ep1w5"]
-[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="3_nj3ik"]
+[ext_resource type="Script" uid="uid://boee2837la0pr" path="res://Scripts/Classes/SnailySprite.gd" id="3_o1o6q"]
 [ext_resource type="Texture2D" uid="uid://cxvgn2uti1cd4" path="res://Assets/Images/Entities/Babyfish.png" id="4_ep1w5"]
-[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="5_61fcf"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yl0hf"]
 size = Vector2(14, 10)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_5ic2g"]
-shader = ExtResource("2_belrl")
-shader_parameter/flash_color = Color(0, 0, 0, 1)
+[sub_resource type="AtlasTexture" id="AtlasTexture_pvf1h"]
+atlas = ExtResource("4_ep1w5")
+region = Rect2(0, 0, 14, 10)
 
-[node name="Babyfish1" type="CharacterBody2D" unique_id=1716162683]
+[sub_resource type="AtlasTexture" id="AtlasTexture_b0nbo"]
+atlas = ExtResource("4_ep1w5")
+region = Rect2(14, 0, 14, 10)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ep1w5"]
+atlas = ExtResource("4_ep1w5")
+region = Rect2(0, 0, 14, 10)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wkouj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pvf1h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b0nbo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pvf1h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b0nbo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pvf1h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b0nbo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pvf1h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pvf1h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b0nbo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b0nbo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pvf1h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pvf1h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pvf1h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b0nbo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b0nbo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b0nbo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b0nbo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b0nbo")
+}],
+"loop": 1,
+"name": &"display",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ep1w5")
+}],
+"loop": 1,
+"name": &"idle_left",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ep1w5")
+}],
+"loop": 1,
+"name": &"idle_right",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pvf1h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b0nbo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pvf1h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b0nbo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pvf1h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b0nbo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pvf1h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pvf1h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b0nbo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b0nbo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pvf1h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pvf1h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pvf1h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b0nbo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b0nbo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b0nbo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b0nbo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b0nbo")
+}],
+"loop": 0,
+"name": &"swim_left",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pvf1h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b0nbo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pvf1h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b0nbo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pvf1h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b0nbo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pvf1h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pvf1h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b0nbo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b0nbo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pvf1h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pvf1h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pvf1h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b0nbo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b0nbo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b0nbo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b0nbo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b0nbo")
+}],
+"loop": 0,
+"name": &"swim_right",
+"speed": 10.0
+}]
+
+[node name="Babyfish1" type="CharacterBody2D" unique_id=1716162683 node_paths=PackedStringArray("col", "body", "sprite", "vis")]
 z_index = 103
 collision_layer = 64
 collision_mask = 3
@@ -23,6 +224,10 @@ max_health = 30
 invulnerable = true
 can_damage = false
 grant_bestiary_without_defeat = true
+col = NodePath("BodyBox")
+body = NodePath(".")
+sprite = NodePath("SnailySprite2D")
+vis = NodePath("VisibleOnScreenNotifier2D")
 
 [node name="BodyBox" type="CollisionShape2D" parent="." unique_id=544569017]
 shape = SubResource("RectangleShape2D_yl0hf")
@@ -31,15 +236,8 @@ debug_color = Color(0.976029, 0, 0.414963, 0.42)
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=2138194764]
 scale = Vector2(0.7, 0.5)
 
-[node name="JsonSprite2D" type="Sprite2D" parent="." unique_id=907496631]
-material = ExtResource("2_ep1w5")
-script = ExtResource("3_nj3ik")
-texture_path = "res://Assets/Images/Entities/Babyfish.json"
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
-
-[node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D" unique_id=540341483]
-material = SubResource("ShaderMaterial_5ic2g")
-texture = ExtResource("4_ep1w5")
-hframes = 4
-script = ExtResource("5_61fcf")
-metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+[node name="SnailySprite2D" type="AnimatedSprite2D" parent="." unique_id=379698940]
+sprite_frames = SubResource("SpriteFrames_wkouj")
+animation = &"display"
+script = ExtResource("3_o1o6q")
+metadata/_custom_type_script = "uid://boee2837la0pr"

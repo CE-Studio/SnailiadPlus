@@ -17,9 +17,6 @@ var last_velocity:float = 0.0
 
 func _ready() -> void:
 	my_type = EnemyTypes.BABYFISH
-	col = $"BodyBox"
-	sprite = $"JsonSprite2D"
-	vis = $"VisibleOnScreenNotifier2D"
 	super.spawn()
 	
 	if not display_mode:
@@ -30,7 +27,8 @@ func _ready() -> void:
 
 func configure_display_mode(_credits:bool = false, _data:int = 0) -> void:
 	elapsed = randf_range(0, TAU)
-	sprite.action = "2_display"
+	sprite.play("display")
+	sprite.flip_h = randf() < 0.5
 
 
 func _physics_process(delta: float) -> void:
@@ -60,7 +58,6 @@ func _physics_process(delta: float) -> void:
 			last_velocity = real.velocity.x
 
 
-func play_anim(modifier:String) -> void:
-	var anim_name = "2_" + modifier
-	anim_name += "_left" if facing_left else "_right"
-	sprite.action = anim_name
+func play_anim(state:String) -> void:
+	sprite.play(state + ("_left" if facing_left else "_right"))
+	sprite.flip_h = facing_left

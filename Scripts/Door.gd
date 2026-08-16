@@ -42,19 +42,24 @@ var is_locked:bool = false
 var spawned_open:bool = false
 var anim_prefix:String = ""
 
-@onready var vis = $"VisibleOnScreenNotifier2D"
-@onready var box_group = $"BoxGroup"
-@onready var body = $"BoxGroup/SolidBox"
-@onready var box = $"BoxGroup/SolidBox/CollisionShape2D"
-@onready var sprite = $"JsonSprite2D"
-@onready var sfx_open = $"AudioGroup/Open"
-@onready var sfx_close = $"AudioGroup/Close"
-@onready var sfx_ping = $"AudioGroup/Ping"
+@export_group("Components")
+@export var vis:VisibleOnScreenNotifier2D
+@export var box_group:Node2D
+@export var body:StaticBody2D
+@export var box:CollisionShape2D
+@export var sprite:SnailySprite2D
+@export var sfx_open:AudioStreamPlayer
+@export var sfx_close:AudioStreamPlayer
+@export var sfx_ping:AudioStreamPlayer
 #endregion
 
 
 func _ready() -> void:
 	_set_editor_marker()
+	if direction == Statics.DirsCardinal.RIGHT:
+		sprite.flip_h = true
+	if direction == Statics.DirsCardinal.DOWN:
+		sprite.flip_v = true
 
 
 func spawn() -> void:
@@ -77,10 +82,10 @@ func spawn() -> void:
 	if position.distance_to(GameCore.instance.player.position) <= SPAWN_OPEN_RADIUS:
 		is_open = true
 		spawned_open = true
-		sprite.action = anim_prefix + "opened"
+		sprite.play(anim_prefix + "open")
 	else:
 		box.disabled = false
-		sprite.action = anim_prefix + "closed"
+		sprite.play(anim_prefix + "closed")
 	
 	if direction == Statics.DirsCardinal.DOWN or direction == Statics.DirsCardinal.UP:
 		box_group.rotation_degrees = 90.0
@@ -116,6 +121,7 @@ func _process(_delta: float) -> void:
 func _set_editor_marker():
 	if not Engine.is_editor_hint() or box_group == null:
 		return
+	sprite.visible = false
 	var target_frame
 	var marker = $"MarkerSprite"
 	if direction == Statics.DirsCardinal.UP or direction == Statics.DirsCardinal.DOWN:
@@ -162,7 +168,8 @@ func _on_bullet_entered(area:Area2D) -> void:
 
 
 func open() -> void:
-	sprite.action = anim_prefix + "open"
+	sprite.play(anim_prefix + "opening")
+	sprite.autoplay_next = anim_prefix + "open"
 	box.set_deferred("disabled", true)
 	is_open = true
 	spawned_open = false
@@ -170,7 +177,8 @@ func open() -> void:
 
 
 func close() -> void:
-	sprite.action = anim_prefix + "close"
+	sprite.play(anim_prefix + "closing")
+	sprite.autoplay_next = anim_prefix + "closed"
 	box.set_deferred("disabled", false)
 	is_open = false
 	sfx_close.play()

@@ -4,15 +4,15 @@
 [ext_resource type="Texture2D" uid="uid://brv00uu770se5" path="res://Assets/Images/Players/Snaily.png" id="2_wqjpd"]
 [ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_qnvb6"]
 
-[node name="PlayerSilhouette" type="Sprite2D" unique_id=1758983127]
+[node name="PlayerSilhouette" type="AnimatedSprite2D" unique_id=2109140592]
 self_modulate = Color(0, 0, 0, 0.39215687)
 script = ExtResource("1_wqjpd")
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
+metadata/_custom_type_script = "uid://boee2837la0pr"
 
 [node name="MarkerSprite" type="Sprite2D" parent="." unique_id=178737998]
 self_modulate = Color(0, 0, 0, 0.39215687)
 texture = ExtResource("2_wqjpd")
 hframes = 12
-vframes = 4
+vframes = 8
 script = ExtResource("3_qnvb6")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"

@@ -48,9 +48,7 @@ sprite_frames = SubResource("SpriteFrames_wkouj")
 script = ExtResource("3_jo1nt")
 metadata/_custom_type_script = "uid://boee2837la0pr"
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=364663306]
-
-[node name="MarkerSprite" type="Sprite2D" parent="Sprite2D" unique_id=1820062534]
+[node name="MarkerSprite" type="Sprite2D" parent="SnailySprite2D" unique_id=1820062534]
 texture = ExtResource("4_tolka")
 hframes = 6
 vframes = 12
