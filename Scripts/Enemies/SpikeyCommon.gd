@@ -43,10 +43,6 @@ var vel = 0
 
 func _ready() -> void:
 	my_type = EnemyTypes.SPIKEY_COMMON
-	col = $"BodyBox"
-	hitbox = $"Area2D"
-	sprite = $"SnailySprite2D"
-	vis = $"VisibleOnScreenNotifier2D"
 	super.spawn()
 	
 	if direction == Statics.DirsSurface.NONE:

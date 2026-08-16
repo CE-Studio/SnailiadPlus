@@ -54,10 +54,6 @@ var stopped:bool = false
 
 func _ready() -> void:
 	my_type = EnemyTypes.SPIKEY_TOUGH
-	col = $"BodyBox"
-	hitbox = $"Area2D"
-	sprite = $"SnailySprite2D"
-	vis = $"VisibleOnScreenNotifier2D"
 	super.spawn()
 	if hard_mode:
 		max_health = 720

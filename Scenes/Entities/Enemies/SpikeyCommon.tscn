@@ -261,13 +261,18 @@ animations = [{
 "speed": 6.0
 }]
 
-[node name="SpikeyCommon" type="CharacterBody2D" unique_id=2071010887]
+[node name="SpikeyCommon" type="CharacterBody2D" unique_id=2071010887 node_paths=PackedStringArray("col", "body", "hitbox", "sprite", "vis")]
 z_index = 103
 collision_layer = 64
 collision_mask = 3
 script = ExtResource("1_f8vex")
 max_health = 70
 attack = 2
+col = NodePath("Area2D/HitBox")
+body = NodePath(".")
+hitbox = NodePath("Area2D")
+sprite = NodePath("SnailySprite2D")
+vis = NodePath("VisibleOnScreenNotifier2D")
 
 [node name="BodyBox" type="CollisionShape2D" parent="." unique_id=282106086]
 position = Vector2(0, 1)

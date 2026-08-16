@@ -10,9 +10,6 @@ var blink_timeout:float = randf_range(1.2, 6.0)
 
 func _ready() -> void:
 	my_type = EnemyTypes.FLOATSPIKE
-	hitbox = $"Area2D"
-	sprite = $"SnailySprite2D"
-	vis = $"VisibleOnScreenNotifier2D"
 	super.spawn()
 
 	if display_mode:

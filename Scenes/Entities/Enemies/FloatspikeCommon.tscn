@@ -34,7 +34,7 @@ animations = [{
 "speed": 1.0
 }]
 
-[node name="FloatspikeCommon" type="Node2D" unique_id=1021874637]
+[node name="FloatspikeCommon" type="Node2D" unique_id=1021874637 node_paths=PackedStringArray("col", "hitbox", "sprite", "vis")]
 z_index = 103
 script = ExtResource("1_v2c1n")
 max_health = 5
@@ -42,6 +42,10 @@ attack = 2
 defense = 59
 interact_with_environments = false
 health_orb_value = 2
+col = NodePath("Area2D/HitBox")
+hitbox = NodePath("Area2D")
+sprite = NodePath("SnailySprite2D")
+vis = NodePath("VisibleOnScreenNotifier2D")
 
 [node name="Area2D" type="Area2D" parent="." unique_id=389249626]
 collision_layer = 64

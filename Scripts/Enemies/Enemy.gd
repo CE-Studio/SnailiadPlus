@@ -52,6 +52,7 @@ enum ElementTypes {
 	NONE = -1
 }
 
+@export_group("Components")
 @export var col:CollisionShape2D
 @export var body:CharacterBody2D
 @export var hitbox:Area2D
@@ -72,12 +73,12 @@ var hard_mode:bool = false
 var flash_color:Color = Color.BLACK
 var flash_strength:float = 0.0
 
-@onready var sfx_ping:AudioStream = preload("res://Assets/Sounds/Sfx/Ping.ogg")
-@onready var sfx_kill:AudioStream = preload("res://Assets/Sounds/Sfx/EnemyKilled1.ogg")
-@onready var sfx_hit1:AudioStream = preload("res://Assets/Sounds/Sfx/Explode1.ogg")
-@onready var sfx_hit2:AudioStream = preload("res://Assets/Sounds/Sfx/Explode2.ogg")
-@onready var sfx_hit3:AudioStream = preload("res://Assets/Sounds/Sfx/Explode3.ogg")
-@onready var sfx_hit4:AudioStream = preload("res://Assets/Sounds/Sfx/Explode4.ogg")
+@onready var sfx_ping:AudioStream = preload("uid://da0tclibjxftr")
+@onready var sfx_kill:AudioStream = preload("uid://bt37e4rs2jw1g")
+@onready var sfx_hit1:AudioStream = preload("uid://br8snm0iqts4g")
+@onready var sfx_hit2:AudioStream = preload("uid://fxp56us7em3w")
+@onready var sfx_hit3:AudioStream = preload("uid://cbkqdrvlo8gbo")
+@onready var sfx_hit4:AudioStream = preload("uid://brxaghtx4yim")
 @onready var hit_sounds:Array = [ sfx_hit1, sfx_hit2, sfx_hit3, sfx_hit4 ]
 
 var my_type:EnemyTypes

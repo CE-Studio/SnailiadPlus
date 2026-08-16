@@ -386,7 +386,7 @@ animations = [{
 "speed": 12.0
 }]
 
-[node name="BlobCommon" type="CharacterBody2D" unique_id=630332670]
+[node name="BlobCommon" type="CharacterBody2D" unique_id=630332670 node_paths=PackedStringArray("col", "body", "hitbox", "sprite", "vis")]
 z_index = 103
 collision_layer = 64
 collision_mask = 3
@@ -395,6 +395,11 @@ max_health = 50
 attack = 2
 defense = 1
 health_orb_value = 2
+col = NodePath("Area2D/HitBox")
+body = NodePath(".")
+hitbox = NodePath("Area2D")
+sprite = NodePath("SnailySprite2D")
+vis = NodePath("VisibleOnScreenNotifier2D")
 
 [node name="BodyBox" type="CollisionShape2D" parent="." unique_id=21715631]
 shape = SubResource("RectangleShape2D_yl0hf")
