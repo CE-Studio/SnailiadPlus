@@ -4,19 +4,43 @@ extends AnimatedSprite2D
 
 
 
+## Fully customizable array meant to hold any externally adjustable information this sprite
+## or its parent node can make use of.
 @export var meta_info:Array = []
+## Array containing the names of every animation that is allowed to start on a random frame.
 @export var start_on_random_frame:Array[String] = []
+## If [code]true[/code], every animation associated with this sprite will start on a random frame.
 @export var start_all_on_random_frame:bool = false
+## If [code]true[/code], this sprite will select any of its associated animations to autoplay when
+## added to the tree.
 @export var autoplay_any_on_spawn:bool = false
+## When set, this value will be passed as an animation name that will automatically start playing
+## as soon as the currently active animation finishes. This value is cleared as soon as it is read.
 @export var autoplay_next:String = ""
+## Will be used on creation to select a random multiplier that will be applied to the playback
+## speed of all animations until [code]set_speed()[/code] is called again. The vector's X component
+## is used as the minimum value, and the Y component is used as the maximum value.
 @export var spawn_speed_variance:Vector2 = Vector2.ONE
+## If [code]true[/code], this sprite will be hidden the instant a non-looping animation finishes playing.
 @export var hide_on_finish:bool = false
 
 @export_group("Infer Additional Animations")
+## If [code]true[/code], this sprite, when added to the tree, will assess its existing animation set
+## and generate new animations in accordance with the parameters below.
 @export var infer_new:bool = false
+## Marks the specific string key that is looked for and replaced in the existing animations' names.
+@export var replace_key:String = "00."
+## Denotes the number of additional sets of animations to create.
 @export var add_count:int = 0
+## The offset in pixels of the first generated animation set's frames relative to the base animation
+## set's frames.
 @export var rect_offset:Vector2i = Vector2i(0, 16)
+## A direct reference to the texture that should be used to generate new animations.
 @export var source:Texture2D
+## An optional array containing any special keys that will replace [code]replace_key[/code] when
+## an animation is created. If this array's size is less than the number of animation sets being
+## generated, the remaining sets will be numbered as if this array was empty.
+@export var specialized_keys:Array[String] = []
 
 
 func _ready() -> void:
@@ -41,7 +65,7 @@ func _infer_new() -> void:
 		return
 	var anims:PackedStringArray = sprite_frames.get_animation_names()
 	for anim in anims:
-		if not anim.contains("00."):
+		if not anim.contains(replace_key):
 			continue
 		var frames:int = sprite_frames.get_frame_count(anim)
 		var rects:Array[Rect2] = []
@@ -49,7 +73,9 @@ func _infer_new() -> void:
 			var this_source:AtlasTexture = sprite_frames.get_frame_texture(anim, i)
 			rects.append(this_source.region)
 		for i in range(1, add_count + 1):
-			var new_anim:String = anim.replace("00.", "%02d." % i)
+			var new_anim:String = anim.replace(replace_key, "%02d." % i)
+			if i <= specialized_keys.size():
+				new_anim = anim.replace(replace_key, specialized_keys[i - 1])
 			if anims.has(new_anim):
 				continue
 			sprite_frames.add_animation(new_anim)
