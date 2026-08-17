@@ -1,26 +1,76 @@
 [gd_scene format=3 uid="uid://ctamvgmd3t6yn"]
 
 [ext_resource type="Script" uid="uid://xiyy0nsou5g3" path="res://Scripts/Enemies/ChirpyCommon.gd" id="1_tg0tv"]
-[ext_resource type="Material" uid="uid://bj1jqi3180tg5" path="res://Resources/EnemyFlashMat.tres" id="2_58c8j"]
-[ext_resource type="Shader" uid="uid://bday5amji1ndg" path="res://Resources/EntityFlash.tres" id="2_d4uhh"]
-[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="3_58c8j"]
 [ext_resource type="Texture2D" uid="uid://ct6qpgc4lolab" path="res://Assets/Images/Entities/Chirpy1.png" id="4_tg0tv"]
-[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="5_jqn7h"]
 [ext_resource type="AudioStream" uid="uid://wg5300r3cxrj" path="res://Assets/Sounds/Sfx/Enemy/Chirp.ogg" id="6_d4uhh"]
+[ext_resource type="Script" uid="uid://boee2837la0pr" path="res://Scripts/Classes/SnailySprite.gd" id="7_0kxwn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6ijum"]
 size = Vector2(14, 14)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_43bce"]
-shader = ExtResource("2_d4uhh")
-shader_parameter/flash_color = Color(0, 0, 0, 1)
+[sub_resource type="AtlasTexture" id="AtlasTexture_fb8lx"]
+atlas = ExtResource("4_tg0tv")
+region = Rect2(0, 0, 16, 16)
 
-[node name="ChirpyCommon" type="Node2D" unique_id=2137947869]
+[sub_resource type="AtlasTexture" id="AtlasTexture_tg0tv"]
+atlas = ExtResource("4_tg0tv")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d4uhh"]
+atlas = ExtResource("4_tg0tv")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_51dtb"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fb8lx")
+}],
+"loop": 1,
+"name": &"down_left",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fb8lx")
+}],
+"loop": 1,
+"name": &"down_right",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tg0tv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d4uhh")
+}],
+"loop": 1,
+"name": &"up_left",
+"speed": 20.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tg0tv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d4uhh")
+}],
+"loop": 1,
+"name": &"up_right",
+"speed": 20.0
+}]
+
+[node name="ChirpyCommon" type="Node2D" unique_id=2137947869 node_paths=PackedStringArray("sfx_chirp", "hitbox", "sprite", "vis")]
 z_index = 103
 script = ExtResource("1_tg0tv")
+sfx_chirp = NodePath("Chirp")
 max_health = 1
 attack = 2
 health_orb_value = 1
+hitbox = NodePath("Area2D")
+sprite = NodePath("SnailySprite2D")
+vis = NodePath("VisibleOnScreenNotifier2D")
 
 [node name="Area2D" type="Area2D" parent="." unique_id=493758419]
 collision_layer = 64
@@ -33,18 +83,11 @@ debug_color = Color(0.976471, 0, 0.415686, 0.419608)
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1687868201]
 scale = Vector2(0.8, 0.8)
 
-[node name="JsonSprite2D" type="Sprite2D" parent="." unique_id=1634664001]
-material = ExtResource("2_58c8j")
-script = ExtResource("3_58c8j")
-texture_path = "res://Assets/Images/Entities/Chirpy1.json"
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
-
-[node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D" unique_id=36118982]
-material = SubResource("ShaderMaterial_43bce")
-texture = ExtResource("4_tg0tv")
-hframes = 2
-script = ExtResource("5_jqn7h")
-metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+[node name="SnailySprite2D" type="AnimatedSprite2D" parent="." unique_id=527670952]
+sprite_frames = SubResource("SpriteFrames_51dtb")
+animation = &"down_right"
+script = ExtResource("7_0kxwn")
+metadata/_custom_type_script = "uid://boee2837la0pr"
 
 [node name="Chirp" type="AudioStreamPlayer" parent="." unique_id=48698296]
 stream = ExtResource("6_d4uhh")

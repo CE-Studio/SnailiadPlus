@@ -21,19 +21,15 @@ var taken_off:bool = false
 var off_screen_time:float = 0.0
 var shot_timeout:float = SHOT_TIMEOUT
 
-@onready var sfx_chirp:AudioStreamPlayer = $"Chirp"
-@onready var donut:PackedScene = preload("res://Scenes/Entities/Bullets/Enemy/EnemyBulletDonutLinear.tscn")
+@export var sfx_chirp:AudioStreamPlayer
+@onready var donut:PackedScene = preload("uid://cr8jpfivtdpnw")
 #endregion
 
 
 func _ready() -> void:
 	my_type = EnemyTypes.CHIRPY
-	hitbox = $"Area2D"
-	sprite = $"JsonSprite2D"
-	vis = $"VisibleOnScreenNotifier2D"
 	super.spawn()
 	
-	sprite.action = "idle"
 	theta = position.x * position.x * 13.7
 	theta_mult += sin(position.x * 1.732 - position.y * 3.2)
 	fly_speed += sin(position.x * 2.332 - position.y * 1.9) * 10.0
@@ -58,10 +54,10 @@ func _process(delta: float) -> void:
 		theta += delta
 		position += velocity * delta
 		position.y = origin.y + sin(theta * theta_mult) * fly_amplitude
-		if position.y < origin.y and not going_up:
+		if position.y > origin.y and not going_up:
 			going_up = true
 			_play_anim(true)
-		elif position.y > origin.y and going_up:
+		elif position.y < origin.y and going_up:
 			going_up = false
 			_play_anim(false)
 		if display_mode:
@@ -92,6 +88,7 @@ func get_going() -> void:
 
 
 func _play_anim(up:bool) -> void:
-	var anim_name = "up_" if up else "down_"
-	anim_name += "left" if facing_left else "right"
-	sprite.action = anim_name
+	var v:String = "up_" if up else "down_"
+	var h:String = "left" if facing_left else "right"
+	sprite.play(v + h)
+	sprite.flip_h = not facing_left

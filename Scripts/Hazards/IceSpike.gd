@@ -5,33 +5,54 @@ class_name IceSpike
 extends Hazard
 
 
+const MAX_SHINE_COOLDOWN:float = 6.0
+
+var shine_cooldown:float = 0.0
+var dec_cooldown:bool = false
+
 @export var direction:Statics.DirsSurface = Statics.DirsSurface.FLOOR:
 	set(value):
 		if value == Statics.DirsSurface.NONE:
 			value = Statics.DirsSurface.FLOOR
 		direction = value
 		if Engine.is_editor_hint():
-			var sprite = $"JsonSprite2D/MarkerSprite"
+			var _sprite:MarkerSprite = $"SnailySprite2D/MarkerSprite"
 			match direction:
 				Statics.DirsSurface.FLOOR:
-					sprite.rotation_degrees = 0.0
+					_sprite.rotation_degrees = 0.0
 				Statics.DirsSurface.LWALL:
-					sprite.rotation_degrees = 90.0
+					_sprite.rotation_degrees = 90.0
 				Statics.DirsSurface.RWALL:
-					sprite.rotation_degrees = -90.0
+					_sprite.rotation_degrees = -90.0
 				Statics.DirsSurface.CEILING:
-					sprite.rotation_degrees = 180.0
+					_sprite.rotation_degrees = 180.0
+@export var sprite:SnailySprite2D
 
 
 func _ready() -> void:
 	super()
-	var sprite = $"JsonSprite2D"
 	match direction:
 		Statics.DirsSurface.FLOOR:
-			sprite.action = "D"
+			sprite.play("d")
 		Statics.DirsSurface.LWALL:
-			sprite.action = "L"
+			sprite.play("l")
 		Statics.DirsSurface.RWALL:
-			sprite.action = "R"
+			sprite.play("r")
+			sprite.flip_h = true
 		Statics.DirsSurface.CEILING:
-			sprite.action = "U"
+			sprite.play("u")
+			sprite.flip_v = true
+	shine_cooldown = randf() * MAX_SHINE_COOLDOWN
+
+
+func _process(delta:float) -> void:
+	if dec_cooldown:
+		shine_cooldown -= delta
+	if shine_cooldown <= 0.0:
+		shine_cooldown = randf() * MAX_SHINE_COOLDOWN
+		sprite.autoplay_next = sprite.animation
+		sprite.play(sprite.animation + "_shine")
+
+
+func _on_sprite_anim_changed() -> void:
+	dec_cooldown = not dec_cooldown

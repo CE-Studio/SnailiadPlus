@@ -1,26 +1,88 @@
 [gd_scene format=3 uid="uid://dsjg815uv2bmi"]
 
 [ext_resource type="Script" uid="uid://fg7bdlxxumsy" path="res://Scripts/Enemies/ChirpyTough.gd" id="1_7nja0"]
-[ext_resource type="Material" uid="uid://bj1jqi3180tg5" path="res://Resources/EnemyFlashMat.tres" id="2_51dtb"]
-[ext_resource type="Shader" uid="uid://bday5amji1ndg" path="res://Resources/EntityFlash.tres" id="2_a730g"]
-[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="3_51dtb"]
 [ext_resource type="Texture2D" uid="uid://ckyewvuuxuwnp" path="res://Assets/Images/Entities/Chirpy2.png" id="4_7nja0"]
-[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="5_5f0x0"]
 [ext_resource type="AudioStream" uid="uid://wg5300r3cxrj" path="res://Assets/Sounds/Sfx/Enemy/Chirp.ogg" id="6_rc8po"]
+[ext_resource type="Script" uid="uid://boee2837la0pr" path="res://Scripts/Classes/SnailySprite.gd" id="7_51dtb"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6ijum"]
 size = Vector2(14, 14)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_43bce"]
-shader = ExtResource("2_a730g")
-shader_parameter/flash_color = Color(0, 0, 0, 1)
+[sub_resource type="AtlasTexture" id="AtlasTexture_tidwj"]
+atlas = ExtResource("4_7nja0")
+region = Rect2(0, 0, 16, 16)
 
-[node name="ChirpyTough" type="Node2D" unique_id=22532425]
+[sub_resource type="AtlasTexture" id="AtlasTexture_thja6"]
+atlas = ExtResource("4_7nja0")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7nja0"]
+atlas = ExtResource("4_7nja0")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a730g"]
+atlas = ExtResource("4_7nja0")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_51dtb"]
+atlas = ExtResource("4_7nja0")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8umin"]
+atlas = ExtResource("4_7nja0")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5f0x0"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tidwj")
+}],
+"loop": 1,
+"name": &"down_left",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_thja6")
+}],
+"loop": 1,
+"name": &"down_right",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7nja0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a730g")
+}],
+"loop": 1,
+"name": &"up_left",
+"speed": 20.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_51dtb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8umin")
+}],
+"loop": 1,
+"name": &"up_right",
+"speed": 20.0
+}]
+
+[node name="ChirpyTough" type="Node2D" unique_id=22532425 node_paths=PackedStringArray("sfx_chirp", "hitbox", "sprite", "vis")]
 z_index = 103
 script = ExtResource("1_7nja0")
+sfx_chirp = NodePath("Chirp")
 max_health = 1
 attack = 3
 health_orb_value = 1
+hitbox = NodePath("Area2D")
+sprite = NodePath("SnailySprite2D")
+vis = NodePath("VisibleOnScreenNotifier2D")
 
 [node name="Area2D" type="Area2D" parent="." unique_id=689466839]
 collision_layer = 64
@@ -33,18 +95,11 @@ debug_color = Color(0.976471, 0, 0.415686, 0.419608)
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=764891423]
 scale = Vector2(0.8, 0.8)
 
-[node name="JsonSprite2D" type="Sprite2D" parent="." unique_id=1695310828]
-material = ExtResource("2_51dtb")
-script = ExtResource("3_51dtb")
-texture_path = "res://Assets/Images/Entities/Chirpy2.json"
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
-
-[node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D" unique_id=1717733866]
-material = SubResource("ShaderMaterial_43bce")
-texture = ExtResource("4_7nja0")
-hframes = 2
-script = ExtResource("5_5f0x0")
-metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+[node name="SnailySprite2D" type="AnimatedSprite2D" parent="." unique_id=402154343]
+sprite_frames = SubResource("SpriteFrames_5f0x0")
+animation = &"down_left"
+script = ExtResource("7_51dtb")
+metadata/_custom_type_script = "uid://boee2837la0pr"
 
 [node name="Chirp" type="AudioStreamPlayer" parent="." unique_id=1351525878]
 stream = ExtResource("6_rc8po")
