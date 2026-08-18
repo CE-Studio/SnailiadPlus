@@ -8,8 +8,8 @@ extends Node2D
 const WIDTH:int = 250
 const DAMAGE_UPDATE_TIMEOUT:float = 0.5
 const DAMAGE_LERP_SPEED:float = 6.0
-const SHAKE_LERP_SPEED:float = 10.0
-const SHAKE_VARIANCE:float = 2.0
+const SHAKE_LERP_SPEED:float = 12.0
+const SHAKE_VARIANCE:float = 2.5
 const INTRO_FILL_TIME:float = 1.5
 const OUTRO_SHAKE:float = 2.0
 
@@ -25,48 +25,45 @@ var intro_fill:float = 0.0
 var programmatic_shake:bool = true
 ## Will be set to [code]true[/code] if the bar is shaking as part of the boss' death animation
 var outro_shake:bool = false
+## The original position at creation of the health bar frame sprite
+var frame_origin:Vector2 = Vector2.ZERO
 ## The original position at creation of the parent node of the "defeated!" text
 var defeated_origin:Vector2 = Vector2.ZERO
 
 ## The main sprite representing the frame of the bar
-@onready var frame:JsonSprite2D = $"Frame"
+@export var frame:SnailySprite2D
 ## The sprite representing the main bar, which always updates when damage is received
-@onready var main:JsonSprite2D = $"Frame/BarMainMask/BarMain"
+@export var main:SnailySprite2D
 ## The supplimentary sprite that masks the main bar out
-@onready var main_mask:JsonSprite2D = $"Frame/BarMainMask"
+@export var main_mask:SnailySprite2D
 ## The sprite representing the secondary damage bar, which hangs at the previous health value
 ## until enough time has passed
-@onready var damaged:JsonSprite2D = $"Frame/BarDamagedMask/BarDamaged"
+@export var damaged:SnailySprite2D
 ## The supplimentary sprite the masks the damage bar out
-@onready var damaged_mask:JsonSprite2D = $"Frame/BarDamagedMask"
+@export var damaged_mask:SnailySprite2D
 ## The text component that displays the boss' name
-@onready var boss_name:SnailyText = $"BossName/HBox/SnailyText"
+@export var boss_name:SnailyText
 ## The container for the boss name text
-@onready var boss_name_container:Node2D = $"BossName"
+@export var boss_name_container:Node2D
 ## The text component that displays "defeated!"
-@onready var defeated:SnailyText = $"Defeated/HBox/SnailyText"
+@export var defeated:SnailyText
 ## The container for the defeated text
-@onready var defeated_container:Node2D = $"Defeated"
+@export var defeated_container:Node2D
 ## The sound that plays when the bar is filling up initially
-@onready var sfx_beep:AudioStreamPlayer = $"AudioGroup/Beep"
+@export var sfx_beep:AudioStreamPlayer
 ## The sound that plays when the bar has finished filling up
-@onready var sfx_full:AudioStreamPlayer = $"AudioGroup/Full"
+@export var sfx_full:AudioStreamPlayer
 ## Drives the appear and defeat animations
-@onready var anim:AnimationPlayer = $"AnimationPlayer"
+@export var anim:AnimationPlayer
 #endregion
 
 
 func _ready() -> void:
-	frame.action = "frame_spawn"
-	main.action = "bar_main_idle"
-	main_mask.action = "bar_main_mask"
-	damaged.action = "bar_damaged_idle"
-	damaged_mask.action = "bar_damaged_mask"
 	_update_main(_get_bar_pos_from_ratio(0))
 	_update_damaged(_get_bar_pos_from_ratio(0))
 	defeated_origin = defeated_container.position
-	if frame.meta.size() > 0 and frame.meta.keys().has("programmatic_shake"):
-		var shake = frame.meta["programmatic_shake"]
+	if frame.meta_info.size() > 0:
+		var shake:Variant = frame.meta_info[0]
 		if shake is bool:
 			programmatic_shake = shake
 
@@ -104,7 +101,7 @@ func _process(delta: float) -> void:
 		var lerp_amount = lerpf(damaged_mask.position.x, main_mask.position.x, DAMAGE_LERP_SPEED * delta)
 		_update_damaged(lerp_amount)
 	damage_update_timeout -= delta
-	frame.position.x = lerpf(frame.position.x, 0.0, SHAKE_LERP_SPEED * delta)
+	frame.position.y = lerpf(frame.position.y, frame_origin.y, SHAKE_LERP_SPEED * delta)
 	
 	if intro_fill > 0.0:
 		var current_ratio = abs((intro_fill / INTRO_FILL_TIME) - 1)
@@ -120,7 +117,7 @@ func _process(delta: float) -> void:
 		boss_name_container.position = container_shake
 		defeated_container.position = container_shake + defeated_origin
 		if programmatic_shake:
-			frame.position.x += randf_range(-OUTRO_SHAKE, OUTRO_SHAKE)
+			frame.position = frame_origin + container_shake
 
 
 #region AnimationPlayer functions
@@ -134,8 +131,10 @@ func _end_intro_fill() -> void:
 	intro_fill = 0.0
 	_update_main(0)
 	_update_damaged(0)
-	main.action = "bar_main_filled"
+	main.play("filled")
+	main.autoplay_next = "default"
 	sfx_full.play()
+	frame_origin = frame.position
 
 
 ## Disables the intro state of the connected boss
@@ -173,9 +172,9 @@ func update() -> void:
 	_update_main()
 	damage_update_timeout = DAMAGE_UPDATE_TIMEOUT
 	if programmatic_shake:
-		frame.position.x += randf_range(-SHAKE_VARIANCE, SHAKE_VARIANCE)
-	frame.action = "frame_damage"
-	main.action = "bar_main_damage"
+		frame.position.y += randf_range(-SHAKE_VARIANCE, SHAKE_VARIANCE)
+	#frame.action = "frame_damage"
+	#main.action = "bar_main_damage"
 
 
 ## Plays the sound set when filling the bar

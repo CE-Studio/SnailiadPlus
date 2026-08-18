@@ -1,13 +1,111 @@
 [gd_scene format=3 uid="uid://d0moh826bija1"]
 
-[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="1_4eer3"]
 [ext_resource type="Script" uid="uid://bcbsgnuirgluw" path="res://Scripts/UI/BossHealthBar.gd" id="1_krcuj"]
 [ext_resource type="Texture2D" uid="uid://kb0jat8ql671" path="res://Assets/Images/UI/BossHealthBar.png" id="2_luj16"]
-[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_krcuj"]
+[ext_resource type="Script" uid="uid://boee2837la0pr" path="res://Scripts/Classes/SnailySprite.gd" id="3_gahxl"]
 [ext_resource type="PackedScene" uid="uid://dke6r2335reau" path="res://Scenes/internals/SnailyText.tscn" id="5_g7p6m"]
 [ext_resource type="AudioStream" uid="uid://dgxsaawqmxanw" path="res://Assets/Sounds/Sfx/BossHpBleep.ogg" id="6_lknyw"]
 [ext_resource type="AudioStream" uid="uid://cnch0eia1ssyo" path="res://Assets/Sounds/Sfx/BossHpFull.ogg" id="7_gahxl"]
 [ext_resource type="AudioStream" uid="uid://1kr007smqo56" path="res://Assets/Sounds/Sfx/BossDefeatPopup.ogg" id="8_0ogdg"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0ogdg"]
+atlas = ExtResource("2_luj16")
+region = Rect2(0, 0, 256, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wkouj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0ogdg")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 1.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gahxl"]
+atlas = ExtResource("2_luj16")
+region = Rect2(0, 48, 256, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0ogdg"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gahxl")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 1.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h3gxo"]
+atlas = ExtResource("2_luj16")
+region = Rect2(0, 32, 256, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_bj8rp"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h3gxo")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 1.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0ep73"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gahxl")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 1.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lf6rf"]
+atlas = ExtResource("2_luj16")
+region = Rect2(0, 16, 256, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i5gy6"]
+atlas = ExtResource("2_luj16")
+region = Rect2(0, 32, 256, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bh8ua"]
+atlas = ExtResource("2_luj16")
+region = Rect2(0, 16, 256, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_2dhju"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lf6rf")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i5gy6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bh8ua")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i5gy6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bh8ua")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i5gy6")
+}],
+"loop": 0,
+"name": &"filled",
+"speed": 20.0
+}]
 
 [sub_resource type="Animation" id="Animation_0ogdg"]
 resource_name = "Defeated"
@@ -567,49 +665,53 @@ _data = {
 &"Spawn": SubResource("Animation_lknyw")
 }
 
-[node name="BossHealthBar" type="Node2D" unique_id=205799282]
+[node name="BossHealthBar" type="Node2D" unique_id=205799282 node_paths=PackedStringArray("frame", "main", "main_mask", "damaged", "damaged_mask", "boss_name", "boss_name_container", "defeated", "defeated_container", "sfx_beep", "sfx_full", "anim")]
 script = ExtResource("1_krcuj")
+frame = NodePath("Frame")
+main = NodePath("Frame/BarMainMask/BarMain")
+main_mask = NodePath("Frame/BarMainMask")
+damaged = NodePath("Frame/BarDamagedMask/BarDamaged")
+damaged_mask = NodePath("Frame/BarDamagedMask")
+boss_name = NodePath("BossName/HBox/SnailyText")
+boss_name_container = NodePath("BossName")
+defeated = NodePath("Defeated/HBox/SnailyText")
+defeated_container = NodePath("Defeated")
+sfx_beep = NodePath("AudioGroup/Beep")
+sfx_full = NodePath("AudioGroup/Full")
+anim = NodePath("AnimationPlayer")
 
-[node name="Frame" type="Sprite2D" parent="." unique_id=1313211067]
+[node name="Frame" type="AnimatedSprite2D" parent="." unique_id=182992430]
 position = Vector2(0, 8)
-script = ExtResource("1_4eer3")
-texture_path = "res://Assets/Images/UI/BossHealthBar.json"
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
+sprite_frames = SubResource("SpriteFrames_wkouj")
+autoplay = "default"
+script = ExtResource("3_gahxl")
+meta_info = [true]
+metadata/_custom_type_script = "uid://boee2837la0pr"
 
-[node name="MarkerSprite" type="Sprite2D" parent="Frame" unique_id=617883090]
-texture = ExtResource("2_luj16")
-vframes = 4
-script = ExtResource("3_krcuj")
-metadata/_custom_type_script = "uid://b63lo60i7kt7f"
-
-[node name="BarDamagedMask" type="Sprite2D" parent="Frame" unique_id=1280433979]
+[node name="BarDamagedMask" type="AnimatedSprite2D" parent="Frame" unique_id=81099549]
 clip_children = 1
-script = ExtResource("1_4eer3")
-texture_path = "res://Assets/Images/UI/BossHealthBar.json"
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
+sprite_frames = SubResource("SpriteFrames_0ogdg")
+script = ExtResource("3_gahxl")
+metadata/_custom_type_script = "uid://boee2837la0pr"
 
-[node name="BarDamaged" type="Sprite2D" parent="Frame/BarDamagedMask" unique_id=546889222]
-script = ExtResource("1_4eer3")
-texture_path = "res://Assets/Images/UI/BossHealthBar.json"
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
+[node name="BarDamaged" type="AnimatedSprite2D" parent="Frame/BarDamagedMask" unique_id=2003908993]
+sprite_frames = SubResource("SpriteFrames_bj8rp")
+autoplay = "default"
+script = ExtResource("3_gahxl")
+metadata/_custom_type_script = "uid://boee2837la0pr"
 
-[node name="BarMainMask" type="Sprite2D" parent="Frame" unique_id=241962077]
+[node name="BarMainMask" type="AnimatedSprite2D" parent="Frame" unique_id=351401258]
 clip_children = 1
-script = ExtResource("1_4eer3")
-texture_path = "res://Assets/Images/UI/BossHealthBar.json"
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
+sprite_frames = SubResource("SpriteFrames_0ep73")
+autoplay = "default"
+script = ExtResource("3_gahxl")
+metadata/_custom_type_script = "uid://boee2837la0pr"
 
-[node name="BarMain" type="Sprite2D" parent="Frame/BarMainMask" unique_id=662390493]
-script = ExtResource("1_4eer3")
-texture_path = "res://Assets/Images/UI/BossHealthBar.json"
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
-
-[node name="MarkerSprite" type="Sprite2D" parent="Frame/BarMainMask/BarMain" unique_id=1833136507]
-texture = ExtResource("2_luj16")
-vframes = 4
-frame = 1
-script = ExtResource("3_krcuj")
-metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+[node name="BarMain" type="AnimatedSprite2D" parent="Frame/BarMainMask" unique_id=1834077027]
+sprite_frames = SubResource("SpriteFrames_2dhju")
+autoplay = "default"
+script = ExtResource("3_gahxl")
+metadata/_custom_type_script = "uid://boee2837la0pr"
 
 [node name="BossName" type="Node2D" parent="." unique_id=1823580315]
 
