@@ -7,9 +7,11 @@ extends Node2D
 
 #region Variables
 const TICKS_BETWEEN_AFTERIMAGES:int = 4
+const ANGLE_DEADZONE:float = 0.3827
 
 @export var damage:int = 0
 @export var rush_damage:int = 0
+@export var parry_damage:int = 0
 @export var max_life_time:float = 1.6
 @export var rapid_mult:float = 1.0
 @export var despawn_offscreen:bool = false
@@ -54,7 +56,7 @@ enum PBulletInteractions {
 }
 
 ## The sprite component of this bullet
-@onready var sprite:JsonSprite2D = $"JsonSprite2D"
+@onready var sprite:SnailySprite2D = $"SnailySprite2D"
 ## The bullet's hitbox for tracking entity collisions
 @onready var area:Area2D = $"Area2D"
 ## The bullet's hitbox for tracking world collisions
@@ -64,7 +66,7 @@ enum PBulletInteractions {
 ## The area that is read to determine if the bullet is currently on-screen
 @onready var vis:VisibleOnScreenNotifier2D = $"VisibleOnScreenNotifier2D"
 ## A persistent reference to the [EnemyBulletAfterimage] scene
-@onready var afterimage:PackedScene = preload("res://Scenes/Entities/Bullets/Enemy/EnemyBulletAfterimage.tscn")
+@onready var afterimage:PackedScene = preload("uid://bcpnu7gti14ph")
 #endregion
 
 
@@ -79,6 +81,19 @@ func _spawn(dir:Vector2, speed:float, play_sound:bool = true) -> void:
 	area.connect("body_exited", _on_body_exited)
 	if light_radius > 0:
 		UICore.instance.darkness_layer.add_source(self, light_radius)
+
+
+func _infer_direction_anim() -> void:
+	var anim_name = ""
+	if normalized_dir.y < -ANGLE_DEADZONE:
+		anim_name += "U"
+	elif normalized_dir.y > ANGLE_DEADZONE:
+		anim_name += "D"
+	if normalized_dir.x < -ANGLE_DEADZONE:
+		anim_name += "L"
+	elif normalized_dir.x > ANGLE_DEADZONE:
+		anim_name += "R"
+	sprite.play(anim_name)
 
 
 func _physics_process(delta: float) -> void:
@@ -115,7 +130,7 @@ func parry_reshoot() -> void:
 		normalized_dir *= -1
 	life_timer = 0.0
 	velocity = velocity_init
-	damage = damage * 32 * (Statics.get_shell_level() + 1)
+	parry_damage *= floori((Statics.get_shell_level() + 1) * Statics.FRAC_8)
 
 
 ## Called whenever this bullet intersects with another body

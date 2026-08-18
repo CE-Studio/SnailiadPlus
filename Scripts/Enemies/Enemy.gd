@@ -251,8 +251,8 @@ func _physics_process(delta) -> void:
 				pbullets_to_despawn.append(bullet)
 		for bullet in intersecting_ebullets:
 			if bullet.has_been_parried:
-				if bullet.damage - defense > 0:
-					var this_damage = floori(bullet.damage - defense)
+				if bullet.parry_damage - defense > 0:
+					var this_damage = floori(bullet.parry_damage - defense)
 					if this_damage > max_damage:
 						max_damage = this_damage
 				else:
