@@ -101,7 +101,7 @@ func _physics_process(delta: float) -> void:
 		var this_damage:int = damage
 		if Statics.is_in_boss_rush and rush_damage != 0:
 			this_damage = rush_damage
-		if GameCore.instance.player.adjust_health(-this_damage):
+		if GameCore.instance.player.adjust_health(-this_damage, false, true):
 			parry_reshoot()
 		elif single_hit:
 			_despawn()
@@ -130,7 +130,7 @@ func parry_reshoot() -> void:
 		normalized_dir *= -1
 	life_timer = 0.0
 	velocity = velocity_init
-	parry_damage *= floori(1.0 + (Statics.get_shell_level() + 1) * Statics.FRAC_8)
+	parry_damage *= floori(1.0 + (Statics.get_shell_level() * 0.25))
 
 
 ## Called whenever this bullet intersects with another body

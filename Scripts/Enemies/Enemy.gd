@@ -10,7 +10,7 @@ const DAMAGE_TIMEOUT:float = 0.025
 const DAMAGE_FLASH_COLOR:Color = Color(0.9, 0.9, 0.9)
 const DAMAGE_FLASH_STRENGTH:float = 0.9
 const DAMAGE_FADE_DECAY:float = 10.0
-const PARRY_DAMAGE_MULT:float = 12.0
+const PARRY_DAMAGE_MULT:float = 8.0
 
 @export var max_health:int
 @export var max_health_easy:int
@@ -20,6 +20,7 @@ const PARRY_DAMAGE_MULT:float = 12.0
 @export var weaknesses:Array[int] = []  # Enemies take double damage from bullet types in this list
 @export var resistances:Array[int] = [] # Enemies take half damage from bullet types in this list
 @export var immunities:Array[int] = []  # Enemies resist all damage from bullet types in this list
+@export_range(0, 1, 0.01) var parry_resist:float = 0.0
 @export var can_be_pierced:bool = true
 @export var make_sound_on_ping:bool = true
 @export var invulnerable:bool = false
@@ -211,8 +212,9 @@ func _physics_process(delta) -> void:
 		if can_hit and attack > 0:
 			if GameCore.instance.player.adjust_health(-attack):
 				parry_damage = floori(attack * PARRY_DAMAGE_MULT)
-				if Statics.check_item(Item.ItemTypes.METAL_SHELL):
-					parry_damage *= 2
+				parry_damage *= floori(1.0 + (Statics.get_shell_level() * 0.25))
+				parry_damage = roundi(lerpf(parry_damage, 0, parry_resist))
+				print(parry_damage)
 
 	damaged_this_tick = false
 	if not stun_invul and (not vis or vis.is_on_screen()) and not invulnerable:

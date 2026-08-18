@@ -41,6 +41,7 @@ script = ExtResource("1_f88cf")
 max_health = 5
 attack = 6
 defense = 250
+parry_resist = 1.0
 can_be_pierced = false
 interact_with_environments = false
 health_orb_value = 2

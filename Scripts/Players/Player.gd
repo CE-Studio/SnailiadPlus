@@ -1480,7 +1480,7 @@ func get_box_size() -> Vector2:
 
 ## Adds to or subtracts from the player's current health by the given amount.
 ## Will return [code]true[/code] if any attempted damage has been parried.
-func adjust_health(amount:int, ignore_defense:bool = false) -> bool:
+func adjust_health(amount:int, ignore_defense:bool = false, allow_parry_heal:bool = false) -> bool:
 	if amount < 0 and in_death_cutscene:
 		return false
 
@@ -1513,14 +1513,15 @@ func adjust_health(amount:int, ignore_defense:bool = false) -> bool:
 				_push_from_wall()
 			_set_direction(home_gravity, facing_left)
 			outer_allowed = false
-			#_play_anim("fall")
+			_play_anim("idle")
 			body.velocity = Vector2.ZERO
 		stunned = true
 		stun_timer = MAX_STUN_TIMER
 		if shielded:
 			if time_since_shell <= PARRY_WINDOW:
 				sfx_parry.play()
-				adjust_health(PARRY_HEAL)
+				if allow_parry_heal:
+					adjust_health(PARRY_HEAL)
 				if (Statics.get_particle_setting(Statics.ParticleOptions.ENTITIES_ALL)
 				or Statics.get_particle_setting(Statics.ParticleOptions.ALL)):
 					Statics.spawn_particle("Parry", Room.Layers.GROUND, position)
