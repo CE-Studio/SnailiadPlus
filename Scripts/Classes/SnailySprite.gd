@@ -61,6 +61,8 @@ func _ready() -> void:
 ## This could be expensive and halt the game for a second if enough animations need to be made,
 ## so try to use sparingly if possible (e.g. player shell states)
 func _infer_new() -> void:
+	if infer_new:
+		assert(source, "A source Texture2D must be supplied for a SnailySprite2D to infer new animations.")
 	if not infer_new or add_count <= 0 or not source:
 		return
 	var anims:PackedStringArray = sprite_frames.get_animation_names()
@@ -76,6 +78,8 @@ func _infer_new() -> void:
 			var new_anim:String = anim.replace(replace_key, "%02d." % i)
 			if i <= specialized_keys.size():
 				new_anim = anim.replace(replace_key, specialized_keys[i - 1])
+			elif replace_key == "0":
+				new_anim = anim.replace(replace_key, str(i))
 			if anims.has(new_anim):
 				continue
 			sprite_frames.add_animation(new_anim)
@@ -87,6 +91,7 @@ func _infer_new() -> void:
 				new_tex.region = rects[j]
 				new_tex.region.position += (Vector2(rect_offset) * i)
 				sprite_frames.add_frame(new_anim, new_tex)
+			#print("Added " + new_anim)
 
 
 ## Takes an array of animations and selects one at random to play

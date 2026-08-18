@@ -69,7 +69,7 @@ func advance_phase(count:int = 1) -> void:
 func play_phase_anim(anim_name:String = "", set_as_current:bool = true) -> String:
 	if not sprite:
 		return ""
-	sprite.action = get_phase_anim(anim_name)
+	sprite.play(get_phase_anim(anim_name))
 	if set_as_current and anim_name.strip_edges() != "":
 		current_anim = anim_name
 	return anim_name

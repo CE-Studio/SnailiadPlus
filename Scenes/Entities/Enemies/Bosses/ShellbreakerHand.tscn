@@ -1,14 +1,45 @@
 [gd_scene format=3 uid="uid://bjgywgga30eg1"]
 
 [ext_resource type="Script" uid="uid://pjdou48esmui" path="res://Scripts/Enemies/Bosses/ShellbreakerHand.gd" id="1_c3pwi"]
-[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="2_q7w5a"]
+[ext_resource type="Script" uid="uid://boee2837la0pr" path="res://Scripts/Classes/SnailySprite.gd" id="3_beswn"]
 [ext_resource type="Texture2D" uid="uid://duqqgrfyg1ij" path="res://Assets/Images/Entities/Boss1Hand.png" id="3_t5rnc"]
-[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="4_fb4ef"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vj7im"]
 size = Vector2(24, 24)
 
-[node name="ShellbreakerHand" type="Node2D" unique_id=1842650276]
+[sub_resource type="AtlasTexture" id="AtlasTexture_c3pwi"]
+atlas = ExtResource("3_t5rnc")
+region = Rect2(0, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t5rnc"]
+atlas = ExtResource("3_t5rnc")
+region = Rect2(24, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q7w5a"]
+atlas = ExtResource("3_t5rnc")
+region = Rect2(48, 0, 24, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wkouj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c3pwi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t5rnc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q7w5a")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t5rnc")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 12.0
+}]
+
+[node name="ShellbreakerHand" type="Node2D" unique_id=1842650276 node_paths=PackedStringArray("col", "hitbox", "sprite", "vis")]
 z_index = -1
 script = ExtResource("1_c3pwi")
 max_health = 100
@@ -16,6 +47,10 @@ attack = 1
 defense = 1000
 make_sound_on_ping = false
 shield_entity = true
+col = NodePath("Area2D/HitBox")
+hitbox = NodePath("Area2D")
+sprite = NodePath("SnailySprite2D")
+vis = NodePath("VisibleOnScreenNotifier2D")
 
 [node name="Area2D" type="Area2D" parent="." unique_id=750220685]
 collision_layer = 64
@@ -28,15 +63,8 @@ debug_color = Color(0.976471, 0, 0.415686, 0.419608)
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1959203950]
 scale = Vector2(1.2, 1.2)
 
-[node name="HandGroup" type="Node2D" parent="." unique_id=553308781]
-
-[node name="Body" type="Sprite2D" parent="." unique_id=688613725]
-script = ExtResource("2_q7w5a")
-texture_path = "res://Assets/Images/Entities/Boss1Hand.json"
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
-
-[node name="MarkerSprite" type="Sprite2D" parent="Body" unique_id=144452456]
-texture = ExtResource("3_t5rnc")
-hframes = 3
-script = ExtResource("4_fb4ef")
-metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+[node name="SnailySprite2D" type="AnimatedSprite2D" parent="." unique_id=466548308]
+sprite_frames = SubResource("SpriteFrames_wkouj")
+autoplay = "default"
+script = ExtResource("3_beswn")
+metadata/_custom_type_script = "uid://boee2837la0pr"

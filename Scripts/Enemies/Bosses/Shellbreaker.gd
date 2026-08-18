@@ -36,10 +36,10 @@ var blink_timeout:float = 0.0
 var grav_shock_kill:bool = false
 var grav_shock_dir:Vector2 = Vector2.ZERO
 
-@onready var eyes:JsonSprite2D = $"Eyes"
-@onready var hand:PackedScene = preload("res://Scenes/Entities/Enemies/Bosses/ShellbreakerHand.tscn")
-@onready var hand_group:Node2D = $"HandGroup"
-@onready var boomerang:PackedScene = preload("res://Scenes/Entities/Bullets/Enemy/EnemyBulletBoomerangBlue.tscn")
+@onready var hand:PackedScene = preload("uid://bjgywgga30eg1")
+@onready var boomerang:PackedScene = preload("uid://bcgwxtcgdpoep")
+@export var eyes:SnailySprite2D
+@export var hand_group:Node2D
 #endregion
 
 
@@ -49,9 +49,6 @@ func _ready() -> void:
 		return
 	
 	my_type = EnemyTypes.SHELLBREAKER
-	sprite = $"Body"
-	hitbox = $"Area2D"
-	vis = $"VisibleOnScreenNotifier2D"
 	super.spawn()
 	
 	if display_mode:
@@ -177,7 +174,7 @@ func try_shoot() -> void:
 	if shot_pattern_timeout <= 0:
 		if not is_firing:
 			is_firing = true
-			play_phase_anim("shoot_start")
+			play_phase_anim("shoot")
 		hand_radius_target = 0.0
 		if shot_timeout <= 0.0:
 			shot_timeout = SHOT_DELAY * SHOT_DELAY_MULTS[phase]
@@ -197,7 +194,7 @@ func try_shoot() -> void:
 				hand_radius_target = 1.0
 				shot_count = 0
 				is_firing = false
-				play_phase_anim("shoot_end")
+				play_phase_anim("idle")
 
 
 func shoot(angle:float) -> void:
@@ -206,8 +203,15 @@ func shoot(angle:float) -> void:
 
 
 func play_phase_anim(anim_name:String = "", set_as_current:bool = true) -> String:
+	if anim_name == "blink":
+		sprite.autoplay_next = sprite.animation
+		eyes.autoplay_next = eyes.animation
 	super.play_phase_anim(anim_name, set_as_current)
-	eyes.action = get_phase_anim(anim_name, "eyes_")
+	if anim_name.contains("shock"):
+		eyes.stop()
+		eyes.visible = false
+	else:
+		eyes.play(get_phase_anim(anim_name))
 	return anim_name
 
 
@@ -227,8 +231,9 @@ func kill() -> void:
 		UICore.instance.achievement_core.check_add(AchievementCore.Achievements.BEAT_SHELLBREAKER)
 		if health_bar:
 			health_bar._toggle_outro_shake()
-		sprite.action = "defeat"
-		eyes.action = "eyes_defeat"
+		sprite.play("defeat")
+		eyes.stop()
+		eyes.visible = false
 		for _hand in hands:
 			_hand.kill()
 		hands.clear()

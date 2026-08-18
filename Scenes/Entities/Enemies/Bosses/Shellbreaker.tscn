@@ -1,17 +1,201 @@
 [gd_scene format=3 uid="uid://da62go5bytmwc"]
 
 [ext_resource type="Script" uid="uid://r14a47rjik4o" path="res://Scripts/Enemies/Bosses/Shellbreaker.gd" id="1_mrmot"]
-[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="2_8mwk1"]
 [ext_resource type="Material" uid="uid://bj1jqi3180tg5" path="res://Resources/EnemyFlashMat.tres" id="2_dkg6q"]
+[ext_resource type="Script" uid="uid://boee2837la0pr" path="res://Scripts/Classes/SnailySprite.gd" id="3_8mwk1"]
 [ext_resource type="Texture2D" uid="uid://btusvvrw8c21i" path="res://Assets/Images/Entities/Boss1.png" id="3_dkg6q"]
-[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="4_edngx"]
+[ext_resource type="Texture2D" uid="uid://sy02axw6tn0g" path="res://Assets/Images/Blank.png" id="5_8mwk1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vj7im"]
 size = Vector2(48, 48)
 
-[node name="Shellbreaker" type="Node2D" unique_id=618070930]
+[sub_resource type="AtlasTexture" id="AtlasTexture_8mwk1"]
+atlas = ExtResource("3_dkg6q")
+region = Rect2(48, 144, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dkg6q"]
+atlas = ExtResource("3_dkg6q")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_edngx"]
+atlas = ExtResource("3_dkg6q")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wkqwb"]
+atlas = ExtResource("3_dkg6q")
+region = Rect2(240, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vj7im"]
+atlas = ExtResource("3_dkg6q")
+region = Rect2(288, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gv1bi"]
+atlas = ExtResource("3_dkg6q")
+region = Rect2(192, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_il0br"]
+atlas = ExtResource("3_dkg6q")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8o8jp"]
+atlas = ExtResource("3_dkg6q")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8mwk1"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8mwk1")
+}],
+"loop": 1,
+"name": &"defeat",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dkg6q")
+}],
+"loop": 0,
+"name": &"p0_blink",
+"speed": 16.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_edngx")
+}],
+"loop": 1,
+"name": &"p0_idle",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wkqwb")
+}],
+"loop": 1,
+"name": &"p0_shock_down",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vj7im")
+}],
+"loop": 1,
+"name": &"p0_shock_left",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gv1bi")
+}],
+"loop": 1,
+"name": &"p0_shock_right",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_il0br")
+}],
+"loop": 1,
+"name": &"p0_shock_up",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8o8jp")
+}],
+"loop": 1,
+"name": &"p0_shoot",
+"speed": 1.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8y4sl"]
+atlas = ExtResource("5_8mwk1")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7o2us"]
+atlas = ExtResource("3_dkg6q")
+region = Rect2(0, 144, 48, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8y4sl"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8y4sl")
+}],
+"loop": 0,
+"name": &"p0_blink",
+"speed": 16.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7o2us")
+}],
+"loop": 1,
+"name": &"p0_idle",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7o2us")
+}],
+"loop": 1,
+"name": &"p0_shoot",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8y4sl")
+}],
+"loop": 0,
+"name": &"p1_blink",
+"speed": 16.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7o2us")
+}],
+"loop": 1,
+"name": &"p1_idle",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7o2us")
+}],
+"loop": 1,
+"name": &"p1_shoot",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8y4sl")
+}],
+"loop": 0,
+"name": &"p2_blink",
+"speed": 16.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7o2us")
+}],
+"loop": 1,
+"name": &"p2_idle",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7o2us")
+}],
+"loop": 1,
+"name": &"p2_shoot",
+"speed": 1.0
+}]
+
+[node name="Shellbreaker" type="Node2D" unique_id=618070930 node_paths=PackedStringArray("eyes", "hand_group", "col", "hitbox", "sprite", "vis")]
 z_index = 120
 script = ExtResource("1_mrmot")
+eyes = NodePath("Eyes")
+hand_group = NodePath("HandGroup")
 phase_changes = Array[float]([0.667, 0.333])
 max_health = 400
 max_health_hard = 450
@@ -21,6 +205,10 @@ light_radius = 64
 kill_particle_range = Vector2i(0, 0)
 kill_particle_types = Array[String]([])
 kill_particle_count = 0
+col = NodePath("Area2D/HitBox")
+hitbox = NodePath("Area2D")
+sprite = NodePath("Body")
+vis = NodePath("VisibleOnScreenNotifier2D")
 
 [node name="Area2D" type="Area2D" parent="." unique_id=556441886]
 collision_layer = 64
@@ -35,30 +223,24 @@ scale = Vector2(2.4, 2.4)
 
 [node name="HandGroup" type="Node2D" parent="." unique_id=596013677]
 
-[node name="Body" type="Sprite2D" parent="." unique_id=1924304832]
+[node name="Body" type="AnimatedSprite2D" parent="." unique_id=1238946115]
 material = ExtResource("2_dkg6q")
-script = ExtResource("2_8mwk1")
-texture_path = "res://Assets/Images/Entities/Boss1.json"
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
+sprite_frames = SubResource("SpriteFrames_8mwk1")
+animation = &"p0_idle"
+autoplay = "p0_idle"
+script = ExtResource("3_8mwk1")
+infer_new = true
+replace_key = "0"
+add_count = 2
+rect_offset = Vector2i(0, 48)
+source = ExtResource("3_dkg6q")
+metadata/_custom_type_script = "uid://boee2837la0pr"
 
-[node name="MarkerSprite" type="Sprite2D" parent="Body" unique_id=2050605357]
-texture = ExtResource("3_dkg6q")
-hframes = 7
-vframes = 4
-script = ExtResource("4_edngx")
-metadata/_custom_type_script = "uid://b63lo60i7kt7f"
-
-[node name="Eyes" type="Sprite2D" parent="." unique_id=1433572842]
+[node name="Eyes" type="AnimatedSprite2D" parent="." unique_id=333340505]
 material = ExtResource("2_dkg6q")
-script = ExtResource("2_8mwk1")
-texture_path = "res://Assets/Images/Entities/Boss1.json"
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
-
-[node name="MarkerSprite" type="Sprite2D" parent="Eyes" unique_id=778250792]
 position = Vector2(-1, 0)
-texture = ExtResource("3_dkg6q")
-hframes = 7
-vframes = 4
-frame = 21
-script = ExtResource("4_edngx")
-metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+sprite_frames = SubResource("SpriteFrames_8y4sl")
+animation = &"p0_idle"
+autoplay = "p0_idle"
+script = ExtResource("3_8mwk1")
+metadata/_custom_type_script = "uid://boee2837la0pr"
