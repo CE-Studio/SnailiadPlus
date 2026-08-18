@@ -204,6 +204,8 @@ func shoot(angle:float) -> void:
 
 func play_phase_anim(anim_name:String = "", set_as_current:bool = true) -> String:
 	if anim_name == "blink":
+		if sprite.animation.contains("blink"):
+			return anim_name
 		sprite.autoplay_next = sprite.animation
 		eyes.autoplay_next = eyes.animation
 	super.play_phase_anim(anim_name, set_as_current)

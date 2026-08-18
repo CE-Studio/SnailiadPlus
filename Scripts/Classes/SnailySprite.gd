@@ -18,7 +18,7 @@ extends AnimatedSprite2D
 ## as soon as the currently active animation finishes. This value is cleared as soon as it is read.
 @export var autoplay_next:String = ""
 ## Will be used on creation to select a random multiplier that will be applied to the playback
-## speed of all animations until [code]set_speed()[/code] is called again. The vector's X component
+## speed of all animations until [param set_speed()] is called again. The vector's X component
 ## is used as the minimum value, and the Y component is used as the maximum value.
 @export var spawn_speed_variance:Vector2 = Vector2.ONE
 ## If [code]true[/code], this sprite will be hidden the instant a non-looping animation finishes playing.
@@ -37,7 +37,7 @@ extends AnimatedSprite2D
 @export var rect_offset:Vector2i = Vector2i(0, 16)
 ## A direct reference to the texture that should be used to generate new animations.
 @export var source:Texture2D
-## An optional array containing any special keys that will replace [code]replace_key[/code] when
+## An optional array containing any special keys that will replace [param replace_key] when
 ## an animation is created. If this array's size is less than the number of animation sets being
 ## generated, the remaining sets will be numbered as if this array was empty.
 @export var specialized_keys:Array[String] = []

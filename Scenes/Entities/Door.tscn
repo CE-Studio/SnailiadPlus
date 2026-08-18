@@ -478,6 +478,7 @@ shape = SubResource("RectangleShape2D_5rp22")
 disabled = true
 
 [node name="SnailySprite2D" type="AnimatedSprite2D" parent="." unique_id=811078249]
+visible = false
 sprite_frames = SubResource("SpriteFrames_wkouj")
 animation = &"blue_left_closed"
 script = ExtResource("8_3w6cd")

@@ -48,9 +48,9 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_exlm5")
 }],
-"loop": 0,
+"loop": 1,
 "name": &"normal_ceil_eaten",
-"speed": 120.0
+"speed": 1.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -72,9 +72,9 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_exlm5")
 }],
-"loop": 0,
+"loop": 1,
 "name": &"normal_floor_eaten",
-"speed": 120.0
+"speed": 1.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -96,9 +96,9 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_exlm5")
 }],
-"loop": 0,
+"loop": 1,
 "name": &"power_ceil_eaten",
-"speed": 120.0
+"speed": 1.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -120,9 +120,9 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_exlm5")
 }],
-"loop": 0,
+"loop": 1,
 "name": &"power_floor_eaten",
-"speed": 120.0
+"speed": 1.0
 }, {
 "frames": [{
 "duration": 1.0,
