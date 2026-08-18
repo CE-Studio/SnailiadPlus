@@ -60,3 +60,4 @@ func _physics_process(delta: float) -> void:
 
 func play_anim(state:String) -> void:
 	sprite.play(state + ("_left" if facing_left else "_right"))
+	sprite.flip_h = facing_left

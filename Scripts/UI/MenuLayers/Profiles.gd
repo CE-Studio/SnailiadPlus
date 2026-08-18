@@ -125,13 +125,14 @@ func _update_profile_buttons() -> void:
 			button.set_subtext(stats)
 			if (profile["world_flags"].size() > (Statics.WorldFlags.DEFEATED_BOSS4 as int)
 			and profile["world_flags"][Statics.WorldFlags.DEFEATED_BOSS4]):
+				marker.visible = true
 				if profile["item_rate"] >= 100.0:
 					marker.frame = 1
 			else: marker.visible = false
 		else:
 			button.set_text(tr(&"Empty profile"))
 			button.set_subtext(tr(&"Select to start a new one!"))
-			marker.action = "none"
+			marker.visible = false
 
 
 func focus_panel() -> void:

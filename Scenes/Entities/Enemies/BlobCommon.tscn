@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://dfvds8owba6tc"]
 
 [ext_resource type="Script" uid="uid://bqfo33dne536c" path="res://Scripts/Enemies/BlobCommon.gd" id="1_hoefv"]
+[ext_resource type="Material" uid="uid://bj1jqi3180tg5" path="res://Resources/EnemyFlashMat.tres" id="2_hoefv"]
 [ext_resource type="Texture2D" uid="uid://t51kmln17iof" path="res://Assets/Images/Entities/Blob.png" id="3_nfjvd"]
 [ext_resource type="AudioStream" uid="uid://dg0ue34dycuir" path="res://Assets/Sounds/Sfx/Enemy/BlobJump.ogg" id="6_nfjvd"]
 [ext_resource type="Script" uid="uid://boee2837la0pr" path="res://Scripts/Classes/SnailySprite.gd" id="8_yl0hf"]
@@ -417,6 +418,7 @@ debug_color = Color(0.976471, 0, 0.415686, 0.419608)
 scale = Vector2(0.8, 0.8)
 
 [node name="SnailySprite2D" type="AnimatedSprite2D" parent="." unique_id=2001022382]
+material = ExtResource("2_hoefv")
 sprite_frames = SubResource("SpriteFrames_wkouj")
 animation = &"idle_left"
 script = ExtResource("8_yl0hf")

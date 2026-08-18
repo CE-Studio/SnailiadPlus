@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://c8v6ec2os4sgf"]
 
 [ext_resource type="Script" uid="uid://cx5iqiw5vi50f" path="res://Scripts/Enemies/FloatspikeTough.gd" id="1_f88cf"]
+[ext_resource type="Material" uid="uid://bj1jqi3180tg5" path="res://Resources/EnemyFlashMat.tres" id="2_aule8"]
 [ext_resource type="Script" uid="uid://boee2837la0pr" path="res://Scripts/Classes/SnailySprite.gd" id="3_ln0yp"]
 [ext_resource type="Texture2D" uid="uid://bhedmx2gxb83y" path="res://Assets/Images/Entities/Floatspike2.png" id="5_f88cf"]
 
@@ -60,6 +61,7 @@ debug_color = Color(0.976471, 0, 0.415686, 0.419608)
 scale = Vector2(0.8, 0.8)
 
 [node name="SnailySprite2D" type="AnimatedSprite2D" parent="." unique_id=1709326804]
+material = ExtResource("2_aule8")
 sprite_frames = SubResource("SpriteFrames_wkouj")
 animation = &"idle"
 autoplay = "idle"

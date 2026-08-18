@@ -69,8 +69,10 @@ func set_direction(new_dir:Statics.DirsSurface, distance:int = 24) -> void:
 		Statics.DirsSurface.RWALL:
 			direction = "R"
 			position = Vector2.LEFT * distance
+			sprite.flip_h = true
 		Statics.DirsSurface.CEILING:
 			direction = "U"
 			position = Vector2.DOWN * distance
+			sprite.flip_v = true
 	if shown:
 		sprite.play(direction + "_open")

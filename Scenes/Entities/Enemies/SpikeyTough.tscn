@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://cdf57eyuaxew"]
 
 [ext_resource type="Script" uid="uid://d28lnjyc2y2g8" path="res://Scripts/Enemies/SpikeyTough.gd" id="1_eebw4"]
+[ext_resource type="Material" uid="uid://bj1jqi3180tg5" path="res://Resources/EnemyFlashMat.tres" id="2_o2w5h"]
 [ext_resource type="Texture2D" uid="uid://dcem1ncnq4ist" path="res://Assets/Images/Entities/Spikey2.png" id="4_eebw4"]
 [ext_resource type="Script" uid="uid://boee2837la0pr" path="res://Scripts/Classes/SnailySprite.gd" id="7_c741o"]
 
@@ -443,6 +444,7 @@ debug_color = Color(0.976471, 0, 0.415686, 0.419608)
 scale = Vector2(0.8, 0.8)
 
 [node name="SnailySprite2D" type="AnimatedSprite2D" parent="." unique_id=2030102418]
+material = ExtResource("2_o2w5h")
 sprite_frames = SubResource("SpriteFrames_74ksv")
 animation = &"floor_cw"
 script = ExtResource("7_c741o")

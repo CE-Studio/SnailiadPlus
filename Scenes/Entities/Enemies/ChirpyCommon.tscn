@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://ctamvgmd3t6yn"]
 
 [ext_resource type="Script" uid="uid://xiyy0nsou5g3" path="res://Scripts/Enemies/ChirpyCommon.gd" id="1_tg0tv"]
+[ext_resource type="Material" uid="uid://bj1jqi3180tg5" path="res://Resources/EnemyFlashMat.tres" id="2_tg0tv"]
 [ext_resource type="Texture2D" uid="uid://ct6qpgc4lolab" path="res://Assets/Images/Entities/Chirpy1.png" id="4_tg0tv"]
 [ext_resource type="AudioStream" uid="uid://wg5300r3cxrj" path="res://Assets/Sounds/Sfx/Enemy/Chirp.ogg" id="6_d4uhh"]
 [ext_resource type="Script" uid="uid://boee2837la0pr" path="res://Scripts/Classes/SnailySprite.gd" id="7_0kxwn"]
@@ -84,6 +85,7 @@ debug_color = Color(0.976471, 0, 0.415686, 0.419608)
 scale = Vector2(0.8, 0.8)
 
 [node name="SnailySprite2D" type="AnimatedSprite2D" parent="." unique_id=527670952]
+material = ExtResource("2_tg0tv")
 sprite_frames = SubResource("SpriteFrames_51dtb")
 animation = &"down_right"
 script = ExtResource("7_0kxwn")
