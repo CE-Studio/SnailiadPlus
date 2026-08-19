@@ -4,4 +4,5 @@ extends Particle
 
 func _spawn(_data:Array) -> void:
 	super(_data)
+	sprite.visible = true
 	sprite.play(_data[0])

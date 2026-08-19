@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://cl17247un10gy" path="res://Assets/Images/Particles/Transformation.png" id="2_la6fb"]
 [ext_resource type="Script" uid="uid://boee2837la0pr" path="res://Scripts/Classes/SnailySprite.gd" id="3_r7vb1"]
 [ext_resource type="AudioStream" uid="uid://c0okte5cvilxm" path="res://Assets/Sounds/Sfx/Transformation.ogg" id="4_elesh"]
+[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="4_la6fb"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_la6fb"]
 atlas = ExtResource("2_la6fb")
@@ -473,7 +474,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_u01sp")
 }],
-"loop": 1,
+"loop": 0,
 "name": &"angel",
 "speed": 24.0
 }, {
@@ -523,7 +524,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_2w7qw")
 }],
-"loop": 1,
+"loop": 0,
 "name": &"corkscrew",
 "speed": 24.0
 }, {
@@ -573,7 +574,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_j8un3")
 }],
-"loop": 1,
+"loop": 0,
 "name": &"default",
 "speed": 24.0
 }, {
@@ -623,7 +624,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_7p8qu")
 }],
-"loop": 1,
+"loop": 0,
 "name": &"gravity",
 "speed": 24.0
 }, {
@@ -673,7 +674,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_nfcr4")
 }],
-"loop": 1,
+"loop": 0,
 "name": &"ice",
 "speed": 24.0
 }, {
@@ -723,7 +724,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_356f3")
 }],
-"loop": 1,
+"loop": 0,
 "name": &"magnet",
 "speed": 24.0
 }, {
@@ -773,7 +774,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_6xnbb")
 }],
-"loop": 1,
+"loop": 0,
 "name": &"metal",
 "speed": 24.0
 }]
@@ -786,12 +787,20 @@ sound = NodePath("Transform")
 timer = NodePath("Timer")
 
 [node name="SnailySprite2D" type="AnimatedSprite2D" parent="." unique_id=239088168]
+visible = false
 sprite_frames = SubResource("SpriteFrames_wkouj")
 animation = &"ice"
-frame = 9
 script = ExtResource("3_r7vb1")
 hide_on_finish = true
 metadata/_custom_type_script = "uid://boee2837la0pr"
+
+[node name="MarkerSprite" type="Sprite2D" parent="." unique_id=1630387532]
+texture = ExtResource("2_la6fb")
+hframes = 15
+vframes = 7
+frame = 24
+script = ExtResource("4_la6fb")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
 
 [node name="Transform" type="AudioStreamPlayer" parent="." unique_id=2065622940]
 stream = ExtResource("4_elesh")

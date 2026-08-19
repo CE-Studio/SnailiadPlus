@@ -302,7 +302,7 @@ func _spawn_entities_from_layer(layer:int) -> void:
 	while (spawned_sp < cells.size()) and (running_count < MAX_SP_PER_LOOP):
 		var ts := Time.get_ticks_msec()
 		if (ts - fts) > MAX_MS_PER_LOOP:
-			print("Timeout")
+			#print("Timeout")
 			break
 		var tile := cells[spawned_sp]
 		var tile_coords := map.get_cell_atlas_coords(tile)
