@@ -7,13 +7,62 @@
 [ext_resource type="PackedScene" uid="uid://brx6hvienl8qy" path="res://Scenes/Entities/Door.tscn" id="3_32syt"]
 [ext_resource type="PackedScene" uid="uid://bcnffsfter41s" path="res://Scenes/Entities/NPC.tscn" id="4_coiht"]
 [ext_resource type="PackedScene" uid="uid://ck2f53pdjx88q" path="res://Scenes/internals/RoomTransitionTrigger.tscn" id="4_nylvx"]
-[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="5_huffg"]
 [ext_resource type="Texture2D" uid="uid://bus4mys0ccidy" path="res://Assets/Images/Environments/EpicBanner.png" id="6_g5lqu"]
-[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="7_qcc3e"]
+[ext_resource type="Script" uid="uid://boee2837la0pr" path="res://Scripts/Classes/SnailySprite.gd" id="7_m3o81"]
 [ext_resource type="PackedScene" uid="uid://biwfp80q8y8j3" path="res://Scenes/internals/Triggers/Trigger.tscn" id="11_m3o81"]
 [ext_resource type="Script" uid="uid://wsvamec27aoo" path="res://Scripts/Classes/TriggerTypes/CutsceneTrigger.gd" id="12_ckfgm"]
 [ext_resource type="PackedScene" uid="uid://d142ll0y7eglf" path="res://Scenes/internals/DummyCutsceneControllable.tscn" id="13_mw3he"]
 [ext_resource type="PackedScene" uid="uid://ccbbpx2kxbml2" path="res://Scenes/internals/Triggers/DialogueSkipTrigger.tscn" id="14_ckfgm"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ckfgm"]
+atlas = ExtResource("6_g5lqu")
+region = Rect2(0, 0, 24, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mw3he"]
+atlas = ExtResource("6_g5lqu")
+region = Rect2(24, 0, 24, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x60gi"]
+atlas = ExtResource("6_g5lqu")
+region = Rect2(48, 0, 24, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vmmpn"]
+atlas = ExtResource("6_g5lqu")
+region = Rect2(72, 0, 24, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ro5wa"]
+atlas = ExtResource("6_g5lqu")
+region = Rect2(96, 0, 24, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ye3t5"]
+atlas = ExtResource("6_g5lqu")
+region = Rect2(120, 0, 24, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wkouj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ckfgm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mw3he")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x60gi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vmmpn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ro5wa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ye3t5")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 3.0
+}]
 
 [sub_resource type="Curve2D" id="Curve2D_67xdc"]
 resource_local_to_scene = true
@@ -83,18 +132,12 @@ tile_map_data = PackedByteArray("AAARAA8AAAAJAFUAAAASAA8AAAAHAFQAAAATAA8AAAAHAFQ
 tile_set = ExtResource("2_wdcwi")
 collision_enabled = false
 
-[node name="EpicBanner" type="Sprite2D" parent="FG1Layer" unique_id=408825327]
+[node name="EpicBanner" type="AnimatedSprite2D" parent="FG1Layer" unique_id=60357962]
 position = Vector2(164, 360)
-script = ExtResource("5_huffg")
-texture_path = "res://Assets/Images/Environments/EpicBanner.json"
-load_autoplay = Array[String](["anim"])
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
-
-[node name="MarkerSprite" type="Sprite2D" parent="FG1Layer/EpicBanner" unique_id=1007078602]
-texture = ExtResource("6_g5lqu")
-hframes = 6
-script = ExtResource("7_qcc3e")
-metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+sprite_frames = SubResource("SpriteFrames_wkouj")
+autoplay = "default"
+script = ExtResource("7_m3o81")
+metadata/_custom_type_script = "uid://boee2837la0pr"
 
 [node name="FG2Layer" type="Parallax2D" parent="." unique_id=1541346344]
 z_index = 200
