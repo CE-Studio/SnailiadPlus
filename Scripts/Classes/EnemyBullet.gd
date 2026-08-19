@@ -130,7 +130,7 @@ func parry_reshoot() -> void:
 		normalized_dir *= -1
 	life_timer = 0.0
 	velocity = velocity_init
-	parry_damage *= floori(1.0 + (Statics.get_shell_level() * 0.25))
+	parry_damage *= floori(1.0 + (Statics.get_shell_level() * 0.15))
 
 
 ## Called whenever this bullet intersects with another body

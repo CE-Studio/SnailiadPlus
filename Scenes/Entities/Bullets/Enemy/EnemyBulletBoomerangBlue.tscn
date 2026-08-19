@@ -299,6 +299,7 @@ visible = false
 sprite_frames = SubResource("SpriteFrames_wkouj")
 animation = &"U"
 script = ExtResource("3_l7h1h")
+start_all_on_random_frame = true
 metadata/_custom_type_script = "uid://boee2837la0pr"
 
 [node name="MarkerSprite" type="Sprite2D" parent="." unique_id=1493599342]

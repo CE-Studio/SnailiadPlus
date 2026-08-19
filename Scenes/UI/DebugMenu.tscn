@@ -2,10 +2,31 @@
 
 [ext_resource type="Texture2D" uid="uid://cntrwlh2hqmak" path="res://Assets/Images/UI/DebugIcons.png" id="1_p0ntn"]
 [ext_resource type="Script" uid="uid://xpql2ogqerw3" path="res://Scripts/UI/DebugMenu.gd" id="1_wy6dv"]
-[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="2_rxuar"]
 [ext_resource type="Texture2D" uid="uid://c75ua7v3gisrs" path="res://Assets/Images/UI/GenericHighlightBox.png" id="3_h8xqe"]
-[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="4_wy6dv"]
+[ext_resource type="Script" uid="uid://boee2837la0pr" path="res://Scripts/Classes/SnailySprite.gd" id="4_h8xqe"]
 [ext_resource type="PackedScene" uid="uid://dke6r2335reau" path="res://Scenes/internals/SnailyText.tscn" id="5_h8xqe"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wy6dv"]
+atlas = ExtResource("3_h8xqe")
+region = Rect2(0, 60, 20, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r0d3v"]
+atlas = ExtResource("3_h8xqe")
+region = Rect2(20, 60, 20, 20)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wkouj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wy6dv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r0d3v")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 2.0
+}]
 
 [node name="DebugMenu" type="Node2D" unique_id=521542018 node_paths=PackedStringArray("sprites", "selector", "desc", "scroll_text")]
 script = ExtResource("1_wy6dv")
@@ -219,20 +240,12 @@ hframes = 2
 vframes = 34
 frame = 62
 
-[node name="Selector" type="Sprite2D" parent="." unique_id=270772345]
+[node name="Selector" type="AnimatedSprite2D" parent="." unique_id=1055150223]
 position = Vector2(8, 8)
-script = ExtResource("2_rxuar")
-texture_path = "res://Assets/Images/UI/GenericHighlightBox.json"
-load_autoplay = Array[String](["16"])
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
-
-[node name="MarkerSprite" type="Sprite2D" parent="Selector" unique_id=143229659]
-texture = ExtResource("3_h8xqe")
-hframes = 2
-vframes = 4
-frame = 6
-script = ExtResource("4_wy6dv")
-metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+sprite_frames = SubResource("SpriteFrames_wkouj")
+autoplay = "default"
+script = ExtResource("4_h8xqe")
+metadata/_custom_type_script = "uid://boee2837la0pr"
 
 [node name="LabelParent" type="Node2D" parent="." unique_id=224497262]
 position = Vector2(0, 88)

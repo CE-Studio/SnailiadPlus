@@ -32,7 +32,7 @@ enum SelectTypes {
 
 @export var grid_size:Vector2i = Vector2i(10, 5)
 @export var sprites:Array[Sprite2D] = []
-@export var selector:JsonSprite2D
+@export var selector:SnailySprite2D
 @export var desc:SnailyText
 @export var scroll_text:SnailyText
 #endregion
