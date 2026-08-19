@@ -19,12 +19,8 @@ var on_screen_once:bool = false
 
 func _ready() -> void:
 	my_type = EnemyTypes.GHOSTBALL
-	hitbox = $"Area2D"
-	sprite = $"JsonSprite2D"
-	vis = $"VisibleOnScreenNotifier2D"
 	super.spawn()
 	origin_x = position.x
-	sprite.action = "right"
 
 
 func _process(delta) -> void:
@@ -41,10 +37,10 @@ func _process(delta) -> void:
 	var before_x:float = position.x
 	position.x = origin_x + CYCLE_AMPLITUDE * sin(theta * CYCLE_SPEED)
 	if before_x > position.x and not going_left:
-		sprite.action = "left"
+		#sprite.action = "left"
 		going_left = true
 	elif before_x < position.x and going_left:
-		sprite.action = "right"
+		#sprite.action = "right"
 		going_left = false
 	if not display_mode:
 		spawn_drift_amount = lerpf(spawn_drift_amount, 0.0, SPAWN_DRIFT_TIME * delta)

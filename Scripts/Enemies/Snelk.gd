@@ -21,7 +21,7 @@ enum States {
 }
 
 @export var state:States = States.NORMAL
-@export_range(0.0, 1.0, 0.01) var spawn_chance:float = 1.0
+@export_range(0.01, 1.0, 0.01) var spawn_chance:float = 1.0
 
 var hop_num:int = 0
 var hop_timeout:float = 0.0
@@ -29,7 +29,7 @@ var facing_left:bool = false
 var first_jump:bool = false
 
 @onready var sfx:AudioStreamPlayer = $"Sfx"
-@onready var sound:AudioStream = load("res://Assets/Sounds/Sfx/Enemy/Snelk.ogg")
+@onready var sound:AudioStream = load("uid://bnmmi3c2auem")
 @onready var emote:EmoteLayer = $"EmoteLayer"
 #endregion
 
@@ -40,9 +40,6 @@ func _ready() -> void:
 		return
 	
 	my_type = EnemyTypes.SNELK
-	col = $"BodyBox"
-	sprite = $"JsonSprite2D"
-	vis = $"VisibleOnScreenNotifier2D"
 	super.spawn()
 	
 	if state == States.SLEEP or display_mode:
@@ -60,45 +57,43 @@ func _physics_process(delta: float) -> void:
 	if not ai_active:
 		return
 	
-	var real = self
-	if real is CharacterBody2D:
-		if state == States.SLEEP:
-			if position.distance_to(GameCore.instance.player.position) < WAKE_RANGE:
+	if state == States.SLEEP:
+		if position.distance_to(GameCore.instance.player.position) < WAKE_RANGE:
+			_play_sound()
+			state = States.RUN
+			emote.surprise(1.0)
+	else:
+		var jump:bool = false
+		var set_vel:bool = false
+		if body.is_on_floor():
+			jump = true
+			if vis and vis.is_on_screen() and randf() <= SFX_CHANCE:
 				_play_sound()
-				state = States.RUN
-				emote.surprise(1.0)
-		else:
-			var jump:bool = false
-			var set_vel:bool = false
-			if real.is_on_floor():
-				jump = true
-				if vis and vis.is_on_screen() and randf() <= SFX_CHANCE:
-					_play_sound()
-			if real.is_on_wall():
-				facing_left = not facing_left
-				_play_anim()
-				set_vel = true
-			
-			if jump:
-				if state == States.NORMAL:
-					facing_left = position.x > GameCore.instance.player.position.x
-					if randf() <= NORMAL_TURN_CHANCE:
-						facing_left = not facing_left
-				elif state == States.RUN:
-					facing_left = position.x < GameCore.instance.player.position.x
-				real.velocity.y = JUMP_POWER * HOP_HEIGHTS[hop_num]
-				hop_num = (hop_num + 1) % HOP_HEIGHTS.size()
-				first_jump = true
-				_play_anim()
-				set_vel = true
-			
-			if set_vel:
-				real.velocity.x = (SPEED_PANIC if state == States.RUN else SPEED_NORMAL)
-				real.velocity.x *= (-1.0 if facing_left else 1.0)
+		if body.is_on_wall():
+			facing_left = not facing_left
+			_play_anim()
+			set_vel = true
 		
-		real.move_and_slide()
+		if jump:
+			if state == States.NORMAL:
+				facing_left = position.x > GameCore.instance.player.position.x
+				if randf() <= NORMAL_TURN_CHANCE:
+					facing_left = not facing_left
+			elif state == States.RUN:
+				facing_left = position.x < GameCore.instance.player.position.x
+			body.velocity.y = JUMP_POWER * HOP_HEIGHTS[hop_num]
+			hop_num = (hop_num + 1) % HOP_HEIGHTS.size()
+			first_jump = true
+			_play_anim()
+			set_vel = true
 		
-		real.velocity.y += GRAVITY * delta
+		if set_vel:
+			body.velocity.x = (SPEED_PANIC if state == States.RUN else SPEED_NORMAL)
+			body.velocity.x *= (-1.0 if facing_left else 1.0)
+	
+	body.move_and_slide()
+	
+	body.velocity.y += GRAVITY * delta
 
 
 func _play_anim() -> void:
@@ -121,9 +116,9 @@ func _play_anim() -> void:
 					action = "idle"
 			States.SLEEP:
 				action = "sleep"
-	sprite.action = action + dir
+	sprite.play(action + dir)
+	sprite.flip_h = facing_left
 
 
 func _play_sound() -> void:
-	#sfx.play()
 	Statics.play_sfx_limited(sound, "Snelk")

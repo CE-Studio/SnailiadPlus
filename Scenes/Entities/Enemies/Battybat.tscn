@@ -54,7 +54,7 @@ animations = [{
 "speed": 1.0
 }]
 
-[node name="BattyBat" type="Node2D" unique_id=300709986 node_paths=PackedStringArray("sfx_fly", "col", "hitbox", "sprite", "vis")]
+[node name="BattyBat" type="Node2D" unique_id=300709986 node_paths=PackedStringArray("sfx_fly", "hitbox", "sprite", "vis")]
 z_index = 103
 script = ExtResource("1_gjyyg")
 sfx_fly = NodePath("Fly")
@@ -63,7 +63,6 @@ attack = 3
 defense = 10
 health_orb_value = 4
 kill_particle_range = Vector2i(16, 8)
-col = NodePath("Area2D/HitBox")
 hitbox = NodePath("Area2D")
 sprite = NodePath("SnailySprite2D")
 vis = NodePath("VisibleOnScreenNotifier2D")

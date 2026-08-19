@@ -2,10 +2,8 @@
 
 [ext_resource type="Script" uid="uid://85jr4xa6qorm" path="res://Scripts/Enemies/KittyTough.gd" id="1_1ves3"]
 [ext_resource type="Material" uid="uid://bj1jqi3180tg5" path="res://Resources/EnemyFlashMat.tres" id="2_g2hfd"]
-[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="3_rpyeu"]
-[ext_resource type="Shader" uid="uid://bday5amji1ndg" path="res://Resources/EntityFlash.tres" id="4_y1jxo"]
 [ext_resource type="Texture2D" uid="uid://cv3yhnj1xsykc" path="res://Assets/Images/Entities/Kitty2.png" id="5_g2hfd"]
-[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="6_erw68"]
+[ext_resource type="Script" uid="uid://boee2837la0pr" path="res://Scripts/Classes/SnailySprite.gd" id="7_g2hfd"]
 [ext_resource type="AudioStream" uid="uid://bu2ihtnuw3kpg" path="res://Assets/Sounds/Sfx/Enemy/KittyJump.ogg" id="7_ykmmr"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yl0hf"]
@@ -14,11 +12,70 @@ size = Vector2(32, 16)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pfaec"]
 size = Vector2(30, 14)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_5ic2g"]
-shader = ExtResource("4_y1jxo")
-shader_parameter/flash_color = Color(0, 0, 0, 1)
+[sub_resource type="AtlasTexture" id="AtlasTexture_6yo5h"]
+atlas = ExtResource("5_g2hfd")
+region = Rect2(0, 16, 32, 16)
 
-[node name="KittyTough" type="CharacterBody2D" unique_id=780379398]
+[sub_resource type="AtlasTexture" id="AtlasTexture_al6ja"]
+atlas = ExtResource("5_g2hfd")
+region = Rect2(0, 0, 32, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ewue3"]
+atlas = ExtResource("5_g2hfd")
+region = Rect2(32, 0, 32, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3oysa"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6yo5h")
+}],
+"loop": 1,
+"name": &"fall_left",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6yo5h")
+}],
+"loop": 1,
+"name": &"fall_right",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_al6ja")
+}],
+"loop": 1,
+"name": &"idle_left",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_al6ja")
+}],
+"loop": 1,
+"name": &"idle_right",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ewue3")
+}],
+"loop": 1,
+"name": &"jump_left",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ewue3")
+}],
+"loop": 1,
+"name": &"jump_right",
+"speed": 1.0
+}]
+
+[node name="KittyTough" type="CharacterBody2D" unique_id=780379398 node_paths=PackedStringArray("col", "body", "hitbox", "sprite", "vis")]
 z_index = 103
 collision_layer = 64
 collision_mask = 3
@@ -28,6 +85,11 @@ attack = 2
 defense = 1
 health_orb_value = 2
 kill_particle_range = Vector2i(16, 8)
+col = NodePath("BodyBox")
+body = NodePath(".")
+hitbox = NodePath("Area2D")
+sprite = NodePath("SnailySprite2D")
+vis = NodePath("VisibleOnScreenNotifier2D")
 
 [node name="BodyBox" type="CollisionShape2D" parent="." unique_id=1911518525]
 shape = SubResource("RectangleShape2D_yl0hf")
@@ -45,19 +107,12 @@ debug_color = Color(0.976471, 0, 0.415686, 0.419608)
 scale = Vector2(0.8, 0.8)
 rect = Rect2(-19.999998, -10, 39.999996, 20)
 
-[node name="JsonSprite2D" type="Sprite2D" parent="." unique_id=309433190]
+[node name="SnailySprite2D" type="AnimatedSprite2D" parent="." unique_id=676432695]
 material = ExtResource("2_g2hfd")
-script = ExtResource("3_rpyeu")
-texture_path = "res://Assets/Images/Entities/Kitty2.json"
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
-
-[node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D" unique_id=1058139923]
-material = SubResource("ShaderMaterial_5ic2g")
-texture = ExtResource("5_g2hfd")
-hframes = 2
-vframes = 2
-script = ExtResource("6_erw68")
-metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+sprite_frames = SubResource("SpriteFrames_3oysa")
+animation = &"idle_left"
+script = ExtResource("7_g2hfd")
+metadata/_custom_type_script = "uid://boee2837la0pr"
 
 [node name="Jump" type="AudioStreamPlayer" parent="." unique_id=62622182]
 stream = ExtResource("7_ykmmr")

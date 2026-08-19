@@ -2,10 +2,8 @@
 
 [ext_resource type="Script" uid="uid://227t0ox5assx" path="res://Scripts/Enemies/Iceball.gd" id="1_70sqt"]
 [ext_resource type="Material" uid="uid://bj1jqi3180tg5" path="res://Resources/EnemyFlashMat.tres" id="2_6kgun"]
-[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="3_ydo0v"]
-[ext_resource type="Shader" uid="uid://bday5amji1ndg" path="res://Resources/EntityFlash.tres" id="4_xpm8o"]
 [ext_resource type="Texture2D" uid="uid://0ylhodornnao" path="res://Assets/Images/Entities/Fireball2.png" id="5_70sqt"]
-[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="6_xc2qc"]
+[ext_resource type="Script" uid="uid://boee2837la0pr" path="res://Scripts/Classes/SnailySprite.gd" id="7_6kgun"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_43bce"]
 size = Vector2(16, 14)
@@ -13,11 +11,162 @@ size = Vector2(16, 14)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6ijum"]
 size = Vector2(14, 14)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_43bce"]
-shader = ExtResource("4_xpm8o")
-shader_parameter/flash_color = Color(0, 0, 0, 1)
+[sub_resource type="AtlasTexture" id="AtlasTexture_at256"]
+atlas = ExtResource("5_70sqt")
+region = Rect2(0, 0, 16, 16)
 
-[node name="Iceball" type="CharacterBody2D" unique_id=658087331]
+[sub_resource type="AtlasTexture" id="AtlasTexture_rwxn3"]
+atlas = ExtResource("5_70sqt")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qykcj"]
+atlas = ExtResource("5_70sqt")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_70sqt"]
+atlas = ExtResource("5_70sqt")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ydo0v"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_at256")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rwxn3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qykcj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_70sqt")
+}],
+"loop": 1,
+"name": &"ceiling_ccw",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_at256")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rwxn3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qykcj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_70sqt")
+}],
+"loop": 1,
+"name": &"ceiling_cw",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_at256")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rwxn3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qykcj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_70sqt")
+}],
+"loop": 1,
+"name": &"floor_ccw",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_at256")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rwxn3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qykcj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_70sqt")
+}],
+"loop": 1,
+"name": &"floor_cw",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_at256")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rwxn3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qykcj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_70sqt")
+}],
+"loop": 1,
+"name": &"lwall_ccw",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_at256")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rwxn3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qykcj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_70sqt")
+}],
+"loop": 1,
+"name": &"lwall_cw",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_at256")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rwxn3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qykcj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_70sqt")
+}],
+"loop": 1,
+"name": &"rwall_ccw",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_at256")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rwxn3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qykcj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_70sqt")
+}],
+"loop": 1,
+"name": &"rwall_cw",
+"speed": 6.0
+}]
+
+[node name="Iceball" type="CharacterBody2D" unique_id=658087331 node_paths=PackedStringArray("col", "body", "hitbox", "sprite", "vis")]
 z_index = 103
 collision_layer = 64
 collision_mask = 3
@@ -25,8 +174,14 @@ script = ExtResource("1_70sqt")
 max_health = 50
 attack = 3
 defense = 25
+parry_resist = 0.9
 light_radius = 40
 my_element = 0
+col = NodePath("BodyBox")
+body = NodePath(".")
+hitbox = NodePath("Area2D")
+sprite = NodePath("SnailySprite2D")
+vis = NodePath("VisibleOnScreenNotifier2D")
 
 [node name="BodyBox" type="CollisionShape2D" parent="." unique_id=159628245]
 position = Vector2(0, 1)
@@ -44,18 +199,13 @@ debug_color = Color(0.976471, 0, 0.415686, 0.419608)
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=2074235265]
 scale = Vector2(0.8, 0.8)
 
-[node name="JsonSprite2D" type="Sprite2D" parent="." unique_id=56578532]
+[node name="SnailySprite2D" type="AnimatedSprite2D" parent="." unique_id=2030898894]
 material = ExtResource("2_6kgun")
-script = ExtResource("3_ydo0v")
-texture_path = "res://Assets/Images/Entities/Fireball2.json"
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
-
-[node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D" unique_id=8229209]
-material = SubResource("ShaderMaterial_43bce")
-texture = ExtResource("5_70sqt")
-hframes = 4
-script = ExtResource("6_xc2qc")
-metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+sprite_frames = SubResource("SpriteFrames_ydo0v")
+animation = &"rwall_ccw"
+script = ExtResource("7_6kgun")
+start_all_on_random_frame = true
+metadata/_custom_type_script = "uid://boee2837la0pr"
 
 [node name="CastGroup" type="Node2D" parent="." unique_id=215996527]
 

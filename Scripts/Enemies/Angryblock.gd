@@ -35,17 +35,14 @@ var body_anim_ptr:int = 0
 var last_face_anim:String = ""
 var time_until_noise:float = 0.0
 
-@onready var face_spr:JsonSprite2D = $"Face"
-@onready var donut:PackedScene = load("res://Scenes/Entities/Bullets/Enemy/EnemyBulletDonutLinear.tscn")
+@onready var face_spr:SnailySprite2D = $"Face"
+@onready var donut:PackedScene = load("uid://cr8jpfivtdpnw")
 @onready var sfx_noise:AudioStreamPlayer = $"Noise"
 #endregion
 
 
 func _ready() -> void:
 	my_type = EnemyTypes.ANGRYBLOCK
-	hitbox = $"Area2D"
-	sprite = $"Body"
-	vis = $"VisibleOnScreenNotifier2D"
 	super.spawn()
 	
 	time_until_noise = randf_range(MIN_NOISE_TIME, MAX_NOISE_TIME)
@@ -122,18 +119,18 @@ func _process(delta: float) -> void:
 
 
 func _update_body_anim() -> void:
-	if body_anim_ptr >= sprite.meta.size() or display_mode:
+	if body_anim_ptr >= sprite.meta_info.size() or display_mode:
 		return
 	var hp_ratio:int = ceili((float(health) / float(max_health)) * 100.0)
-	if hp_ratio <= sprite.meta[str(body_anim_ptr)]:
+	if hp_ratio <= sprite.meta_info[body_anim_ptr]:
 		body_anim_ptr += 1
-		sprite.action = str(body_anim_ptr)
+		sprite.play(str(body_anim_ptr))
 
 
 func _update_face_anim(overwrite:bool, state:String = "idle") -> void:
 	var anim_name:String = ""
 	if look_dir == Vector2.ZERO:
-		anim_name = "idle"
+		state = "idle"
 	else:
 		var norm_dir = look_dir.normalized()
 		if norm_dir.y < -0.3827:
@@ -146,5 +143,5 @@ func _update_face_anim(overwrite:bool, state:String = "idle") -> void:
 			anim_name += "R"
 		anim_name = "_".join([anim_name, state])
 	if overwrite or anim_name != last_face_anim:
-		face_spr.action = anim_name
+		face_spr.play(anim_name)
 		last_face_anim = anim_name

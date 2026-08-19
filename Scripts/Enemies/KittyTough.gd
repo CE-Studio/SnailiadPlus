@@ -31,10 +31,6 @@ var fall_flag:bool = false
 
 func _ready() -> void:
 	my_type = EnemyTypes.KITTY
-	col = $"BodyBox"
-	hitbox = $"Area2D"
-	sprite = $"JsonSprite2D"
-	vis = $"VisibleOnScreenNotifier2D"
 	super.spawn()
 	
 	hop_ptr = int(position.x) % HOP_TIMEOUTS.size()
@@ -51,15 +47,13 @@ func _physics_process(delta: float) -> void:
 	if not ai_active:
 		return
 	
-	var real = self
-	if real is CharacterBody2D and vis.is_on_screen():
-		real.velocity.y += GRAVITY * delta
+	if vis.is_on_screen():
+		body.velocity.y += GRAVITY * delta
 		shot_timeout -= delta
 		if is_attacking and shot_timeout <= 0.0 and shot_counter > 0:
 			shot_counter -= 1
 			shot_timeout = SHOT_TIMEOUT
 			shoot(PI + (PI * 0.6 * shot_counter / MAX_SHOTS))
-			play_anim("shoot")
 		if shot_counter <= 0:
 			hop_timeout -= delta
 			if hop_timeout <= 0.0:
@@ -72,27 +66,27 @@ func _physics_process(delta: float) -> void:
 					next_attack -= 1
 					is_attacking = false
 					if position.x > GameCore.instance.player.position.x:
-						real.velocity.x = -VEL_X
+						body.velocity.x = -VEL_X
 						facing_right = false
 					else:
-						real.velocity.x = VEL_X
+						body.velocity.x = VEL_X
 						facing_right = true
-					real.velocity.y = JUMP_VEL_BASE * HOP_HEIGHTS[hop_ptr]
+					body.velocity.y = JUMP_VEL_BASE * HOP_HEIGHTS[hop_ptr]
 					play_anim("jump")
 					sfx_jump.play()
 				hop_ptr = (hop_ptr + 1) % HOP_HEIGHTS.size()
 				hop_timeout = HOP_TIMEOUTS[hop_ptr]
 				fall_flag = false
-		var air_flag:bool = not real.is_on_floor()
-		real.move_and_slide()
-		if real.is_on_wall():
+		var air_flag:bool = not body.is_on_floor()
+		body.move_and_slide()
+		if body.is_on_wall():
 			facing_right = not facing_right
-			real.velocity.x = VEL_X if facing_right else -VEL_X
+			body.velocity.x = VEL_X if facing_right else -VEL_X
 			play_anim("fall" if fall_flag else "jump")
-		if real.is_on_floor() and air_flag:
-			play_anim("land")
-			real.velocity.x = 0
-		elif not real.is_on_floor() and real.velocity.y > 0 and not fall_flag:
+		if body.is_on_floor() and air_flag:
+			play_anim("idle")
+			body.velocity.x = 0
+		elif not body.is_on_floor() and body.velocity.y > 0 and not fall_flag:
 			fall_flag = true
 			play_anim("fall")
 
@@ -106,4 +100,5 @@ func shoot(angle:float) -> void:
 
 func play_anim(anim:String) -> void:
 	anim += "_right" if facing_right else "_left"
-	sprite.action = anim
+	sprite.flip_h = facing_right
+	sprite.play(anim)

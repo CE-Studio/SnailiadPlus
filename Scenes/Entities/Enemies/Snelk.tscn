@@ -1,22 +1,100 @@
 [gd_scene format=3 uid="uid://bxxcqyt05cebe"]
 
 [ext_resource type="Script" uid="uid://cgffkaop7cyhp" path="res://Scripts/Enemies/Snelk.gd" id="1_mlwfl"]
-[ext_resource type="Material" uid="uid://bj1jqi3180tg5" path="res://Resources/EnemyFlashMat.tres" id="2_mlwfl"]
-[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="3_vtb3o"]
-[ext_resource type="Shader" uid="uid://bday5amji1ndg" path="res://Resources/EntityFlash.tres" id="4_ourwp"]
+[ext_resource type="Script" uid="uid://boee2837la0pr" path="res://Scripts/Classes/SnailySprite.gd" id="3_0xrel"]
 [ext_resource type="Texture2D" uid="uid://8ajluyxd0650" path="res://Assets/Images/Entities/Snelk.png" id="5_tt5hy"]
-[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="6_sjk62"]
 [ext_resource type="AudioStream" uid="uid://bnmmi3c2auem" path="res://Assets/Sounds/Sfx/Enemy/Snelk.ogg" id="7_mlwfl"]
 [ext_resource type="PackedScene" uid="uid://n33i7arxa7t6" path="res://Scenes/internals/EmoteLayer.tscn" id="8_vtb3o"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yl0hf"]
 size = Vector2(24, 24)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_5ic2g"]
-shader = ExtResource("4_ourwp")
-shader_parameter/flash_color = Color(0, 0, 0, 1)
+[sub_resource type="AtlasTexture" id="AtlasTexture_tt5hy"]
+atlas = ExtResource("5_tt5hy")
+region = Rect2(0, 0, 24, 24)
 
-[node name="Snelk" type="CharacterBody2D" unique_id=1559879025]
+[sub_resource type="AtlasTexture" id="AtlasTexture_mlwfl"]
+atlas = ExtResource("5_tt5hy")
+region = Rect2(0, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vtb3o"]
+atlas = ExtResource("5_tt5hy")
+region = Rect2(0, 48, 24, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wkouj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tt5hy")
+}],
+"loop": 1,
+"name": &"idle_left",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tt5hy")
+}],
+"loop": 1,
+"name": &"idle_right",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tt5hy")
+}],
+"loop": 1,
+"name": &"jump_left",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tt5hy")
+}],
+"loop": 1,
+"name": &"jump_panic_left",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tt5hy")
+}],
+"loop": 1,
+"name": &"jump_panic_right",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tt5hy")
+}],
+"loop": 1,
+"name": &"jump_right",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mlwfl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vtb3o")
+}],
+"loop": 1,
+"name": &"sleep_left",
+"speed": 1.5
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mlwfl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vtb3o")
+}],
+"loop": 1,
+"name": &"sleep_right",
+"speed": 1.5
+}]
+
+[node name="Snelk" type="CharacterBody2D" unique_id=1559879025 node_paths=PackedStringArray("col", "body", "sprite", "vis")]
 z_index = 103
 collision_layer = 64
 script = ExtResource("1_mlwfl")
@@ -27,6 +105,10 @@ invulnerable = true
 can_damage = false
 light_radius = 24
 grant_bestiary_without_defeat = true
+col = NodePath("BodyBox")
+body = NodePath(".")
+sprite = NodePath("SnailySprite2D")
+vis = NodePath("VisibleOnScreenNotifier2D")
 
 [node name="BodyBox" type="CollisionShape2D" parent="." unique_id=1127829874]
 shape = SubResource("RectangleShape2D_yl0hf")
@@ -36,18 +118,11 @@ debug_color = Color(0.976029, 0, 0.414963, 0.42)
 scale = Vector2(0.7, 0.5)
 rect = Rect2(-17.142857, -24, 34.285713, 48)
 
-[node name="JsonSprite2D" type="Sprite2D" parent="." unique_id=475403193]
-material = ExtResource("2_mlwfl")
-script = ExtResource("3_vtb3o")
-texture_path = "res://Assets/Images/Entities/Snelk.json"
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
-
-[node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D" unique_id=1796985553]
-material = SubResource("ShaderMaterial_5ic2g")
-texture = ExtResource("5_tt5hy")
-vframes = 3
-script = ExtResource("6_sjk62")
-metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+[node name="SnailySprite2D" type="AnimatedSprite2D" parent="." unique_id=1722911804]
+sprite_frames = SubResource("SpriteFrames_wkouj")
+animation = &"idle_right"
+script = ExtResource("3_0xrel")
+metadata/_custom_type_script = "uid://boee2837la0pr"
 
 [node name="Sfx" type="AudioStreamPlayer" parent="." unique_id=960968711]
 stream = ExtResource("7_mlwfl")

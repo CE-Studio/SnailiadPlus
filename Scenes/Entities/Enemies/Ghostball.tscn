@@ -2,25 +2,58 @@
 
 [ext_resource type="Script" uid="uid://dgvu7txtfbgxw" path="res://Scripts/Enemies/Ghostball.gd" id="1_ticem"]
 [ext_resource type="Material" uid="uid://bj1jqi3180tg5" path="res://Resources/EnemyFlashMat.tres" id="2_4y3yc"]
-[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="3_pn6rq"]
-[ext_resource type="Shader" uid="uid://bday5amji1ndg" path="res://Resources/EntityFlash.tres" id="4_3qmr4"]
+[ext_resource type="Script" uid="uid://boee2837la0pr" path="res://Scripts/Classes/SnailySprite.gd" id="3_ah45w"]
 [ext_resource type="Texture2D" uid="uid://cbv735apnas0c" path="res://Assets/Images/Entities/Dandelion.png" id="5_ticem"]
-[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="6_s83xv"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6ijum"]
 size = Vector2(14, 14)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_43bce"]
-shader = ExtResource("4_3qmr4")
-shader_parameter/flash_color = Color(0, 0, 0, 1)
+[sub_resource type="AtlasTexture" id="AtlasTexture_3du1u"]
+atlas = ExtResource("5_ticem")
+region = Rect2(0, 0, 16, 16)
 
-[node name="Ghostball" type="Node2D" unique_id=86368319]
+[sub_resource type="AtlasTexture" id="AtlasTexture_f5ovg"]
+atlas = ExtResource("5_ticem")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ticem"]
+atlas = ExtResource("5_ticem")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4y3yc"]
+atlas = ExtResource("5_ticem")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wkouj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3du1u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f5ovg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ticem")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4y3yc")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 0.0
+}]
+
+[node name="Ghostball" type="Node2D" unique_id=86368319 node_paths=PackedStringArray("hitbox", "sprite", "vis")]
 z_index = 103
 script = ExtResource("1_ticem")
 max_health = 50
 max_health_hard = 250
 attack = 3
 defense = 1
+hitbox = NodePath("Area2D")
+sprite = NodePath("SnailySprite2D")
+vis = NodePath("VisibleOnScreenNotifier2D")
 
 [node name="Area2D" type="Area2D" parent="." unique_id=1006321637]
 collision_layer = 64
@@ -33,14 +66,10 @@ debug_color = Color(0.976471, 0, 0.415686, 0.419608)
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=711227304]
 scale = Vector2(0.8, 0.8)
 
-[node name="JsonSprite2D" type="Sprite2D" parent="." unique_id=262191413]
+[node name="SnailySprite2D" type="AnimatedSprite2D" parent="." unique_id=1402260064]
 material = ExtResource("2_4y3yc")
-script = ExtResource("3_pn6rq")
-texture_path = "res://Assets/Images/Entities/Dandelion.json"
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
-
-[node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D" unique_id=322729899]
-material = SubResource("ShaderMaterial_43bce")
-texture = ExtResource("5_ticem")
-script = ExtResource("6_s83xv")
-metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+sprite_frames = SubResource("SpriteFrames_wkouj")
+autoplay = "default"
+script = ExtResource("3_ah45w")
+start_all_on_random_frame = true
+metadata/_custom_type_script = "uid://boee2837la0pr"
