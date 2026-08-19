@@ -39,36 +39,34 @@ func _physics_process(delta: float) -> void:
 	if not ai_active:
 		return
 	
-	var real = self
-	if real is CharacterBody2D:
-		if vis.is_on_screen():
-			hop_timeout -= delta
-			if hop_timeout <= QUIVER_THRESHOLD:
-				sprite.position.x = randf_range(-QUIVER_RANGE, QUIVER_RANGE)
-			if hop_timeout <= 0.0:
-				sprite.position.x = 0.0
-				facing_right = Player.instance.position.x > position.x
-				real.velocity = Vector2(
-					VEL_X * (1 if facing_right else -1),
-					JUMP_VEL_BASE * HOP_HEIGHTS[hop_ptr]
-				)
-				hop_ptr = (hop_ptr + 1) % HOP_HEIGHTS.size()
-				hop_timeout = HOP_TIMEOUTS[hop_ptr] * (0.5 if hard_mode else 1.0)
-				play_anim("jump")
-				sfx_jump.play()
-		real.move_and_slide()
-		real.velocity.y += GRAVITY * delta
-		
-		if real.is_on_wall():
-			facing_right = not facing_right
-			real.velocity.x = VEL_X * (1 if facing_right else -1)
-			play_anim("reflect")
-		
-		if real.is_on_floor():
-			if real.velocity.x != 0.0:
-				play_anim("quiver")
-			real.velocity.x = 0.0
-			real.velocity.y *= -0.1
+	if vis.is_on_screen():
+		hop_timeout -= delta
+		if hop_timeout <= QUIVER_THRESHOLD:
+			sprite.position.x = randf_range(-QUIVER_RANGE, QUIVER_RANGE)
+		if hop_timeout <= 0.0:
+			sprite.position.x = 0.0
+			facing_right = Player.instance.position.x > position.x
+			body.velocity = Vector2(
+				VEL_X * (1 if facing_right else -1),
+				JUMP_VEL_BASE * HOP_HEIGHTS[hop_ptr]
+			)
+			hop_ptr = (hop_ptr + 1) % HOP_HEIGHTS.size()
+			hop_timeout = HOP_TIMEOUTS[hop_ptr] * (0.5 if hard_mode else 1.0)
+			play_anim("jump")
+			sfx_jump.play()
+	body.move_and_slide()
+	body.velocity.y += GRAVITY * delta
+	
+	if body.is_on_wall():
+		facing_right = not facing_right
+		body.velocity.x = VEL_X * (1 if facing_right else -1)
+		play_anim("reflect")
+	
+	if body.is_on_floor():
+		if body.velocity.x != 0.0:
+			play_anim("quiver")
+		body.velocity.x = 0.0
+		body.velocity.y *= -0.1
 
 
 func play_anim(state:String) -> void:

@@ -395,6 +395,7 @@ script = ExtResource("1_hoefv")
 max_health = 50
 attack = 2
 defense = 1
+parry_resist = 0.15
 health_orb_value = 2
 col = NodePath("Area2D/HitBox")
 body = NodePath(".")

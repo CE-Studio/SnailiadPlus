@@ -212,9 +212,8 @@ func _physics_process(delta) -> void:
 		if can_hit and attack > 0:
 			if GameCore.instance.player.adjust_health(-attack):
 				parry_damage = floori(attack * PARRY_DAMAGE_MULT)
-				parry_damage *= floori(1.0 + (Statics.get_shell_level() * 0.15))
+				parry_damage *= floori(1.0 + (Statics.get_shell_level() * 0.2))
 				parry_damage = roundi(lerpf(parry_damage, 0, parry_resist))
-				print(parry_damage)
 
 	damaged_this_tick = false
 	if not stun_invul and (not vis or vis.is_on_screen()) and not invulnerable:

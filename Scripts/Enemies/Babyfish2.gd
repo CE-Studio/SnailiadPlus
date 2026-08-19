@@ -36,26 +36,24 @@ func _physics_process(delta: float) -> void:
 	if not ai_active and not display_mode:
 		return
 	
-	var real = self
-	if real is CharacterBody2D:
-		elapsed += delta
-		position.y = origin.y + 4 * sin(elapsed * (1.86 if display_mode else 2.0))
-		if vis.is_on_screen() and not display_mode:
-			move_timeout -= delta
-			if move_timeout <= 0:
-				facing_left = GameCore.instance.player.position.x < position.x
-				if randf() > 0.8:
-					facing_left = not facing_left
-				real.velocity.x = SPEED * (-1 if facing_left else 1)
-				move_timeout = MOVE_TIMEOUT
-				play_anim("swim")
-			real.move_and_slide()
-			if real.is_on_wall():
-				real.velocity.x = -last_velocity
+	elapsed += delta
+	position.y = origin.y + 4 * sin(elapsed * (1.86 if display_mode else 2.0))
+	if vis.is_on_screen() and not display_mode:
+		move_timeout -= delta
+		if move_timeout <= 0:
+			facing_left = GameCore.instance.player.position.x < position.x
+			if randf() > 0.8:
 				facing_left = not facing_left
-				play_anim("swim")
-			real.velocity.x -= DECEL * delta * (-1 if real.velocity.x < 0 else 1)
-			last_velocity = real.velocity.x
+			body.velocity.x = SPEED * (-1 if facing_left else 1)
+			move_timeout = MOVE_TIMEOUT
+			play_anim("swim")
+		body.move_and_slide()
+		if body.is_on_wall():
+			body.velocity.x = -last_velocity
+			facing_left = not facing_left
+			play_anim("swim")
+		body.velocity.x -= DECEL * delta * (-1 if body.velocity.x < 0 else 1)
+		last_velocity = body.velocity.x
 
 
 func play_anim(state:String) -> void:

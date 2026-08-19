@@ -407,6 +407,7 @@ script = ExtResource("1_m0vag")
 max_health = 270
 attack = 2
 defense = 10
+parry_resist = 0.25
 health_orb_value = 2
 col = NodePath("Area2D/HitBox")
 body = NodePath(".")
