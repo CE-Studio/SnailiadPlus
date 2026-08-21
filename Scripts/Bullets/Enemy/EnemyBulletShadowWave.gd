@@ -19,5 +19,5 @@ func _physics_process(delta: float) -> void:
 
 
 func _flip_sprite_from_dir(_angle:Vector2 = normalized_dir) -> void:
-	sprite.flip_x = _angle.x < 0.0
-	sprite.flip_y = _angle.y > 0.0
+	sprite.flip_h = _angle.x < 0.0
+	sprite.flip_v = _angle.y > 0.0
