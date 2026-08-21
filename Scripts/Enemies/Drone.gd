@@ -33,16 +33,13 @@ var move_time:float = 2.2
 var shot_timeout:float = 0.0
 var shot_count:int = 0
 
-@onready var laser:PackedScene = load("res://Scenes/Entities/Bullets/Enemy/EnemyBulletLaser.tscn")
-@onready var donut:PackedScene = load("res://Scenes/Entities/Bullets/Enemy/EnemyBulletDonutRotary.tscn")
+@onready var laser:PackedScene = load("uid://dueroaqpwv2r")
+@onready var donut:PackedScene = load("uid://cpp1rm5lkd443")
 #endregion
 
 
 func _ready() -> void:
 	my_type = EnemyTypes.DRONE
-	hitbox = $"Area2D"
-	sprite = $"JsonSprite2D"
-	vis = $"VisibleOnScreenNotifier2D"
 	super.spawn()
 	
 	if hard_mode:
@@ -50,9 +47,9 @@ func _ready() -> void:
 		move_time = 1.3
 	elapsed = move_time
 	
-	sprite.action = "right_idle"
+	sprite.play("right_idle")
 	if display_mode and randf() < 0.5:
-		sprite.action = "left_idle"
+		sprite.play("left_idle")
 	theta = position.x * position.x * 1.1 + position.y * 3.2 + 0.7
 
 
@@ -66,12 +63,13 @@ func _process(delta: float) -> void:
 	if vis.is_on_screen():
 		if player_pos.x < position.x and not facing_left:
 			facing_left = true
-			sprite.action = "right_turn_up" if player_pos.y < position.y else "right_turn_down"
+			sprite.play("right_turn_up" if player_pos.y < position.y else "right_turn_down")
 		elif player_pos.x > position.x and facing_left:
 			facing_left = false
-			sprite.action = "left_turn_up" if player_pos.y < position.y else "left_turn_down"
+			sprite.play("left_turn_up" if player_pos.y < position.y else "left_turn_down")
 		
 		if mode == MoveMode.ATTACK:
+			sprite.play("left_fire" if facing_left else "right_fire")
 			shot_timeout -= delta
 			if shot_timeout <= 0.0:
 				shot_timeout = SHOT_TIMEOUT
@@ -93,18 +91,22 @@ func _process(delta: float) -> void:
 			if player_pos.x < position.x:
 				if facing_left:
 					mode = MoveMode.COS_UP_LEFT if player_pos.y < position.y else MoveMode.COS_DOWN_LEFT
-					sprite.action = "left_fly_up" if player_pos.y < position.y else "left_fly_down"
+					sprite.play("left_fly_up" if player_pos.y < position.y else "left_fly_down")
+					sprite.autoplay_next = "left_idle"
 				else:
 					mode = MoveMode.TURN_UP_RIGHT if player_pos.y < position.y else MoveMode.TURN_DOWN_RIGHT
-					sprite.action = "right_turn_up" if player_pos.y < position.y else "right_turn_down"
+					sprite.play("right_turn_up" if player_pos.y < position.y else "right_turn_down")
+					sprite.autoplay_next = "left_idle"
 					facing_left = true
 			else:
 				if not facing_left:
 					mode = MoveMode.COS_UP_RIGHT if player_pos.y < position.y else MoveMode.COS_DOWN_RIGHT
-					sprite.action = "right_fly_up" if player_pos.y < position.y else "right_fly_down"
+					sprite.play("right_fly_up" if player_pos.y < position.y else "right_fly_down")
+					sprite.autoplay_next = "right_idle"
 				else:
 					mode = MoveMode.TURN_UP_LEFT if player_pos.y < position.y else MoveMode.TURN_DOWN_LEFT
-					sprite.action = "left_turn_up" if player_pos.y < position.y else "left_turn_down"
+					sprite.play("left_turn_up" if player_pos.y < position.y else "left_turn_down")
+					sprite.autoplay_next = "right_idle"
 					facing_left = false
 
 

@@ -2,21 +2,210 @@
 
 [ext_resource type="Script" uid="uid://cwtqry62duh52" path="res://Scripts/Enemies/Pincer.gd" id="1_owx7w"]
 [ext_resource type="Material" uid="uid://bj1jqi3180tg5" path="res://Resources/EnemyFlashMat.tres" id="2_3ri7d"]
-[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="3_66xtt"]
-[ext_resource type="Shader" uid="uid://bday5amji1ndg" path="res://Resources/EntityFlash.tres" id="4_2u3x6"]
+[ext_resource type="Script" uid="uid://boee2837la0pr" path="res://Scripts/Classes/SnailySprite.gd" id="4_6tdsh"]
 [ext_resource type="Texture2D" uid="uid://hkphu10nxt4j" path="res://Assets/Images/Entities/Pincer.png" id="5_owx7w"]
-[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="6_ukfma"]
 [ext_resource type="AudioStream" uid="uid://cvh5rh1qbiph1" path="res://Assets/Sounds/Sfx/Enemy/PincerJump.ogg" id="7_owx7w"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yl0hf"]
-size = Vector2(16, 16)
+size = Vector2(14, 14)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pfaec"]
 size = Vector2(14, 14)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_5ic2g"]
-shader = ExtResource("4_2u3x6")
-shader_parameter/flash_color = Color(0, 0, 0, 1)
+[sub_resource type="AtlasTexture" id="AtlasTexture_nc5mv"]
+atlas = ExtResource("5_owx7w")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_owx7w"]
+atlas = ExtResource("5_owx7w")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3ri7d"]
+atlas = ExtResource("5_owx7w")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_66xtt"]
+atlas = ExtResource("5_owx7w")
+region = Rect2(16, 16, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wkouj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nc5mv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_owx7w")
+}],
+"loop": 1,
+"name": &"ceiling_left_idle",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nc5mv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_owx7w")
+}],
+"loop": 1,
+"name": &"ceiling_left_pounce",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nc5mv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_owx7w")
+}],
+"loop": 1,
+"name": &"ceiling_right_idle",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nc5mv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_owx7w")
+}],
+"loop": 1,
+"name": &"ceiling_right_pounce",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nc5mv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_owx7w")
+}],
+"loop": 1,
+"name": &"floor_left_idle",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nc5mv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_owx7w")
+}],
+"loop": 1,
+"name": &"floor_left_pounce",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nc5mv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_owx7w")
+}],
+"loop": 1,
+"name": &"floor_right_idle",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nc5mv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_owx7w")
+}],
+"loop": 1,
+"name": &"floor_right_pounce",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3ri7d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_66xtt")
+}],
+"loop": 1,
+"name": &"lwall_left_idle",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3ri7d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_66xtt")
+}],
+"loop": 1,
+"name": &"lwall_left_pounce",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3ri7d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_66xtt")
+}],
+"loop": 1,
+"name": &"lwall_right_idle",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3ri7d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_66xtt")
+}],
+"loop": 1,
+"name": &"lwall_right_pounce",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3ri7d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_66xtt")
+}],
+"loop": 1,
+"name": &"rwall_left_idle",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3ri7d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_66xtt")
+}],
+"loop": 1,
+"name": &"rwall_left_pounce",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3ri7d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_66xtt")
+}],
+"loop": 1,
+"name": &"rwall_right_idle",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3ri7d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_66xtt")
+}],
+"loop": 1,
+"name": &"rwall_right_pounce",
+"speed": 10.0
+}]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_owx7w"]
 playback_mode = 1
@@ -24,7 +213,7 @@ random_pitch = 1.5
 streams_count = 1
 stream_0/stream = ExtResource("7_owx7w")
 
-[node name="Pincer" type="CharacterBody2D" unique_id=971914757]
+[node name="Pincer" type="CharacterBody2D" unique_id=971914757 node_paths=PackedStringArray("col", "body", "hitbox", "sprite", "vis")]
 z_index = 103
 collision_layer = 64
 collision_mask = 3
@@ -32,7 +221,13 @@ script = ExtResource("1_owx7w")
 max_health = 850
 attack = 6
 defense = 10
+parry_resist = 0.3
 health_orb_value = 2
+col = NodePath("BodyBox")
+body = NodePath(".")
+hitbox = NodePath("Area2D")
+sprite = NodePath("SnailySprite2D")
+vis = NodePath("VisibleOnScreenNotifier2D")
 
 [node name="BodyBox" type="CollisionShape2D" parent="." unique_id=1030804486]
 shape = SubResource("RectangleShape2D_yl0hf")
@@ -49,19 +244,13 @@ debug_color = Color(0.976471, 0, 0.415686, 0.419608)
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1101849848]
 scale = Vector2(0.8, 0.8)
 
-[node name="JsonSprite2D" type="Sprite2D" parent="." unique_id=815376702]
+[node name="SnailySprite2D" type="AnimatedSprite2D" parent="." unique_id=602092590]
 material = ExtResource("2_3ri7d")
-script = ExtResource("3_66xtt")
-texture_path = "res://Assets/Images/Entities/Pincer.json"
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
-
-[node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D" unique_id=924056335]
-material = SubResource("ShaderMaterial_5ic2g")
-texture = ExtResource("5_owx7w")
-hframes = 2
-vframes = 2
-script = ExtResource("6_ukfma")
-metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+sprite_frames = SubResource("SpriteFrames_wkouj")
+animation = &"floor_left_idle"
+script = ExtResource("4_6tdsh")
+start_all_on_random_frame = true
+metadata/_custom_type_script = "uid://boee2837la0pr"
 
 [node name="Jump" type="AudioStreamPlayer" parent="." unique_id=715728055]
 stream = SubResource("AudioStreamRandomizer_owx7w")

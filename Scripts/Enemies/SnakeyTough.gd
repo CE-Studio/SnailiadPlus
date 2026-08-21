@@ -36,46 +36,44 @@ func _physics_process(delta: float) -> void:
 	if not ai_active:
 		return
 	
-	var real = self
-	if real is CharacterBody2D:
-		if vis.is_on_screen():
-			move_timeout -= delta
-			var player_x:float = GameCore.instance.player.position.x
-			if move_timeout <= 0.0 and abs(player_x - position.x) <= REACT_DISTANCE:
-				if player_x < position.x:
-					facing_left = true
-					real.velocity.x = -SPEED
-				else:
-					facing_left = false
-					real.velocity.x = SPEED
-				_play_anim(true)
-				move_timeout = MOVE_TIMEOUT
-				sfx_move.play()
-			if hard_mode:
-				shot_timeout -= delta
-				if shot_timeout <= 0.0:
-					shot_timeout = SHOT_TIMEOUT
-					var angle = atan2(
-						position.y - GameCore.instance.player.position.y,
-						position.x - GameCore.instance.player.position.x
-					)
-					_shoot(donut, Vector2(-cos(angle), -sin(angle)), SHOT_SPEED)
-		
-		var last_vel:Vector2 = real.velocity
-		var last_grounded:bool = real.is_on_floor()
-		real.move_and_slide()
-		if real.is_on_wall() and last_vel.x != 0.0:
-			real.velocity.x = -last_vel.x
-			facing_left = not facing_left
+	if vis.is_on_screen():
+		move_timeout -= delta
+		var player_x:float = GameCore.instance.player.position.x
+		if move_timeout <= 0.0 and abs(player_x - position.x) <= REACT_DISTANCE:
+			if player_x < position.x:
+				facing_left = true
+				body.velocity.x = -SPEED
+			else:
+				facing_left = false
+				body.velocity.x = SPEED
 			_play_anim(true)
-		if real.is_on_floor() and last_grounded:
-			real.velocity.y = last_vel.y * -0.1
-		
-		if not real.is_on_floor():
-			real.velocity.y += GRAVITY * delta
-		real.velocity.x = move_toward(real.velocity.x, 0.0, DECEL * delta)
-		if abs(real.velocity.x) < RETURN_SPEED:
-			_play_anim(false)
+			move_timeout = MOVE_TIMEOUT
+			sfx_move.play()
+		if hard_mode:
+			shot_timeout -= delta
+			if shot_timeout <= 0.0:
+				shot_timeout = SHOT_TIMEOUT
+				var angle = atan2(
+					position.y - GameCore.instance.player.position.y,
+					position.x - GameCore.instance.player.position.x
+				)
+				_shoot(donut, Vector2(-cos(angle), -sin(angle)), SHOT_SPEED)
+	
+	var last_vel:Vector2 = body.velocity
+	var last_grounded:bool = body.is_on_floor()
+	body.move_and_slide()
+	if body.is_on_wall() and last_vel.x != 0.0:
+		body.velocity.x = -last_vel.x
+		facing_left = not facing_left
+		_play_anim(true)
+	if body.is_on_floor() and last_grounded:
+		body.velocity.y = last_vel.y * -0.1
+	
+	if not body.is_on_floor():
+		body.velocity.y += GRAVITY * delta
+	body.velocity.x = move_toward(body.velocity.x, 0.0, DECEL * delta)
+	if abs(body.velocity.x) < RETURN_SPEED:
+		_play_anim(false)
 
 
 func _play_anim(moving:bool) -> void:

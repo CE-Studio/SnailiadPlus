@@ -34,13 +34,11 @@ func _physics_process(delta) -> void:
 	if not ai_active:
 		return
 	
-	var real = self
-	if real is CharacterBody2D:
-		check_mode(delta)
-		real.velocity += accel_dir * (ACCEL[1] if boss and boss.phase > 0 else ACCEL[0]) * delta
-		var stomp_vel:Vector2 = real.velocity
-		if stomp_vel != Vector2.ZERO and real.move_and_slide() and stomp_vel != real.velocity:
-			stomp(stomp_vel)
+	check_mode(delta)
+	body.velocity += accel_dir * (ACCEL[1] if boss and boss.phase > 0 else ACCEL[0]) * delta
+	var stomp_vel:Vector2 = body.velocity
+	if stomp_vel != Vector2.ZERO and body.move_and_slide() and stomp_vel != body.velocity:
+		stomp(stomp_vel)
 
 
 func play_phase_anim(anim:String = last_action) -> void:
@@ -49,25 +47,23 @@ func play_phase_anim(anim:String = last_action) -> void:
 
 
 func stomp(impact_vel:Vector2) -> void:
-	var real = self
-	if real is CharacterBody2D:
-		if impact_vel.length() > 100.0:
-			sfx_stomp.play()
-		match current_mode:
-			Statics.DirsCompass.N:
-				play_phase_anim("U_land")
-			Statics.DirsCompass.E:
-				play_phase_anim("R_land")
-			Statics.DirsCompass.S:
-				play_phase_anim("D_land")
-			Statics.DirsCompass.W:
-				play_phase_anim("L_land")
-		position += impact_vel.normalized() * -0.25
-		real.velocity = Vector2.ZERO
-		accel_dir = Vector2.ZERO
-		last_mode = current_mode
-		current_mode = Statics.DirsCompass.NONE
-		mode_timeout = MODE_TIMEOUT
+	if impact_vel.length() > 100.0:
+		sfx_stomp.play()
+	match current_mode:
+		Statics.DirsCompass.N:
+			play_phase_anim("U_land")
+		Statics.DirsCompass.E:
+			play_phase_anim("R_land")
+		Statics.DirsCompass.S:
+			play_phase_anim("D_land")
+		Statics.DirsCompass.W:
+			play_phase_anim("L_land")
+	position += impact_vel.normalized() * -0.25
+	body.velocity = Vector2.ZERO
+	accel_dir = Vector2.ZERO
+	last_mode = current_mode
+	current_mode = Statics.DirsCompass.NONE
+	mode_timeout = MODE_TIMEOUT
 
 
 func check_mode(delta:float) -> void:

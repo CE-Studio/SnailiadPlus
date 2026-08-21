@@ -2,27 +2,168 @@
 
 [ext_resource type="Script" uid="uid://c32s0j7ai67yd" path="res://Scripts/Enemies/Drone.gd" id="1_ibwj3"]
 [ext_resource type="Material" uid="uid://bj1jqi3180tg5" path="res://Resources/EnemyFlashMat.tres" id="2_g1h82"]
-[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="3_4cirk"]
-[ext_resource type="Shader" uid="uid://bday5amji1ndg" path="res://Resources/EntityFlash.tres" id="4_46eee"]
+[ext_resource type="Script" uid="uid://boee2837la0pr" path="res://Scripts/Classes/SnailySprite.gd" id="4_a8bfr"]
 [ext_resource type="Texture2D" uid="uid://mlslhhh6xjad" path="res://Assets/Images/Entities/Drone.png" id="5_ibwj3"]
-[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="6_12jmj"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_v2c1n"]
 size = Vector2(22, 28)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ojica"]
-shader = ExtResource("4_46eee")
-shader_parameter/flash_color = Color(0, 0, 0, 1)
+[sub_resource type="AtlasTexture" id="AtlasTexture_kddhp"]
+atlas = ExtResource("5_ibwj3")
+region = Rect2(0, 0, 24, 30)
 
-[node name="Drone" type="Node2D" unique_id=2053652137]
+[sub_resource type="AtlasTexture" id="AtlasTexture_ibwj3"]
+atlas = ExtResource("5_ibwj3")
+region = Rect2(24, 0, 24, 30)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wkouj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kddhp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ibwj3")
+}],
+"loop": 1,
+"name": &"left_fire",
+"speed": 18.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kddhp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ibwj3")
+}],
+"loop": 1,
+"name": &"left_fly_down",
+"speed": 18.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kddhp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ibwj3")
+}],
+"loop": 1,
+"name": &"left_fly_up",
+"speed": 18.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kddhp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ibwj3")
+}],
+"loop": 1,
+"name": &"left_idle",
+"speed": 18.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kddhp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ibwj3")
+}],
+"loop": 0,
+"name": &"left_turn_down",
+"speed": 18.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kddhp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ibwj3")
+}],
+"loop": 0,
+"name": &"left_turn_up",
+"speed": 18.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kddhp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ibwj3")
+}],
+"loop": 1,
+"name": &"right_fire",
+"speed": 18.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kddhp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ibwj3")
+}],
+"loop": 1,
+"name": &"right_fly_down",
+"speed": 18.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kddhp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ibwj3")
+}],
+"loop": 1,
+"name": &"right_fly_up",
+"speed": 18.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kddhp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ibwj3")
+}],
+"loop": 1,
+"name": &"right_idle",
+"speed": 18.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kddhp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ibwj3")
+}],
+"loop": 0,
+"name": &"right_turn_down",
+"speed": 18.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kddhp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ibwj3")
+}],
+"loop": 0,
+"name": &"right_turn_up",
+"speed": 18.0
+}]
+
+[node name="Drone" type="Node2D" unique_id=2053652137 node_paths=PackedStringArray("hitbox", "sprite", "vis")]
 z_index = 103
 script = ExtResource("1_ibwj3")
 max_health = 1850
 attack = 4
 defense = 10
+parry_resist = 0.25
 health_orb_value = 2
 light_radius = 32
 kill_particle_range = Vector2i(12, 16)
+hitbox = NodePath("Area2D")
+sprite = NodePath("SnailySprite2D")
+vis = NodePath("VisibleOnScreenNotifier2D")
 
 [node name="Area2D" type="Area2D" parent="." unique_id=1270629804]
 collision_layer = 64
@@ -36,15 +177,9 @@ debug_color = Color(0.976471, 0, 0.415686, 0.419608)
 scale = Vector2(0.8, 0.8)
 rect = Rect2(-14.999998, -18.749998, 29.999996, 37.499996)
 
-[node name="JsonSprite2D" type="Sprite2D" parent="." unique_id=362549124]
+[node name="SnailySprite2D" type="AnimatedSprite2D" parent="." unique_id=986097679]
 material = ExtResource("2_g1h82")
-script = ExtResource("3_4cirk")
-texture_path = "res://Assets/Images/Entities/Drone.json"
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
-
-[node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D" unique_id=285278172]
-material = SubResource("ShaderMaterial_ojica")
-texture = ExtResource("5_ibwj3")
-hframes = 2
-script = ExtResource("6_12jmj")
-metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+sprite_frames = SubResource("SpriteFrames_wkouj")
+animation = &"left_fire"
+script = ExtResource("4_a8bfr")
+metadata/_custom_type_script = "uid://boee2837la0pr"

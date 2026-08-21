@@ -24,9 +24,6 @@ var closest_onscreen_point:Vector2 = origin
 
 func _ready() -> void:
 	my_type = EnemyTypes.GEAR_COMMON
-	hitbox = $"Area2D"
-	sprite = $"JsonSprite2D"
-	vis = $"VisibleOnScreenNotifier2D"
 	super.spawn()
 	
 	match direction:
@@ -34,7 +31,6 @@ func _ready() -> void:
 		Statics.DirsCardinal.LEFT: position.x += START_OFFSET
 		Statics.DirsCardinal.DOWN: position.y -= START_OFFSET
 		Statics.DirsCardinal.RIGHT: position.x -= START_OFFSET
-	sprite.action = "idle"
 	
 	if not display_mode:
 		closest_onscreen_point = GameCore.instance.current_room.bounds.get_closest_point_to(origin)
@@ -46,7 +42,8 @@ func _process(delta: float) -> void:
 		fast_idle_timer -= delta
 		if fast_idle_timer <= 0.0:
 			fast_idle_timer = randf_range(FAST_IDLE_MIN, FAST_IDLE_MAX)
-			sprite.action = "idle_fast"
+			sprite.play("idle_fast")
+			sprite.autoplay_next = "idle"
 	if not ai_active:
 		return
 	
@@ -57,7 +54,7 @@ func _process(delta: float) -> void:
 				if abs(player_pos.x - position.x) < REACT_DISTANCE:
 					going = true
 					velocity.y = -SPEED.y
-					sprite.action = "charge_up"
+					sprite.play("charge_up")
 			else:
 				position += velocity * delta
 				velocity.y += ACCEL.y * delta
@@ -68,7 +65,7 @@ func _process(delta: float) -> void:
 				if abs(player_pos.y - position.y) < REACT_DISTANCE:
 					going = true
 					velocity.x = -SPEED.x
-					sprite.action = "charge_left"
+					sprite.play("charge_left")
 			else:
 				position += velocity * delta
 				velocity.x += ACCEL.x * delta
@@ -79,7 +76,7 @@ func _process(delta: float) -> void:
 				if abs(player_pos.x - position.x) < REACT_DISTANCE:
 					going = true
 					velocity.y = SPEED.y
-					sprite.action = "charge_down"
+					sprite.play("charge_down")
 			else:
 				position += velocity * delta
 				velocity.y -= ACCEL.y * delta
@@ -90,7 +87,7 @@ func _process(delta: float) -> void:
 				if abs(player_pos.y - position.y) < REACT_DISTANCE:
 					going = true
 					velocity.x = SPEED.x
-					sprite.action = "charge_right"
+					sprite.play("charge_right")
 			else:
 				position += velocity * delta
 				velocity.x -= ACCEL.x * delta

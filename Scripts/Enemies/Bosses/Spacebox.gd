@@ -95,12 +95,10 @@ func _physics_process(delta: float) -> void:
 		check_shoot(delta)
 		check_add_shields()
 		update_shield_positions()
-	var real = self
-	if real is CharacterBody2D:
-		real.velocity += accel_dir * ACCEL * delta
-		var stomp_vel:Vector2 = real.velocity
-		if stomp_vel != Vector2.ZERO and real.move_and_slide() and stomp_vel != real.velocity:
-			stomp(stomp_vel)
+	body.velocity += accel_dir * ACCEL * delta
+	var stomp_vel:Vector2 = body.velocity
+	if stomp_vel != Vector2.ZERO and body.move_and_slide() and stomp_vel != body.velocity:
+		stomp(stomp_vel)
 	
 	for i in range(babyboxes.size() - 1, -1, -1):
 		if babyboxes[i] == null:
@@ -168,14 +166,12 @@ func stomp(impact_vel:Vector2) -> void:
 			if impact:
 				UICore.instance.call_screen_shake_linear(SHAKE_TIMELINE, Vector2(-1, -1).normalized(), UICore.ShakeCallMode.OVERWRITE_ALL)
 			play_phase_anim("UL_land")
-	var real = self
-	if real is CharacterBody2D:
-		position += impact_vel.normalized() * -0.25
-		real.velocity = Vector2.ZERO
-		accel_dir = Vector2.ZERO
-		last_mode = current_mode
-		current_mode = Statics.DirsCompass.NONE
-		mode_timeout = MODE_TIMEOUT
+	position += impact_vel.normalized() * -0.25
+	body.velocity = Vector2.ZERO
+	accel_dir = Vector2.ZERO
+	last_mode = current_mode
+	current_mode = Statics.DirsCompass.NONE
+	mode_timeout = MODE_TIMEOUT
 
 
 func check_add_shields() -> void:

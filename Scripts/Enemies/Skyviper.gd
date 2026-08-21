@@ -28,16 +28,12 @@ var shot_timeout:float = SHOT_TIMEOUT
 var facing_left:bool = false
 
 @onready var sfx_move:AudioStreamPlayer = $"Move"
-@onready var donut:PackedScene = load("res://Scenes/Entities/Bullets/Enemy/EnemyBulletDonutLinear.tscn")
+@onready var donut:PackedScene = load("uid://cr8jpfivtdpnw")
 #endregion
 
 
 func _ready() -> void:
 	my_type = EnemyTypes.SKYVIPER
-	col = $"BodyBox"
-	hitbox = $"Area2D"
-	sprite = $"JsonSprite2D"
-	vis = $"VisibleOnScreenNotifier2D"
 	super.spawn()
 	
 	if easy_mode:
@@ -56,53 +52,50 @@ func _physics_process(delta: float) -> void:
 	if not ai_active:
 		return
 	
-	var real = self
-	if real is CharacterBody2D:
-		if vis.is_on_screen():
-			move_timeout -= delta
-			shot_timeout -= delta
-			var player_pos:Vector2 = GameCore.instance.player.position
-			if abs(player_pos.x - position.x) <= REACT_DISTANCE and abs(player_pos.y - position.y) <= REACT_DISTANCE:
-				if move_timeout <= 0.0:
-					var aim:float = atan2(player_pos.y - position.y, player_pos.x - position.x)
-					aim += THETA_OFFSETS[theta_offset_index]
-					theta_offset_index = (theta_offset_index + 1) % THETA_OFFSETS.size()
-					real.velocity = Vector2(cos(aim) * SPEED.x, sin(aim) * SPEED.y)
-					move_timeout_index = (move_timeout_index + 1) % MOVE_TIMEOUTS.size()
-					move_timeout = MOVE_TIMEOUTS[move_timeout_index]
-					facing_left = real.velocity.x < 0.0
-					_play_anim(true)
-					sfx_move.play()
-				if shot_timeout <= 0.0 and hard_mode:
-					shot_timeout = SHOT_TIMEOUT
-					var aim:float = atan2(player_pos.y - position.y, player_pos.x - position.x)
-					_shoot(donut, Vector2(cos(aim), sin(aim)), WEAPON_SPEED)
-		
-		var last_vel:Vector2 = real.velocity
-		real.move_and_slide()
-		if real.is_on_wall() and last_vel.x != 0.0:
-			real.velocity.x = -last_vel.x
-			facing_left = not facing_left
-			_play_anim(true)
-		if (real.is_on_floor() or real.is_on_ceiling()) and last_vel.y != 0.0:
-			real.velocity.y = -last_vel.y
-		
-		real.velocity = Vector2(
-			move_toward(real.velocity.x, 0.0, DECEL.x * delta),
-			move_toward(real.velocity.y, 0.0, DECEL.y * delta)
-		)
-		if abs(real.velocity.x) < RETURN_SPEED:
-			_play_anim(false)
+	if vis.is_on_screen():
+		move_timeout -= delta
+		shot_timeout -= delta
+		var player_pos:Vector2 = GameCore.instance.player.position
+		if abs(player_pos.x - position.x) <= REACT_DISTANCE and abs(player_pos.y - position.y) <= REACT_DISTANCE:
+			if move_timeout <= 0.0:
+				var aim:float = atan2(player_pos.y - position.y, player_pos.x - position.x)
+				aim += THETA_OFFSETS[theta_offset_index]
+				theta_offset_index = (theta_offset_index + 1) % THETA_OFFSETS.size()
+				body.velocity = Vector2(cos(aim) * SPEED.x, sin(aim) * SPEED.y)
+				move_timeout_index = (move_timeout_index + 1) % MOVE_TIMEOUTS.size()
+				move_timeout = MOVE_TIMEOUTS[move_timeout_index]
+				facing_left = body.velocity.x < 0.0
+				_play_anim(true)
+				sfx_move.play()
+			if shot_timeout <= 0.0 and hard_mode:
+				shot_timeout = SHOT_TIMEOUT
+				var aim:float = atan2(player_pos.y - position.y, player_pos.x - position.x)
+				_shoot(donut, Vector2(cos(aim), sin(aim)), WEAPON_SPEED)
+	
+	var last_vel:Vector2 = body.velocity
+	body.move_and_slide()
+	if body.is_on_wall() and last_vel.x != 0.0:
+		body.velocity.x = -last_vel.x
+		facing_left = not facing_left
+		_play_anim(true)
+	if (body.is_on_floor() or body.is_on_ceiling()) and last_vel.y != 0.0:
+		body.velocity.y = -last_vel.y
+	
+	body.velocity = Vector2(
+		move_toward(body.velocity.x, 0.0, DECEL.x * delta),
+		move_toward(body.velocity.y, 0.0, DECEL.y * delta)
+	)
+	if abs(body.velocity.x) < RETURN_SPEED:
+		_play_anim(false)
 
 
 func _play_anim(mode:int = 0) -> void:
 	var anim_name:String = "left_" if facing_left else "right_"
-	#anim_name += "move" if moving else "idle"
 	if mode > 0:
 		anim_name += "move_high"
 	elif mode < 0:
 		anim_name += "move_low"
 	else:
 		anim_name += "idle"
-	if sprite.action != anim_name:
-		sprite.action = anim_name
+	sprite.play(anim_name)
+	sprite.flip_h = not facing_left

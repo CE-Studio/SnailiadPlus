@@ -29,9 +29,6 @@ static var global_move_index:int = 0
 
 func _ready() -> void:
 	my_type = EnemyTypes.SPIDER_COMMON
-	hitbox = $"Area2D"
-	sprite = $"JsonSprite2D"
-	vis = $"VisibleOnScreenNotifier2D"
 	super.spawn()
 	
 	global_move_index = (global_move_index + 1) % WAIT_TABLE.size()
@@ -69,4 +66,4 @@ func _update_anim() -> void:
 		anim_name += "L"
 	elif velocity.x > 0.3827:
 		anim_name += "R"
-	sprite.action = anim_name
+	sprite.play(anim_name)

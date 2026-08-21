@@ -21,16 +21,12 @@ var grounded:bool = false
 
 @onready var sfx_jump:AudioStreamPlayer = $"Jump"
 @onready var ceil_ray:RayCast2D = $"CeilCheck"
-@onready var donut:PackedScene = load("res://Scenes/Entities/Bullets/Enemy/EnemyBulletDonutRotary.tscn")
+@onready var donut:PackedScene = load("uid://cpp1rm5lkd443")
 #endregion
 
 
 func _ready() -> void:
 	my_type = EnemyTypes.BLOB_ANGEL
-	col = $"BodyBox"
-	hitbox = $"Area2D"
-	sprite = $"JsonSprite2D"
-	vis = $"VisibleOnScreenNotifier2D"
 	super.spawn()
 	
 	hop_ptr = int(position.x) % HOP_HEIGHTS.size()
@@ -47,47 +43,44 @@ func _physics_process(delta: float) -> void:
 	if not ai_active:
 		return
 	
-	var real = self
-	if real is CharacterBody2D:
-		if vis.is_on_screen():
-			hop_timeout -= delta
-			if hop_timeout <= 0.0:
-				facing_right = GameCore.instance.player.position.x > position.x
-				real.velocity = Vector2(
-					VEL_X * (1 if facing_right else -1),
-					JUMP_VEL_BASE * HOP_HEIGHTS[hop_ptr]
-				)
-				hop_ptr = (hop_ptr + 1) % HOP_HEIGHTS.size()
-				hop_timeout = HOP_TIMEOUTS[hop_ptr]
-				play_anim("jump")
-				grounded = false
-				if not ceil_ray.is_colliding():
-					sfx_jump.play()
-			shot_timeout -= delta
-			if shot_timeout <= 0.0:
-				shot_timeout = SHOT_TIMEOUT
-				_shoot_360_cluster_rotary(donut, Vector2(4.0, 0.0), 60.0, SHOT_COUNT)
-		real.move_and_slide()
-		real.velocity.y += GRAVITY * delta
-		
-		if real.is_on_wall() and not grounded:
-			facing_right = not facing_right
-			real.velocity.x = VEL_X * (1 if facing_right else -1)
-			play_anim("reflect")
-		
-		if real.is_on_floor():
-			if real.velocity.x != 0.0:
-				play_anim("quiver")
-			real.velocity.x = 0.0
-			real.velocity.y *= -0.1
-			grounded = true
-		
-		if real.is_on_ceiling() and real.velocity.y < 0.0:
-			real.velocity.y = 0.0
+	if vis.is_on_screen():
+		hop_timeout -= delta
+		if hop_timeout <= 0.0:
+			facing_right = GameCore.instance.player.position.x > position.x
+			body.velocity = Vector2(
+				VEL_X * (1 if facing_right else -1),
+				JUMP_VEL_BASE * HOP_HEIGHTS[hop_ptr]
+			)
+			hop_ptr = (hop_ptr + 1) % HOP_HEIGHTS.size()
+			hop_timeout = HOP_TIMEOUTS[hop_ptr]
+			play_anim("jump")
+			grounded = false
+			if not ceil_ray.is_colliding():
+				sfx_jump.play()
+		shot_timeout -= delta
+		if shot_timeout <= 0.0:
+			shot_timeout = SHOT_TIMEOUT
+			_shoot_360_cluster_rotary(donut, Vector2(4.0, 0.0), 60.0, SHOT_COUNT)
+	body.move_and_slide()
+	body.velocity.y += GRAVITY * delta
+	
+	if body.is_on_wall() and not grounded:
+		facing_right = not facing_right
+		body.velocity.x = VEL_X * (1 if facing_right else -1)
+		play_anim("reflect")
+	
+	if body.is_on_floor():
+		if body.velocity.x != 0.0:
+			play_anim("quiver")
+		body.velocity.x = 0.0
+		body.velocity.y *= -0.1
+		grounded = true
+	
+	if body.is_on_ceiling() and body.velocity.y < 0.0:
+		body.velocity.y = 0.0
 
 
-func play_anim(modifier:String = "") -> void:
-	var anim_name = "angel_"
-	anim_name += modifier
-	anim_name += "_right" if facing_right else "_left"
-	sprite.action = anim_name
+func play_anim(state:String = "") -> void:
+	state += "_right" if facing_right else "_left"
+	sprite.play(state)
+	sprite.flip_h = facing_right

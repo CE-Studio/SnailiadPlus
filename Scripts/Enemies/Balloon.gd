@@ -20,17 +20,14 @@ var spawn_drift_amount:float = 0.0
 var on_screen_once:bool = false
 var shot_timeout:float = SHOT_TIMEOUT
 
-@onready var donut:PackedScene = load("res://Scenes/Entities/Bullets/Enemy/EnemyBulletDonutLinear.tscn")
+@onready var donut:PackedScene = load("uid://cr8jpfivtdpnw")
 
 
 func _ready() -> void:
 	my_type = EnemyTypes.BALLOON
-	hitbox = $"Area2D"
-	sprite = $"JsonSprite2D"
-	vis = $"VisibleOnScreenNotifier2D"
 	super.spawn()
 	origin_x = position.x
-	sprite.action = "right"
+	sprite.play("right")
 
 
 func _process(delta) -> void:
@@ -50,10 +47,10 @@ func _process(delta) -> void:
 	var before_x:float = position.x
 	position.x = origin_x + CYCLE_AMPLITUDE * sin(theta * CYCLE_SPEED)
 	if before_x > position.x and not going_left:
-		sprite.action = "left"
+		sprite.play("left")
 		going_left = true
 	elif before_x < position.x and going_left:
-		sprite.action = "right"
+		sprite.play("right")
 		going_left = false
 	spawn_drift_amount = lerpf(spawn_drift_amount, 0.0, SPAWN_DRIFT_TIME * delta)
 	position.y -= (RISE_SPEED + spawn_drift_amount) * delta
@@ -67,3 +64,5 @@ func _process(delta) -> void:
 				position.x - GameCore.instance.player.position.x
 			)
 			_shoot(donut, Vector2(-cos(aim), -sin(aim)), WEAPON_SPEED)
+			sprite.play(("left" if going_left else "right") + "_fire")
+			sprite.autoplay_next = "left" if going_left else "right"

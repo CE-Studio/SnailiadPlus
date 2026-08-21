@@ -2,25 +2,132 @@
 
 [ext_resource type="Script" uid="uid://bf8umv2ermc7a" path="res://Scripts/Enemies/SpiderCommon.gd" id="1_prnnb"]
 [ext_resource type="Material" uid="uid://bj1jqi3180tg5" path="res://Resources/EnemyFlashMat.tres" id="2_ntflk"]
-[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="3_a7djd"]
-[ext_resource type="Shader" uid="uid://bday5amji1ndg" path="res://Resources/EntityFlash.tres" id="4_arq4i"]
+[ext_resource type="Script" uid="uid://boee2837la0pr" path="res://Scripts/Classes/SnailySprite.gd" id="4_u0i2y"]
 [ext_resource type="Texture2D" uid="uid://b64kcewt6g5gn" path="res://Assets/Images/Entities/Spider1.png" id="5_prnnb"]
-[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="6_q1li6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_v2c1n"]
 size = Vector2(14, 14)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ojica"]
-shader = ExtResource("4_arq4i")
-shader_parameter/flash_color = Color(0, 0, 0, 1)
+[sub_resource type="AtlasTexture" id="AtlasTexture_g6lbn"]
+atlas = ExtResource("5_prnnb")
+region = Rect2(0, 0, 16, 16)
 
-[node name="SpiderCommon" type="Node2D" unique_id=1756167421]
+[sub_resource type="AtlasTexture" id="AtlasTexture_prnnb"]
+atlas = ExtResource("5_prnnb")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wkouj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g6lbn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_prnnb")
+}],
+"loop": 1,
+"name": &"D",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g6lbn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_prnnb")
+}],
+"loop": 1,
+"name": &"DL",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g6lbn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_prnnb")
+}],
+"loop": 1,
+"name": &"DR",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g6lbn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_prnnb")
+}],
+"loop": 1,
+"name": &"L",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g6lbn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_prnnb")
+}],
+"loop": 1,
+"name": &"R",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g6lbn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_prnnb")
+}],
+"loop": 1,
+"name": &"U",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g6lbn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_prnnb")
+}],
+"loop": 1,
+"name": &"UL",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g6lbn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_prnnb")
+}],
+"loop": 1,
+"name": &"UR",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g6lbn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_prnnb")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 6.0
+}]
+
+[node name="SpiderCommon" type="Node2D" unique_id=1756167421 node_paths=PackedStringArray("hitbox", "sprite", "vis")]
 z_index = 103
 script = ExtResource("1_prnnb")
 max_health = 500
 attack = 3
 defense = 10
 health_orb_value = 2
+hitbox = NodePath("Area2D")
+sprite = NodePath("SnailySprite2D")
+vis = NodePath("VisibleOnScreenNotifier2D")
 
 [node name="Area2D" type="Area2D" parent="." unique_id=858458341]
 collision_layer = 64
@@ -33,16 +140,11 @@ debug_color = Color(0.976471, 0, 0.415686, 0.419608)
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=577587203]
 scale = Vector2(0.8, 0.8)
 
-[node name="JsonSprite2D" type="Sprite2D" parent="." unique_id=922927556]
+[node name="SnailySprite2D" type="AnimatedSprite2D" parent="." unique_id=1964123260]
 material = ExtResource("2_ntflk")
-script = ExtResource("3_a7djd")
-texture_path = "res://Assets/Images/Entities/Spider1.json"
-load_autoplay = Array[String](["idle"])
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
-
-[node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D" unique_id=1927658289]
-material = SubResource("ShaderMaterial_ojica")
-texture = ExtResource("5_prnnb")
-hframes = 2
-script = ExtResource("6_q1li6")
-metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+sprite_frames = SubResource("SpriteFrames_wkouj")
+animation = &"idle"
+autoplay = "idle"
+script = ExtResource("4_u0i2y")
+start_all_on_random_frame = true
+metadata/_custom_type_script = "uid://boee2837la0pr"
