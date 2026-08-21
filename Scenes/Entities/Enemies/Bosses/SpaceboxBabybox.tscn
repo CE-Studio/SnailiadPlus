@@ -2,15 +2,130 @@
 
 [ext_resource type="Script" uid="uid://cqliimvj68ekg" path="res://Scripts/Enemies/Bosses/SpaceboxBabybox.gd" id="1_bd0kd"]
 [ext_resource type="Material" uid="uid://bj1jqi3180tg5" path="res://Resources/EnemyFlashMat.tres" id="2_4ciwk"]
-[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="2_eew36"]
 [ext_resource type="Texture2D" uid="uid://bf31hhii6t2tq" path="res://Assets/Images/Entities/Boss3Babybox.png" id="3_bd0kd"]
-[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="4_a4jov"]
+[ext_resource type="Script" uid="uid://boee2837la0pr" path="res://Scripts/Classes/SnailySprite.gd" id="4_eew36"]
 [ext_resource type="AudioStream" uid="uid://ceqtn3682frsa" path="res://Assets/Sounds/Sfx/Stomp.ogg" id="6_4ciwk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vj7im"]
 size = Vector2(64, 64)
 
-[node name="SpaceboxBabybox" type="CharacterBody2D" unique_id=9073554]
+[sub_resource type="AtlasTexture" id="AtlasTexture_eew36"]
+atlas = ExtResource("3_bd0kd")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4ciwk"]
+atlas = ExtResource("3_bd0kd")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a4jov"]
+atlas = ExtResource("3_bd0kd")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tbf1h"]
+atlas = ExtResource("3_bd0kd")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8ve5k"]
+atlas = ExtResource("3_bd0kd")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1aykw"]
+atlas = ExtResource("3_bd0kd")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wkouj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eew36")
+}],
+"loop": 1,
+"name": &"display",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4ciwk")
+}],
+"loop": 1,
+"name": &"p0_D_land",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4ciwk")
+}],
+"loop": 1,
+"name": &"p0_D_move",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4ciwk")
+}],
+"loop": 1,
+"name": &"p0_L_land",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4ciwk")
+}],
+"loop": 1,
+"name": &"p0_L_move",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4ciwk")
+}],
+"loop": 1,
+"name": &"p0_R_land",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4ciwk")
+}],
+"loop": 1,
+"name": &"p0_R_move",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4ciwk")
+}],
+"loop": 1,
+"name": &"p0_U_land",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4ciwk")
+}],
+"loop": 1,
+"name": &"p0_U_move",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a4jov")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tbf1h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8ve5k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1aykw")
+}],
+"loop": 0,
+"name": &"p0_spawn",
+"speed": 20.0
+}]
+
+[node name="SpaceboxBabybox" type="CharacterBody2D" unique_id=9073554 node_paths=PackedStringArray("col", "body", "hitbox", "sprite", "vis")]
 z_index = 121
 collision_layer = 64
 collision_mask = 3
@@ -21,6 +136,11 @@ defense = 9
 kill_particle_range = Vector2i(16, 16)
 kill_particle_types = Array[String](["ExplosionBig", "ExplosionHuge"])
 kill_particle_count = 8
+col = NodePath("BodyBox")
+body = NodePath(".")
+hitbox = NodePath("Area2D")
+sprite = NodePath("SnailySprite2D")
+vis = NodePath("VisibleOnScreenNotifier2D")
 
 [node name="BodyBox" type="CollisionShape2D" parent="." unique_id=1741564860]
 shape = SubResource("RectangleShape2D_vj7im")
@@ -40,19 +160,18 @@ rect = Rect2(-26.666666, -26.666666, 53.333332, 53.333332)
 
 [node name="HandGroup" type="Node2D" parent="." unique_id=1022105799]
 
-[node name="JsonSprite2D" type="Sprite2D" parent="." unique_id=621544336]
+[node name="SnailySprite2D" type="AnimatedSprite2D" parent="." unique_id=1737745460]
 material = ExtResource("2_4ciwk")
-script = ExtResource("2_eew36")
-texture_path = "res://Assets/Images/Entities/Boss3Babybox.json"
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
-
-[node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D" unique_id=1426059906]
-texture = ExtResource("3_bd0kd")
-hframes = 4
-vframes = 2
-frame = 3
-script = ExtResource("4_a4jov")
-metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+sprite_frames = SubResource("SpriteFrames_wkouj")
+animation = &"display"
+script = ExtResource("4_eew36")
+infer_new = true
+replace_key = "p0_"
+add_count = 1
+rect_offset = Vector2i(0, 64)
+source = ExtResource("3_bd0kd")
+specialized_keys = Array[String](["p1_"])
+metadata/_custom_type_script = "uid://boee2837la0pr"
 
 [node name="Stomp" type="AudioStreamPlayer" parent="." unique_id=219756953]
 stream = ExtResource("6_4ciwk")

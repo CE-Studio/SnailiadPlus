@@ -1,14 +1,64 @@
 [gd_scene format=3 uid="uid://ka2xpbxbm32q"]
 
 [ext_resource type="Script" uid="uid://c6xrv4xwlucqx" path="res://Scripts/Enemies/Bosses/SpaceboxShield.gd" id="1_bb8v3"]
-[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="2_j0t6a"]
 [ext_resource type="Texture2D" uid="uid://cjg1uut8gtmma" path="res://Assets/Images/Entities/Boss3Shield.png" id="3_bb8v3"]
+[ext_resource type="Script" uid="uid://boee2837la0pr" path="res://Scripts/Classes/SnailySprite.gd" id="3_j0t6a"]
 [ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="4_lqrqj"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vj7im"]
 size = Vector2(16, 16)
 
-[node name="SpaceboxShield" type="Node2D" unique_id=1841395489]
+[sub_resource type="AtlasTexture" id="AtlasTexture_yc5qp"]
+atlas = ExtResource("3_bb8v3")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lqrqj"]
+atlas = ExtResource("3_bb8v3")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qwp1o"]
+atlas = ExtResource("3_bb8v3")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mv5rc"]
+atlas = ExtResource("3_bb8v3")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2mn87"]
+atlas = ExtResource("3_bb8v3")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_euvrx"]
+atlas = ExtResource("3_bb8v3")
+region = Rect2(80, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wkouj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yc5qp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lqrqj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qwp1o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mv5rc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2mn87")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_euvrx")
+}],
+"loop": 0,
+"name": &"idle",
+"speed": 30.0
+}]
+
+[node name="SpaceboxShield" type="Node2D" unique_id=1841395489 node_paths=PackedStringArray("hitbox", "sprite", "vis")]
 z_index = -1
 script = ExtResource("1_bb8v3")
 max_health = 100
@@ -20,6 +70,9 @@ shield_entity = true
 kill_particle_range = Vector2i(0, 0)
 kill_particle_types = Array[String](["ExplosionWhiteSmall"])
 kill_particle_count = 1
+hitbox = NodePath("Area2D")
+sprite = NodePath("Body")
+vis = NodePath("VisibleOnScreenNotifier2D")
 
 [node name="Area2D" type="Area2D" parent="." unique_id=858626240]
 collision_layer = 64
@@ -35,10 +88,12 @@ rect = Rect2(-6.6666665, -6.6666665, 13.333333, 13.333333)
 
 [node name="HandGroup" type="Node2D" parent="." unique_id=1965195270]
 
-[node name="Body" type="Sprite2D" parent="." unique_id=2106613158]
-script = ExtResource("2_j0t6a")
-texture_path = "res://Assets/Images/Entities/Boss3Shield.json"
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
+[node name="Body" type="AnimatedSprite2D" parent="." unique_id=375547549]
+sprite_frames = SubResource("SpriteFrames_wkouj")
+animation = &"idle"
+autoplay = "idle"
+script = ExtResource("3_j0t6a")
+metadata/_custom_type_script = "uid://boee2837la0pr"
 
 [node name="MarkerSprite" type="Sprite2D" parent="Body" unique_id=1831473167]
 texture = ExtResource("3_bb8v3")

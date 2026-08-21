@@ -21,16 +21,12 @@ var accel_dir:Vector2 = Vector2.ZERO
 
 func _ready() -> void:
 	my_type = EnemyTypes.SPACEBOX_BABYBOX
-	col = $"BodyBox"
-	sprite = $"JsonSprite2D"
-	hitbox = $"Area2D"
-	vis = $"VisibleOnScreenNotifier2D"
 	super.spawn()
 	
 	if boss:
 		play_phase_anim("spawn")
 	if display_mode:
-		sprite.action = "display"
+		sprite.play("display")
 
 
 func _physics_process(delta) -> void:
@@ -49,7 +45,7 @@ func _physics_process(delta) -> void:
 
 func play_phase_anim(anim:String = last_action) -> void:
 	last_action = anim
-	sprite.action = "p%d_%s" % [boss.phase, anim]
+	sprite.play("p%d_%s" % [boss.phase, anim])
 
 
 func stomp(impact_vel:Vector2) -> void:

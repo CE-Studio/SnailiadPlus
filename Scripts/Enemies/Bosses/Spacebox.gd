@@ -55,9 +55,9 @@ var accel_dir:Vector2 = Vector2.ZERO
 @onready var sfx_summon:AudioStreamPlayer = $"Summon"
 @onready var sfx_stomp:AudioStreamPlayer = $"Stomp"
 @onready var shield_layer:Node2D = $"ShieldLayer"
-@onready var donut:PackedScene = preload("res://Scenes/Entities/Bullets/Enemy/EnemyBulletDonutRotary.tscn")
-@onready var shield_scn:PackedScene = preload("res://Scenes/Entities/Enemies/Bosses/SpaceboxShield.tscn")
-@onready var babybox_scn:PackedScene = preload("res://Scenes/Entities/Enemies/Bosses/SpaceboxBabybox.tscn")
+@onready var donut:PackedScene = preload("uid://cpp1rm5lkd443")
+@onready var shield_scn:PackedScene = preload("uid://ka2xpbxbm32q")
+@onready var babybox_scn:PackedScene = preload("uid://4w6iyanqj1ks")
 #endregion
 
 
@@ -67,14 +67,10 @@ func _ready() -> void:
 		return
 	
 	my_type = EnemyTypes.SPACEBOX
-	col = $"BodyBox"
-	sprite = $"JsonSprite2D"
-	hitbox = $"Area2D"
-	vis = $"VisibleOnScreenNotifier2D"
 	super.spawn()
 	
 	if display_mode:
-		sprite.action = "display"
+		sprite.play("display")
 		z_index = 0
 		return
 	else:
@@ -393,7 +389,7 @@ func kill() -> void:
 		UICore.instance.achievement_core.check_add(AchievementCore.Achievements.BEAT_SPACE_BOX)
 		if health_bar:
 			health_bar._toggle_outro_shake()
-		sprite.action = "defeat"
+		sprite.play("defeat")
 		for _shield in shields:
 			_shield.kill()
 		shields.clear()
