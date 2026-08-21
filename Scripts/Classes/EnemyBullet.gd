@@ -125,7 +125,7 @@ func _physics_process(delta: float) -> void:
 func parry_reshoot() -> void:
 	has_been_parried = true
 	if source_enemy:
-		normalized_dir = Vector2(source_enemy.position - position).normalized()
+		normalized_dir = Vector2(source_enemy.global_position - global_position).normalized()
 	else:
 		normalized_dir *= -1
 	life_timer = 0.0
