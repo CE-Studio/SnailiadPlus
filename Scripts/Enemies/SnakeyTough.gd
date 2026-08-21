@@ -19,16 +19,12 @@ var shot_timeout:float = SHOT_TIMEOUT
 var facing_left:bool = false
 
 @onready var sfx_move:AudioStreamPlayer = $"Move"
-@onready var donut:PackedScene = load("res://Scenes/Entities/Bullets/Enemy/EnemyBulletDonutLinear.tscn")
+@onready var donut:PackedScene = load("uid://cr8jpfivtdpnw")
 #endregion
 
 
 func _ready() -> void:
 	my_type = EnemyTypes.SNAKEY
-	col = $"BodyBox"
-	hitbox = $"Area2D"
-	sprite = $"JsonSprite2D"
-	vis = $"VisibleOnScreenNotifier2D"
 	super.spawn()
 	
 	facing_left = randf() <= 0.5
@@ -85,5 +81,5 @@ func _physics_process(delta: float) -> void:
 func _play_anim(moving:bool) -> void:
 	var anim_name:String = "left_" if facing_left else "right_"
 	anim_name += "move" if moving else "idle"
-	if sprite.action != anim_name:
-		sprite.action = anim_name
+	sprite.play(anim_name)
+	sprite.flip_h = not facing_left

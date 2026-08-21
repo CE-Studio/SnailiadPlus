@@ -2,19 +2,100 @@
 
 [ext_resource type="Script" uid="uid://kbuak1kceuw6" path="res://Scripts/Enemies/Seahorse.gd" id="1_5ug84"]
 [ext_resource type="Material" uid="uid://bj1jqi3180tg5" path="res://Resources/EnemyFlashMat.tres" id="2_0avds"]
-[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="3_l2b1b"]
-[ext_resource type="Shader" uid="uid://bday5amji1ndg" path="res://Resources/EntityFlash.tres" id="4_1x5ks"]
+[ext_resource type="Script" uid="uid://boee2837la0pr" path="res://Scripts/Classes/SnailySprite.gd" id="4_lxkrs"]
 [ext_resource type="Texture2D" uid="uid://ds5a6kypxtit2" path="res://Assets/Images/Entities/Seahorse.png" id="5_0avds"]
-[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="6_51v0e"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_v2c1n"]
 size = Vector2(14, 30)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ojica"]
-shader = ExtResource("4_1x5ks")
-shader_parameter/flash_color = Color(0, 0, 0, 1)
+[sub_resource type="AtlasTexture" id="AtlasTexture_u0j6m"]
+atlas = ExtResource("5_0avds")
+region = Rect2(0, 0, 16, 32)
 
-[node name="Seahorse" type="Node2D" unique_id=677374071]
+[sub_resource type="SpriteFrames" id="SpriteFrames_wkouj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u0j6m")
+}],
+"loop": 1,
+"name": &"left_idle",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u0j6m")
+}],
+"loop": 0,
+"name": &"left_swim_down",
+"speed": 0.9
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u0j6m")
+}],
+"loop": 0,
+"name": &"left_swim_up",
+"speed": 0.9
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u0j6m")
+}],
+"loop": 0,
+"name": &"left_turn_down",
+"speed": 0.9
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u0j6m")
+}],
+"loop": 0,
+"name": &"left_turn_up",
+"speed": 0.9
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u0j6m")
+}],
+"loop": 1,
+"name": &"right_idle",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u0j6m")
+}],
+"loop": 0,
+"name": &"right_swim_down",
+"speed": 0.9
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u0j6m")
+}],
+"loop": 0,
+"name": &"right_swim_up",
+"speed": 0.9
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u0j6m")
+}],
+"loop": 0,
+"name": &"right_turn_down",
+"speed": 0.9
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u0j6m")
+}],
+"loop": 0,
+"name": &"right_turn_up",
+"speed": 0.9
+}]
+
+[node name="Seahorse" type="Node2D" unique_id=677374071 node_paths=PackedStringArray("hitbox", "sprite", "vis")]
 z_index = 103
 script = ExtResource("1_5ug84")
 max_health = 250
@@ -22,6 +103,9 @@ attack = 2
 defense = 10
 health_orb_value = 2
 kill_particle_range = Vector2i(8, 16)
+hitbox = NodePath("Area2D")
+sprite = NodePath("SnailySprite2D")
+vis = NodePath("VisibleOnScreenNotifier2D")
 
 [node name="Area2D" type="Area2D" parent="." unique_id=1288193786]
 collision_layer = 64
@@ -35,14 +119,11 @@ debug_color = Color(0.976471, 0, 0.415686, 0.419608)
 scale = Vector2(0.8, 0.8)
 rect = Rect2(-10, -19.999998, 20, 39.999996)
 
-[node name="JsonSprite2D" type="Sprite2D" parent="." unique_id=468533002]
+[node name="SnailySprite2D" type="AnimatedSprite2D" parent="." unique_id=1134457466]
 material = ExtResource("2_0avds")
-script = ExtResource("3_l2b1b")
-texture_path = "res://Assets/Images/Entities/Seahorse.json"
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
+sprite_frames = SubResource("SpriteFrames_wkouj")
+animation = &"right_idle"
+script = ExtResource("4_lxkrs")
+metadata/_custom_type_script = "uid://boee2837la0pr"
 
-[node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D" unique_id=509570694]
-material = SubResource("ShaderMaterial_ojica")
-texture = ExtResource("5_0avds")
-script = ExtResource("6_51v0e")
-metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+[connection signal="animation_changed" from="SnailySprite2D" to="." method="_on_sprite_animation_changed"]

@@ -13,10 +13,11 @@ const NEUTRAL_BUFFER:float = 2.0
 var last_pos:Vector2 = Vector2.ZERO
 var last_anim:String = ""
 
-@onready var body:AnimatableBody2D = $"PlatBody"
-@onready var col:CollisionShape2D = $"PlatBody/CollisionShape2D"
-@onready var sprite:JsonSprite2D = $"PlatBody/JsonSprite2D"
-@onready var anim:AnimationPlayer = $"AnimationPlayer"
+@export_group("Components")
+@export var body:AnimatableBody2D
+@export var col:CollisionShape2D
+@export var sprite:SnailySprite2D
+@export var anim:AnimationPlayer
 #endregion
 
 
@@ -37,6 +38,6 @@ func _physics_process(_delta: float) -> void:
 			state = "left" if dir.x < 0 else "right"
 	var anim_name:String = "%d_%d_%s" % [ type, size, state ]
 	if anim_name != last_anim:
-		sprite.action = anim_name
+		sprite.play(anim_name)
 		last_anim = anim_name
 	last_pos = body.position

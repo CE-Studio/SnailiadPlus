@@ -33,9 +33,6 @@ var out_of_water_timeout:float = 0.0
 
 func _ready() -> void:
 	my_type = EnemyTypes.SEAHORSE
-	hitbox = $"Area2D"
-	sprite = $"JsonSprite2D"
-	vis = $"VisibleOnScreenNotifier2D"
 	super.spawn()
 	
 	if hard_mode:
@@ -43,9 +40,9 @@ func _ready() -> void:
 		move_time = 1.3
 	elapsed = move_time
 	
-	sprite.action = "right_idle"
+	sprite.play("right_idle")
 	if display_mode and randf() < 0.5:
-		sprite.action = "left_idle"
+		sprite.play("left_idle")
 	theta = position.x * position.x * 1.1 + position.y * 3.2 + 0.7
 
 
@@ -59,16 +56,19 @@ func _process(delta: float) -> void:
 	if not in_water and environment and environment is WaterArea:
 		in_water = true
 	if in_water and environment and not environment.point_in_bounds(position + Vector2(0, -16)) and out_of_water_timeout <= 0.0:
+		in_water = false
 		out_of_water_timeout = OUT_OF_WATER_TIMEOUT
 		elapsed = 0.0
 		move_origin = position
 		if player_pos.x < position.x:
 			mode = MoveMode.COS_DOWN_LEFT if facing_left else MoveMode.TURN_DOWN_RIGHT
-			sprite.action = "left_swim_down" if facing_left else "right_turn_down"
+			sprite.play("left_swim_down" if facing_left else "right_turn_down")
+			sprite.autoplay_next = "left_idle"
 			facing_left = true
 		else:
 			mode = MoveMode.TURN_DOWN_LEFT if facing_left else MoveMode.COS_DOWN_RIGHT
-			sprite.action = "left_turn_down" if facing_left else "right_move_down"
+			sprite.play("left_turn_down" if facing_left else "right_move_down")
+			sprite.autoplay_next = "right_idle"
 			facing_left = false
 	out_of_water_timeout -= delta
 	
@@ -81,19 +81,21 @@ func _process(delta: float) -> void:
 			if player_pos.x < position.x:
 				if facing_left:
 					mode = MoveMode.COS_UP_LEFT if player_pos.y < position.y else MoveMode.COS_DOWN_LEFT
-					sprite.action = "left_swim_up" if player_pos.y < position.y else "left_swim_down"
+					sprite.play("left_swim_up" if player_pos.y < position.y else "left_swim_down")
 				else:
 					mode = MoveMode.TURN_UP_RIGHT if player_pos.y < position.y else MoveMode.TURN_DOWN_RIGHT
-					sprite.action = "right_turn_up" if player_pos.y < position.y else "right_turn_down"
+					sprite.play("right_turn_up" if player_pos.y < position.y else "right_turn_down")
 					facing_left = true
+				sprite.autoplay_next = "left_idle"
 			else:
 				if not facing_left:
 					mode = MoveMode.COS_UP_RIGHT if player_pos.y < position.y else MoveMode.COS_DOWN_RIGHT
-					sprite.action = "right_swim_up" if player_pos.y < position.y else "right_swim_down"
+					sprite.play("right_swim_up" if player_pos.y < position.y else "right_swim_down")
 				else:
 					mode = MoveMode.TURN_UP_LEFT if player_pos.y < position.y else MoveMode.TURN_DOWN_LEFT
-					sprite.action = "left_turn_up" if player_pos.y < position.y else "left_turn_down"
+					sprite.play("left_turn_up" if player_pos.y < position.y else "left_turn_down")
 					facing_left = false
+				sprite.autoplay_next = "right_idle"
 
 
 func _update_position() -> void:
@@ -143,3 +145,7 @@ func _update_position() -> void:
 				radius.y * (1.0 - cos(lerp_val * PI))
 			)
 	position = move_origin + move
+
+
+func _on_sprite_animation_changed() -> void:
+	sprite.flip_h = facing_left

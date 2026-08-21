@@ -2,10 +2,8 @@
 
 [ext_resource type="Script" uid="uid://bvv1q6l3nhsj4" path="res://Scripts/Enemies/SnakeyTough.gd" id="1_7kimf"]
 [ext_resource type="Material" uid="uid://bj1jqi3180tg5" path="res://Resources/EnemyFlashMat.tres" id="2_ttbwj"]
-[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="3_nggac"]
-[ext_resource type="Shader" uid="uid://bday5amji1ndg" path="res://Resources/EntityFlash.tres" id="4_uoily"]
+[ext_resource type="Script" uid="uid://boee2837la0pr" path="res://Scripts/Classes/SnailySprite.gd" id="4_1xg66"]
 [ext_resource type="Texture2D" uid="uid://j4l60hjaoc7e" path="res://Assets/Images/Entities/Snake2.png" id="5_7kimf"]
-[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="6_6tej5"]
 [ext_resource type="AudioStream" uid="uid://cxfhl40fsjfsi" path="res://Assets/Sounds/Sfx/Enemy/SnakeyMove.ogg" id="7_unqxd"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yl0hf"]
@@ -14,9 +12,60 @@ size = Vector2(16, 16)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pfaec"]
 size = Vector2(14, 14)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_5ic2g"]
-shader = ExtResource("4_uoily")
-shader_parameter/flash_color = Color(0, 0, 0, 1)
+[sub_resource type="AtlasTexture" id="AtlasTexture_cbk6c"]
+atlas = ExtResource("5_7kimf")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7kimf"]
+atlas = ExtResource("5_7kimf")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wkouj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cbk6c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7kimf")
+}],
+"loop": 1,
+"name": &"left_idle",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cbk6c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7kimf")
+}],
+"loop": 1,
+"name": &"left_move",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cbk6c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7kimf")
+}],
+"loop": 1,
+"name": &"right_idle",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cbk6c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7kimf")
+}],
+"loop": 1,
+"name": &"right_move",
+"speed": 10.0
+}]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_7kimf"]
 playback_mode = 1
@@ -24,7 +73,7 @@ random_pitch = 1.2
 streams_count = 1
 stream_0/stream = ExtResource("7_unqxd")
 
-[node name="SnakeyTough" type="CharacterBody2D" unique_id=1360526946]
+[node name="SnakeyTough" type="CharacterBody2D" unique_id=1360526946 node_paths=PackedStringArray("col", "body", "hitbox", "sprite", "vis")]
 z_index = 103
 collision_layer = 64
 collision_mask = 3
@@ -32,7 +81,13 @@ script = ExtResource("1_7kimf")
 max_health = 450
 attack = 4
 defense = 10
+parry_resist = 1.0
 health_orb_value = 2
+col = NodePath("BodyBox")
+body = NodePath(".")
+hitbox = NodePath("Area2D")
+sprite = NodePath("SnailySprite2D")
+vis = NodePath("VisibleOnScreenNotifier2D")
 
 [node name="BodyBox" type="CollisionShape2D" parent="." unique_id=62986842]
 shape = SubResource("RectangleShape2D_yl0hf")
@@ -49,18 +104,13 @@ debug_color = Color(0.976471, 0, 0.415686, 0.419608)
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1791012798]
 scale = Vector2(0.8, 0.8)
 
-[node name="JsonSprite2D" type="Sprite2D" parent="." unique_id=1664703340]
+[node name="SnailySprite2D" type="AnimatedSprite2D" parent="." unique_id=1649084031]
 material = ExtResource("2_ttbwj")
-script = ExtResource("3_nggac")
-texture_path = "res://Assets/Images/Entities/Snake2.json"
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
-
-[node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D" unique_id=381456133]
-material = SubResource("ShaderMaterial_5ic2g")
-texture = ExtResource("5_7kimf")
-hframes = 2
-script = ExtResource("6_6tej5")
-metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+sprite_frames = SubResource("SpriteFrames_wkouj")
+animation = &"right_move"
+script = ExtResource("4_1xg66")
+start_all_on_random_frame = true
+metadata/_custom_type_script = "uid://boee2837la0pr"
 
 [node name="Move" type="AudioStreamPlayer" parent="." unique_id=149018627]
 stream = SubResource("AudioStreamRandomizer_7kimf")
