@@ -55,7 +55,7 @@ func _process(delta: float) -> void:
 ## Damages the boss and updates the health bar
 func _damage(health_lost:int, sound:bool = true, allow_kill:bool = false) -> void:
 	super(health_lost, sound, allow_kill)
-	if health_bar:
+	if health_bar and health_lost > 0:
 		health_bar.update()
 
 
