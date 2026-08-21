@@ -63,7 +63,7 @@ func _ready() -> void:
 func _infer_new() -> void:
 	if infer_new:
 		assert(source, "A source Texture2D must be supplied for a SnailySprite2D to infer new animations.")
-	if not infer_new or add_count <= 0 or not source:
+	if not infer_new or add_count <= 0 or not source or Engine.is_editor_hint():
 		return
 	var anims:PackedStringArray = sprite_frames.get_animation_names()
 	for anim in anims:

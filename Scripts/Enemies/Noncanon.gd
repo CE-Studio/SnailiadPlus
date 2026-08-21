@@ -16,39 +16,36 @@ var base_dir:Statics.DirsSurface = Statics.DirsSurface.FLOOR
 var vel:Vector2 = Vector2.ZERO
 var current_dir:String = ""
 
-@onready var base_spr:JsonSprite2D = $"Base"
-@onready var spikeball:PackedScene = load("res://Scenes/Entities/Bullets/Enemy/EnemyBulletSpikeBall.tscn")
+@onready var base_spr:SnailySprite2D = $"Base"
+@onready var spikeball:PackedScene = load("uid://nu02ausampyq")
 #endregion
 
 
 func _ready() -> void:
 	my_type = EnemyTypes.NONCANON
-	hitbox = $"Area2D"
-	sprite = $"Body"
-	vis = $"VisibleOnScreenNotifier2D"
 	super.spawn()
 	
 	if display_mode:
-		sprite.action = "UR_idle"
-		base_spr.action = "floor_idle"
+		sprite.play("UR_idle")
+		base_spr.play("floor_idle")
 	else:
 		match base_dir:
 			Statics.DirsSurface.FLOOR:
-				sprite.action = "U_idle"
 				current_dir = "U"
-				base_spr.action = "floor_idle"
+				sprite.play("U_idle")
+				base_spr.play("floor_idle")
 			Statics.DirsSurface.LWALL:
-				sprite.action = "R_idle"
 				current_dir = "R"
-				base_spr.action = "lwall_idle"
+				sprite.play("R_idle")
+				base_spr.play("lwall_idle")
 			Statics.DirsSurface.RWALL:
-				sprite.action = "L_idle"
 				current_dir = "L"
-				base_spr.action = "rwall_idle"
+				sprite.play("L_idle")
+				base_spr.play("rwall_idle")
 			Statics.DirsSurface.CEILING:
-				sprite.action = "D_idle"
 				current_dir = "D"
-				base_spr.action = "ceiling_idle"
+				sprite.play("D_idle")
+				base_spr.play("ceiling_idle")
 		aim_timeout = fmod(position.x / 38.2, 0.25)
 		shot_timeout = SHOT_TIMEOUT + fmod(position.x / 96.0, 6.0)
 
@@ -67,7 +64,7 @@ func _process(delta: float) -> void:
 		if shot_timeout <= 0.0:
 			shot_timeout = SHOT_TIMEOUT
 			_shoot(spikeball, vel.normalized(), SHOT_SPEED)
-			sprite.action = current_dir + "_fire"
+			sprite.play(current_dir + "_fire")
 
 
 func aim() -> void:
@@ -86,8 +83,8 @@ func aim() -> void:
 		anim_name += "L"
 	elif vel.x > 0.1:
 		anim_name += "R"
-	current_dir += anim_name
-	sprite.action = anim_name + "_idle"
+	current_dir = anim_name
+	sprite.play(anim_name + "_idle")
 
 
 func kill() -> void:
@@ -109,10 +106,10 @@ func kill() -> void:
 	invulnerable = true
 	match base_dir:
 		Statics.DirsSurface.FLOOR:
-			base_spr.action = "floor_destroyed"
+			base_spr.play("floor_destroyed")
 		Statics.DirsSurface.LWALL:
-			base_spr.action = "lwall_destroyed"
+			base_spr.play("lwall_destroyed")
 		Statics.DirsSurface.RWALL:
-			base_spr.action = "rwall_destroyed"
+			base_spr.play("rwall_destroyed")
 		Statics.DirsSurface.CEILING:
-			base_spr.action = "ceiling_destroyed"
+			base_spr.play("ceiling_destroyed")

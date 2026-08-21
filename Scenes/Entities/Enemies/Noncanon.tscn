@@ -2,26 +2,285 @@
 
 [ext_resource type="Script" uid="uid://deo4vhnjxutmw" path="res://Scripts/Enemies/Noncanon.gd" id="1_xuow6"]
 [ext_resource type="Material" uid="uid://bj1jqi3180tg5" path="res://Resources/EnemyFlashMat.tres" id="2_hd3j3"]
-[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="3_3yru2"]
-[ext_resource type="Shader" uid="uid://bday5amji1ndg" path="res://Resources/EntityFlash.tres" id="4_t2eo6"]
+[ext_resource type="Script" uid="uid://boee2837la0pr" path="res://Scripts/Classes/SnailySprite.gd" id="4_ah8xf"]
 [ext_resource type="Texture2D" uid="uid://bqroxmal5mhic" path="res://Assets/Images/Entities/Cannon2.png" id="5_xuow6"]
-[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="6_qjvry"]
 [ext_resource type="Texture2D" uid="uid://cxcrw4qp505wl" path="res://Assets/Images/Entities/Cannon2Base.png" id="7_hd3j3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_v2c1n"]
 size = Vector2(46, 46)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ojica"]
-shader = ExtResource("4_t2eo6")
-shader_parameter/flash_color = Color(0, 0, 0, 1)
+[sub_resource type="AtlasTexture" id="AtlasTexture_v782p"]
+atlas = ExtResource("5_xuow6")
+region = Rect2(336, 0, 48, 48)
 
-[node name="Noncanon" type="Node2D" unique_id=696436906]
+[sub_resource type="AtlasTexture" id="AtlasTexture_xuow6"]
+atlas = ExtResource("5_xuow6")
+region = Rect2(240, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hd3j3"]
+atlas = ExtResource("5_xuow6")
+region = Rect2(288, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3yru2"]
+atlas = ExtResource("5_xuow6")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t2eo6"]
+atlas = ExtResource("5_xuow6")
+region = Rect2(192, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x3oyc"]
+atlas = ExtResource("5_xuow6")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qjvry"]
+atlas = ExtResource("5_xuow6")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x2kaq"]
+atlas = ExtResource("5_xuow6")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wkouj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v782p")
+}],
+"loop": 0,
+"name": &"DL_fire",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v782p")
+}],
+"loop": 1,
+"name": &"DL_idle",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xuow6")
+}],
+"loop": 0,
+"name": &"DR_fire",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xuow6")
+}],
+"loop": 1,
+"name": &"DR_idle",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hd3j3")
+}],
+"loop": 0,
+"name": &"D_fire",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hd3j3")
+}],
+"loop": 1,
+"name": &"D_idle",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3yru2")
+}],
+"loop": 0,
+"name": &"L_fire",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3yru2")
+}],
+"loop": 1,
+"name": &"L_idle",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t2eo6")
+}],
+"loop": 0,
+"name": &"R_fire",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t2eo6")
+}],
+"loop": 1,
+"name": &"R_idle",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x3oyc")
+}],
+"loop": 0,
+"name": &"UL_fire",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x3oyc")
+}],
+"loop": 1,
+"name": &"UL_idle",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qjvry")
+}],
+"loop": 0,
+"name": &"UR_fire",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qjvry")
+}],
+"loop": 1,
+"name": &"UR_idle",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x2kaq")
+}],
+"loop": 0,
+"name": &"U_fire",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x2kaq")
+}],
+"loop": 1,
+"name": &"U_idle",
+"speed": 1.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0pyie"]
+atlas = ExtResource("7_hd3j3")
+region = Rect2(32, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ns5l8"]
+atlas = ExtResource("7_hd3j3")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s2y2w"]
+atlas = ExtResource("7_hd3j3")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ndrt8"]
+atlas = ExtResource("7_hd3j3")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y0spx"]
+atlas = ExtResource("7_hd3j3")
+region = Rect2(16, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a6401"]
+atlas = ExtResource("7_hd3j3")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ywo1h"]
+atlas = ExtResource("7_hd3j3")
+region = Rect2(48, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_erotk"]
+atlas = ExtResource("7_hd3j3")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_bj8rp"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0pyie")
+}],
+"loop": 1,
+"name": &"ceiling_destroyed",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ns5l8")
+}],
+"loop": 1,
+"name": &"ceiling_idle",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s2y2w")
+}],
+"loop": 1,
+"name": &"floor_destroyed",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ndrt8")
+}],
+"loop": 1,
+"name": &"floor_idle",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y0spx")
+}],
+"loop": 1,
+"name": &"lwall_destroyed",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a6401")
+}],
+"loop": 1,
+"name": &"lwall_idle",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ywo1h")
+}],
+"loop": 1,
+"name": &"rwall_destroyed",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_erotk")
+}],
+"loop": 1,
+"name": &"rwall_idle",
+"speed": 1.0
+}]
+
+[node name="Noncanon" type="Node2D" unique_id=696436906 node_paths=PackedStringArray("hitbox", "sprite", "vis")]
 z_index = 103
 script = ExtResource("1_xuow6")
 max_health = 650
 can_damage = false
 health_orb_value = 2
 kill_particle_range = Vector2i(16, 16)
+hitbox = NodePath("Area2D")
+sprite = NodePath("Body")
+vis = NodePath("VisibleOnScreenNotifier2D")
 
 [node name="Area2D" type="Area2D" parent="." unique_id=1940526305]
 collision_layer = 64
@@ -35,30 +294,16 @@ debug_color = Color(0.976471, 0, 0.415686, 0.419608)
 scale = Vector2(0.8, 0.8)
 rect = Rect2(-29.999996, -29.999996, 59.999992, 59.999992)
 
-[node name="Body" type="Sprite2D" parent="." unique_id=1908137894]
+[node name="Body" type="AnimatedSprite2D" parent="." unique_id=1547524670]
 material = ExtResource("2_hd3j3")
-script = ExtResource("3_3yru2")
-texture_path = "res://Assets/Images/Entities/Cannon2.json"
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
+sprite_frames = SubResource("SpriteFrames_wkouj")
+animation = &"UR_idle"
+script = ExtResource("4_ah8xf")
+metadata/_custom_type_script = "uid://boee2837la0pr"
 
-[node name="MarkerSprite" type="Sprite2D" parent="Body" unique_id=1220196881]
-material = SubResource("ShaderMaterial_ojica")
-texture = ExtResource("5_xuow6")
-hframes = 8
-frame = 3
-script = ExtResource("6_qjvry")
-metadata/_custom_type_script = "uid://b63lo60i7kt7f"
-
-[node name="Base" type="Sprite2D" parent="." unique_id=551688285]
+[node name="Base" type="AnimatedSprite2D" parent="." unique_id=1187555889]
 material = ExtResource("2_hd3j3")
-script = ExtResource("3_3yru2")
-texture_path = "res://Assets/Images/Entities/Cannon2Base.json"
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
-
-[node name="MarkerSprite" type="Sprite2D" parent="Base" unique_id=1971196604]
-material = SubResource("ShaderMaterial_ojica")
-texture = ExtResource("7_hd3j3")
-hframes = 4
-vframes = 2
-script = ExtResource("6_qjvry")
-metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+sprite_frames = SubResource("SpriteFrames_bj8rp")
+animation = &"floor_idle"
+script = ExtResource("4_ah8xf")
+metadata/_custom_type_script = "uid://boee2837la0pr"

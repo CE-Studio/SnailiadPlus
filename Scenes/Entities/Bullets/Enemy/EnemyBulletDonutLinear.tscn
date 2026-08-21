@@ -2,17 +2,172 @@
 
 [ext_resource type="Script" uid="uid://cufrtsjx618i3" path="res://Scripts/Bullets/Enemy/EnemyBulletDonutLinear.gd" id="1_gwjhu"]
 [ext_resource type="AudioStream" uid="uid://b8hwo683tykgl" path="res://Assets/Sounds/Sfx/Bullets/Enemy/ShotEnemyDonut.ogg" id="2_gwjhu"]
-[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="2_k3nue"]
+[ext_resource type="Script" uid="uid://boee2837la0pr" path="res://Scripts/Classes/SnailySprite.gd" id="3_pbwfw"]
 [ext_resource type="Texture2D" uid="uid://d2d63f4o5acdh" path="res://Assets/Images/Bullets/Enemy/EnemyDonut.png" id="4_gwjhu"]
-[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="5_7mha5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3p1tk"]
 size = Vector2(24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_srttv"]
+atlas = ExtResource("4_gwjhu")
+region = Rect2(0, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5q7oq"]
+atlas = ExtResource("4_gwjhu")
+region = Rect2(24, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3l3xt"]
+atlas = ExtResource("4_gwjhu")
+region = Rect2(48, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hatl8"]
+atlas = ExtResource("4_gwjhu")
+region = Rect2(72, 0, 24, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wkouj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_srttv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5q7oq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3l3xt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hatl8")
+}],
+"loop": 1,
+"name": &"D",
+"speed": 30.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_srttv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5q7oq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3l3xt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hatl8")
+}],
+"loop": 1,
+"name": &"DL",
+"speed": 30.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_srttv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5q7oq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3l3xt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hatl8")
+}],
+"loop": 1,
+"name": &"DR",
+"speed": 30.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_srttv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5q7oq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3l3xt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hatl8")
+}],
+"loop": 1,
+"name": &"L",
+"speed": 30.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_srttv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5q7oq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3l3xt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hatl8")
+}],
+"loop": 1,
+"name": &"R",
+"speed": 30.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_srttv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5q7oq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3l3xt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hatl8")
+}],
+"loop": 1,
+"name": &"U",
+"speed": 30.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_srttv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5q7oq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3l3xt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hatl8")
+}],
+"loop": 1,
+"name": &"UL",
+"speed": 30.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_srttv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5q7oq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3l3xt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hatl8")
+}],
+"loop": 1,
+"name": &"UR",
+"speed": 30.0
+}]
 
 [node name="EnemyBulletDonutLinear" type="Node2D" unique_id=312585189]
 z_index = 150
 script = ExtResource("1_gwjhu")
 damage = 2
+parry_damage = 12
 max_life_time = 3.8
 despawn_offscreen = true
 light_radius = 24
@@ -28,16 +183,12 @@ debug_color = Color(0.482353, 0.435294, 1, 0.419608)
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=875366705]
 scale = Vector2(1.2, 1.2)
 
-[node name="JsonSprite2D" type="Sprite2D" parent="." unique_id=1160340606]
-script = ExtResource("2_k3nue")
-texture_path = "res://Assets/Images/Bullets/Enemy/EnemyDonut.json"
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
-
-[node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D" unique_id=1675753477]
-texture = ExtResource("4_gwjhu")
-hframes = 4
-script = ExtResource("5_7mha5")
-metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+[node name="SnailySprite2D" type="AnimatedSprite2D" parent="." unique_id=471899792]
+sprite_frames = SubResource("SpriteFrames_wkouj")
+animation = &"U"
+script = ExtResource("3_pbwfw")
+start_all_on_random_frame = true
+metadata/_custom_type_script = "uid://boee2837la0pr"
 
 [node name="AudioGroup" type="Node" parent="." unique_id=1246818029]
 

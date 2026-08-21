@@ -30,9 +30,6 @@ func _ready() -> void:
 		return
 	
 	my_type = EnemyTypes.NONE
-	sprite = $"JsonSprite2D"
-	hitbox = $"Area2D"
-	vis = $"VisibleOnScreenNotifier2D"
 	super.spawn()
 	
 	play_phase_anim(0, "up")
@@ -53,5 +50,5 @@ func play_phase_anim(phase:int, anim:String) -> void:
 		"left" if left else "right",
 		anim
 	]
-	if sprite.action != anim_name:
-		sprite.action = anim_name
+	sprite.play(anim_name)
+	sprite.flip_h = left

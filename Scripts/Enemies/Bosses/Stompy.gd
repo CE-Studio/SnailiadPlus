@@ -537,8 +537,8 @@ func kill() -> void:
 		UICore.instance.achievement_core.check_add(AchievementCore.Achievements.BEAT_STOMPY)
 		if health_bar:
 			health_bar._toggle_outro_shake()
-		foot_l.sprite.action = "defeat_left"
-		foot_r.sprite.action = "defeat_right"
+		foot_l.sprite.play("defeat_left")
+		foot_r.sprite.play("defeat_right")
 		eye_l.set_death_pose.call_deferred()
 		eye_r.set_death_pose.call_deferred()
 		for _cannon in cannons:

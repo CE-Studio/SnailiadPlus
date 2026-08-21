@@ -25,31 +25,26 @@ var shot_count:int = 0
 var is_shooting:bool = false
 var can_attack:bool = false
 var is_dying:bool = false
+@export var clip_eye:bool = false
 
 var boss:Stompy
 var my_foot:StompyFoot
-@onready var spr_group:Node2D = $"SpriteGroup"
-@onready var pupil:JsonSprite2D = $"SpriteGroup/Pupil"
-@onready var eyelid:JsonSprite2D = $"SpriteGroup/Eyelid"
-@onready var donut:PackedScene = load("res://Scenes/Entities/Bullets/Enemy/EnemyBulletDonutLinear.tscn")
+@export var spr_group:Node2D
+@export var pupil:SnailySprite2D
+@export var eyelid:SnailySprite2D
+@onready var donut:PackedScene = load("uid://cr8jpfivtdpnw")
 #endregion
 
 func _ready() -> void:
 	my_type = EnemyTypes.NONE
-	sprite = $"SpriteGroup/Eye"
-	hitbox = $"Area2D"
-	vis = $"VisibleOnScreenNotifier2D"
 	super.spawn()
 	
-	sprite.action = "p0_left" if left else "p0_right"
-	pupil.action = "p0_left" if left else "p0_right"
-	eyelid.action = "p0_left_open" if left else "p0_right_open"
+	sprite.play("p0_left" if left else "p0_right")
+	pupil.play("p0_left" if left else "p0_right")
+	eyelid.play("p0_left_open" if left else "p0_right_open")
 	
-	if pupil.meta.size() > 0 and pupil.meta.keys().has("clip"):
-		var clip = pupil.meta["clip"]
-		if clip is bool:
-			if clip and not display_mode:
-				pupil.reparent(sprite)
+	if clip_eye and not display_mode:
+		pupil.reparent(sprite)
 	
 	if hard_mode:
 		SHOT_TIMEOUT *= 0.5
@@ -106,39 +101,39 @@ func _physics_process(delta) -> void:
 		blink_timeout -= delta
 		if blink_timeout <= 0.0:
 			blink_timeout = randf() * 8.0 + 1.0
-			eyelid.action = boss.get_phase_anim("left_blink" if left else "right_blink")
+			eyelid.play(boss.get_phase_anim("left_blink" if left else "right_blink"))
 		if will_close:
 			close_timeout -= delta
 			if close_timeout <= 0.0:
 				will_close = false
 				open = false
 				invulnerable = true
-				eyelid.action = boss.get_phase_anim("left_close" if left else "right_close")
+				eyelid.play(boss.get_phase_anim("left_close" if left else "right_close"))
 				open_timeout = OPEN_DELAY
 	else:
 		open_timeout -= delta
 		if open_timeout <= 0.0:
 			open = true
 			invulnerable = false
-			eyelid.action = boss.get_phase_anim("left_open" if left else "right_open")
+			eyelid.play(boss.get_phase_anim("left_open" if left else "right_open"))
 
 
 func update_phase() -> void:
 	var dir:String = "left" if left else "right"
-	sprite.action = "p%d_%s" % [boss.phase, dir]
-	pupil.action = "p%d_%s" % [boss.phase, dir]
-	eyelid.action = "p%d_%s_%s" % [boss.phase, dir, "open" if open else "blink"]
+	sprite.play("p%d_%s" % [boss.phase, dir])
+	pupil.play("p%d_%s" % [boss.phase, dir])
+	eyelid.play("p%d_%s_%s" % [boss.phase, dir, "open" if open else "blink"])
 
 
 func set_death_pose() -> void:
 	if left:
-		sprite.action = "defeat_left"
-		pupil.action = "defeat_left"
+		sprite.play("defeat_left")
+		pupil.play("defeat_left")
 		pupil.position = Vector2(cos(3.2), sin(3.2)) * PUPIL_RADII
-		eyelid.action = "defeat_left"
+		eyelid.play("defeat_left")
 	else:
-		sprite.action = "defeat_right"
-		pupil.action = "defeat_right"
+		sprite.play("defeat_right")
+		pupil.play("defeat_right")
 		pupil.position = Vector2(cos(0.85), sin(0.85)) * PUPIL_RADII
-		eyelid.action = "defeat_right"
+		eyelid.play("defeat_right")
 	is_dying = true
