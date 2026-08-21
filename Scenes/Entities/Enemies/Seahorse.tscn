@@ -5,6 +5,9 @@
 [ext_resource type="Script" uid="uid://boee2837la0pr" path="res://Scripts/Classes/SnailySprite.gd" id="4_lxkrs"]
 [ext_resource type="Texture2D" uid="uid://ds5a6kypxtit2" path="res://Assets/Images/Entities/Seahorse.png" id="5_0avds"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lxkrs"]
+size = Vector2(16, 32)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_v2c1n"]
 size = Vector2(14, 30)
 
@@ -95,17 +98,25 @@ animations = [{
 "speed": 0.9
 }]
 
-[node name="Seahorse" type="Node2D" unique_id=677374071 node_paths=PackedStringArray("hitbox", "sprite", "vis")]
+[node name="Seahorse" type="CharacterBody2D" unique_id=1110579686 node_paths=PackedStringArray("col", "body", "hitbox", "sprite", "vis")]
 z_index = 103
+collision_layer = 64
+collision_mask = 0
 script = ExtResource("1_5ug84")
 max_health = 250
 attack = 2
 defense = 10
 health_orb_value = 2
 kill_particle_range = Vector2i(8, 16)
+col = NodePath("BodyBox")
+body = NodePath(".")
 hitbox = NodePath("Area2D")
 sprite = NodePath("SnailySprite2D")
 vis = NodePath("VisibleOnScreenNotifier2D")
+
+[node name="BodyBox" type="CollisionShape2D" parent="." unique_id=666959820]
+shape = SubResource("RectangleShape2D_lxkrs")
+debug_color = Color(0.976471, 0, 0.415686, 0.419608)
 
 [node name="Area2D" type="Area2D" parent="." unique_id=1288193786]
 collision_layer = 64
