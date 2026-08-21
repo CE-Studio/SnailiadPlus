@@ -58,6 +58,7 @@ func _physics_process(delta) -> void:
 		eyelid.material.set("shader_parameter/flash_color", Color.BLACK + flash_color)
 		my_foot.sprite.material.set("shader_parameter/flash_color", Color.BLACK + flash_color)
 	if is_dying or boss.in_death_anim:
+		invulnerable = true
 		return
 	
 	if damaged_this_tick:
