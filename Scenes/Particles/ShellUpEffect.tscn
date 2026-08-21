@@ -14,3 +14,5 @@ vframes = 7
 frame = 54
 script = ExtResource("2_w5vqj")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+
+[connection signal="tree_exiting" from="." to="." method="_on_tree_exiting"]

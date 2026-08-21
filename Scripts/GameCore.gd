@@ -86,6 +86,8 @@ func spawn_room(path:String, entrance:int = -1, offset:Vector2 = Vector2.ZERO) -
 	
 	new_room.spawn(true)
 	player.set_box_disable_override.call_deferred(false)
+	if SInput.cutscene_has_control:
+		SInput.cutscene_has_control = false
 	if new_room.area_id != current_area:
 		if not (new_room.area_id == Room.Areas.SHRINE_OF_IRIS
 		and not Statics.get_world_flag(Statics.WorldFlags.TALKED_TO_IRIS)):

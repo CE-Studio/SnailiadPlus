@@ -29,6 +29,7 @@ var rand_i:int = randi_range(0, DUST_COUNT - 1)
 var restore_input:bool = false
 var update_player_shell:int = Statics.get_shell_level()
 var fade_music:bool = false
+var finished_completely:bool = false
 #endregion
 
 
@@ -95,6 +96,7 @@ func _tick_dynamic(_delta:float) -> void:
 
 
 func _despawn() -> void:
+	finished_completely = true
 	if fade_music:
 		GameCore.instance.music_manager.set_fade(1.0, 1.0, 0.75)
 	for dust in dusts:
@@ -105,3 +107,10 @@ func _despawn() -> void:
 		SInput.read_inputs = true
 	GameCore.instance.player.update_shell_displayed(update_player_shell, 0 if Statics.stack_shells else 2)
 	queue_free()
+
+
+func _on_tree_exiting() -> void:
+	if not finished_completely:
+		GameCore.instance.player.update_shell_displayed(update_player_shell, 0 if Statics.stack_shells else 2)
+		SInput.read_inputs = true
+		GameCore.instance.music_manager.set_fade(1.0, 1.0, 0.75)
