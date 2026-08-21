@@ -1,19 +1,174 @@
 [gd_scene format=3 uid="uid://to26wfc5ofk5"]
 
 [ext_resource type="Script" uid="uid://cexm8xt3doh5" path="res://Scripts/Bullets/Enemy/EnemyBulletShadowWave.gd" id="1_52e2f"]
-[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="2_b4qjj"]
 [ext_resource type="Texture2D" uid="uid://wg0ov37lblr6" path="res://Assets/Images/Bullets/Enemy/EnemyShadowWave.png" id="3_52e2f"]
-[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="4_0wkd3"]
+[ext_resource type="Script" uid="uid://boee2837la0pr" path="res://Scripts/Classes/SnailySprite.gd" id="3_tg3fb"]
 [ext_resource type="AudioStream" uid="uid://x1b81s6u8jp7" path="res://Assets/Sounds/Sfx/Bullets/Enemy/ShotEnemyShadowWave.ogg" id="5_b4qjj"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3p1tk"]
 size = Vector2(48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_52e2f"]
+atlas = ExtResource("3_52e2f")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b4qjj"]
+atlas = ExtResource("3_52e2f")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_214t7"]
+atlas = ExtResource("3_52e2f")
+region = Rect2(48, 48, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0wkd3"]
+atlas = ExtResource("3_52e2f")
+region = Rect2(0, 48, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pg6c0"]
+atlas = ExtResource("3_52e2f")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ay7b2"]
+atlas = ExtResource("3_52e2f")
+region = Rect2(96, 48, 48, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wkouj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_52e2f")
+}],
+"loop": 1,
+"name": &"D",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b4qjj")
+}],
+"loop": 1,
+"name": &"DL",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_214t7")
+}],
+"loop": 1,
+"name": &"DL_aftimg",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b4qjj")
+}],
+"loop": 1,
+"name": &"DR",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_214t7")
+}],
+"loop": 1,
+"name": &"DR_aftimg",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0wkd3")
+}],
+"loop": 1,
+"name": &"D_aftimg",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pg6c0")
+}],
+"loop": 1,
+"name": &"L",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ay7b2")
+}],
+"loop": 1,
+"name": &"L_aftimg",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pg6c0")
+}],
+"loop": 1,
+"name": &"R",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ay7b2")
+}],
+"loop": 1,
+"name": &"R_aftimg",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_52e2f")
+}],
+"loop": 1,
+"name": &"U",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b4qjj")
+}],
+"loop": 1,
+"name": &"UL",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_214t7")
+}],
+"loop": 1,
+"name": &"UL_aftimg",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b4qjj")
+}],
+"loop": 1,
+"name": &"UR",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_214t7")
+}],
+"loop": 1,
+"name": &"UR_aftimg",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0wkd3")
+}],
+"loop": 1,
+"name": &"U_aftimg",
+"speed": 1.0
+}]
 
 [node name="EnemyBulletShadowWave" type="Node2D" unique_id=2038470674]
 z_index = 150
 script = ExtResource("1_52e2f")
 damage = 16
 rush_damage = 2
+parry_damage = 40
 max_life_time = 2.0
 despawn_offscreen = true
 despawn_particle = ""
@@ -34,18 +189,11 @@ debug_color = Color(0.482353, 0.435294, 1, 0.419608)
 scale = Vector2(1.2, 1.2)
 rect = Rect2(-20, -20, 40, 40)
 
-[node name="JsonSprite2D" type="Sprite2D" parent="." unique_id=955529868]
-script = ExtResource("2_b4qjj")
-texture_path = "res://Assets/Images/Bullets/Enemy/EnemyShadowWave.json"
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
-
-[node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D" unique_id=1493599342]
-texture = ExtResource("3_52e2f")
-hframes = 3
-vframes = 2
-frame = 2
-script = ExtResource("4_0wkd3")
-metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+[node name="SnailySprite2D" type="AnimatedSprite2D" parent="." unique_id=175164105]
+sprite_frames = SubResource("SpriteFrames_wkouj")
+animation = &"R"
+script = ExtResource("3_tg3fb")
+metadata/_custom_type_script = "uid://boee2837la0pr"
 
 [node name="AudioGroup" type="Node" parent="." unique_id=1803925562]
 

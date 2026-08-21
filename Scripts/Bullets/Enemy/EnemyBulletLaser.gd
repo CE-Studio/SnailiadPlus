@@ -9,25 +9,13 @@ func _spawn(dir:Vector2, speed:float, play_sound:bool = true) -> void:
 	super._spawn(dir, speed, play_sound)
 	velocity = speed
 	velocity_init = speed
-	#region Direction animation
-	var anim_name:String = ""
-	if dir.y < -0.3827:
-		anim_name += "U"
-	elif dir.y > 0.3827:
-		anim_name += "D"
-	if dir.x < -0.3827:
-		anim_name += "L"
-	elif dir.x > 0.3827:
-		anim_name += "R"
-	sprite.action = anim_name
-	sprite._process(0.0)
-	#endregion
+	_infer_direction_anim()
 	#region Rotate hitbox
-	if anim_name == "UR" or anim_name == "DL":
+	if sprite.animation == "UR" or sprite.animation == "DL":
 		area.rotation_degrees = -45
-	elif anim_name == "UL" or anim_name == "DR":
+	elif sprite.animation == "UL" or sprite.animation == "DR":
 		area.rotation_degrees = 45
-	elif anim_name == "U" or anim_name == "D":
+	elif sprite.animation == "U" or sprite.animation == "D":
 		area.rotation_degrees = 90
 	#endregion
 
@@ -35,3 +23,8 @@ func _spawn(dir:Vector2, speed:float, play_sound:bool = true) -> void:
 func _physics_process(delta: float) -> void:
 	position += velocity * normalized_dir * delta
 	super(delta)
+
+
+func _flip_sprite_from_dir(_angle:Vector2 = normalized_dir) -> void:
+	sprite.flip_x = _angle.x < 0.0
+	sprite.flip_y = _angle.y < 0.0

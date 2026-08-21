@@ -25,21 +25,7 @@ func _spawn(dir:Vector2, speed:float, play_sound:bool = true) -> void:
 	vel_radius = speed
 	vel_theta = dir.x
 	theta_offset = dir.y
-	#region Direction animation
-	var angle_vector:Vector2 = Vector2(cos(dir.y), sin(dir.y))
-	var anim_name = ""
-	if angle_vector.y < -0.3827:
-		anim_name += "U"
-	elif angle_vector.y > 0.3827:
-		anim_name += "D"
-	if angle_vector.x < -0.3827:
-		anim_name += "L"
-	elif angle_vector.x > 0.3827:
-		anim_name += "R"
-	anim_name += "_rotary"
-	sprite.action = anim_name
-	sprite._process(0.0)
-	#endregion
+	_infer_direction_anim()
 
 
 func _physics_process(delta: float) -> void:
@@ -55,15 +41,4 @@ func _physics_process(delta: float) -> void:
 
 func _update_anim(last_pos:Vector2) -> void:
 	var dir = last_pos.direction_to(position)
-	var anim_name = ""
-	if dir.y < -0.3827:
-		anim_name += "U"
-	elif dir.y > 0.3827:
-		anim_name += "D"
-	if dir.x < -0.3827:
-		anim_name += "L"
-	elif dir.x > 0.3827:
-		anim_name += "R"
-	anim_name += "_rotary"
-	if sprite.action != anim_name:
-		sprite.action = anim_name
+	_infer_direction_anim(dir)

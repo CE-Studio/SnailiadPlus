@@ -9,6 +9,7 @@ func _spawn(dir:Vector2, speed:float, play_sound:bool = true) -> void:
 	super._spawn(dir, speed, play_sound)
 	velocity = speed
 	velocity_init = speed
+	sprite.visible = true
 	_infer_direction_anim()
 
 

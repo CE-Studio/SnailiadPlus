@@ -44,6 +44,7 @@ func _physics_process(delta: float) -> void:
 		if fire_delay <= 0.0:
 			sfx_fire.play()
 			sprite.position = Vector2.ZERO
+			_infer_direction_anim()
 			fired = true
 			normalized_dir = position.direction_to(Player.instance.position)
 		elif fire_delay <= WIGGLE_THRESHOLD:

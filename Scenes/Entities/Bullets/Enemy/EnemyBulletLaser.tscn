@@ -1,13 +1,199 @@
 [gd_scene format=3 uid="uid://dueroaqpwv2r"]
 
 [ext_resource type="Script" uid="uid://dc2c85rbji3cg" path="res://Scripts/Bullets/Enemy/EnemyBulletLaser.gd" id="1_hvoa8"]
-[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="2_2awia"]
 [ext_resource type="Texture2D" uid="uid://d0x2nlxn44jd" path="res://Assets/Images/Bullets/Enemy/EnemyLaser.png" id="3_hvoa8"]
-[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="4_m4leg"]
+[ext_resource type="Script" uid="uid://boee2837la0pr" path="res://Scripts/Classes/SnailySprite.gd" id="3_urfll"]
 [ext_resource type="AudioStream" uid="uid://bx7oaavred703" path="res://Assets/Sounds/Sfx/Bullets/Enemy/ShotEnemyLaser.ogg" id="5_2awia"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3p1tk"]
 size = Vector2(24, 6)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hvoa8"]
+atlas = ExtResource("3_hvoa8")
+region = Rect2(0, 48, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2awia"]
+atlas = ExtResource("3_hvoa8")
+region = Rect2(24, 48, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uwpno"]
+atlas = ExtResource("3_hvoa8")
+region = Rect2(48, 48, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m4leg"]
+atlas = ExtResource("3_hvoa8")
+region = Rect2(72, 48, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sruwd"]
+atlas = ExtResource("3_hvoa8")
+region = Rect2(0, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_78abt"]
+atlas = ExtResource("3_hvoa8")
+region = Rect2(24, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n3152"]
+atlas = ExtResource("3_hvoa8")
+region = Rect2(48, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gdr7c"]
+atlas = ExtResource("3_hvoa8")
+region = Rect2(72, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mcqe1"]
+atlas = ExtResource("3_hvoa8")
+region = Rect2(0, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t4h2t"]
+atlas = ExtResource("3_hvoa8")
+region = Rect2(24, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_84kti"]
+atlas = ExtResource("3_hvoa8")
+region = Rect2(48, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ry7kh"]
+atlas = ExtResource("3_hvoa8")
+region = Rect2(72, 0, 24, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wkouj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hvoa8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2awia")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uwpno")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m4leg")
+}],
+"loop": 1,
+"name": &"D",
+"speed": 30.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sruwd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_78abt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n3152")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gdr7c")
+}],
+"loop": 1,
+"name": &"DL",
+"speed": 30.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sruwd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_78abt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n3152")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gdr7c")
+}],
+"loop": 1,
+"name": &"DR",
+"speed": 30.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mcqe1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t4h2t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_84kti")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ry7kh")
+}],
+"loop": 1,
+"name": &"L",
+"speed": 30.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mcqe1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t4h2t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_84kti")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ry7kh")
+}],
+"loop": 1,
+"name": &"R",
+"speed": 30.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hvoa8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2awia")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uwpno")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m4leg")
+}],
+"loop": 1,
+"name": &"U",
+"speed": 30.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sruwd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_78abt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n3152")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gdr7c")
+}],
+"loop": 1,
+"name": &"UL",
+"speed": 30.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sruwd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_78abt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n3152")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gdr7c")
+}],
+"loop": 1,
+"name": &"UR",
+"speed": 30.0
+}]
 
 [node name="EnemyBulletLaser" type="Node2D" unique_id=358427844]
 z_index = 150
@@ -29,17 +215,12 @@ debug_color = Color(0.482353, 0.435294, 1, 0.419608)
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=519690144]
 scale = Vector2(1.2, 1.2)
 
-[node name="JsonSprite2D" type="Sprite2D" parent="." unique_id=1298337644]
-script = ExtResource("2_2awia")
-texture_path = "res://Assets/Images/Bullets/Enemy/EnemyLaser.json"
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
-
-[node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D" unique_id=191143486]
-texture = ExtResource("3_hvoa8")
-hframes = 4
-vframes = 3
-script = ExtResource("4_m4leg")
-metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+[node name="SnailySprite2D" type="AnimatedSprite2D" parent="." unique_id=1908134936]
+sprite_frames = SubResource("SpriteFrames_wkouj")
+animation = &"R"
+script = ExtResource("3_urfll")
+start_all_on_random_frame = true
+metadata/_custom_type_script = "uid://boee2837la0pr"
 
 [node name="AudioGroup" type="Node" parent="." unique_id=46627264]
 

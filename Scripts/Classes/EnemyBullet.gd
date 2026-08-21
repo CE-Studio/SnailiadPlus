@@ -45,6 +45,9 @@ var intersecting_player:bool = false
 ## If this bullet is set to create afterimage hitboxes, this value tracks how many frames have passed
 ## since the last afterimage was spawned
 var afterimage_tick:int = 0
+## Will be set to [code]true[/code] if this bullet's animation has been previously inferred from
+## its travel direction
+var has_inferred_once:bool = false
 
 ## Determines what interactions with any set [PlayerBullet] nodes this bullet should have
 enum PBulletInteractions {
@@ -83,17 +86,23 @@ func _spawn(dir:Vector2, speed:float, play_sound:bool = true) -> void:
 		UICore.instance.darkness_layer.add_source(self, light_radius)
 
 
-func _infer_direction_anim() -> void:
+func _infer_direction_anim(_angle:Vector2 = normalized_dir) -> void:
+	has_inferred_once = true
 	var anim_name = ""
-	if normalized_dir.y < -ANGLE_DEADZONE:
+	if _angle.y < -ANGLE_DEADZONE:
 		anim_name += "U"
-	elif normalized_dir.y > ANGLE_DEADZONE:
+	elif _angle.y > ANGLE_DEADZONE:
 		anim_name += "D"
-	if normalized_dir.x < -ANGLE_DEADZONE:
+	if _angle.x < -ANGLE_DEADZONE:
 		anim_name += "L"
-	elif normalized_dir.x > ANGLE_DEADZONE:
+	elif _angle.x > ANGLE_DEADZONE:
 		anim_name += "R"
 	sprite.play(anim_name)
+	_flip_sprite_from_dir(_angle)
+
+
+func _flip_sprite_from_dir(_angle:Vector2 = normalized_dir) -> void:
+	pass
 
 
 func _physics_process(delta: float) -> void:
@@ -131,6 +140,8 @@ func parry_reshoot() -> void:
 	life_timer = 0.0
 	velocity = velocity_init
 	parry_damage *= floori(1.0 + (Statics.get_shell_level() * 0.2))
+	if has_inferred_once:
+		_infer_direction_anim()
 
 
 ## Called whenever this bullet intersects with another body

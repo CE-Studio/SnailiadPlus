@@ -1,19 +1,222 @@
 [gd_scene format=3 uid="uid://dl78x5wkkhuaw"]
 
 [ext_resource type="Script" uid="uid://8kx4qoikvx2n" path="res://Scripts/Bullets/Enemy/EnemyBulletGigaWave.gd" id="1_olclx"]
-[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="2_xftor"]
+[ext_resource type="Script" uid="uid://boee2837la0pr" path="res://Scripts/Classes/SnailySprite.gd" id="3_af2e7"]
 [ext_resource type="Texture2D" uid="uid://bhuh4gjumojh2" path="res://Assets/Images/Bullets/Enemy/EnemyGigaWave.png" id="3_olclx"]
-[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="4_qn5cg"]
 [ext_resource type="AudioStream" uid="uid://bmr6w6qarjjyp" path="res://Assets/Sounds/Sfx/Bullets/Enemy/ShotEnemyGigaWave.ogg" id="5_xftor"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3p1tk"]
 size = Vector2(34, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_olclx"]
+atlas = ExtResource("3_olclx")
+region = Rect2(0, 96, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xftor"]
+atlas = ExtResource("3_olclx")
+region = Rect2(96, 96, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hgm20"]
+atlas = ExtResource("3_olclx")
+region = Rect2(192, 96, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qn5cg"]
+atlas = ExtResource("3_olclx")
+region = Rect2(288, 96, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gaxmg"]
+atlas = ExtResource("3_olclx")
+region = Rect2(0, 288, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_maeis"]
+atlas = ExtResource("3_olclx")
+region = Rect2(96, 288, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fhhqj"]
+atlas = ExtResource("3_olclx")
+region = Rect2(192, 288, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mlrvl"]
+atlas = ExtResource("3_olclx")
+region = Rect2(288, 288, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v0ovh"]
+atlas = ExtResource("3_olclx")
+region = Rect2(0, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g24jh"]
+atlas = ExtResource("3_olclx")
+region = Rect2(96, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bmmv0"]
+atlas = ExtResource("3_olclx")
+region = Rect2(192, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8xvwv"]
+atlas = ExtResource("3_olclx")
+region = Rect2(288, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kcoge"]
+atlas = ExtResource("3_olclx")
+region = Rect2(0, 192, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8y0xc"]
+atlas = ExtResource("3_olclx")
+region = Rect2(96, 192, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ih1mq"]
+atlas = ExtResource("3_olclx")
+region = Rect2(192, 192, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_epqv8"]
+atlas = ExtResource("3_olclx")
+region = Rect2(288, 192, 96, 96)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wkouj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_olclx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xftor")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hgm20")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qn5cg")
+}],
+"loop": 1,
+"name": &"D",
+"speed": 30.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gaxmg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_maeis")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fhhqj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mlrvl")
+}],
+"loop": 1,
+"name": &"D_aftimg",
+"speed": 30.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v0ovh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g24jh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bmmv0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8xvwv")
+}],
+"loop": 1,
+"name": &"L",
+"speed": 30.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kcoge")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8y0xc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ih1mq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_epqv8")
+}],
+"loop": 1,
+"name": &"L_aftimg",
+"speed": 30.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v0ovh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g24jh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bmmv0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8xvwv")
+}],
+"loop": 1,
+"name": &"R",
+"speed": 30.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kcoge")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8y0xc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ih1mq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_epqv8")
+}],
+"loop": 1,
+"name": &"R_aftimg",
+"speed": 30.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_olclx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xftor")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hgm20")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qn5cg")
+}],
+"loop": 1,
+"name": &"U",
+"speed": 30.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gaxmg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_maeis")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fhhqj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mlrvl")
+}],
+"loop": 1,
+"name": &"U_aftimg",
+"speed": 30.0
+}]
 
 [node name="EnemyBulletGigaWave" type="Node2D" unique_id=2038470674]
 z_index = 150
 script = ExtResource("1_olclx")
 damage = 12
 rush_damage = 2
+parry_damage = 36
 max_life_time = 2.0
 despawn_offscreen = true
 despawn_particle = ""
@@ -34,17 +237,12 @@ debug_color = Color(0.482353, 0.435294, 1, 0.419608)
 scale = Vector2(1.2, 1.2)
 rect = Rect2(-40, -40, 80, 80)
 
-[node name="JsonSprite2D" type="Sprite2D" parent="." unique_id=955529868]
-script = ExtResource("2_xftor")
-texture_path = "res://Assets/Images/Bullets/Enemy/EnemyGigaWave.json"
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
-
-[node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D" unique_id=1493599342]
-texture = ExtResource("3_olclx")
-hframes = 4
-vframes = 4
-script = ExtResource("4_qn5cg")
-metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+[node name="SnailySprite2D" type="AnimatedSprite2D" parent="." unique_id=1195553745]
+sprite_frames = SubResource("SpriteFrames_wkouj")
+animation = &"R"
+script = ExtResource("3_af2e7")
+start_all_on_random_frame = true
+metadata/_custom_type_script = "uid://boee2837la0pr"
 
 [node name="AudioGroup" type="Node" parent="." unique_id=1803925562]
 
