@@ -74,7 +74,7 @@ func _ready() -> void:
 		ItemTypes.BOOMERANG:
 			anim = "boomerang"
 		ItemTypes.RAINBOW_WAVE:
-			anim = "rainbow+wave"
+			anim = "rainbow_wave"
 		ItemTypes.DEVASTATOR:
 			anim = "devastator"
 			box.shape.size = Vector2(44, 28)
