@@ -20,21 +20,19 @@ var shot_timeout:float = 0.0
 var shot_num:int = 0
 var facing_left:bool = false
 
-@onready var donut:PackedScene = load("res://Scenes/Entities/Bullets/Enemy/EnemyBulletDonutLinear.tscn")
+@onready var donut:PackedScene = load("uid://cr8jpfivtdpnw")
 #endregion
 
 
 func _ready() -> void:
 	my_type = EnemyTypes.TALLFISH_TOUGH
-	hitbox = $"Area2D"
-	sprite = $"JsonSprite2D"
-	vis = $"VisibleOnScreenNotifier2D"
 	super.spawn()
 	
 	facing_left = randf() < 0.5
-	sprite.action = "idle_left" if facing_left else "idle_right"
+	sprite.play("idle_left" if facing_left else "idle_right")
+	sprite.flip_h = facing_left
 	if display_mode:
-		sprite.action = "idle_swim_left" if facing_left else "idle_swim_right"
+		sprite.play("idle_swim_left" if facing_left else "idle_swim_right")
 		elapsed += randf() * TAU
 
 
@@ -57,7 +55,9 @@ func _process(delta: float) -> void:
 			shot_num = SHOT_COUNT
 			shot_timeout = 0.0
 			move_timeout = MOVE_TIMEOUT
-			sprite.action = "swim_left" if facing_left else "swim_right"
+			sprite.play("swim_left" if facing_left else "swim_right")
+			sprite.autoplay_next = "idle_left" if facing_left else "idle_right"
+			sprite.flip_h = facing_left
 		shot_timeout -= delta
 		if shot_timeout <= 0.0 and shot_num > 0:
 			var angle:float = atan2(

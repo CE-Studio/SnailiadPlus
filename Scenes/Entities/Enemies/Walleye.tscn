@@ -2,19 +2,156 @@
 
 [ext_resource type="Script" uid="uid://c2pr8rxlli1mt" path="res://Scripts/Enemies/Walleye.gd" id="1_uj8qx"]
 [ext_resource type="Material" uid="uid://bj1jqi3180tg5" path="res://Resources/EnemyFlashMat.tres" id="2_8iune"]
-[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="3_x5veq"]
-[ext_resource type="Shader" uid="uid://bday5amji1ndg" path="res://Resources/EntityFlash.tres" id="4_iin5a"]
+[ext_resource type="Script" uid="uid://boee2837la0pr" path="res://Scripts/Classes/SnailySprite.gd" id="4_k61dc"]
 [ext_resource type="Texture2D" uid="uid://dr8pp5oj0pwar" path="res://Assets/Images/Entities/Walleye.png" id="5_uj8qx"]
-[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="6_h4b3q"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_v2c1n"]
 size = Vector2(14, 14)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ojica"]
-shader = ExtResource("4_iin5a")
-shader_parameter/flash_color = Color(0, 0, 0, 1)
+[sub_resource type="AtlasTexture" id="AtlasTexture_6xs7l"]
+atlas = ExtResource("5_uj8qx")
+region = Rect2(16, 0, 16, 16)
 
-[node name="Walleye" type="Node2D" unique_id=775189396]
+[sub_resource type="AtlasTexture" id="AtlasTexture_uj8qx"]
+atlas = ExtResource("5_uj8qx")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8iune"]
+atlas = ExtResource("5_uj8qx")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wkouj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6xs7l")
+}],
+"loop": 0,
+"name": &"DL_fire",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6xs7l")
+}],
+"loop": 1,
+"name": &"DL_idle",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6xs7l")
+}],
+"loop": 0,
+"name": &"DR_fire",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6xs7l")
+}],
+"loop": 1,
+"name": &"DR_idle",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uj8qx")
+}],
+"loop": 0,
+"name": &"D_fire",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uj8qx")
+}],
+"loop": 1,
+"name": &"D_idle",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8iune")
+}],
+"loop": 0,
+"name": &"L_fire",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8iune")
+}],
+"loop": 1,
+"name": &"L_idle",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8iune")
+}],
+"loop": 0,
+"name": &"R_fire",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8iune")
+}],
+"loop": 1,
+"name": &"R_idle",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6xs7l")
+}],
+"loop": 0,
+"name": &"UL_fire",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6xs7l")
+}],
+"loop": 1,
+"name": &"UL_idle",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6xs7l")
+}],
+"loop": 0,
+"name": &"UR_fire",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6xs7l")
+}],
+"loop": 1,
+"name": &"UR_idle",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uj8qx")
+}],
+"loop": 0,
+"name": &"U_fire",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uj8qx")
+}],
+"loop": 1,
+"name": &"U_idle",
+"speed": 1.0
+}]
+
+[node name="Walleye" type="Node2D" unique_id=775189396 node_paths=PackedStringArray("hitbox", "sprite", "vis")]
 z_index = 103
 script = ExtResource("1_uj8qx")
 max_health = 400
@@ -22,6 +159,9 @@ invulnerable = true
 can_damage = false
 health_orb_value = 2
 grant_bestiary_without_defeat = true
+hitbox = NodePath("Area2D")
+sprite = NodePath("SnailySprite2D")
+vis = NodePath("VisibleOnScreenNotifier2D")
 
 [node name="Area2D" type="Area2D" parent="." unique_id=843252133]
 collision_layer = 64
@@ -35,18 +175,12 @@ debug_color = Color(0.976471, 0, 0.415686, 0.419608)
 scale = Vector2(0.8, 0.8)
 rect = Rect2(-1.2499999, -1.2499999, 2.4999998, 2.4999998)
 
-[node name="JsonSprite2D" type="Sprite2D" parent="." unique_id=1516292731]
+[node name="SnailySprite2D" type="AnimatedSprite2D" parent="." unique_id=1381085156]
 material = ExtResource("2_8iune")
-script = ExtResource("3_x5veq")
-texture_path = "res://Assets/Images/Entities/Walleye.json"
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
-
-[node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D" unique_id=663183893]
-material = SubResource("ShaderMaterial_ojica")
-texture = ExtResource("5_uj8qx")
-hframes = 3
-script = ExtResource("6_h4b3q")
-metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+sprite_frames = SubResource("SpriteFrames_wkouj")
+animation = &"R_fire"
+script = ExtResource("4_k61dc")
+metadata/_custom_type_script = "uid://boee2837la0pr"
 
 [node name="LineOfSight" type="Node2D" parent="." unique_id=409193057]
 

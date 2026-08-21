@@ -2,19 +2,200 @@
 
 [ext_resource type="Script" uid="uid://dclh2rqtd4t27" path="res://Scripts/Enemies/TallfishCommon.gd" id="1_ahqjg"]
 [ext_resource type="Material" uid="uid://bj1jqi3180tg5" path="res://Resources/EnemyFlashMat.tres" id="2_2apn6"]
-[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="3_wbpyv"]
-[ext_resource type="Shader" uid="uid://bday5amji1ndg" path="res://Resources/EntityFlash.tres" id="4_ykcgw"]
+[ext_resource type="Script" uid="uid://boee2837la0pr" path="res://Scripts/Classes/SnailySprite.gd" id="4_bkebm"]
 [ext_resource type="Texture2D" uid="uid://b3h5jqbxfw8mx" path="res://Assets/Images/Entities/Tallfish1.png" id="5_ahqjg"]
-[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="6_ijpss"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_v2c1n"]
 size = Vector2(30, 46)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ojica"]
-shader = ExtResource("4_ykcgw")
-shader_parameter/flash_color = Color(0, 0, 0, 1)
+[sub_resource type="AtlasTexture" id="AtlasTexture_6v56o"]
+atlas = ExtResource("5_ahqjg")
+region = Rect2(0, 0, 32, 48)
 
-[node name="TallfishCommon" type="Node2D" unique_id=696439526]
+[sub_resource type="AtlasTexture" id="AtlasTexture_ahqjg"]
+atlas = ExtResource("5_ahqjg")
+region = Rect2(0, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2apn6"]
+atlas = ExtResource("5_ahqjg")
+region = Rect2(32, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wbpyv"]
+atlas = ExtResource("5_ahqjg")
+region = Rect2(64, 0, 32, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wkouj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6v56o")
+}],
+"loop": 1,
+"name": &"idle_left",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6v56o")
+}],
+"loop": 1,
+"name": &"idle_right",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ahqjg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2apn6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ahqjg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wbpyv")
+}],
+"loop": 1,
+"name": &"idle_swim_left",
+"speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ahqjg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2apn6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ahqjg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wbpyv")
+}],
+"loop": 1,
+"name": &"idle_swim_right",
+"speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ahqjg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2apn6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ahqjg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wbpyv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wbpyv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ahqjg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ahqjg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2apn6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2apn6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2apn6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ahqjg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ahqjg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ahqjg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ahqjg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wbpyv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wbpyv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wbpyv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wbpyv")
+}],
+"loop": 0,
+"name": &"swim_left",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ahqjg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2apn6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ahqjg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wbpyv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wbpyv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ahqjg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ahqjg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2apn6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2apn6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2apn6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ahqjg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ahqjg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ahqjg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ahqjg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wbpyv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wbpyv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wbpyv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wbpyv")
+}],
+"loop": 0,
+"name": &"swim_right",
+"speed": 10.0
+}]
+
+[node name="TallfishCommon" type="Node2D" unique_id=696439526 node_paths=PackedStringArray("hitbox", "sprite", "vis")]
 z_index = 103
 script = ExtResource("1_ahqjg")
 max_health = 500
@@ -23,6 +204,9 @@ defense = 10
 health_orb_value = 2
 kill_particle_range = Vector2i(16, 24)
 kill_particle_count = 6
+hitbox = NodePath("Area2D")
+sprite = NodePath("SnailySprite2D")
+vis = NodePath("VisibleOnScreenNotifier2D")
 
 [node name="Area2D" type="Area2D" parent="." unique_id=1688438767]
 collision_layer = 64
@@ -36,15 +220,9 @@ debug_color = Color(0.976471, 0, 0.415686, 0.419608)
 scale = Vector2(0.8, 0.8)
 rect = Rect2(-19.999998, -29.999996, 39.999996, 59.999992)
 
-[node name="JsonSprite2D" type="Sprite2D" parent="." unique_id=1067455307]
+[node name="SnailySprite2D" type="AnimatedSprite2D" parent="." unique_id=1870883450]
 material = ExtResource("2_2apn6")
-script = ExtResource("3_wbpyv")
-texture_path = "res://Assets/Images/Entities/Tallfish1.json"
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
-
-[node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D" unique_id=1911073807]
-material = SubResource("ShaderMaterial_ojica")
-texture = ExtResource("5_ahqjg")
-hframes = 3
-script = ExtResource("6_ijpss")
-metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+sprite_frames = SubResource("SpriteFrames_wkouj")
+animation = &"idle_right"
+script = ExtResource("4_bkebm")
+metadata/_custom_type_script = "uid://boee2837la0pr"

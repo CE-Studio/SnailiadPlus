@@ -19,15 +19,12 @@ var fire_dir:Vector2 = Vector2.ZERO
 @onready var line_of_sight:Node2D = $"LineOfSight"
 @onready var cast1:RayCast2D = $"LineOfSight/RayCast2D"
 @onready var cast2:RayCast2D = $"LineOfSight/RayCast2D2"
-@onready var laser:PackedScene = load("res://Scenes/Entities/Bullets/Enemy/EnemyBulletLaser.tscn")
+@onready var laser:PackedScene = load("uid://dueroaqpwv2r")
 #endregion
 
 
 func _ready() -> void:
 	my_type = EnemyTypes.WALLEYE
-	hitbox = $"Area2D"
-	sprite = $"JsonSprite2D"
-	vis = $"VisibleOnScreenNotifier2D"
 	super.spawn()
 	
 	_play_anim(false)
@@ -62,4 +59,10 @@ func _play_anim(shoot:bool) -> void:
 		6: angle = "L"
 		7: angle = "UL"
 	var mode:String = "fire" if shoot else "idle"
-	sprite.action = "_".join([angle, mode])
+	sprite.play("_".join([angle, mode]))
+	if mode == "fire":
+		sprite.autoplay_next = "_".join([angle, "idle"])
+	if angle.contains("L"):
+		sprite.flip_h = true
+	if angle.contains("D"):
+		sprite.flip_v = true

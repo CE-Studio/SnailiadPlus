@@ -11,12 +11,10 @@ var theta = 0.0
 
 func _ready() -> void:
 	my_type = EnemyTypes.JELLYFISH
-	hitbox = $"Area2D"
-	sprite = $"JsonSprite2D"
-	vis = $"VisibleOnScreenNotifier2D"
 	super.spawn()
 	
 	theta = position.x * 0.7 + position.y * 1.3
+	_process(0.0)
 
 
 func _process(delta: float) -> void:

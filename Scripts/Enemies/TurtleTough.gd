@@ -31,10 +31,6 @@ var last_action:String = ""
 
 func _ready() -> void:
 	my_type = EnemyTypes.TURTLE_TOUGH
-	col = $"BodyBox"
-	hitbox = $"Area2D"
-	sprite = $"JsonSprite2D"
-	vis = $"VisibleOnScreenNotifier2D"
 	super.spawn()
 	
 	_set_gravity(direction)
@@ -105,7 +101,7 @@ func _physics_process(delta: float) -> void:
 						(not facing_left and player.position.x < position.x)
 					)):
 						facing_left = not facing_left
-						_play_anim("turn" if real.is_on_floor() else "fall")
+						_play_anim("walk" if real.is_on_floor() else "fall")
 					real.velocity.x = -speed if facing_left else speed
 					if jump:
 						real.velocity.y = -JUMP_POWER
@@ -124,7 +120,7 @@ func _physics_process(delta: float) -> void:
 						(not facing_left and player.position.y < position.y)
 					)):
 						facing_left = not facing_left
-						_play_anim("turn" if real.is_on_floor() else "fall")
+						_play_anim("walk" if real.is_on_floor() else "fall")
 					real.velocity.y = -speed if facing_left else speed
 					if jump:
 						real.velocity.x = JUMP_POWER
@@ -143,7 +139,7 @@ func _physics_process(delta: float) -> void:
 						(not facing_left and player.position.y > position.y)
 					)):
 						facing_left = not facing_left
-						_play_anim("turn" if real.is_on_floor() else "fall")
+						_play_anim("walk" if real.is_on_floor() else "fall")
 					real.velocity.y = speed if facing_left else -speed
 					if jump:
 						real.velocity.x = -JUMP_POWER
@@ -162,7 +158,7 @@ func _physics_process(delta: float) -> void:
 						(not facing_left and player.position.x > position.x)
 					)):
 						facing_left = not facing_left
-						_play_anim("turn" if real.is_on_floor() else "fall")
+						_play_anim("walk" if real.is_on_floor() else "fall")
 					real.velocity.x = speed if facing_left else -speed
 					if jump:
 						real.velocity.y = JUMP_POWER
@@ -199,12 +195,24 @@ func _set_gravity(new_dir:Statics.DirsSurface) -> void:
 func _play_anim(action:String = "") -> void:
 	var anim_name:String = ""
 	match direction:
-		Statics.DirsSurface.FLOOR: anim_name = "floor_"
-		Statics.DirsSurface.LWALL: anim_name = "lwall_"
-		Statics.DirsSurface.RWALL: anim_name = "rwall_"
-		Statics.DirsSurface.CEILING: anim_name = "ceiling_"
+		Statics.DirsSurface.FLOOR:
+			anim_name = "floor_"
+			sprite.flip_h = facing_left
+			sprite.flip_v = false
+		Statics.DirsSurface.LWALL:
+			anim_name = "lwall_"
+			sprite.flip_h = true
+			sprite.flip_v = facing_left
+		Statics.DirsSurface.RWALL:
+			anim_name = "rwall_"
+			sprite.flip_h = false
+			sprite.flip_v = not facing_left
+		Statics.DirsSurface.CEILING:
+			anim_name = "ceiling_"
+			sprite.flip_h = not facing_left
+			sprite.flip_v = true
 	anim_name += "left_" if facing_left else "right_"
 	anim_name += action if action.strip_edges() != "" else last_action
-	if sprite.action != anim_name:
-		sprite.action = anim_name
+	if sprite.animation != anim_name:
+		sprite.play(anim_name)
 		last_action = action

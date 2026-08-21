@@ -2,25 +2,59 @@
 
 [ext_resource type="Script" uid="uid://wlfeuyhrcrqu" path="res://Scripts/Enemies/Jellyfish.gd" id="1_j1yy8"]
 [ext_resource type="Material" uid="uid://bj1jqi3180tg5" path="res://Resources/EnemyFlashMat.tres" id="2_8h27v"]
-[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="3_pxuho"]
-[ext_resource type="Shader" uid="uid://bday5amji1ndg" path="res://Resources/EntityFlash.tres" id="4_qvfi5"]
+[ext_resource type="Script" uid="uid://boee2837la0pr" path="res://Scripts/Classes/SnailySprite.gd" id="4_okx87"]
 [ext_resource type="Texture2D" uid="uid://5s8iklqdl43d" path="res://Assets/Images/Entities/Jellyfish.png" id="5_j1yy8"]
-[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="6_y1cb8"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_v2c1n"]
 size = Vector2(14, 14)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ojica"]
-shader = ExtResource("4_qvfi5")
-shader_parameter/flash_color = Color(0, 0, 0, 1)
+[sub_resource type="AtlasTexture" id="AtlasTexture_qqkg4"]
+atlas = ExtResource("5_j1yy8")
+region = Rect2(0, 0, 16, 16)
 
-[node name="Jellyfish" type="Node2D" unique_id=81927199]
+[sub_resource type="AtlasTexture" id="AtlasTexture_j1yy8"]
+atlas = ExtResource("5_j1yy8")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8h27v"]
+atlas = ExtResource("5_j1yy8")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pxuho"]
+atlas = ExtResource("5_j1yy8")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wkouj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qqkg4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j1yy8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8h27v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pxuho")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 4.0
+}]
+
+[node name="Jellyfish" type="Node2D" unique_id=81927199 node_paths=PackedStringArray("hitbox", "sprite", "vis")]
 z_index = 103
 script = ExtResource("1_j1yy8")
 max_health = 350
 attack = 3
 defense = 50
+parry_resist = 0.85
 health_orb_value = 2
+hitbox = NodePath("Area2D")
+sprite = NodePath("SnailySprite2D")
+vis = NodePath("VisibleOnScreenNotifier2D")
 
 [node name="Area2D" type="Area2D" parent="." unique_id=1417046274]
 collision_layer = 64
@@ -33,16 +67,11 @@ debug_color = Color(0.976471, 0, 0.415686, 0.419608)
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1026956752]
 scale = Vector2(0.8, 0.8)
 
-[node name="JsonSprite2D" type="Sprite2D" parent="." unique_id=286787326]
+[node name="SnailySprite2D" type="AnimatedSprite2D" parent="." unique_id=227508236]
 material = ExtResource("2_8h27v")
-script = ExtResource("3_pxuho")
-texture_path = "res://Assets/Images/Entities/Jellyfish.json"
-load_autoplay = Array[String](["idle"])
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
-
-[node name="MarkerSprite" type="Sprite2D" parent="JsonSprite2D" unique_id=328456415]
-material = SubResource("ShaderMaterial_ojica")
-texture = ExtResource("5_j1yy8")
-hframes = 4
-script = ExtResource("6_y1cb8")
-metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+sprite_frames = SubResource("SpriteFrames_wkouj")
+animation = &"idle"
+autoplay = "idle"
+script = ExtResource("4_okx87")
+start_all_on_random_frame = true
+metadata/_custom_type_script = "uid://boee2837la0pr"
