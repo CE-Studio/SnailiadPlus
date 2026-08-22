@@ -8,6 +8,7 @@ const CENTER:Vector2 = Statics.VECTOR_CENTER
 const EASE_MOD:float = 3.5
 const CENTER_WEIGHT_THRESHOLD:float = 0.25
 const WEIGHT_FADE_MULT:float = 1.8
+const DYNAMIC_REDIRECT_WEIGHT:float = 0.75
 
 var speed:float = randf() * 100.0 + 10.0
 var mod:float = 1.0
@@ -15,6 +16,7 @@ var direction:Vector2 = Vector2.LEFT
 var border_mode:int = 0 # 0 - no special mode, 1 - inward from border, 2 - outward to border
 var fade_in:float = randf_range(1.5, 5.0)
 var sleep_theta:float = randf() * TAU
+var dynamic_direction:Vector2 = Vector2.UP
 
 var mode:String = "intro"
 var weight_intro:float = 1.0
@@ -22,6 +24,8 @@ var weight_stomp:float = 0.0
 var weight_smash:float = 0.0
 var weight_strafe:float = 0.0
 var weight_sleep:float = 0.0
+
+var boss:Gigasnail
 
 
 func _spawn(_data:Array) -> void:
@@ -47,7 +51,7 @@ func _process(delta: float) -> void:
 	if weight_intro > 0.0:
 		_to_center(delta, ease(weight_intro, EASE_MOD))
 	if weight_stomp > 0.0:
-		position += Vector2.UP * speed * mod * delta * ease(weight_stomp, EASE_MOD)
+		position += dynamic_direction * speed * mod * delta * ease(weight_stomp, EASE_MOD)
 	if weight_smash > 0.0:
 		position += (Statics.VECTOR_DIAG * Vector2(-1, 1)) * speed * mod * delta * ease(weight_smash, EASE_MOD)
 	if weight_strafe > 0.0:
@@ -59,6 +63,9 @@ func _process(delta: float) -> void:
 	if fade_in > 0:
 		fade_in -= delta
 		sprite.modulate.a = clampf(1.0 - fade_in, 0.0, 1.0)
+	
+	if dynamic_direction != -boss.body.up_direction:
+		dynamic_direction = dynamic_direction.move_toward(-boss.body.up_direction, DYNAMIC_REDIRECT_WEIGHT * delta)
 
 
 func _to_center(delta:float, curve:float) -> void:

@@ -323,11 +323,11 @@ func _set_mode(new_mode:BossMode) -> void:
 	waiting_to_jump = false
 	_set_hitboxes(0)
 	
-	match new_mode:
-		BossMode.STOMP: boss_environment.set_state("stomp")
-		BossMode.STRAFE: boss_environment.set_state("strafe")
-		BossMode.SMASH: boss_environment.set_state("smash")
-		BossMode.SLEEP: boss_environment.set_state("sleep")
+	#match new_mode:
+	#	BossMode.STOMP: boss_environment.set_state("stomp")
+	#	BossMode.STRAFE: boss_environment.set_state("strafe")
+	#	BossMode.SMASH: boss_environment.set_state("smash")
+	#	BossMode.SLEEP: boss_environment.set_state("sleep")
 
 
 func _shoot_wave() -> void:
@@ -508,6 +508,7 @@ func _update_stomp(delta:float) -> void:
 		_set_hitboxes(0)
 		_face_player(false)
 		_spawn_afterimage()
+		boss_environment.set_state("stomp")
 	if last_state == "shell":
 		if position.distance_to(target) < STOMP_TARGET_APPROACH_DIST:
 			_face_player(true, true)
@@ -588,6 +589,7 @@ func _update_strafe(delta:float) -> void:
 		target = origin
 		aimed = false
 		_spawn_afterimage()
+		boss_environment.set_state("strafe")
 	position = Vector2(
 		Statics.integrate(position.x, target.x, 1.7, delta * boss_speed),
 		Statics.integrate(position.y, target.y, 1.7, delta * boss_speed)
@@ -631,6 +633,7 @@ func _update_smash() -> void:
 		body.velocity = Vector2.ZERO
 		body.up_direction = Vector2.UP
 		_spawn_afterimage()
+		boss_environment.set_state("smash")
 	if stomped:
 		stomped = false
 		if _get_decision() > 0.7 or phase > 0:
@@ -667,6 +670,7 @@ func _update_sleep(delta:float) -> void:
 		_set_hitboxes(0)
 		body.up_direction = Vector2.UP
 		_spawn_afterimage()
+		boss_environment.set_state("sleep")
 	if stomped:
 		zzz_timeout -= delta * boss_speed
 		if zzz_timeout <= 0.0 and zzz_count > 0:

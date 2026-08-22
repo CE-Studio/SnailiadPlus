@@ -39,3 +39,5 @@ func _spawn_one() -> void:
 func update_mode(mode:String) -> void:
 	for particle in active_particles:
 		particle.mode = mode
+		if particle.boss:
+			particle.dynamic_direction = -particle.boss.body.up_direction

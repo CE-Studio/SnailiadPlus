@@ -43,6 +43,8 @@ func connect_giga(_giga:Gigasnail) -> void:
 	bg.environment = self
 	stars.environment = self
 	stars.spawn()
+	for star in stars.active_particles:
+		star.boss = giga
 
 
 func get_stripe_glow_at_y(spr_y:float) -> float:
