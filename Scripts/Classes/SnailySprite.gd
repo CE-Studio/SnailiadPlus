@@ -140,3 +140,9 @@ func _on_anim_finished() -> void:
 func _set_random_frame() -> void:
 	var frame_count:int = sprite_frames.get_frame_count(animation)
 	frame = randi_range(0, frame_count - 1)
+
+
+func create_afterimage(_start_a:float, _end_a:float, _fade_time:float, _z_index:int, _anim:String = animation) -> void:
+	var afterimage:AfterimageSprite2D = AfterimageSprite2D.new()
+	afterimage.setup(self, _anim, _start_a, _end_a, _fade_time, _z_index)
+	Statics.active_room.layer_ground.add_child(afterimage)

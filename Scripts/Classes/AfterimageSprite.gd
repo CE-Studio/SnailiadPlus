@@ -22,6 +22,7 @@ func setup(_source:SnailySprite2D, _anim:String, _start_a:float, _end_a:float, _
 	flip_v = _source.flip_v
 	play(_anim)
 	pause()
+	frame = _source.frame
 	start_a = _start_a
 	end_a = _end_a
 	fade_time = _fade_time
