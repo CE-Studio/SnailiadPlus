@@ -47,7 +47,8 @@ func _spawn(_data:Array) -> void:
 	
 	for i in range(DUST_COUNT):
 		dusts.append(Statics.spawn_particle("Dust", Room.Layers.GROUND, position))
-		dusts[i].sprite.play(TYPES[type])
+		if type != 0:
+			dusts[i].sprite.play(TYPES[type])
 		radii.append(LEGACY_START_RADIUS if legacy_anim else DYNAMIC_MAX_RADIUS)
 	if legacy_anim:
 		_tick_legacy(0.0)

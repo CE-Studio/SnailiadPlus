@@ -108,6 +108,7 @@ func _process(delta: float) -> void:
 					sprite.play("left_turn_up" if player_pos.y < position.y else "left_turn_down")
 					sprite.autoplay_next = "right_idle"
 					facing_left = false
+		sprite.flip_h = facing_left
 
 
 func _update_position() -> void:

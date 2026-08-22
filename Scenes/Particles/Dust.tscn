@@ -2,7 +2,6 @@
 
 [ext_resource type="Script" uid="uid://bjoxx2waxewlf" path="res://Scripts/Classes/Particle.gd" id="1_vq8lx"]
 [ext_resource type="Texture2D" uid="uid://delm72qbdpn8e" path="res://Assets/Images/Particles/Dust.png" id="2_vq8lx"]
-[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_vqwiu"]
 [ext_resource type="Script" uid="uid://boee2837la0pr" path="res://Scripts/Classes/SnailySprite.gd" id="4_vq8lx"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8x5iu"]
@@ -272,15 +271,9 @@ z_index = 215
 script = ExtResource("1_vq8lx")
 sprite = NodePath("SnailySprite2D")
 
-[node name="MarkerSprite" type="Sprite2D" parent="." unique_id=1199283378]
-texture = ExtResource("2_vq8lx")
-hframes = 2
-vframes = 4
-script = ExtResource("3_vqwiu")
-metadata/_custom_type_script = "uid://b63lo60i7kt7f"
-
 [node name="SnailySprite2D" type="AnimatedSprite2D" parent="." unique_id=1863370727]
 sprite_frames = SubResource("SpriteFrames_wkouj")
+autoplay = "default"
 script = ExtResource("4_vq8lx")
 start_all_on_random_frame = true
 metadata/_custom_type_script = "uid://boee2837la0pr"

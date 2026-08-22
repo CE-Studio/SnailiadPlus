@@ -94,6 +94,7 @@ func _infer_new() -> void:
 			#print("Added " + new_anim)
 
 
+
 ## Takes an array of animations and selects one at random to play
 func play_random(anims:PackedStringArray) -> void:
 	var rand_i:int = randi_range(0, anims.size() - 1)
