@@ -38,6 +38,6 @@ func _spawn_one() -> void:
 
 func update_mode(mode:String) -> void:
 	for particle in active_particles:
-		particle.mode = mode
-		if particle.boss:
+		if particle.boss and particle.mode != "stomp":
 			particle.dynamic_direction = -particle.boss.body.up_direction
+		particle.mode = mode

@@ -1,6 +1,6 @@
 # Copyright 2026 CE-Studio: AGPL-3.0-only
 class_name AfterimageSprite2D
-extends SnailySprite2D
+extends AnimatedSprite2D
 
 
 ## The alpha (from 0.0 to 1.0) that this sprite starts at

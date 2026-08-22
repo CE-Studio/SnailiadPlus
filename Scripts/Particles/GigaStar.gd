@@ -8,7 +8,7 @@ const CENTER:Vector2 = Statics.VECTOR_CENTER
 const EASE_MOD:float = 3.5
 const CENTER_WEIGHT_THRESHOLD:float = 0.25
 const WEIGHT_FADE_MULT:float = 1.8
-const DYNAMIC_REDIRECT_WEIGHT:float = 0.75
+const DYNAMIC_REDIRECT_WEIGHT:float = 1.2
 
 var speed:float = randf() * 100.0 + 10.0
 var mod:float = 1.0
