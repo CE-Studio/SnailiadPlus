@@ -61,8 +61,11 @@ func parry_reshoot() -> void:
 	origin = position
 	elapsed = 0.0
 	current_speed = 0.0
-	move_theta = 0.0
 	super()
+	move_theta = atan2(
+		source_enemy.position.y - origin.y,
+		source_enemy.position.x - origin.x
+	)
 
 
 func _update_anim(last_pos:Vector2) -> void:
