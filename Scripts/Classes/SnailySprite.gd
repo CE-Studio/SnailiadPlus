@@ -51,10 +51,10 @@ func _ready() -> void:
 	if autoplay != "" or autoplay_any_on_spawn:
 		if autoplay_any_on_spawn:
 			play_any_random()
-		if start_all_on_random_frame or start_on_random_frame.has(autoplay):
-			_set_random_frame()
-		else:
-			frame = 0
+	if start_all_on_random_frame or start_on_random_frame.has(animation):
+		_set_random_frame()
+	else:
+		frame = 0
 
 
 ## Infers and creates additional sets of animations using the existing animations as a basis.
