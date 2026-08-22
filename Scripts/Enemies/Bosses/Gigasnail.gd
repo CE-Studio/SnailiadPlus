@@ -515,6 +515,8 @@ func _update_stomp(delta:float) -> void:
 				_set_hitboxes(-1)
 			else:
 				_set_hitboxes(1)
+		else:
+			_face_player(false)
 		position = Vector2(
 			Statics.integrate(position.x, target.x, 0.7, delta * boss_speed),
 			Statics.integrate(position.y, target.y, 0.7, delta * boss_speed)

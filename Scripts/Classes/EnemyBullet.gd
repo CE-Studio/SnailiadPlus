@@ -136,7 +136,7 @@ func parry_reshoot() -> void:
 	if source_enemy:
 		normalized_dir = Vector2(source_enemy.global_position - global_position).normalized()
 	else:
-		normalized_dir *= -1
+		normalized_dir *= -1.0
 	life_timer = 0.0
 	velocity = velocity_init
 	parry_damage *= floori(1.0 + (Statics.get_shell_level() * 0.2))

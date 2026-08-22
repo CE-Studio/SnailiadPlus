@@ -18,7 +18,18 @@ func _physics_process(delta: float) -> void:
 	super(delta)
 
 
+func parry_reshoot() -> void:
+	has_been_parried = true
+	normalized_dir *= -1.0
+	life_timer = 0.0
+	velocity = velocity_init
+	parry_damage *= floori(1.0 + (Statics.get_shell_level() * 0.2))
+	if has_inferred_once:
+		_infer_direction_anim()
+
+
 func _infer_direction_anim(_angle:Vector2 = normalized_dir) -> void:
+	has_inferred_once = true
 	if abs(_angle.x) > abs(_angle.y):
 		sprite.play("R" if _angle.x > 0.0 else "L")
 		box.rotation_degrees = 0.0
