@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://cetmpo4dp2s1y"]
 
 [ext_resource type="Script" uid="uid://bdjcumfld83a3" path="res://Scripts/Enemies/Bosses/Moonsnail.gd" id="1_bauxv"]
+[ext_resource type="Material" uid="uid://bj1jqi3180tg5" path="res://Resources/EnemyFlashMat.tres" id="2_tehrv"]
 [ext_resource type="Texture2D" uid="uid://b3s62b8njggvc" path="res://Assets/Images/Entities/Boss4.png" id="3_bauxv"]
 [ext_resource type="Script" uid="uid://boee2837la0pr" path="res://Scripts/Classes/SnailySprite.gd" id="3_qe0if"]
 [ext_resource type="Texture2D" uid="uid://dgq5m8fk1skxx" path="res://Assets/Images/Entities/Boss4ShadowBall.png" id="4_qe0if"]
@@ -753,7 +754,7 @@ animations = [{
 "speed": 20.0
 }]
 
-[node name="Moonsnail" type="CharacterBody2D" unique_id=1600867824]
+[node name="Moonsnail" type="CharacterBody2D" unique_id=1600867824 node_paths=PackedStringArray("col", "body", "hitbox", "sprite", "vis")]
 visibility_layer = 3
 z_index = 120
 collision_layer = 0
@@ -765,6 +766,11 @@ death_wiggle_mult = 0.4
 max_health = 7000
 defense = 30
 kill_particle_count = 0
+col = NodePath("BodyBox")
+body = NodePath(".")
+hitbox = NodePath("Area2D")
+sprite = NodePath("SnailySprite2D")
+vis = NodePath("VisibleOnScreenNotifier2D")
 
 [node name="BodyBox" type="CollisionShape2D" parent="." unique_id=1177653414]
 shape = SubResource("RectangleShape2D_31aru")
@@ -780,9 +786,10 @@ shape = SubResource("RectangleShape2D_hpe74")
 debug_color = Color(0.9764706, 0, 0.41568628, 0.41960785)
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1211885645]
-rect = Rect2(-12, -8, 24, 16)
+rect = Rect2(-12, -12, 24, 24)
 
 [node name="SnailySprite2D" type="AnimatedSprite2D" parent="." unique_id=1155866434]
+material = ExtResource("2_tehrv")
 sprite_frames = SubResource("SpriteFrames_wkouj")
 animation = &"p0_floor_right_idle"
 script = ExtResource("3_qe0if")

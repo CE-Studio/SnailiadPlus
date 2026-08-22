@@ -1,5 +1,5 @@
 # Copyright 2026 CE-Studio: AGPL-3.0-only
-extends JsonSprite2D
+extends SnailySprite2D
 
 
 #region Variables
@@ -17,12 +17,24 @@ var player_prox_limit:float = 0.0
 var current_prox_add:float = 0.0
 var decay_rate:float = 0.0
 var col_fade_rate:float = 0.0
-var current_col_array:Array = []
 var shimmer:bool = true
 var impact_add:float = 0.0
 var impact_elapsed:float = 0.0
 var last_impact_add:float = 0.0
 var last_impact_elapsed:float = 0.0
+
+var current_col_array:Array[PackedColorArray] = []
+enum ColorIndeces {
+	INTRO,
+	STOMP0,
+	STOMP1,
+	SMASH0,
+	SMASH1,
+	STRAFE0,
+	STRAFE1,
+	SLEEP0,
+	SLEEP1
+}
 
 var elapsed:float = 0.0
 var intro_fade:float = 4.0
@@ -38,12 +50,11 @@ func _ready() -> void:
 	player_prox_limit = randf_range(24.0, 88.0)
 	decay_rate = randf_range(0.2, 1.6)
 	col_fade_rate = randf_range(0.6, 1.2)
-	set_color(meta["col_intro"])
+	_setup_colors()
+	set_color(current_col_array[ColorIndeces.INTRO])
 
 
 func _process(delta: float) -> void:
-	super(delta)
-	
 	modulate = modulate.lerp(target_color, col_fade_rate * delta)
 	
 	var this_a:float = 0.0
@@ -82,7 +93,13 @@ func _process(delta: float) -> void:
 	current_prox_add = move_toward(current_prox_add, 0.0, decay_rate * delta)
 
 
-func set_color(col_array:Array, instant:bool = false) -> void:
+func _setup_colors() -> void:
+	for item in meta_info:
+		if item is PackedColorArray:
+			current_col_array.append(item)
+
+
+func set_color(col_array:PackedColorArray, instant:bool = false) -> void:
 	if col_array.size() == 0:
 		return
 	var i:int = randi_range(0, col_array.size() - 1)
@@ -93,7 +110,11 @@ func set_color(col_array:Array, instant:bool = false) -> void:
 
 
 func update_state(state:String, phase:int) -> void:
-	set_color(meta["col_" + state + str(phase)])
+	match state:
+		"stomp": set_color(current_col_array[ColorIndeces.STOMP0 + phase])
+		"smash": set_color(current_col_array[ColorIndeces.SMASH0 + phase])
+		"strafe": set_color(current_col_array[ColorIndeces.STRAFE0 + phase])
+		"sleep": set_color(current_col_array[ColorIndeces.SLEEP0 + phase])
 
 
 func set_impact_flash(impact_point:Vector2) -> void:

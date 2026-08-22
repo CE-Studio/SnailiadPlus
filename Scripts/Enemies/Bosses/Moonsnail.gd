@@ -141,7 +141,7 @@ func _ready() -> void:
 	invulnerable = true
 	
 	if display_mode:
-		sprite.action = "p0_floor_left_idle" if randf() < 0.5 else "p0_floor_right_idle"
+		sprite.play("p0_floor_left_idle" if randf() < 0.5 else "p0_floor_right_idle")
 		return
 	else:
 		if not Statics.is_in_boss_rush:
@@ -219,7 +219,7 @@ func exit_intro() -> void:
 
 func _tick_death(delta:float) -> void:
 	mode_elapsed += delta
-	sprite.fps_mult = 1.0 + mode_elapsed
+	sprite.set_speed(1.0 + mode_elapsed)
 	var lerp_prog:float = inverse_lerp(DEATH_FADE_START, DEATH_FADE_END, mode_elapsed)
 	flash_color = Color.BLACK.lerp(DEATH_FADE_COLOR, clampf(lerp_prog, 0.0, 1.0))
 	var progress:float = Statics.normalized_sigmoid(mode_elapsed / DEATH_MOVE_TIME, SIGMOID_MOD)
@@ -235,7 +235,7 @@ func kill() -> void:
 		if health_bar:
 			health_bar._toggle_outro_shake(true)
 		set_timer = true
-		sprite.action = "defeat"
+		sprite.play("defeat")
 		death_start = position
 		death_boom = Statics.spawn_particle("ExplosionBossDefeat",
 			Room.Layers.GROUND, position, [true, DEATH_TIME, true])
@@ -243,7 +243,7 @@ func kill() -> void:
 		GameCore.instance.music_manager.stop_all(true)
 		Player.instance.do_moon_snail_heal()
 	else:
-		var giga:Gigasnail = load("res://Scenes/Entities/Enemies/Bosses/Gigasnail.tscn").instantiate()
+		var giga:Gigasnail = load("uid://shycd53058d3").instantiate()
 		giga.position = giga_spawn_pos
 		health_bar.pass_control(giga)
 		giga.stomp_targets.append_array(stomp_targets)
@@ -392,7 +392,7 @@ func advance_phase(count:int = 1) -> void:
 	if phase == 1:
 		boss_speed += 0.3
 		for shadowball in shadowballs:
-			shadowball.action = "anim_panic"
+			shadowball.play("anim_panic")
 
 
 func _draw() -> void:

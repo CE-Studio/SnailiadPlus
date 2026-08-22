@@ -27,8 +27,8 @@ var extend_dir:Vector2 = Vector2.RIGHT
 @export var segments:int = 1
 @export var surface:Statics.DirsSurface
 
-@onready var sprites:Array[JsonSprite2D] = [ $"Sprite" ]
-@onready var circle:PackedScene = preload("res://Scenes/Environments/Backgrounds/GigaGroundPart.tscn")
+@onready var sprites:Array[SnailySprite2D] = []
+@onready var circle:PackedScene = preload("uid://c2d3jobu0nn2a")
 #endregion
 
 
@@ -80,8 +80,8 @@ func _spawn_grid() -> void:
 
 
 func _spawn_circles() -> void:
-	sprites[0].queue_free()
-	sprites.clear()
+	#sprites[0].queue_free()
+	#sprites.clear()
 	
 	var length:int = 0
 	var goal:int = (segments - 1) * SPR_SIZE
@@ -89,9 +89,9 @@ func _spawn_circles() -> void:
 	var placed_all:bool = false
 	var shimmer_state:bool = true
 	while not placed_all:
-		var new_spr:JsonSprite2D = circle.instantiate()
+		var new_spr:SnailySprite2D = circle.instantiate()
 		new_spr.position = start + (length * extend_dir)
-		new_spr.action = anim_prefix + str(randi_range(0, 4))
+		new_spr.play(anim_prefix + str(randi_range(0, 4)))
 		new_spr.shimmer = shimmer_state
 		sprites.append(new_spr)
 		add_child(new_spr)

@@ -1,23 +1,17 @@
 [gd_scene format=3 uid="uid://ccxsfn66gb7w8"]
 
-[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="1_3qe6u"]
 [ext_resource type="Script" uid="uid://ddfms2f1lg8mw" path="res://Scripts/WorldElements/Backgrounds/GigaGround.gd" id="1_e336a"]
-[ext_resource type="Texture2D" uid="uid://b7w8imqisoqu8" path="res://Assets/Images/Environments/GigaGround.png" id="2_i3l3e"]
+[ext_resource type="Texture2D" uid="uid://dxigl6lsqyhfa" path="res://Assets/Images/Environments/GigaGround2.png" id="2_i3l3e"]
 [ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_e336a"]
 
 [node name="GigaGround" type="Node2D" unique_id=473466438]
 z_index = 5
 script = ExtResource("1_e336a")
 
-[node name="Sprite" type="Sprite2D" parent="." unique_id=1575348885]
-script = ExtResource("1_3qe6u")
-texture_path = "res://Assets/Images/Environments/GigaGround.json"
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
-
-[node name="MarkerSprite" type="Sprite2D" parent="Sprite" unique_id=426348530]
+[node name="MarkerSprite" type="Sprite2D" parent="." unique_id=1198877183]
 texture = ExtResource("2_i3l3e")
-hframes = 8
-vframes = 6
-frame = 8
+hframes = 5
+vframes = 4
+frame = 4
 script = ExtResource("3_e336a")
 metadata/_custom_type_script = "uid://b63lo60i7kt7f"
