@@ -73,7 +73,7 @@ var facing_left:bool = false
 var gravity:Statics.DirsSurface = Statics.DirsSurface.FLOOR
 var target_gravity:Statics.DirsSurface = Statics.DirsSurface.NONE
 var decision_table_index:int = 0
-var shadowballs:Array[JsonSprite2D] = []
+var shadowballs:Array[SnailySprite2D] = []
 var current_weapon:int = 2
 var just_hit_surface:bool = false
 var just_grav_jumped:bool = false
@@ -132,16 +132,11 @@ func _ready() -> void:
 		return
 	
 	my_type = EnemyTypes.MOONSNAIL
-	col = $"BodyBox"
-	sprite = $"JsonSprite2D"
-	hitbox = $"Area2D"
-	vis = $"VisibleOnScreenNotifier2D"
 	super.spawn()
 	
 	for child in shadowball_group.get_children():
-		if child is JsonSprite2D:
+		if child is SnailySprite2D:
 			shadowballs.append(child)
-	shadowball_group.visible = false
 	
 	invulnerable = true
 	
@@ -366,12 +361,21 @@ func _pick_tele_target() -> void:
 func _play_anim(action:String) -> void:
 	var _surface:String = "floor"
 	match gravity:
+		Statics.DirsSurface.FLOOR:
+			sprite.flip_h = facing_left
+			sprite.flip_v = false
 		Statics.DirsSurface.LWALL:
 			_surface = "lwall"
+			sprite.flip_h = true
+			sprite.flip_v = facing_left
 		Statics.DirsSurface.RWALL:
 			_surface = "rwall"
+			sprite.flip_h = false
+			sprite.flip_v = not facing_left
 		Statics.DirsSurface.CEILING:
 			_surface = "ceiling"
+			sprite.flip_h = not facing_left
+			sprite.flip_v = true
 	var _dir:String = "left" if facing_left else "right"
 	var full_action:String = "_".join([_surface, _dir, action])
 	if full_action != last_anim:
@@ -756,8 +760,8 @@ func _check_move_input(delta:float) -> void:
 	if _pressed_right(true):
 		most_recent_dir = Statics.DirsCardinal.RIGHT
 		most_recent_horiz = Statics.DirsCardinal.RIGHT
-	var jump_state:int = 0
-	var turned:bool = false
+	var _jump_state:int = 0
+	var _turned:bool = false
 	var moving:bool = false
 	
 	if not jumping and not _casts_colliding():
@@ -770,15 +774,15 @@ func _check_move_input(delta:float) -> void:
 				real.velocity.x = 0.0
 				if jumping:
 					real.velocity.y += GRAVITY * delta
-					jump_state = 1 if real.velocity.y < 0 else 2
+					_jump_state = 1 if real.velocity.y < 0 else 2
 				if _pressed_left(false):
 					if not facing_left:
-						turned = true
+						_turned = true
 					facing_left = true
 					real.velocity.x = -RUN_SPEED
 				elif _pressed_right(false):
 					if facing_left:
-						turned = true
+						_turned = true
 					facing_left = false
 					real.velocity.x = RUN_SPEED
 				moving = real.velocity.x != 0.0
@@ -786,15 +790,15 @@ func _check_move_input(delta:float) -> void:
 				real.velocity.y = 0.0
 				if jumping:
 					real.velocity.x -= GRAVITY * delta
-					jump_state = 1 if real.velocity.x > 0 else 2
+					_jump_state = 1 if real.velocity.x > 0 else 2
 				if _pressed_up(false):
 					if not facing_left:
-						turned = true
+						_turned = true
 					facing_left = true
 					real.velocity.y = -RUN_SPEED
 				elif _pressed_down(false):
 					if facing_left:
-						turned = true
+						_turned = true
 					facing_left = false
 					real.velocity.y = RUN_SPEED
 				moving = real.velocity.y != 0.0
@@ -802,15 +806,15 @@ func _check_move_input(delta:float) -> void:
 				real.velocity.y = 0.0
 				if jumping:
 					real.velocity.x += GRAVITY * delta
-					jump_state = 1 if real.velocity.x < 0 else 2
+					_jump_state = 1 if real.velocity.x < 0 else 2
 				if _pressed_down(false):
 					if not facing_left:
-						turned = true
+						_turned = true
 					facing_left = true
 					real.velocity.y = RUN_SPEED
 				elif _pressed_up(false):
 					if facing_left:
-						turned = true
+						_turned = true
 					facing_left = false
 					real.velocity.y = -RUN_SPEED
 				moving = real.velocity.y != 0.0
@@ -818,28 +822,29 @@ func _check_move_input(delta:float) -> void:
 				real.velocity.x = 0.0
 				if jumping:
 					real.velocity.y -= GRAVITY * delta
-					jump_state = 1 if real.velocity.y > 0 else 2
+					_jump_state = 1 if real.velocity.y > 0 else 2
 				if _pressed_right(false):
 					if not facing_left:
-						turned = true
+						_turned = true
 					facing_left = true
 					real.velocity.x = RUN_SPEED
 				elif _pressed_left(false):
 					if facing_left:
-						turned = true
+						_turned = true
 					facing_left = false
 					real.velocity.x = -RUN_SPEED
 				moving = real.velocity.x != 0.0
 	
-	if jumping:
-		if turned:
-			_play_anim("turnjump" if jump_state == 1 else "turnfall")
-		else:
-			_play_anim("jump" if jump_state == 1 else "fall")
-	elif moving:
-		_play_anim("turnground" if turned else "walk")
-	else:
-		_play_anim("turnground" if turned else "idle")
+	#if jumping:
+	#	if turned:
+	#		_play_anim("turnjump" if jump_state == 1 else "turnfall")
+	#	else:
+	#		_play_anim("jump" if jump_state == 1 else "fall")
+	#elif moving:
+	#	_play_anim("turnground" if turned else "walk")
+	#else:
+	#	_play_anim("turnground" if turned else "idle")
+	_play_anim("walk" if moving else "idle")
 
 
 func _fix_gravity() -> void:
@@ -882,8 +887,8 @@ func _fix_gravity() -> void:
 			fall_frames += 1
 		else:
 			fall_frames = 0
-		if fall_frames == 1:
-			_play_anim("jump")
+		#if fall_frames == 1:
+		#	_play_anim("jump")
 #endregion
 
 
