@@ -51,6 +51,7 @@ func _ready() -> void:
 	my_type = EnemyTypes.SHELLBREAKER
 	super.spawn()
 	
+	eyes.position = Vector2.ZERO
 	if display_mode:
 		HAND_COUNT = 6
 	elif hard_mode:
