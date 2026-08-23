@@ -125,12 +125,12 @@ static var stack_weapon_mods:bool = true
 
 # Block of vars from musicParent to healthOrbPointer
 
-static var palette:Image = preload("res://Assets/Images/Palette.png")
-static var missing := preload("res://Assets/Images/Missing.png")
+static var palette:Image = preload("uid://b8qaimtfk0ndf")
+static var missing := preload("uid://rdi8ck7qb61x")
 
 
-static var disconnected_sound := preload("res://Scenes/internals/DisconnectedSound.tscn")
-static var damage_number := preload("res://Scenes/internals/DamageNumber.tscn")
+static var disconnected_sound := preload("uid://cscnnpsomiw4i")
+static var damage_number := preload("uid://u13oxny8a4rn")
 
 
 static var current_area:int = 0
@@ -786,6 +786,7 @@ static func colorize_sprite(spritesheet:Texture2D, _palette:Texture2D, row_id:in
 
 
 static func get_color(coords:Vector2i) -> Color:
+	if not palette: return Color.WHITE
 	return palette.get_pixelv(coords)
 
 
