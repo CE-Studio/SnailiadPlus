@@ -2,16 +2,199 @@
 
 [ext_resource type="Texture2D" uid="uid://dmaptufh7rsw2" path="res://Assets/Images/UI/ScreenCover.png" id="1_8ficc"]
 [ext_resource type="Script" uid="uid://f22im3cbh6yp" path="res://Scripts/UI/EndingComponents/EndingCutscene.gd" id="1_rel1c"]
-[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="2_afgk6"]
 [ext_resource type="Texture2D" uid="uid://bewig4ibx8mm" path="res://Assets/Images/Backgrounds/EndingBG.png" id="2_q2pro"]
-[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_lnog6"]
+[ext_resource type="Script" uid="uid://boee2837la0pr" path="res://Scripts/Classes/SnailySprite.gd" id="3_7865d"]
 [ext_resource type="PackedScene" uid="uid://c2845y87tiqct" path="res://Scenes/Environments/ParticleLayers/StarLayer.tscn" id="4_2vmc0"]
 [ext_resource type="Texture2D" uid="uid://drfavrb4msd46" path="res://Assets/Images/Environments/EndingSpotlight.png" id="6_u4rgk"]
 [ext_resource type="Texture2D" uid="uid://dkxwvlw8prl3c" path="res://Assets/Images/Entities/EndingMoonSnail.png" id="7_u4rgk"]
 [ext_resource type="AudioStream" uid="uid://gjmmcnxl7qkq" path="res://Assets/Sounds/Music/EndingIntro.ogg" id="8_eplnd"]
+[ext_resource type="Texture2D" uid="uid://bcy5wqyee2npo" path="res://Assets/Images/Particles/Zzz.png" id="8_y4q6a"]
 [ext_resource type="Texture2D" uid="uid://cv67pgk0cf0w4" path="res://Assets/Images/UI/FadeBorder.png" id="10_7865d"]
 [ext_resource type="PackedScene" uid="uid://dke6r2335reau" path="res://Scenes/internals/SnailyText.tscn" id="10_ws1ke"]
 [ext_resource type="AudioStream" uid="uid://dsn0n1srqm0ow" path="res://Assets/Sounds/Sfx/Dialogue1.ogg" id="11_ginrr"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3lkdi"]
+atlas = ExtResource("2_q2pro")
+region = Rect2(0, 0, 496, 336)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_78jdt"]
+atlas = ExtResource("2_q2pro")
+region = Rect2(496, 0, 496, 336)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_60ydq"]
+atlas = ExtResource("2_q2pro")
+region = Rect2(0, 336, 496, 336)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_2dhju"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3lkdi")
+}],
+"loop": 1,
+"name": &"moon",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_78jdt")
+}],
+"loop": 1,
+"name": &"sun1",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_60ydq")
+}],
+"loop": 1,
+"name": &"sun2",
+"speed": 1.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mmbpu"]
+atlas = ExtResource("6_u4rgk")
+region = Rect2(0, 0, 96, 256)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wkouj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mmbpu")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 1.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gxbek"]
+atlas = ExtResource("7_u4rgk")
+region = Rect2(0, 0, 80, 44)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_473al"]
+atlas = ExtResource("7_u4rgk")
+region = Rect2(80, 0, 80, 44)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_bj8rp"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gxbek")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_473al")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 2.5
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g7gvu"]
+atlas = ExtResource("7_u4rgk")
+region = Rect2(0, 44, 80, 44)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xwfym"]
+atlas = ExtResource("7_u4rgk")
+region = Rect2(80, 44, 80, 44)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1k5pp"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g7gvu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xwfym")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 2.5
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cddmt"]
+atlas = ExtResource("7_u4rgk")
+region = Rect2(0, 88, 80, 44)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v24dp"]
+atlas = ExtResource("7_u4rgk")
+region = Rect2(80, 88, 80, 44)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_lbw1t"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cddmt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v24dp")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 2.5
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w3xtq"]
+atlas = ExtResource("7_u4rgk")
+region = Rect2(0, 132, 80, 44)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_50uwq"]
+atlas = ExtResource("7_u4rgk")
+region = Rect2(80, 132, 80, 44)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i3kgd"]
+atlas = ExtResource("7_u4rgk")
+region = Rect2(0, 176, 80, 44)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_csab3"]
+atlas = ExtResource("7_u4rgk")
+region = Rect2(80, 176, 80, 44)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4mhjd"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w3xtq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_50uwq")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 2.5
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i3kgd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_csab3")
+}],
+"loop": 1,
+"name": &"sun",
+"speed": 2.5
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jxo4d"]
+atlas = ExtResource("8_y4q6a")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q1xgf"]
+atlas = ExtResource("8_y4q6a")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_lixtt"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jxo4d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q1xgf")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 2.0
+}]
 
 [sub_resource type="Animation" id="Animation_rel1c"]
 resource_name = "Moon"
@@ -333,7 +516,7 @@ tracks/4/keys = {
 "times": PackedFloat32Array(0, 0.1, 1.8, 16.8, 17),
 "transitions": PackedFloat32Array(1, 1, 0.35, 1, 1),
 "update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 0.49803922), Color(1, 1, 1, 0.49803925), Color(1, 1, 1, 0.8745098)]
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 0.49803922), Color(1, 1, 1, 0.49803925), Color(1, 1, 1, 0.23529412)]
 }
 tracks/5/type = "value"
 tracks/5/imported = false
@@ -472,20 +655,14 @@ dialogue = NodePath("Dialogue")
 music = NodePath("Music")
 sfx_dialogue = NodePath("DialogueBeep")
 
-[node name="BG" type="Sprite2D" parent="." unique_id=624316069]
+[node name="BG" type="AnimatedSprite2D" parent="." unique_id=768325739]
 z_index = -2
 position = Vector2(200, 120)
-script = ExtResource("2_afgk6")
-texture_path = "res://Assets/Images/Backgrounds/EndingBG.json"
-load_autoplay = Array[String](["moon"])
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
-
-[node name="MarkerSprite" type="Sprite2D" parent="BG" unique_id=1024487071]
-texture = ExtResource("2_q2pro")
-hframes = 2
-vframes = 2
-script = ExtResource("3_lnog6")
-metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+sprite_frames = SubResource("SpriteFrames_2dhju")
+animation = &"moon"
+autoplay = "moon"
+script = ExtResource("3_7865d")
+metadata/_custom_type_script = "uid://boee2837la0pr"
 
 [node name="StarLayer" parent="." unique_id=532173821 instance=ExtResource("4_2vmc0")]
 direction = 9
@@ -500,63 +677,51 @@ position = Vector2(200, 120)
 scale = Vector2(2, 2)
 texture = ExtResource("1_8ficc")
 
-[node name="Spotlight" type="Sprite2D" parent="." unique_id=1617582884]
+[node name="Spotlight" type="AnimatedSprite2D" parent="." unique_id=1843202803]
 position = Vector2(264, 80)
-script = ExtResource("2_afgk6")
-texture_path = "res://Assets/Images/Environments/EndingSpotlight.json"
-load_autoplay = Array[String](["anim"])
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
+sprite_frames = SubResource("SpriteFrames_wkouj")
+autoplay = "default"
+script = ExtResource("3_7865d")
+metadata/_custom_type_script = "uid://boee2837la0pr"
 
-[node name="MarkerSprite" type="Sprite2D" parent="Spotlight" unique_id=322941863]
-texture = ExtResource("6_u4rgk")
-script = ExtResource("3_lnog6")
-metadata/_custom_type_script = "uid://b63lo60i7kt7f"
-
-[node name="MoonSnail0" type="Sprite2D" parent="." unique_id=670981982]
+[node name="MoonSnail0" type="AnimatedSprite2D" parent="." unique_id=792971068]
 position = Vector2(264, 172)
-script = ExtResource("2_afgk6")
-texture_path = "res://Assets/Images/Entities/EndingMoonSnail.json"
-load_autoplay = Array[String](["0"])
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
+sprite_frames = SubResource("SpriteFrames_bj8rp")
+autoplay = "default"
+script = ExtResource("3_7865d")
+metadata/_custom_type_script = "uid://boee2837la0pr"
 
-[node name="MarkerSprite" type="Sprite2D" parent="MoonSnail0" unique_id=488351202]
-texture = ExtResource("7_u4rgk")
-hframes = 2
-vframes = 5
-script = ExtResource("3_lnog6")
-metadata/_custom_type_script = "uid://b63lo60i7kt7f"
-
-[node name="MoonSnail1" type="Sprite2D" parent="." unique_id=1798575524]
+[node name="MoonSnail1" type="AnimatedSprite2D" parent="." unique_id=1432015738]
 modulate = Color(1, 1, 1, 0)
 position = Vector2(264, 172)
-script = ExtResource("2_afgk6")
-texture_path = "res://Assets/Images/Entities/EndingMoonSnail.json"
-load_autoplay = Array[String](["1"])
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
+sprite_frames = SubResource("SpriteFrames_1k5pp")
+autoplay = "default"
+script = ExtResource("3_7865d")
+metadata/_custom_type_script = "uid://boee2837la0pr"
 
-[node name="MoonSnail2" type="Sprite2D" parent="." unique_id=1590992189]
+[node name="MoonSnail2" type="AnimatedSprite2D" parent="." unique_id=2001834593]
 modulate = Color(1, 1, 1, 0)
 position = Vector2(264, 172)
-script = ExtResource("2_afgk6")
-texture_path = "res://Assets/Images/Entities/EndingMoonSnail.json"
-load_autoplay = Array[String](["2"])
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
+sprite_frames = SubResource("SpriteFrames_lbw1t")
+autoplay = "default"
+script = ExtResource("3_7865d")
+metadata/_custom_type_script = "uid://boee2837la0pr"
 
-[node name="MoonSnail3" type="Sprite2D" parent="." unique_id=1305973664]
+[node name="MoonSnail3" type="AnimatedSprite2D" parent="." unique_id=190890997]
 modulate = Color(1, 1, 1, 0)
 position = Vector2(264, 172)
-script = ExtResource("2_afgk6")
-texture_path = "res://Assets/Images/Entities/EndingMoonSnail.json"
-load_autoplay = Array[String](["shell"])
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
+sprite_frames = SubResource("SpriteFrames_4mhjd")
+autoplay = "default"
+script = ExtResource("3_7865d")
+metadata/_custom_type_script = "uid://boee2837la0pr"
 
-[node name="Zzz" type="Sprite2D" parent="." unique_id=2083216955]
+[node name="Zzz" type="AnimatedSprite2D" parent="." unique_id=690307210]
 modulate = Color(1, 1, 1, 0)
 position = Vector2(279, 183)
-script = ExtResource("2_afgk6")
-texture_path = "res://Assets/Images/Particles/Zzz.json"
-load_autoplay = Array[String](["moon"])
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
+sprite_frames = SubResource("SpriteFrames_lixtt")
+autoplay = "default"
+script = ExtResource("3_7865d")
+metadata/_custom_type_script = "uid://boee2837la0pr"
 
 [node name="Dialogue" parent="." unique_id=326553468 instance=ExtResource("10_ws1ke")]
 custom_minimum_size = Vector2(400, 0)

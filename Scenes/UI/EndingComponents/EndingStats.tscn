@@ -2,11 +2,13 @@
 
 [ext_resource type="Texture2D" uid="uid://dmaptufh7rsw2" path="res://Assets/Images/UI/ScreenCover.png" id="1_w3dvm"]
 [ext_resource type="Script" uid="uid://bonyx0tvgokx4" path="res://Scripts/UI/EndingComponents/EndingStats.gd" id="1_wfbin"]
-[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="2_72yjm"]
 [ext_resource type="Texture2D" uid="uid://dnlvoym7mocsg" path="res://Assets/Images/Endings/EndingBackground.png" id="3_3bpwr"]
-[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="4_yfkq1"]
+[ext_resource type="Script" uid="uid://boee2837la0pr" path="res://Scripts/Classes/SnailySprite.gd" id="4_3tbo3"]
+[ext_resource type="Texture2D" uid="uid://vlc5vftc13kp" path="res://Assets/Images/Endings/Ending100.png" id="5_w4wy8"]
 [ext_resource type="Texture2D" uid="uid://baded8o60aqlq" path="res://Assets/Images/Endings/EndingNormal.png" id="5_wfbin"]
+[ext_resource type="Texture2D" uid="uid://cvo8qw0jy8utd" path="res://Assets/Images/Endings/EndingInsane.png" id="6_cs8c3"]
 [ext_resource type="Script" uid="uid://dqt4uo3ejug3v" path="res://Scripts/Classes/SnailyText.gd" id="6_yfkq1"]
+[ext_resource type="Texture2D" uid="uid://bxsv368macrl5" path="res://Assets/Images/Endings/EndingSub30.png" id="8_aee07"]
 [ext_resource type="AudioStream" uid="uid://rdsa7iqbba60" path="res://Assets/Sounds/Sfx/EndingStatAppear.ogg" id="8_q7rhw"]
 [ext_resource type="AudioStream" uid="uid://b3ixpp7kjia5k" path="res://Assets/Sounds/Sfx/Dialogue0.ogg" id="9_ooj1n"]
 [ext_resource type="AudioStream" uid="uid://dqs24itjujvno" path="res://Assets/Sounds/Sfx/Dialogue3.ogg" id="10_e1msr"]
@@ -14,6 +16,96 @@
 [ext_resource type="AudioStream" uid="uid://dsn0n1srqm0ow" path="res://Assets/Sounds/Sfx/Dialogue1.ogg" id="11_ty743"]
 [ext_resource type="AudioStream" uid="uid://b60650li5d52q" path="res://Assets/Sounds/Sfx/Dialogue2.ogg" id="12_3tbo3"]
 [ext_resource type="AudioStream" uid="uid://p3bp61rmw7rh" path="res://Assets/Sounds/Sfx/MenuBeep2.ogg" id="14_e1msr"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gfd5f"]
+atlas = ExtResource("3_3bpwr")
+region = Rect2(0, 0, 224, 204)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wkouj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gfd5f")
+}],
+"loop": 1,
+"name": &"100",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gfd5f")
+}],
+"loop": 1,
+"name": &"insane",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gfd5f")
+}],
+"loop": 1,
+"name": &"normal",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gfd5f")
+}],
+"loop": 1,
+"name": &"sub30",
+"speed": 1.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4unu5"]
+atlas = ExtResource("5_w4wy8")
+region = Rect2(0, 0, 400, 240)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y1ro1"]
+atlas = ExtResource("6_cs8c3")
+region = Rect2(0, 0, 400, 240)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k7q3l"]
+atlas = ExtResource("5_wfbin")
+region = Rect2(0, 0, 400, 240)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m4bc8"]
+atlas = ExtResource("8_aee07")
+region = Rect2(0, 0, 400, 240)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_bj8rp"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4unu5")
+}],
+"loop": 1,
+"name": &"100",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y1ro1")
+}],
+"loop": 1,
+"name": &"insane",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k7q3l")
+}],
+"loop": 1,
+"name": &"normal",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m4bc8")
+}],
+"loop": 1,
+"name": &"sub30",
+"speed": 1.0
+}]
 
 [sub_resource type="Animation" id="Animation_yfkq1"]
 resource_name = "Ending"
@@ -82,70 +174,46 @@ tracks/4/keys = {
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("CongratsHeader:position")
+tracks/5/path = NodePath("HeaderContainer/CongratsHeader:visible_ratio")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(0, 3.5, 4, 4.5),
-"transitions": PackedFloat32Array(1, 3, 0.3333, 1),
-"update": 0,
-"values": [Vector2(0, 112), Vector2(0, 112), Vector2(0, 84.00001), Vector2(0, 56)]
-}
-tracks/6/type = "value"
-tracks/6/imported = false
-tracks/6/enabled = true
-tracks/6/path = NodePath("CongratsHeader:visible_ratio")
-tracks/6/interp = 1
-tracks/6/loop_wrap = true
-tracks/6/keys = {
 "times": PackedFloat32Array(1.65, 2.65),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [0.0, 1.0]
 }
-tracks/7/type = "value"
-tracks/7/imported = false
-tracks/7/enabled = true
-tracks/7/path = NodePath("CharDiff:position")
-tracks/7/interp = 1
-tracks/7/loop_wrap = true
-tracks/7/keys = {
-"times": PackedFloat32Array(0, 4, 5.25),
-"transitions": PackedFloat32Array(1, 0.25, 1),
-"update": 0,
-"values": [Vector2(0, 256), Vector2(0, 256), Vector2(0, 104)]
-}
-tracks/8/type = "value"
-tracks/8/imported = false
-tracks/8/enabled = true
-tracks/8/path = NodePath("ItemContainer:position")
-tracks/8/interp = 1
-tracks/8/loop_wrap = true
-tracks/8/keys = {
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("ItemContainer:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
 "times": PackedFloat32Array(0, 5.5, 6.75),
 "transitions": PackedFloat32Array(1, 0.25, 1),
 "update": 0,
 "values": [Vector2(0, 264), Vector2(0, 264), Vector2(0, 136)]
 }
-tracks/9/type = "value"
-tracks/9/imported = false
-tracks/9/enabled = true
-tracks/9/path = NodePath("TimeContainer:position")
-tracks/9/interp = 1
-tracks/9/loop_wrap = true
-tracks/9/keys = {
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("TimeContainer:position")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
 "times": PackedFloat32Array(0, 8.55, 9.8),
 "transitions": PackedFloat32Array(1, 0.25, 1),
 "update": 0,
 "values": [Vector2(0, 288), Vector2(0, 288), Vector2(0, 160)]
 }
-tracks/10/type = "method"
-tracks/10/imported = false
-tracks/10/enabled = true
-tracks/10/path = NodePath("StatAppear")
-tracks/10/interp = 1
-tracks/10/loop_wrap = true
-tracks/10/keys = {
+tracks/8/type = "method"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("StatAppear")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
 "times": PackedFloat32Array(4.05, 5.6, 8.7),
 "transitions": PackedFloat32Array(1, 1, 1),
 "values": [{
@@ -159,13 +227,13 @@ tracks/10/keys = {
 "method": &"play"
 }]
 }
-tracks/11/type = "method"
-tracks/11/imported = false
-tracks/11/enabled = true
-tracks/11/path = NodePath(".")
-tracks/11/interp = 1
-tracks/11/loop_wrap = true
-tracks/11/keys = {
+tracks/9/type = "method"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath(".")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
 "times": PackedFloat32Array(6.6, 9.65),
 "transitions": PackedFloat32Array(1, 1),
 "values": [{
@@ -176,13 +244,13 @@ tracks/11/keys = {
 "method": &"start_ticking_time"
 }]
 }
-tracks/12/type = "method"
-tracks/12/imported = false
-tracks/12/enabled = true
-tracks/12/path = NodePath("HeaderAppear")
-tracks/12/interp = 1
-tracks/12/loop_wrap = true
-tracks/12/keys = {
+tracks/10/type = "method"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("HeaderAppear")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
 "times": PackedFloat32Array(1.75, 1.8000001, 1.85, 1.9, 1.95, 2, 2.05, 2.1000001, 2.15, 2.2, 2.25, 2.3, 2.3500001, 2.4, 2.45, 2.5, 2.55, 2.6000001, 2.65),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "values": [{
@@ -243,6 +311,30 @@ tracks/12/keys = {
 "args": [0.0],
 "method": &"play"
 }]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("HeaderContainer:position")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0, 3.5, 4, 4.5),
+"transitions": PackedFloat32Array(1, 3, 0.3333, 1),
+"update": 0,
+"values": [Vector2(0, 112), Vector2(0, 112), Vector2(0, 84.00001), Vector2(0, 56)]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("CharDiffContainer:position")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0, 3.9999998, 5.25),
+"transitions": PackedFloat32Array(1, 0.25, 1),
+"update": 0,
+"values": [Vector2(0, 256), Vector2(0, 256), Vector2(0, 104)]
 }
 
 [sub_resource type="Animation" id="Animation_wfbin"]
@@ -310,62 +402,62 @@ tracks/4/keys = {
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("CongratsHeader:position")
+tracks/5/path = NodePath("HeaderContainer/CongratsHeader:visible_ratio")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0, 56)]
+"values": [1.0]
 }
 tracks/6/type = "value"
 tracks/6/imported = false
 tracks/6/enabled = true
-tracks/6/path = NodePath("CongratsHeader:visible_ratio")
+tracks/6/path = NodePath("ItemContainer:position")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [1.0]
+"values": [Vector2(0, 136)]
 }
 tracks/7/type = "value"
 tracks/7/imported = false
 tracks/7/enabled = true
-tracks/7/path = NodePath("CharDiff:position")
+tracks/7/path = NodePath("TimeContainer:position")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0, 104)]
+"values": [Vector2(0, 160)]
 }
 tracks/8/type = "value"
 tracks/8/imported = false
 tracks/8/enabled = true
-tracks/8/path = NodePath("ItemContainer:position")
+tracks/8/path = NodePath("HeaderContainer:position")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0, 136)]
+"values": [Vector2(0, 56)]
 }
 tracks/9/type = "value"
 tracks/9/imported = false
 tracks/9/enabled = true
-tracks/9/path = NodePath("TimeContainer:position")
+tracks/9/path = NodePath("CharDiffContainer:position")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0, 160)]
+"values": [Vector2(0, 104)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_wfbin"]
@@ -382,13 +474,15 @@ stream_1/stream = ExtResource("10_e1msr")
 stream_2/stream = ExtResource("11_ty743")
 stream_3/stream = ExtResource("12_3tbo3")
 
-[node name="EndingStats" type="Node2D" unique_id=774344908 node_paths=PackedStringArray("anim", "end_bg", "end_pic_parent", "header", "char_diff", "item_container", "item_header", "item_counter", "new_best_items", "time_container", "time_header", "time_counter", "new_best_time", "sfx_tick", "sfx_best", "sfx_continue", "continue_prompt", "fade_cover")]
+[node name="EndingStats" type="Node2D" unique_id=774344908 node_paths=PackedStringArray("anim", "end_bg", "end_pic", "header_container", "header", "char_diff_container", "char_diff", "item_container", "item_header", "item_counter", "new_best_items", "time_container", "time_header", "time_counter", "new_best_time", "sfx_tick", "sfx_best", "sfx_continue", "continue_prompt", "fade_cover")]
 script = ExtResource("1_wfbin")
 anim = NodePath("AnimationPlayer")
 end_bg = NodePath("Background")
-end_pic_parent = NodePath("Snail")
-header = NodePath("CongratsHeader")
-char_diff = NodePath("CharDiff")
+end_pic = NodePath("Snail")
+header_container = NodePath("HeaderContainer")
+header = NodePath("HeaderContainer/CongratsHeader")
+char_diff_container = NodePath("CharDiffContainer")
+char_diff = NodePath("CharDiffContainer/CharDiff")
 item_container = NodePath("ItemContainer")
 item_header = NodePath("ItemContainer/ItemHeader")
 item_counter = NodePath("ItemContainer/ItemCount")
@@ -409,31 +503,33 @@ position = Vector2(200, 120)
 scale = Vector2(2, 2)
 texture = ExtResource("1_w3dvm")
 
-[node name="Background" type="Sprite2D" parent="." unique_id=2127892930]
+[node name="Background" type="AnimatedSprite2D" parent="." unique_id=1616167031]
 position = Vector2(200, 120)
-script = ExtResource("2_72yjm")
-texture_path = "res://Assets/Images/Endings/EndingBackground.json"
-load_autoplay = Array[String](["normal"])
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
+sprite_frames = SubResource("SpriteFrames_wkouj")
+animation = &"normal"
+autoplay = "normal"
+script = ExtResource("4_3tbo3")
+metadata/_custom_type_script = "uid://boee2837la0pr"
 
-[node name="MarkerSprite" type="Sprite2D" parent="Background" unique_id=387159985]
-texture = ExtResource("3_3bpwr")
-script = ExtResource("4_yfkq1")
-metadata/_custom_type_script = "uid://b63lo60i7kt7f"
-
-[node name="Snail" type="Node2D" parent="." unique_id=284474218]
+[node name="Snail" type="AnimatedSprite2D" parent="." unique_id=735716079]
 position = Vector2(200, 120)
+sprite_frames = SubResource("SpriteFrames_bj8rp")
+animation = &"normal"
+autoplay = "normal"
+script = ExtResource("4_3tbo3")
+metadata/_custom_type_script = "uid://boee2837la0pr"
 
-[node name="MarkerSprite" type="Sprite2D" parent="Snail" unique_id=1602874636]
-texture = ExtResource("5_wfbin")
-script = ExtResource("4_yfkq1")
-metadata/_custom_type_script = "uid://b63lo60i7kt7f"
-
-[node name="CongratsHeader" type="RichTextLabel" parent="." unique_id=248810681]
-clip_contents = false
+[node name="HeaderContainer" type="HBoxContainer" parent="." unique_id=2100905763]
 offset_top = 56.0
 offset_right = 400.0
-offset_bottom = 87.00014
+offset_bottom = 95.999954
+alignment = 1
+
+[node name="CongratsHeader" type="RichTextLabel" parent="HeaderContainer" unique_id=248810681]
+custom_minimum_size = Vector2(200, 0)
+custom_maximum_size = Vector2(400, -1)
+clip_contents = false
+layout_mode = 2
 mouse_filter = 2
 bbcode_enabled = true
 text = "Congratulations!!"
@@ -445,11 +541,19 @@ shadow_scale = 2
 border_scale = 1
 metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
 
-[node name="CharDiff" type="RichTextLabel" parent="." unique_id=500644217]
-clip_contents = false
+[node name="CharDiffContainer" type="HBoxContainer" parent="." unique_id=196366867]
 offset_top = 104.0
 offset_right = 400.0
-offset_bottom = 135.0
+offset_bottom = 144.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
+
+[node name="CharDiff" type="RichTextLabel" parent="CharDiffContainer" unique_id=500644217]
+custom_minimum_size = Vector2(400, 0)
+custom_maximum_size = Vector2(400, -1)
+clip_contents = false
+layout_mode = 2
 mouse_filter = 2
 theme_override_font_sizes/normal_font_size = 16
 bbcode_enabled = true
@@ -465,7 +569,7 @@ metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
 [node name="ItemContainer" type="HBoxContainer" parent="." unique_id=770029073]
 offset_top = 136.0
 offset_right = 400.0
-offset_bottom = 176.00003
+offset_bottom = 176.00009
 alignment = 1
 
 [node name="ItemHeader" type="RichTextLabel" parent="ItemContainer" unique_id=470990984]

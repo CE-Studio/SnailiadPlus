@@ -7,9 +7,9 @@ const ANIM_START_THRESHOLD:float = 200.0
 ## Will be set once the babybox animation starts playing
 var babybox_appeared:bool = false
 
-@onready var spacebox:JsonSprite2D = $"Spacebox"
-@onready var babybox:JsonSprite2D = $"Babybox"
-@onready var anim:AnimationPlayer = $"AnimationPlayer"
+@export var spacebox:SnailySprite2D
+@export var babybox:SnailySprite2D
+@export var anim:AnimationPlayer
 
 
 func _process(_delta: float) -> void:
@@ -19,5 +19,5 @@ func _process(_delta: float) -> void:
 
 
 func update_anims() -> void:
-	spacebox.action = "display_smile"
-	babybox.action = "display_hit"
+	spacebox.play("smile")
+	babybox.play("hit")

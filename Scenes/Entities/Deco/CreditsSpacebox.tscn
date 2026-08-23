@@ -1,10 +1,87 @@
 [gd_scene format=3 uid="uid://ddccj6od43xp1"]
 
 [ext_resource type="Script" uid="uid://cdoxdv7ysybm0" path="res://Scripts/Enemies/Deco/CreditsSpacebox.gd" id="1_6nlko"]
-[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="1_qnaxo"]
 [ext_resource type="Texture2D" uid="uid://b5sa3oaybgbqy" path="res://Assets/Images/Entities/Boss3.png" id="2_6nlko"]
-[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_lw2us"]
+[ext_resource type="Script" uid="uid://boee2837la0pr" path="res://Scripts/Classes/SnailySprite.gd" id="3_qnaxo"]
 [ext_resource type="Texture2D" uid="uid://bf31hhii6t2tq" path="res://Assets/Images/Entities/Boss3Babybox.png" id="4_7uco6"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6nlko"]
+atlas = ExtResource("2_6nlko")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lw2us"]
+atlas = ExtResource("2_6nlko")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7uco6"]
+atlas = ExtResource("2_6nlko")
+region = Rect2(768, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ty0po"]
+atlas = ExtResource("2_6nlko")
+region = Rect2(512, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cqeon"]
+atlas = ExtResource("2_6nlko")
+region = Rect2(0, 256, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_47v35"]
+atlas = ExtResource("2_6nlko")
+region = Rect2(128, 256, 128, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wkouj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6nlko")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lw2us")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7uco6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ty0po")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cqeon")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_47v35")
+}],
+"loop": 0,
+"name": &"smile",
+"speed": 0.9
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bkjpu"]
+atlas = ExtResource("4_7uco6")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_bj8rp"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bkjpu")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bkjpu")
+}],
+"loop": 1,
+"name": &"hit",
+"speed": 1.0
+}]
 
 [sub_resource type="Animation" id="Animation_6nlko"]
 resource_name = "Babybox"
@@ -82,37 +159,26 @@ _data = {
 &"RESET": SubResource("Animation_lw2us")
 }
 
-[node name="CreditsSpacebox" type="Node2D" unique_id=1915450913]
+[node name="CreditsSpacebox" type="Node2D" unique_id=1915450913 node_paths=PackedStringArray("spacebox", "babybox", "anim")]
 script = ExtResource("1_6nlko")
+spacebox = NodePath("Spacebox")
+babybox = NodePath("Babybox")
+anim = NodePath("AnimationPlayer")
 
-[node name="Spacebox" type="Sprite2D" parent="." unique_id=2105323670]
-script = ExtResource("1_qnaxo")
-texture_path = "res://Assets/Images/Entities/Boss3.json"
-load_autoplay = Array[String](["display"])
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
+[node name="Spacebox" type="AnimatedSprite2D" parent="." unique_id=1736417171]
+sprite_frames = SubResource("SpriteFrames_wkouj")
+animation = &"smile"
+autoplay = "default"
+script = ExtResource("3_qnaxo")
+metadata/_custom_type_script = "uid://boee2837la0pr"
 
-[node name="MarkerSprite" type="Sprite2D" parent="Spacebox" unique_id=44074982]
-texture = ExtResource("2_6nlko")
-hframes = 10
-vframes = 3
-frame = 21
-script = ExtResource("3_lw2us")
-metadata/_custom_type_script = "uid://b63lo60i7kt7f"
-
-[node name="Babybox" type="Sprite2D" parent="." unique_id=325815688]
+[node name="Babybox" type="AnimatedSprite2D" parent="." unique_id=1422865315]
 position = Vector2(396, 32)
-script = ExtResource("1_qnaxo")
-texture_path = "res://Assets/Images/Entities/Boss3Babybox.json"
-load_autoplay = Array[String](["p0_L_move"])
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
-
-[node name="MarkerSprite" type="Sprite2D" parent="Babybox" unique_id=56541747]
-texture = ExtResource("4_7uco6")
-hframes = 4
-vframes = 2
-frame = 3
-script = ExtResource("3_lw2us")
-metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+sprite_frames = SubResource("SpriteFrames_bj8rp")
+animation = &"hit"
+autoplay = "default"
+script = ExtResource("3_qnaxo")
+metadata/_custom_type_script = "uid://boee2837la0pr"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1047799001]
 libraries/ = SubResource("AnimationLibrary_lw2us")

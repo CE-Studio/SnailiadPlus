@@ -250,6 +250,8 @@ func kill() -> void:
 		if health_bar:
 			health_bar._toggle_outro_shake(true)
 		sprite.play("defeat")
+		sprite.flip_h = false
+		sprite.flip_v = false
 		for bullet in bullets:
 			bullet._despawn()
 		set_timer = true

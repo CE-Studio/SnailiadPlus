@@ -6,7 +6,7 @@ extends Node2D
 
 #region Variables
 const ENEMY_PATH:String = "res://Scenes/Entities/Enemies/%s.tscn"
-const PIXEL_PEOPLE_PATH:String = "res://Assets/Images/Entities/PixelPeople.json"
+const PIXEL_PEOPLE_PATH:String = "uid://dvgo6dlptr5d4"
 const ENEMY_SPACING_Y:float = 40.0
 const PIXEL_PEOPLE_SPACING_Y:float = 56.0
 const SCROLL_DELAY:float = 3.2
@@ -59,7 +59,7 @@ var can_scroll_manually:bool = false
 @export var stats:EndingStats
 
 ## Quick reference to the custom text scene
-@onready var text:PackedScene = load("res://Scenes/internals/SnailyText.tscn")
+@onready var text:PackedScene = load("uid://dke6r2335reau")
 #endregion
 
 
@@ -237,7 +237,7 @@ func _create_credits() -> void:
 			_add_label(tr(&"Stompy"))
 			_add_y(ENEMY_SPACING_Y + 8)
 		29:
-			_add_scene("res://Scenes/Entities/Deco/CreditsSpacebox.tscn", 64, 128)
+			_add_scene("uid://ddccj6od43xp1", 64, 128)
 			_add_label(tr(&"Space Box"))
 			_add_fade_label(tr(&"and Babybox"), 170)
 			_add_y(ENEMY_SPACING_Y + 8)
@@ -252,7 +252,7 @@ func _create_credits() -> void:
 		32:
 			match Player.instance.who_i_is:
 				Player.Players.SNAILY:
-					_add_sprite("res://Assets/Images/Players/Snaily.json", "0.floor.right.idle",
+					_add_sprite("uid://dduivh26hbk0y", "00.floor.right.idle",
 					Vector2(0, 8))
 					_add_label(tr(&"Snaily Snail"))
 			_add_y(PIXEL_PEOPLE_SPACING_Y)
@@ -333,13 +333,13 @@ func _create_credits() -> void:
 			_add_y(PIXEL_PEOPLE_SPACING_Y)
 		48:
 			if randf() <= 0.125:
-				_add_sprite("res://Assets/Images/Entities/ForTheFunny.json", "anim", Vector2(0, 16), 32)
+				_add_sprite("uid://qt0amyc7q4m2", "default", Vector2(0, 16), 32)
 				_add_y(PIXEL_PEOPLE_SPACING_Y)
 		49:
 			_add_label(tr(&"And you\n\n\nBecause seriously, why not\n\n\nAll the other games put \"And You\" in the credits, so I figure, \"And You\" must be someone pretty cool\n\n\nThanks, And You!!"))
 			_add_y(PIXEL_PEOPLE_SPACING_Y + 32)
 		50:
-			_add_sprite("res://Assets/Images/Endings/TheEnd.json", "anim", Vector2i(0, 61), 61)
+			_add_sprite("uid://m7h6tnoxysr3", "default", Vector2i(0, 61), 61)
 			stop_y = -spawn_y + 120
 		_:
 			finished_spawning = true
@@ -397,13 +397,13 @@ func _add_enemy_group(_paths:PackedStringArray, _spacing:float, _y_offset:float,
 	group_i = 0
 
 
-## Adds a generic [JsonSprite2D] to the credits
-func _add_sprite(_path:String, _anim:String, _offset:Vector2, _y_add:float = 16) -> void:
-	var new_spr:JsonSprite2D = JsonSprite2D.new()
-	new_spr.texture_path = _path
+## Adds a generic [SnailySprite2D] to the credits
+func _add_sprite(_frames_path:String, _anim:String, _offset:Vector2, _y_add:float = 16) -> void:
+	var new_spr:SnailySprite2D = SnailySprite2D.new()
+	new_spr.sprite_frames = load(_frames_path)
 	credits_parent.add_child(new_spr)
 	new_spr.position = Vector2(_offset.x, spawn_y + _offset.y)
-	new_spr.action = _anim
+	new_spr.play(_anim)
 	_add_y(_y_add)
 
 

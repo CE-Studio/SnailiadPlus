@@ -236,6 +236,8 @@ func kill() -> void:
 			health_bar._toggle_outro_shake(true)
 		set_timer = true
 		sprite.play("defeat")
+		sprite.flip_h = false
+		sprite.flip_v = false
 		death_start = position
 		death_boom = Statics.spawn_particle("ExplosionBossDefeat",
 			Room.Layers.GROUND, position, [true, DEATH_TIME, true])

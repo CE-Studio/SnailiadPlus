@@ -29,17 +29,17 @@ size = Vector2(24, 14)
 atlas = ExtResource("3_bauxv")
 region = Rect2(0, 64, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_5bgqr"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_31gx0"]
 atlas = ExtResource("3_bauxv")
-region = Rect2(32, 64, 32, 32)
+region = Rect2(96, 64, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0winh"]
 atlas = ExtResource("3_bauxv")
 region = Rect2(64, 64, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_31gx0"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_5bgqr"]
 atlas = ExtResource("3_bauxv")
-region = Rect2(96, 64, 32, 32)
+region = Rect2(32, 64, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xp6sm"]
 atlas = ExtResource("3_bauxv")
@@ -64,13 +64,13 @@ animations = [{
 "texture": SubResource("AtlasTexture_tehrv")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_5bgqr")
+"texture": SubResource("AtlasTexture_31gx0")
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_0winh")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_31gx0")
+"texture": SubResource("AtlasTexture_5bgqr")
 }],
 "loop": 1,
 "name": &"defeat",

@@ -44,11 +44,15 @@ var credits:EndingCredits
 ## The animation node that drives the entire stats screen
 @export var anim:AnimationPlayer
 ## The background sprite
-@export var end_bg:JsonSprite2D
-## The node that acts as a parent to the snail sprite
-@export var end_pic_parent:Node2D
+@export var end_bg:SnailySprite2D
+## The snail sprite
+@export var end_pic:SnailySprite2D
+## The container that holds the header
+@export var header_container:HBoxContainer
 ## The "congratulations!" header text
 @export var header:SnailyText
+## The container that holds the character and difficulty
+@export var char_diff_container:HBoxContainer
 ## The text that displays the character and difficulty played with
 @export var char_diff:SnailyText
 ## The container that holds all item text
@@ -82,29 +86,31 @@ var credits:EndingCredits
 
 func _ready() -> void:
 	end_bg.modulate.a = 0.0
-	end_pic_parent.modulate.a = 0.0
+	end_pic.modulate.a = 0.0
 	header.visible_ratio = 0.0
 	header.set_snaily_text(tr(&"Congratulations!!"), true)
-	char_diff.position.y += 240
+	header.custom_minimum_size.x = header.get_width()
+	char_diff_container.position.y += 240
 	char_diff.set_snaily_text(" - ".join([
 		GlobalText.characters[Statics.current_profile["character"]][0],
 		GlobalText.difficulties[Statics.current_profile["difficulty"]]
 		]), true)
+	char_diff.custom_minimum_size.x = char_diff.get_width()
 	item_container.position.y += 240
 	item_header.set_snaily_text(tr(&"Items collected:"), true)
 	item_counter.set_snaily_text("0.0%", true)
-	new_best_items.set_snaily_text("New best!!")
+	new_best_items.set_snaily_text(tr(&"New highest!!"))
 	new_best_items.visible = false
 	new_best_items.enable_rainbow()
 	time_container.position.y += 240
 	time_header.set_snaily_text(tr(&"Completion time:"), true)
 	time_counter.set_snaily_text("0:00:00.00", true)
-	new_best_time.set_snaily_text("New best!!")
+	new_best_time.set_snaily_text(tr(&"New best!!"))
 	new_best_time.visible = false
 	new_best_time.enable_rainbow()
 	header.enable_rainbow_scroll()
 	continue_prompt.modulate.a = 0.0
-	continue_prompt.set_snaily_text("Press anything to save and continue")
+	continue_prompt.set_snaily_text(tr(&"Press anything to save and continue"))
 	
 	final_items = Statics.get_item_percentage()
 	items_to_save = final_items
@@ -118,7 +124,7 @@ func _ready() -> void:
 	)
 	if lowest_items != -1 and lowest_items > final_items and absf(lowest_items - final_items) >= 0.1:
 		is_new_best_items = -1
-		new_best_items.set_snaily_text("New lowest!!")
+		new_best_items.set_snaily_text(tr(&"New lowest!!"))
 	
 	var time:Array = Statics.current_profile["game_time"]
 	time_to_save = time.duplicate()
@@ -127,21 +133,18 @@ func _ready() -> void:
 	if Statics.has_time(time_id) and Statics.compare_times(Statics.get_time(time_id), time) > 0:
 		is_new_best_time = true
 	
-	var end_pic:JsonSprite2D = JsonSprite2D.new()
 	if Statics.current_profile["difficulty"] == 2:
-		end_bg.action = "insane"
-		end_pic.texture_path = "res://Assets/Images/Endings/EndingInsane.json"
+		end_bg.play("insane")
+		end_pic.play("insane")
 	elif Statics.compare_times(time, [0, 30, 0.0]) < 0:
-		end_bg.action = "sub_30_min"
-		end_pic.texture_path = "res://Assets/Images/Endings/EndingSub30.json"
+		end_bg.play("sub30")
+		end_pic.play("sub30")
 	elif final_items >= 100.0:
-		end_bg.action = "100"
-		end_pic.texture_path = "res://Assets/Images/Endings/Ending100.json"
+		end_bg.play("100")
+		end_pic.play("100")
 	else:
-		end_bg.action = "normal"
-		end_pic.texture_path = "res://Assets/Images/Endings/EndingNormal.json"
-	end_pic_parent.add_child(end_pic)
-	end_pic.action = "anim"
+		end_bg.play("normal")
+		end_pic.play("normal")
 
 
 func _process(delta: float) -> void:

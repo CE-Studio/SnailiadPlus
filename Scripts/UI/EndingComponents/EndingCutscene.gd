@@ -46,13 +46,13 @@ var skipping:bool = false
 ## The fade that appears over everything if the cutscene is skipped
 @export var skip_cover:Sprite2D
 ## The background sprite
-@export var bg:JsonSprite2D
+@export var bg:SnailySprite2D
 ## The first sprite instance of Moon Snail
-@export var first_moon:JsonSprite2D
+@export var first_moon:SnailySprite2D
 ## The final sprite instance of Moon Snail, which can either be shelled or Sun Snail
-@export var last_moon:JsonSprite2D
+@export var last_moon:SnailySprite2D
 ## The spotlight sprite
-@export var spotlight:JsonSprite2D
+@export var spotlight:SnailySprite2D
 ## The dialogue node
 @export var dialogue:SnailyText
 ## The music that plays during the cutscene
@@ -72,7 +72,7 @@ func _ready() -> void:
 	if Statics.get_item_percentage() >= 100:
 		is_sun = true
 		anim.play(&"Sun")
-		last_moon.action = "sun"
+		last_moon.play("sun")
 	else:
 		anim.play(&"Moon")
 	dialogue.set_snaily_text("")
@@ -104,7 +104,7 @@ func _process(delta: float) -> void:
 
 ## Updates the background animation to the desired state
 func update_bg(action:String) -> void:
-	bg.action = action
+	bg.play(action)
 
 
 ## Sets the target string to a string out of the necessary dialogue array using the given index
@@ -128,7 +128,7 @@ func fade_text() -> void:
 ## Spawns and configures the fade for the credits
 func spawn_credits() -> void:
 	stars.despawn()
-	var credits:EndingCredits = load("res://Scenes/UI/EndingComponents/EndingCredits.tscn").instantiate()
+	var credits:EndingCredits = load("uid://c67ojukakghti").instantiate()
 	GameCore.instance.add_child(credits)
 	credits.setup(is_sun)
 	queue_free()
