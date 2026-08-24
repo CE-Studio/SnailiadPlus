@@ -26,7 +26,7 @@ func _ready():
 	gravity = [ 1200, 1200, 1200, 1200, 1200, 1200, 1200, 1200 ]
 	terminal_velocity = [ 500, 500, 500, 500, 500, 500, 500, 500 ]
 	jump_floatiness = [ 4, 4, 4, 4, 4, 4, 4, 4 ]
-	surface_jump_power = 130
+	surface_jump_power = 120
 	#weapon_cooldowns
 	apply_rapid_fire_multiplier = true
 	time_until_idle = 30.0

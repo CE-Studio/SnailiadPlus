@@ -793,8 +793,8 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 	and not (fire_mode or SInput.input_pressed(SInput.Inputs.STRAFE) or stunned)):
 		_toggle_shell()
 
-	if (body.is_on_wall() and rel_axis.x == (-1 if facing_left else 1)
-	and (_can_grab_wall() or (_can_round_corner_inner() and grounded and rel_axis.y != 0))):
+	if (body.is_on_wall() and rel_axis.y != 0 and rel_axis.x == (-1 if facing_left else 1)
+	and (_can_grab_wall() or (_can_round_corner_inner() and grounded))):
 		var adjustment:Vector2 = Vector2.ZERO
 		var new_dir = _get_dir_adjacent_ccw(surface)
 		var perform_flip:bool = true
