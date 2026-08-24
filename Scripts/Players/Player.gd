@@ -19,6 +19,7 @@ const GRAV_SHOCK_SHAKE_LAND:Array[float] = [5.0, 0.5]
 const SEC_PER_SHOCK_STEP:float = 0.04
 const PARRY_WINDOW:float = 0.15
 const PARRY_HEAL:int = 2
+const SURFACE_JUMP_DEC_RATE:float = 128.0
 
 ## The position occupied by the player on the last frame.
 var last_position:Vector2
@@ -91,6 +92,7 @@ var set_home_on_any_flip:bool = true
 var suppress_retain_gravity:bool = false
 var grav_shock_anim_time:float = 0.0
 var grav_shock_anim_step:int = 0
+var surface_jump_vel:Vector2 = Vector2.ZERO
 #endregion
 
 
@@ -141,6 +143,8 @@ var gravity:Array[float]
 var terminal_velocity:Array[float]
 ## Contains how floaty the player's jump is when the jump button is held with each shell upgrade + High Jump
 var jump_floatiness:Array[float]
+## How much power should be applied when jumping from a wall
+var surface_jump_power:float
 ## Contains the cooldown in seconds of each weapon. The second half of the array assumes Rapid Fire
 var weapon_cooldowns:Array[float]
 ## Determines if collecting Rapid Fire affects bullet velocity
@@ -483,6 +487,15 @@ func _physics_process(delta:float) -> void:
 	last_box_size = box_shell.shape.size if shelled else box_normal.shape.size
 	last_gravity = gravity_dir
 	grounded_last_frame = grounded
+	if surface_jump_vel != Vector2.ZERO:
+		var mult:float = 1.0
+		var vec:Vector2 = SInput.vector_move()
+		if (
+			(surface_jump_vel.x != 0.0 and sign(surface_jump_vel.x) != sign(vec.x)) or
+			(surface_jump_vel.y != 0.0 and sign(surface_jump_vel.y) != sign(vec.y))
+		):
+			mult = 3.0
+		surface_jump_vel = surface_jump_vel.move_toward(Vector2.ZERO, SURFACE_JUMP_DEC_RATE * delta * mult)
 
 	if stun_timer > 0:
 		stun_timer -= delta
@@ -780,8 +793,8 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 	and not (fire_mode or SInput.input_pressed(SInput.Inputs.STRAFE) or stunned)):
 		_toggle_shell()
 
-	if (body.is_on_wall() and rel_axis.y != 0 and rel_axis.x == (-1 if facing_left else 1)
-	and (_can_grab_wall() or (_can_round_corner_inner() and grounded))):
+	if (body.is_on_wall() and rel_axis.x == (-1 if facing_left else 1)
+	and (_can_grab_wall() or (_can_round_corner_inner() and grounded and rel_axis.y != 0))):
 		var adjustment:Vector2 = Vector2.ZERO
 		var new_dir = _get_dir_adjacent_ccw(surface)
 		var perform_flip:bool = true
@@ -799,6 +812,7 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 			if _check_ground_casts()[0]:
 				adjustment.y -= 1
 			adjustment *= _get_box_difference()
+			surface_jump_vel = Vector2.ZERO
 		else:
 			perform_flip = false
 		if perform_flip:
@@ -825,6 +839,7 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 			outer_allowed = true
 			force_full_jump = false
 			rel_vel.y = 720
+			surface_jump_vel = Vector2.ZERO
 		elif body.is_on_ceiling():
 			if rel_axis.y < 0 and _can_grab_ceiling():
 				grounded = true
@@ -834,10 +849,12 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 				#_play_anim("idle" if rel_axis.x == 0.0 else "walk")
 				_play_anim("idle")
 				current_state = AnimStates.IDLE if rel_axis.x == 0.0 else AnimStates.WALK
-		elif body.is_on_floor() and rel_vel.y >= 0:
+				surface_jump_vel = Vector2.ZERO
+		elif body.is_on_floor() and rel_vel.y >= 0 and not just_jumped:
 			grounded = true
 			outer_allowed = true
 			force_full_jump = false
+			surface_jump_vel = Vector2.ZERO
 		elif ((not _check_ability(retain_gravity_on_airborne) or suppress_retain_gravity)
 		and surface != home_gravity and not SInput.cutscene_has_control):
 			var this_left = facing_left
@@ -867,8 +884,9 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 
 	var cur_vel:Vector2 = body.velocity
 	var step_vel:Vector2 = cur_vel / MOVE_STEPS
+	var surface_vel:Vector2 = surface_jump_vel / MOVE_STEPS
 	for i in range(MOVE_STEPS):
-		body.velocity = step_vel
+		body.velocity = step_vel + surface_vel
 		body.move_and_slide()
 	body.velocity *= MOVE_STEPS
 	position = body.position
@@ -932,6 +950,15 @@ func _jump_and_reorient() -> float:
 		_test_for_ceiling_reorient_wall_nudge()
 	else:
 		_push_from_wall()
+		surface_jump_vel = surface_jump_power * body.up_direction
+		var out:bool = false
+		var move:Vector2 = SInput.vector_move()
+		match gravity_dir:
+			Statics.DirsSurface.FLOOR: out = move.y < 0.0
+			Statics.DirsSurface.LWALL: out = move.x > 0.0
+			Statics.DirsSurface.RWALL: out = move.x < 0.0
+			Statics.DirsSurface.CEILING: out = move.y > 0.0
+		if out: surface_jump_vel *= 0.6
 		_set_direction(home_gravity, facing_left)
 	outer_allowed = false
 	if shelled:
