@@ -1519,6 +1519,7 @@ func adjust_health(amount:int, ignore_defense:bool = false, allow_parry_heal:boo
 				grav_shock_charge.queue_free()
 				grav_shock_charge = null
 				#_play_anim("fall")
+				_play_anim("idle")
 		elif grav_shock_state == 2:
 			return false
 		elif shelled and Statics.check_item(Item.ItemTypes.SHELL_SHIELD) and not ignore_defense:

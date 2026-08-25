@@ -181,7 +181,7 @@ func _on_pbullet_collision(_area:Area2D) -> void:
 			PBulletInteractions.DESTROY_PERPENDICULAR_WIDE:
 				destroy_flag = angle >= 22.5 and angle <= 157.5
 		if destroy_flag:
-			if i_destroy:
+			if i_destroy and not bullet.immune_to_bullet_collisions:
 				bullet.despawn(true)
 			if destroys_me:
 				_despawn(true)

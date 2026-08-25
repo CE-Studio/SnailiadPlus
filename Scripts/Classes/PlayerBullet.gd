@@ -23,6 +23,7 @@ const ANGLE_DEADZONE:float = 0.3827
 @export var single_hit:bool
 @export var always_pierce:bool
 @export var ping_on_breakables:bool = true
+@export var immune_to_bullet_collisions:bool = false
 @export var despawn_particle:String = "ExplosionSmall"
 @export var despawn_offset:Vector2 = Vector2.ZERO
 @export var light_radius:int = 0

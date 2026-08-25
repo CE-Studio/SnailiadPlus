@@ -621,6 +621,7 @@ damage = 200
 damage_powered = 450
 cooldown = 0.17
 always_pierce = true
+immune_to_bullet_collisions = true
 despawn_particle = "ExplosionRainbowHuge"
 light_radius = 40
 
