@@ -36,4 +36,6 @@ func _spawn(dir:Vector2, rapid_shot:float, power_shot:bool) -> float:
 		sprite.flip_h = true
 	if dir == Vector2.UP:
 		sprite.flip_v = true
+	if dir == Vector2.LEFT or dir == Vector2.RIGHT:
+		area.rotation_degrees = 90.0
 	return 0.0

@@ -5,10 +5,10 @@
 [ext_resource type="Script" uid="uid://boee2837la0pr" path="res://Scripts/Classes/SnailySprite.gd" id="5_relyn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0nsho"]
-size = Vector2(48, 48)
+size = Vector2(48, 64)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xq3d5"]
-size = Vector2(64, 64)
+size = Vector2(64, 80)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_relyn"]
 atlas = ExtResource("5_e2ltk")
