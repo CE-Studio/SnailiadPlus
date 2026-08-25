@@ -808,7 +808,7 @@ z_index = 1
 
 [node name="Shadowball0" type="AnimatedSprite2D" parent="ShadowballGroup" unique_id=183821813]
 sprite_frames = SubResource("SpriteFrames_bj8rp")
-animation = &"anim_panic"
+animation = &"anim_normal"
 autoplay = "anim_normal"
 script = ExtResource("3_qe0if")
 metadata/_custom_type_script = "uid://boee2837la0pr"
@@ -816,24 +816,28 @@ metadata/_custom_type_script = "uid://boee2837la0pr"
 [node name="Shadowball1" type="AnimatedSprite2D" parent="ShadowballGroup" unique_id=1138562844]
 sprite_frames = SubResource("SpriteFrames_7s0l7")
 animation = &"anim_normal"
+autoplay = "anim_normal"
 script = ExtResource("3_qe0if")
 metadata/_custom_type_script = "uid://boee2837la0pr"
 
 [node name="Shadowball2" type="AnimatedSprite2D" parent="ShadowballGroup" unique_id=882595027]
 sprite_frames = SubResource("SpriteFrames_vp30q")
 animation = &"anim_normal"
+autoplay = "anim_normal"
 script = ExtResource("3_qe0if")
 metadata/_custom_type_script = "uid://boee2837la0pr"
 
 [node name="Shadowball3" type="AnimatedSprite2D" parent="ShadowballGroup" unique_id=744497676]
 sprite_frames = SubResource("SpriteFrames_d53t6")
 animation = &"anim_normal"
+autoplay = "anim_normal"
 script = ExtResource("3_qe0if")
 metadata/_custom_type_script = "uid://boee2837la0pr"
 
 [node name="Shadowball4" type="AnimatedSprite2D" parent="ShadowballGroup" unique_id=259099439]
 sprite_frames = SubResource("SpriteFrames_4mejr")
 animation = &"anim_normal"
+autoplay = "anim_normal"
 script = ExtResource("3_qe0if")
 metadata/_custom_type_script = "uid://boee2837la0pr"
 
