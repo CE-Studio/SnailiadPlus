@@ -30,7 +30,7 @@ animations = [{
 
 [node name="DebugMenu" type="Node2D" unique_id=521542018 node_paths=PackedStringArray("sprites", "selector", "desc", "scroll_text")]
 script = ExtResource("1_wy6dv")
-sprites = [NodePath("ButtonIcons/Peashooter"), NodePath("ButtonIcons/Boomerang"), NodePath("ButtonIcons/RainbowWave"), NodePath("ButtonIcons/Devastator"), NodePath("ButtonIcons/HighJump"), null, NodePath("ButtonIcons/Boss1"), NodePath("ButtonIcons/Boss2"), NodePath("ButtonIcons/Boss3"), NodePath("ButtonIcons/Boss4"), NodePath("ButtonIcons/ShellShield"), NodePath("ButtonIcons/RapidFire"), NodePath("ButtonIcons/IceSnail"), NodePath("ButtonIcons/GravitySnail"), NodePath("ButtonIcons/FullMetalSnail"), null, null, null, null, null, NodePath("ButtonIcons/GravityShock"), NodePath("ButtonIcons/Broom"), NodePath("ButtonIcons/RadarShell"), NodePath("ButtonIcons/HeartContainer"), NodePath("ButtonIcons/HelixFragment"), null, NodePath("ButtonIcons/Noclip"), NodePath("ButtonIcons/AttackMult"), NodePath("ButtonIcons/ShowHidden"), null, null, null, null, null, null, null, null, null, null, null, NodePath("ButtonIcons/WeaponTrap"), NodePath("ButtonIcons/GravityTrap"), NodePath("ButtonIcons/LullabyTrap"), NodePath("ButtonIcons/SpiderTrap"), NodePath("ButtonIcons/WarpTrap"), null, null, null, null, NodePath("ButtonIcons/EditSave")]
+sprites = [NodePath("ButtonIcons/Peashooter"), NodePath("ButtonIcons/Boomerang"), NodePath("ButtonIcons/RainbowWave"), NodePath("ButtonIcons/Devastator"), NodePath("ButtonIcons/HighJump"), null, NodePath("ButtonIcons/Boss1"), NodePath("ButtonIcons/Boss2"), NodePath("ButtonIcons/Boss3"), NodePath("ButtonIcons/Boss4"), NodePath("ButtonIcons/ShellShield"), NodePath("ButtonIcons/RapidFire"), NodePath("ButtonIcons/IceSnail"), NodePath("ButtonIcons/GravitySnail"), NodePath("ButtonIcons/FullMetalSnail"), null, null, null, null, null, NodePath("ButtonIcons/GravityShock"), NodePath("ButtonIcons/Broom"), NodePath("ButtonIcons/RadarShell"), NodePath("ButtonIcons/HeartContainer"), NodePath("ButtonIcons/HelixFragment"), null, NodePath("ButtonIcons/Noclip"), NodePath("ButtonIcons/AttackMult"), NodePath("ButtonIcons/ShowHidden"), NodePath("ButtonIcons/Invincibility"), null, null, null, null, null, null, null, null, null, null, NodePath("ButtonIcons/WeaponTrap"), NodePath("ButtonIcons/GravityTrap"), NodePath("ButtonIcons/LullabyTrap"), NodePath("ButtonIcons/SpiderTrap"), NodePath("ButtonIcons/WarpTrap"), null, null, null, null, NodePath("ButtonIcons/EditSave")]
 selector = NodePath("Selector")
 desc = NodePath("LabelParent/Description")
 scroll_text = NodePath("LabelParent/ScrollValue")
@@ -48,196 +48,203 @@ color = Color(0, 0, 0, 0.39215687)
 position = Vector2(8, 8)
 texture = ExtResource("1_p0ntn")
 hframes = 2
-vframes = 34
+vframes = 35
 frame = 2
 
 [node name="Boomerang" type="Sprite2D" parent="ButtonIcons" unique_id=1669055343]
 position = Vector2(24, 8)
 texture = ExtResource("1_p0ntn")
 hframes = 2
-vframes = 34
+vframes = 35
 frame = 4
 
 [node name="RainbowWave" type="Sprite2D" parent="ButtonIcons" unique_id=1762020810]
 position = Vector2(40, 8)
 texture = ExtResource("1_p0ntn")
 hframes = 2
-vframes = 34
+vframes = 35
 frame = 6
 
 [node name="Devastator" type="Sprite2D" parent="ButtonIcons" unique_id=2139127953]
 position = Vector2(56, 8)
 texture = ExtResource("1_p0ntn")
 hframes = 2
-vframes = 34
+vframes = 35
 frame = 8
 
 [node name="HighJump" type="Sprite2D" parent="ButtonIcons" unique_id=961631183]
 position = Vector2(72, 8)
 texture = ExtResource("1_p0ntn")
 hframes = 2
-vframes = 34
+vframes = 35
 frame = 10
 
 [node name="ShellShield" type="Sprite2D" parent="ButtonIcons" unique_id=1407481247]
 position = Vector2(8, 24)
 texture = ExtResource("1_p0ntn")
 hframes = 2
-vframes = 34
+vframes = 35
 frame = 12
 
 [node name="RapidFire" type="Sprite2D" parent="ButtonIcons" unique_id=638048610]
 position = Vector2(24, 24)
 texture = ExtResource("1_p0ntn")
 hframes = 2
-vframes = 34
+vframes = 35
 frame = 14
 
 [node name="IceSnail" type="Sprite2D" parent="ButtonIcons" unique_id=595277652]
 position = Vector2(40, 24)
 texture = ExtResource("1_p0ntn")
 hframes = 2
-vframes = 34
+vframes = 35
 frame = 16
 
 [node name="GravitySnail" type="Sprite2D" parent="ButtonIcons" unique_id=1903350741]
 position = Vector2(56, 24)
 texture = ExtResource("1_p0ntn")
 hframes = 2
-vframes = 34
+vframes = 35
 frame = 18
 
 [node name="FullMetalSnail" type="Sprite2D" parent="ButtonIcons" unique_id=2004751548]
 position = Vector2(72, 24)
 texture = ExtResource("1_p0ntn")
 hframes = 2
-vframes = 34
+vframes = 35
 frame = 20
 
 [node name="GravityShock" type="Sprite2D" parent="ButtonIcons" unique_id=354335623]
 position = Vector2(8, 40)
 texture = ExtResource("1_p0ntn")
 hframes = 2
-vframes = 34
+vframes = 35
 frame = 22
 
 [node name="Broom" type="Sprite2D" parent="ButtonIcons" unique_id=1671779663]
 position = Vector2(24, 40)
 texture = ExtResource("1_p0ntn")
 hframes = 2
-vframes = 34
+vframes = 35
 frame = 66
 
 [node name="RadarShell" type="Sprite2D" parent="ButtonIcons" unique_id=1178371138]
 position = Vector2(40, 40)
 texture = ExtResource("1_p0ntn")
 hframes = 2
-vframes = 34
+vframes = 35
 frame = 64
 
 [node name="HeartContainer" type="Sprite2D" parent="ButtonIcons" unique_id=1785565256]
 position = Vector2(56, 40)
 texture = ExtResource("1_p0ntn")
 hframes = 2
-vframes = 34
+vframes = 35
 frame = 28
 
 [node name="HelixFragment" type="Sprite2D" parent="ButtonIcons" unique_id=1536925498]
 position = Vector2(72, 40)
 texture = ExtResource("1_p0ntn")
 hframes = 2
-vframes = 34
+vframes = 35
 frame = 30
 
 [node name="Boss1" type="Sprite2D" parent="ButtonIcons" unique_id=1095962904]
 position = Vector2(104, 8)
 texture = ExtResource("1_p0ntn")
 hframes = 2
-vframes = 34
+vframes = 35
 frame = 32
 
 [node name="Boss2" type="Sprite2D" parent="ButtonIcons" unique_id=1488679916]
 position = Vector2(120, 8)
 texture = ExtResource("1_p0ntn")
 hframes = 2
-vframes = 34
+vframes = 35
 frame = 34
 
 [node name="Boss3" type="Sprite2D" parent="ButtonIcons" unique_id=1140894318]
 position = Vector2(136, 8)
 texture = ExtResource("1_p0ntn")
 hframes = 2
-vframes = 34
+vframes = 35
 frame = 36
 
 [node name="Boss4" type="Sprite2D" parent="ButtonIcons" unique_id=1096220937]
 position = Vector2(152, 8)
 texture = ExtResource("1_p0ntn")
 hframes = 2
-vframes = 34
+vframes = 35
 frame = 38
 
 [node name="WeaponTrap" type="Sprite2D" parent="ButtonIcons" unique_id=1370827662]
 position = Vector2(8, 72)
 texture = ExtResource("1_p0ntn")
 hframes = 2
-vframes = 34
+vframes = 35
 frame = 46
 
 [node name="GravityTrap" type="Sprite2D" parent="ButtonIcons" unique_id=1166187453]
 position = Vector2(24, 72)
 texture = ExtResource("1_p0ntn")
 hframes = 2
-vframes = 34
+vframes = 35
 frame = 48
 
 [node name="LullabyTrap" type="Sprite2D" parent="ButtonIcons" unique_id=523509792]
 position = Vector2(40, 72)
 texture = ExtResource("1_p0ntn")
 hframes = 2
-vframes = 34
+vframes = 35
 frame = 50
 
 [node name="SpiderTrap" type="Sprite2D" parent="ButtonIcons" unique_id=317233847]
 position = Vector2(56, 72)
 texture = ExtResource("1_p0ntn")
 hframes = 2
-vframes = 34
+vframes = 35
 frame = 52
 
 [node name="WarpTrap" type="Sprite2D" parent="ButtonIcons" unique_id=58299515]
 position = Vector2(72, 72)
 texture = ExtResource("1_p0ntn")
 hframes = 2
-vframes = 34
+vframes = 35
 frame = 54
 
 [node name="Noclip" type="Sprite2D" parent="ButtonIcons" unique_id=156532286]
 position = Vector2(104, 40)
 texture = ExtResource("1_p0ntn")
 hframes = 2
-vframes = 34
+vframes = 35
 frame = 56
 
 [node name="AttackMult" type="Sprite2D" parent="ButtonIcons" unique_id=1289435015]
 position = Vector2(120, 40)
 texture = ExtResource("1_p0ntn")
 hframes = 2
-vframes = 34
+vframes = 35
 frame = 58
 
 [node name="ShowHidden" type="Sprite2D" parent="ButtonIcons" unique_id=2044062710]
 position = Vector2(136, 40)
 texture = ExtResource("1_p0ntn")
 hframes = 2
-vframes = 34
+vframes = 35
 frame = 60
+
+[node name="Invincibility" type="Sprite2D" parent="ButtonIcons" unique_id=145651930]
+position = Vector2(152, 40)
+texture = ExtResource("1_p0ntn")
+hframes = 2
+vframes = 35
+frame = 68
 
 [node name="EditSave" type="Sprite2D" parent="ButtonIcons" unique_id=390769744]
 position = Vector2(152, 72)
 texture = ExtResource("1_p0ntn")
 hframes = 2
-vframes = 34
+vframes = 35
 frame = 62
 
 [node name="Selector" type="AnimatedSprite2D" parent="." unique_id=1055150223]

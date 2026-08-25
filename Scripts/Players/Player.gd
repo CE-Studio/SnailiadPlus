@@ -1525,7 +1525,9 @@ func adjust_health(amount:int, ignore_defense:bool = false, allow_parry_heal:boo
 		elif shelled and Statics.check_item(Item.ItemTypes.SHELL_SHIELD) and not ignore_defense:
 			amount = 0
 			shielded = true
-		if Statics.check_item(Item.ItemTypes.METAL_SHELL) and not ignore_defense:
+		if Statics.invincibility:
+			amount = 0
+		elif Statics.check_item(Item.ItemTypes.METAL_SHELL) and not ignore_defense:
 			amount = floori(amount * 0.5)
 	health += amount
 	health = clampi(health, 0, max_health)

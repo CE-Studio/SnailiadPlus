@@ -138,6 +138,8 @@ func _handle_toggle_cases(spr:Sprite2D) -> void:
 		"ShowHidden":
 			Statics.show_entity_layer = not Statics.show_entity_layer
 			Statics.show_invis_entites = not Statics.show_invis_entites
+		"Invincibility":
+			Statics.invincibility = not Statics.invincibility
 	_update_sprite(spr)
 
 
@@ -310,6 +312,8 @@ func _update_sprite(spr:Sprite2D) -> void:
 			_generic_set_sprite(spr, Statics.damage_mult)
 		"ShowHidden":
 			_generic_set_sprite(spr, Statics.show_entity_layer)
+		"Invincibility":
+			_generic_set_sprite(spr, Statics.invincibility)
 
 
 ## Updates the description based on the current option
@@ -390,6 +394,9 @@ func _update_desc_action(spr:Sprite2D) -> void:
 			_set_toggle_prompt()
 		"ShowHidden":
 			_set_tool_desc("Show entity layer/invis entites")
+			_set_toggle_prompt()
+		"Invincibility":
+			_set_tool_desc("Invincibility")
 			_set_toggle_prompt()
 
 

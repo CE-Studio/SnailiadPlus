@@ -110,6 +110,11 @@ func _process(delta: float) -> void:
 				igt.modulate = Color.WHITE
 	
 	tick_screen_shake(delta)
+	
+	if Statics.invincibility:
+		heart_group.modulate.a = 0.25
+	else:
+		heart_group.modulate.a = 1.0
 
 
 func configure_for_aspect_ratio(ratio_id:int) -> void:
