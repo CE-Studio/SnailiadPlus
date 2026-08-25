@@ -267,6 +267,7 @@ var sfx_death:AudioStreamPlayer
 var sfx_shockcharge:AudioStreamPlayer
 var sfx_shocklaunch:AudioStreamPlayer
 var sfx_shockland:AudioStreamPlayer
+var sfx_shockstop:AudioStreamPlayer
 var cast_group:Node2D
 var corner_cast:RayCast2D
 var ground_casts:Array[RayCast2D]
@@ -305,6 +306,7 @@ func _ready():
 	sfx_shockcharge = $"AudioGroup/ShockCharge"
 	sfx_shocklaunch = $"AudioGroup/ShockLaunch"
 	sfx_shockland = $"AudioGroup/ShockLand"
+	sfx_shockstop = $"AudioGroup/ShockStop"
 	cast_group = $"CastGroup"
 	timer_die_fade = $"TimerGroup/DieFadeDelay"
 	timer_die_respawn = $"TimerGroup/RespawnDelay"
@@ -687,20 +689,25 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 				grav_shock_anim_step = (grav_shock_anim_step + 1) % GRAV_SHOCK_ANIM_STEPS
 		if grav_shock_charge:
 			grav_shock_charge.position = position
-		if body.is_on_floor() and grav_shock_state == 2:
+		if grav_shock_state == 2 and (body.is_on_floor() or SInput.check_input(SInput.Inputs.JUMP, true)):
 			grav_shock_bullet.despawn()
 			grav_shock_bullet = null
 			grav_shock_state = 0
 			sprite.visible = true
 			_play_anim("idle")
-			sfx_shockland.play()
-			_shoot_shockwaves()
-			var shake_dir:Vector2 = Vector2.DOWN
-			match gravity_dir:
-				Statics.DirsSurface.LWALL: shake_dir = Vector2.LEFT
-				Statics.DirsSurface.RWALL: shake_dir = Vector2.RIGHT
-				Statics.DirsSurface.CEILING: shake_dir = Vector2.UP
-			UICore.instance.call_screen_shake_linear(GRAV_SHOCK_SHAKE_LAND, shake_dir, UICore.ShakeCallMode.OVERWRITE_ALL)
+			if body.is_on_floor():
+				sfx_shockland.play()
+				_shoot_shockwaves()
+				var shake_dir:Vector2 = Vector2.DOWN
+				match gravity_dir:
+					Statics.DirsSurface.LWALL: shake_dir = Vector2.LEFT
+					Statics.DirsSurface.RWALL: shake_dir = Vector2.RIGHT
+					Statics.DirsSurface.CEILING: shake_dir = Vector2.UP
+				UICore.instance.call_screen_shake_linear(GRAV_SHOCK_SHAKE_LAND,
+				shake_dir, UICore.ShakeCallMode.OVERWRITE_ALL)
+			else:
+				body.velocity = Vector2.ZERO
+				sfx_shockstop.play()
 		return
 
 	# The way physics process works, we want to move as little and as late as possible
