@@ -468,7 +468,7 @@ func _physics_process(delta:float) -> void:
 		var vector_raw := SInput.vector_move()
 		var vector_out:Vector2
 		if vector_aim != Vector2.ZERO:
-			vector_out = vector_aim
+			vector_out = (Statics.VECTOR_DIAG * vector_aim).normalized()
 		elif vector_raw != Vector2.ZERO:
 			vector_out = (Vector2(Statics.VECTOR_DIAG.x * vector_raw.x,
 			Statics.VECTOR_DIAG.y * vector_raw.y).normalized())
