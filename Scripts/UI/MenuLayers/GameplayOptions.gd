@@ -10,6 +10,7 @@ func _ready() -> void:
 	$"ScrollContainer/VBoxContainer/DynamicCamera".toggled_on = ProjectSettings.get_setting("game/visuals/dynamic_camera")
 	$"ScrollContainer/VBoxContainer/ShootMode".remote_set_option(ProjectSettings.get_setting("game/control/toggle_shoot"))
 	$"ScrollContainer/VBoxContainer/Breakables".remote_set_option(ProjectSettings.get_setting("game/world/breakables"))
+	$"ScrollContainer/VBoxContainer/BreakableHints".toggled_on = ProjectSettings.get_setting("game/world/breakable_hints")
 	$"ScrollContainer/VBoxContainer/SecretMap".toggled_on = ProjectSettings.get_setting("game/ui/secret_map_tiles")
 	$"ScrollContainer/VBoxContainer/TargetFPS".remote_set_option(ProjectSettings.get_setting("game/visuals/frame_limit"))
 	$"ScrollContainer/VBoxContainer/ScreenShake".remote_set_option(ProjectSettings.get_setting("game/visuals/screen_shake"))
@@ -29,6 +30,10 @@ func _on_shoot_mode_cycled(value) -> void:
 
 func _on_breakables_cycled(value) -> void:
 	ProjectSettings.set_setting("game/world/breakables", value)
+
+
+func _on_breakable_hints_toggled(value) -> void:
+	ProjectSettings.set_setting("game/world/breakable_hints", value)
 
 
 func _on_secret_map_tiles_toggled(value) -> void:

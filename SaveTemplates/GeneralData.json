@@ -17,6 +17,7 @@
 	"text_pack_id": "__DEFAULT__",
 	"particle_state": 5,
 	"breakable_state": 0,
+	"breakable_hints": false,
 	"secret_tile_toggle": false,
 	"frame_limiter_state": 2,
 	"screen_shake_state": 2,

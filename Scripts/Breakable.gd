@@ -29,7 +29,7 @@ var coords:Vector2i
 var tile_data:Array
 var type:int
 var is_silent:bool
-var layers:Array = [
+var layers:Array[TileMapLayer] = [
 	GameCore.instance.current_room.map_ground,
 	GameCore.instance.current_room.map_fg1,
 	]
@@ -75,6 +75,8 @@ func _on_bullet_entered(_area:Area2D) -> void:
 		sprite.visible = false
 		for map in layers:
 			map.set_cell(coords)
+		if GameCore.instance.current_room.hint_layer:
+			GameCore.instance.current_room.hint_layer.set_cell(coords)
 		for i in range(2):
 			var pos = Vector2(randi_range(-16, 16), randi_range(-16, 16))
 			Statics.spawn_particle("ExplosionSmall", Room.Layers.FG1, position + pos)

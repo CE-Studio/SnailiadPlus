@@ -65,3 +65,4 @@ func unpause_fade_out() -> void:
 	cam.darkness_layer.update_col()
 	cam.shake_setting = ProjectSettings.get_setting("game/visuals/screen_shake")
 	game.current_room.set_environment_visibility()
+	game.current_room.update_hint_layer_visibility()

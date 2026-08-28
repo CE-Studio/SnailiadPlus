@@ -66,21 +66,31 @@ layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../ShootMode")
 focus_neighbor_right = NodePath(".")
-focus_neighbor_bottom = NodePath("../SecretMap")
-focus_next = NodePath("../SecretMap")
+focus_neighbor_bottom = NodePath("../BreakableHints")
+focus_next = NodePath("../BreakableHints")
 focus_previous = NodePath("../ShootMode")
 header_text = "Show breakables"
 cycle_option_text = "Off|Obvious,\\nany shot|All,\\nany shot|Obvious, permeating\\nshots only|All, permeating\\nshots only"
 auto_select_mode = true
 
-[node name="SecretMap" parent="MainVBox/ScrollContainer/VBoxContainer" unique_id=742925757 instance=ExtResource("5_c8ry5")]
+[node name="BreakableHints" parent="MainVBox/ScrollContainer/VBoxContainer" unique_id=622407168 instance=ExtResource("5_c8ry5")]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../Breakables")
 focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../SecretMap")
+focus_next = NodePath("../SecretMap")
+focus_previous = NodePath("../Breakables")
+button_text = "Hint important\\nbreakables"
+
+[node name="SecretMap" parent="MainVBox/ScrollContainer/VBoxContainer" unique_id=742925757 instance=ExtResource("5_c8ry5")]
+layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../BreakableHints")
+focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../TargetFPS")
 focus_next = NodePath("../TargetFPS")
-focus_previous = NodePath("../Breakables")
+focus_previous = NodePath("../BreakableHints")
 button_text = "Show secret map tiles"
 
 [node name="TargetFPS" parent="MainVBox/ScrollContainer/VBoxContainer" unique_id=1102593608 instance=ExtResource("4_n8y14")]
@@ -171,6 +181,7 @@ hide_frame = true
 [connection signal="button_toggled" from="MainVBox/ScrollContainer/VBoxContainer/DynamicCamera" to="MainVBox" method="_on_dynamic_camera_toggled"]
 [connection signal="option_cycled" from="MainVBox/ScrollContainer/VBoxContainer/ShootMode" to="MainVBox" method="_on_shoot_mode_cycled"]
 [connection signal="option_cycled" from="MainVBox/ScrollContainer/VBoxContainer/Breakables" to="MainVBox" method="_on_breakables_cycled"]
+[connection signal="button_toggled" from="MainVBox/ScrollContainer/VBoxContainer/BreakableHints" to="MainVBox" method="_on_breakable_hints_toggled"]
 [connection signal="button_toggled" from="MainVBox/ScrollContainer/VBoxContainer/SecretMap" to="MainVBox" method="_on_secret_map_tiles_toggled"]
 [connection signal="option_cycled" from="MainVBox/ScrollContainer/VBoxContainer/TargetFPS" to="MainVBox" method="_on_target_fps_cycled"]
 [connection signal="option_cycled" from="MainVBox/ScrollContainer/VBoxContainer/ScreenShake" to="MainVBox" method="_on_screen_shake_cycled"]

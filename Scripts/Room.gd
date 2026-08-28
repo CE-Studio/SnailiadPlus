@@ -23,6 +23,7 @@ extends Node2D
 @export var song_change:MusicManager.Loops = MusicManager.Loops.NONE
 @export var play_song_on_enter:bool = true
 @export var display_room:bool = false
+@export var hint_layer:TileMapLayer
 
 @export_group("Tiled importing")
 @export_file("*.tmx") var tiled_path:String = "res://Resources/map.tmx"
@@ -106,8 +107,8 @@ signal despawn
 @onready var bounds:CameraBorder = $"CameraBorder"
 @onready var default_spawn:Marker2D = $"DefaultSpawn"
 
-@onready var breakable_scene = preload("res://Scenes/Entities/Breakable.tscn")
-@onready var special_collision_scene = preload("res://Scenes/Entities/SpecialCollision.tscn")
+@onready var breakable_scene = preload("uid://ckorsdyiwbgow")
+@onready var special_collision_scene = preload("uid://biopitj8e1fre")
 #endregion
 #endregion
 
@@ -122,7 +123,7 @@ func _ready() -> void:
 		Statics.load_room = Statics.ROOM_PATH % (areas[area_id] + "/" + name if area_id != -1 else name)
 		Statics.load_coords = default_spawn.position
 		Statics.shortcut_load_game_scene = true
-		get_tree().call_deferred("change_scene_to_file", "res://Scenes/PreloadScene.tscn")
+		get_tree().call_deferred("change_scene_to_file", "uid://dntc0s7wr1h1g")
 	if UICore.instance:
 		UICore.instance.darkness_layer.call_deferred("update_col", darkness_level)
 	var ar:Array[CutsceneControllable] = get_actors()
@@ -174,6 +175,7 @@ func spawn(_spawn_all:bool) -> void:
 
 	if center_parallax_maps:
 		center_maps()
+	update_hint_layer_visibility()
 
 	if UICore.instance and not display_room:
 		UICore.instance.minimap.room_offset = minimap_offset
@@ -220,6 +222,11 @@ func center_maps() -> void:
 				room_size.y - (room_size.y / scroll.y)
 			) * 0.5 * scroll
 			this_layer.scroll_offset += new_offset
+
+
+func update_hint_layer_visibility() -> void:
+	if hint_layer:
+		hint_layer.visible = ProjectSettings.get_setting("game/world/breakable_hints")
 
 
 func get_actors() -> Array[CutsceneControllable]:

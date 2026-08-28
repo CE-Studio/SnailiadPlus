@@ -92,6 +92,7 @@ control/deadzone_move=0.3
 control/deadzone_aim=0.3
 visuals/opaque_afterimages=true
 world/damage_numbers=false
+world/breakable_hints=false
 
 [gui]
 
