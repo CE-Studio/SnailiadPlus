@@ -347,7 +347,7 @@ static func set_textbox_player_preset(_player:Player.Players) -> void:
 			set_textbox_color("#005919")
 			set_textbox_frame(0)
 		Player.Players.UPSIDE:
-			set_textbox_color("#ae7c2a")
+			set_textbox_color("#503000")
 			set_textbox_frame(0)
 		Player.Players.LEGGY:
 			set_textbox_color("#008991")
