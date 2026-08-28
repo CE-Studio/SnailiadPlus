@@ -166,7 +166,7 @@ func play_save_anim() -> void:
 
 func play_bestiary_anim() -> void:
 	bestiary_icon.visible = true
-	bestiary_icon.action = "anim"
+	bestiary_icon.play("default")
 
 
 func set_border_anim(anim_id:int) -> void:

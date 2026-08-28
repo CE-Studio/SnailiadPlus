@@ -2683,12 +2683,6 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_awdhv")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_77dln")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_77dln")
 }],
 "loop": 0,
 "name": &"default",
@@ -2987,10 +2981,9 @@ hide_on_finish = true
 metadata/_custom_type_script = "uid://boee2837la0pr"
 
 [node name="BestiaryIcon" type="AnimatedSprite2D" parent="BR" unique_id=1798755364]
+visible = false
 position = Vector2(-16, -16)
 sprite_frames = SubResource("SpriteFrames_wkouj")
-frame = 25
-frame_progress = 1.0
 script = ExtResource("15_cac8p")
 hide_on_finish = true
 metadata/_custom_type_script = "uid://boee2837la0pr"

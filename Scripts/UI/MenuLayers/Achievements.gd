@@ -67,7 +67,7 @@ var desc_mode:int = 0
 ## Parent node for all achievement icons
 @onready var icon_group:Node2D = $"../IconGroup"
 ## Scene reference for the achievement icon
-@onready var icon_scene:PackedScene = preload("res://Scenes/UI/AchievementIcon.tscn")
+@onready var icon_scene:PackedScene = preload("uid://blm214ukusxkj")
 #endregion
 
 
@@ -99,11 +99,11 @@ func _ready() -> void:
 		var new_icon:AchievementIcon = icon_scene.instantiate()
 		icon_group.add_child(new_icon)
 		icons.append(new_icon)
-		new_icon.action = "selected" if i == 0 else "idle"
+		new_icon.play("selected" if i == 0 else "idle")
 		if Statics.check_achievement(i):
-			new_icon.icon.action = achievement_str_names[i]
+			new_icon.icon.frame = i + 1
 		else:
-			new_icon.icon.action = "locked"
+			new_icon.icon.frame = 0
 	
 	_update_desc(2 if Statics.check_achievement(0) else 0)
 
@@ -123,9 +123,9 @@ func _process(delta: float) -> void:
 ## Called when the menu is scrolled to the left
 func _on_cycle_left(value: Variant) -> void:
 	target_theta -= theta_add_value
-	icons[selected_achievement].action = "idle"
+	icons[selected_achievement].play("idle")
 	selected_achievement = value
-	icons[selected_achievement].action = "selected"
+	icons[selected_achievement].play("selected")
 	_update_desc(2 if Statics.check_achievement(value) else 0)
 	main_scroller.sfx_focus.play()
 
@@ -133,9 +133,9 @@ func _on_cycle_left(value: Variant) -> void:
 ## Called when the menu is scrolled to the right
 func _on_cycle_right(value: Variant) -> void:
 	target_theta += theta_add_value
-	icons[selected_achievement].action = "idle"
+	icons[selected_achievement].play("idle")
 	selected_achievement = value
-	icons[selected_achievement].action = "selected"
+	icons[selected_achievement].play("selected")
 	_update_desc(2 if Statics.check_achievement(value) else 0)
 	main_scroller.sfx_focus.play()
 

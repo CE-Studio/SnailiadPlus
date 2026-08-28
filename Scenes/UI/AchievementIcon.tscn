@@ -1,31 +1,45 @@
 [gd_scene format=3 uid="uid://blm214ukusxkj"]
 
-[ext_resource type="Script" uid="uid://dedkfqojjyx57" path="res://Scripts/Classes/jsonSprite2D.gd" id="1_2hb6l"]
 [ext_resource type="Script" uid="uid://5mgbnx3hi7qv" path="res://Scripts/UI/AchievementIcon.gd" id="1_bca4f"]
 [ext_resource type="Texture2D" uid="uid://1qhmjtdj5npe" path="res://Assets/Images/UI/AchievementFrame.png" id="2_ebifv"]
-[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_gk2pu"]
 [ext_resource type="Texture2D" uid="uid://p7n0mc1vnka6" path="res://Assets/Images/UI/AchievementIcons.png" id="4_gk2pu"]
 
-[node name="AchivevementIcon" type="Sprite2D" unique_id=420965754]
+[sub_resource type="AtlasTexture" id="AtlasTexture_yakq3"]
+atlas = ExtResource("2_ebifv")
+region = Rect2(0, 0, 60, 60)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ebifv"]
+atlas = ExtResource("2_ebifv")
+region = Rect2(0, 60, 60, 60)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wkouj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yakq3")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ebifv")
+}],
+"loop": 1,
+"name": &"selected",
+"speed": 1.0
+}]
+
+[node name="AchivevementIcon" type="AnimatedSprite2D" unique_id=659416309 node_paths=PackedStringArray("icon")]
 y_sort_enabled = true
+sprite_frames = SubResource("SpriteFrames_wkouj")
+animation = &"idle"
 script = ExtResource("1_bca4f")
-texture_path = "res://Assets/Images/UI/AchievementFrame.json"
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
+icon = NodePath("Icon")
+metadata/_custom_type_script = "uid://boee2837la0pr"
 
-[node name="MarkerSprite" type="Sprite2D" parent="." unique_id=1674047924]
-texture = ExtResource("2_ebifv")
-vframes = 2
-script = ExtResource("3_gk2pu")
-metadata/_custom_type_script = "uid://b63lo60i7kt7f"
-
-[node name="Icon" type="Sprite2D" parent="." unique_id=99583866]
-script = ExtResource("1_2hb6l")
-texture_path = "res://Assets/Images/UI/AchievementIcons.json"
-metadata/_custom_type_script = "uid://dedkfqojjyx57"
-
-[node name="MarkerSprite" type="Sprite2D" parent="Icon" unique_id=83938141]
+[node name="Icon" type="Sprite2D" parent="." unique_id=1691370499]
 texture = ExtResource("4_gk2pu")
 hframes = 5
 vframes = 6
-script = ExtResource("3_gk2pu")
-metadata/_custom_type_script = "uid://b63lo60i7kt7f"
