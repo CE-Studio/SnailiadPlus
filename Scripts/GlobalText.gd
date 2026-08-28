@@ -20,12 +20,12 @@ var version_types:Array[StringName] = [
 ]
 
 var characters:Array = [
-	[tr(&"Snaily"), tr(&"Snaily Snail"),],
-	[tr(&"Sluggy"), tr(&"Sluggy Slug"),],
-	[tr(&"Upside"), tr(&"Upside Snail"),],
-	[tr(&"Leggy"), tr(&"Leggy Snail"),],
-	[tr(&"Blobby"), tr(&"Blobby Blob"),],
-	[tr(&"Leechy"), tr(&"Leechy Leech"),],
+	[tr(&"Snaily"), tr(&"Snaily Snail"), tr(&"[color=#f4d0b4]Snaily[/color]"), tr(&"[color=#f4d0b4]Snaily Snail[/color]"),],
+	[tr(&"Sluggy"), tr(&"Sluggy Slug"),  tr(&"[color=#dcb8fc]Sluggy[/color]"), tr(&"[color=#dcb8fc]Sluggy Slug[/color]"),],
+	[tr(&"Upside"), tr(&"Upside Snail"), tr(&"[color=#fcb800]Upside[/color]"), tr(&"[color=#fcb800]Upside Snail[/color]"),],
+	[tr(&"Leggy"),  tr(&"Leggy Snail"),  tr(&"[color=#b0f0d8]Leggy[/color]"),  tr(&"[color=#b0f0d8]Leggy Snail[/color]"),],
+	[tr(&"Blobby"), tr(&"Blobby Blob"),  tr(&"[color=#bcb8fc]Blobby[/color]"), tr(&"[color=#bcb8fc]Blobby Blob[/color]"),],
+	[tr(&"Leechy"), tr(&"Leechy Leech"), tr(&"[color=#fc7858]Leechy[/color]"), tr(&"[color=#fc7858]Leechy Leech[/color]"),],
 ]
 
 var species:Array = [

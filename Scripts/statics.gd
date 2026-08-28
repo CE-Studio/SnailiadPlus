@@ -638,6 +638,8 @@ static func has_shell(shell_id:int) -> bool:
 static func get_character_name_string(character:Player.Players, full:bool = false) -> String:
 	var char_i:int = character as int
 	var full_i:int = 1 if full else 0
+	if CutsceneController.running:
+		full_i += 2
 	return GlobalText.characters[char_i][full_i]
 
 
