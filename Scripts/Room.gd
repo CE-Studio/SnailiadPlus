@@ -181,7 +181,7 @@ func spawn(_spawn_all:bool) -> void:
 		UICore.instance.minimap.room_offset = minimap_offset
 		for cell in minimap_autofill:
 			UICore.instance.minimap.fill_cell(cell)
-		UICore.instance.minimap.set_room_name(room_path)
+		UICore.instance.minimap.set_room_name.call_deferred(room_path)
 
 
 func _process(_delta: float) -> void:

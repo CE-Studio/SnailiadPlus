@@ -423,7 +423,10 @@ func update_markers(target_cells:Array = []) -> void:
 
 
 func set_room_name(_name:String):
-	if not subscreen_mode:
+	if (GameCore.instance.current_area == Room.Areas.SHRINE_OF_IRIS
+	and not Statics.get_world_flag(Statics.WorldFlags.TALKED_TO_IRIS)):
+		name_text.set_snaily_text("")
+	elif not subscreen_mode:
 		if GlobalText.room_names.keys().has(_name):
 			name_text.set_snaily_text(GlobalText.room_names[_name])
 

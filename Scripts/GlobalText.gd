@@ -182,10 +182,10 @@ var room_names:Dictionary = {
 	"LuxLirata/LastHeart": tr(&"Reinforcements"),
 	"LuxLirata/MoonSnail": tr(&"Moon Arena"),
 	"LuxLirata/AfterMoonSnail": tr(&"Victory Road"),
-	"Iris/Entrance": tr(&"Wait what"),
-	"Iris/Crossroads": tr(&"Where are we, Snaily?"),
-	"Iris/Helix": tr(&"Glitched Goodies"),
-	"Iris/Shrine": tr(&"Shrine of Iris"),
+	"ShrineOfIris/Entrance": tr(&"Wait what"),
+	"ShrineOfIris/Crossroads": tr(&"Where are we, Snaily?"),
+	"ShrineOfIris/Helix": tr(&"Glitched Goodies"),
+	"ShrineOfIris/Shrine": tr(&"Shrine of Iris"),
 }
 
 
