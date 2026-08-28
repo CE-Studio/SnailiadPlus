@@ -25,9 +25,9 @@ func _ready() -> void:
 
 func _on_save_spawn_pressed(_value) -> void:
 	match pro_id:
-		1: Statics.current_profile = Statics.data_profile1
-		2: Statics.current_profile = Statics.data_profile2
-		3: Statics.current_profile = Statics.data_profile3
+		1: Statics.current_profile = Statics.data_profile1.duplicate()
+		2: Statics.current_profile = Statics.data_profile2.duplicate()
+		3: Statics.current_profile = Statics.data_profile3.duplicate()
 	Statics.current_profile_id = pro_id
 	var load_pos = Statics.current_profile["save_coords"]
 	if load_pos is String:
@@ -42,9 +42,9 @@ func _on_save_spawn_pressed(_value) -> void:
 
 func _on_world_spawn_pressed(_value) -> void:
 	match pro_id:
-		1: Statics.current_profile = Statics.data_profile1
-		2: Statics.current_profile = Statics.data_profile2
-		3: Statics.current_profile = Statics.data_profile3
+		1: Statics.current_profile = Statics.data_profile1.duplicate()
+		2: Statics.current_profile = Statics.data_profile2.duplicate()
+		3: Statics.current_profile = Statics.data_profile3.duplicate()
 	Statics.current_profile_id = pro_id
 	var world_spawn = Statics.WORLD_SPAWN[Statics.current_profile["character"]]
 	Statics.load_room = Statics.ROOM_PATH % world_spawn[0]

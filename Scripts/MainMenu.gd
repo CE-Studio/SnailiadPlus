@@ -174,7 +174,7 @@ func spawn_menu() -> void:
 			$"ColorCover".set_new_fade($"ColorCover".end_color, Color(0.0, 0.0, 0.0, 0.0), 0.25)
 		if not Statics.main_menu_booted_once:
 			Statics.save_general()
-			Statics.current_profile = Statics.data_profile1
+			Statics.current_profile = Statics.data_profile1.duplicate()
 		Statics.main_menu_booted_once = true
 		create_layer("Main")
 

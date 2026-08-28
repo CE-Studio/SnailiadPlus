@@ -72,9 +72,9 @@ func _on_start_pressed(_value) -> void:
 	var world_spawn = Statics.WORLD_SPAWN[character]
 	Statics.current_profile_id = pro_id
 	match pro_id:
-		1: Statics.current_profile = Statics.data_profile1
-		2: Statics.current_profile = Statics.data_profile2
-		3: Statics.current_profile = Statics.data_profile3
+		1: Statics.current_profile = Statics.data_profile1.duplicate()
+		2: Statics.current_profile = Statics.data_profile2.duplicate()
+		3: Statics.current_profile = Statics.data_profile3.duplicate()
 	Statics.current_profile["is_empty"] = false
 	Statics.current_profile["save_room"] = world_spawn[0]
 	Statics.current_profile["save_coords"] = Vector2i(world_spawn[1], world_spawn[2])

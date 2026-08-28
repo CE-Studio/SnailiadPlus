@@ -118,7 +118,7 @@ func _ready() -> void:
 		return
 	instance = self
 	if GameCore.instance == null and not display_room:
-		Statics.current_profile = Statics.data_profile1
+		Statics.current_profile = Statics.data_profile1.duplicate()
 		Statics.current_profile_id = 1
 		Statics.load_room = Statics.ROOM_PATH % (areas[area_id] + "/" + name if area_id != -1 else name)
 		Statics.load_coords = default_spawn.position
