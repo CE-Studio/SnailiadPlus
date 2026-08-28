@@ -148,6 +148,7 @@ point_ratio_adjustments = Array[Vector2i]([Vector2i(0, 1), Vector2i(0, -1), Vect
 [node name="FakeCamBoundary" parent="CameraBorder" unique_id=829238892 instance=ExtResource("4_7qxkc")]
 position = Vector2(200, 248)
 axis = 1
+stop_from = 2
 cover_full_tile = true
 aspect_offset = Vector2i(0, 1)
 offset_dir_from_entry_dir = true
