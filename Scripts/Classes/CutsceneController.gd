@@ -101,7 +101,7 @@ func _process(delta: float) -> void:
 	textbox.position = textbox.position.lerp(toptargpos.position, delta * 10.0)
 	if running:
 		_sound_elapsed += delta
-	
+
 	if _remote_skip_flag:
 		if running:
 			if texlabel.is_typing:
@@ -125,13 +125,13 @@ static func _process_dia() -> void:
 	current_scene.reset_state()
 	var line:DialogueLine = await current_scene.get_next_dialogue_line()
 	while is_instance_valid(line) and running:
-		print(line.text)
-		print(line.next_id)
+		print_verbose(line.text)
+		print_verbose(line.next_id)
 		instance.texlabel.dialogue_line = line
 		instance.texlabel.type_out()
-		print("wait for typing")
+		print_verbose("wait for typing")
 		await instance.texlabel.finished_typing
-		print("wait for next")
+		print_verbose("wait for next")
 		if SInput.cutscene_has_control:
 			instance.advancearrow.show()
 			await StaticProcess.cut_advance
@@ -139,9 +139,9 @@ static func _process_dia() -> void:
 		else:
 			await StaticProcess.get_tree().create_timer(_next_line_timeout).timeout
 			_next_line_timeout = DEFAULT_NEXT_TIMEOUT
-		print("wait for line")
+		print_verbose("wait for line")
 		line = await current_scene.get_next_dialogue_line(line.next_id)
-	print("done")
+	print_verbose("done")
 	running = false
 	await hide_textbox()
 	unlock_input()
@@ -383,7 +383,7 @@ static func _idmod(id:int) -> int:
 
 
 ## Sets the sound played when drawing dialogue to a given [AudioStream] based on its filename.
-## Can also set a default sound based on a numerical identifier 
+## Can also set a default sound based on a numerical identifier
 static func set_sound(id := "-1") -> void:
 	if is_instance_valid(instance):
 		const pth := "res://Assets/Sounds/Sfx"
