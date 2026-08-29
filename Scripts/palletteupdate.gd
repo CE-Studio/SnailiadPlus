@@ -1,5 +1,5 @@
+# Copyright 2026 CE-Studio: AGPL-3.0-only
 extends Node2D
-
 
 
 @export var new_colors: Array[Color];
@@ -11,14 +11,11 @@ extends Node2D
 var master_tex: ImageTexture;
 
 
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	var img = pallette_tex.get_image()
 	master_tex = ImageTexture.create_from_image(img)
 	if mat:
 		mat.set_shader_parameter("palettes", master_tex)
-	
-	
 	replace_colors(new_colors)
 
 
@@ -27,4 +24,3 @@ func replace_colors(custom_colors: Array[Color]) -> void:
 	for i in range(img.get_width()):
 		img.set_pixel(i, id, custom_colors[i])
 	master_tex.update(img)
-	
