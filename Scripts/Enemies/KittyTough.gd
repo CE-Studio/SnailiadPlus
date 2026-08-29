@@ -25,7 +25,7 @@ var shot_timeout:float = 0.0
 var fall_flag:bool = false
 
 @onready var sfx_jump:AudioStreamPlayer = $"Jump"
-@onready var bullet:PackedScene = load("res://Scenes/Entities/Bullets/Enemy/EnemyBulletPea.tscn")
+@onready var bullet:PackedScene = load("uid://ypf8dhvoybdu")
 #endregion
 
 

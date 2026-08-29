@@ -10,8 +10,8 @@ extends Enemy
 	set(value):
 		left = value
 		$"Area2D/HitBox".scale.x = -1 if value else 1
-		if Engine.is_editor_hint():
-			$"JsonSprite2D/MarkerSprite".flip_h = value
+		if Engine.is_editor_hint() and sprite:
+			sprite.flip_h = value
 
 enum FootStates {
 	DOWN,

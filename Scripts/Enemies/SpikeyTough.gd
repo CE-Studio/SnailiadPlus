@@ -29,16 +29,16 @@ var stopped:bool = false
 @export var direction:Statics.DirsSurface = Statics.DirsSurface.NONE:
 	set(value):
 		direction = value
-		if Engine.is_editor_hint():
+		if Engine.is_editor_hint() and sprite:
 			match value:
 				Statics.DirsSurface.FLOOR or Statics.DirsSurface.NONE:
-					$"JsonSprite2D/MarkerSprite".frame = 0
+					sprite.rotation_degrees = 0.0
 				Statics.DirsSurface.LWALL:
-					$"JsonSprite2D/MarkerSprite".frame = 12
+					sprite.rotation_degrees = 90.0
 				Statics.DirsSurface.RWALL:
-					$"JsonSprite2D/MarkerSprite".frame = 4
+					sprite.rotation_degrees = -90.0
 				Statics.DirsSurface.CEILING:
-					$"JsonSprite2D/MarkerSprite".frame = 8
+					sprite.rotation_degrees = 180.0
 @export var ccw:bool # Assuming the spikey is tracking the inner edge of a ring, false for CW and true for CCW
 
 @onready var box:CollisionShape2D = $"BodyBox"

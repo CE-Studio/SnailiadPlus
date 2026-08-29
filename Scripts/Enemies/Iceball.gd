@@ -16,19 +16,7 @@ var is_falling:bool = false
 var grace_period = 0.4
 var vel = 0
 
-@export var direction:Statics.DirsSurface = Statics.DirsSurface.NONE:
-	set(value):
-		direction = value
-		if Engine.is_editor_hint():
-			match value:
-				Statics.DirsSurface.FLOOR or Statics.DirsSurface.NONE:
-					$"JsonSprite2D/MarkerSprite".frame = 0
-				Statics.DirsSurface.LWALL:
-					$"JsonSprite2D/MarkerSprite".frame = 12
-				Statics.DirsSurface.RWALL:
-					$"JsonSprite2D/MarkerSprite".frame = 4
-				Statics.DirsSurface.CEILING:
-					$"JsonSprite2D/MarkerSprite".frame = 8
+@export var direction:Statics.DirsSurface = Statics.DirsSurface.NONE
 @export var ccw:bool # Assuming the iceball is tracking the inner edge of a ring, false for CW and true for CCW
 
 @onready var box:CollisionShape2D = $"BodyBox"
