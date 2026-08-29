@@ -1,3 +1,4 @@
+# Copyright 2026 CE-Studio: AGPL-3.0-only
 class_name ExplosionBossDefeat
 extends Particle
 
@@ -23,7 +24,7 @@ var huge:bool = false
 
 func _spawn(_data:Array) -> void:
 	super(_data)
-	
+
 	if _data.size() > 0 and _data[0] is bool:
 		play_sound = _data[0]
 	if _data.size() > 1 and _data[1] is float:
