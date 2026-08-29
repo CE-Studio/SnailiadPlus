@@ -10,8 +10,10 @@ enum Status {
 	UNKOWN_ERROR,
 }
 
+
 const MIN_SOUND_ELAPSED:float = 0.0333
 const DEFAULT_NEXT_TIMEOUT:float = 3.0
+
 
 ## The currently active instance of the [CutsceneController] class
 static var instance:CutsceneController
@@ -33,6 +35,7 @@ static var _sound_elapsed:float = 0.0
 static var _next_line_timeout:float = DEFAULT_NEXT_TIMEOUT
 ## Will be set if the currently printed line needs to be skipped or not as per an external call
 static var _remote_skip_flag:bool = false
+
 
 ## A small arrow texture drawn on the dialogue box when advancing dialogue is available
 @onready var advancearrow: Control = $CanvasLayer/Control/text/PanelContainer/advancearrow
@@ -376,39 +379,43 @@ static func set_camera_focus_player() -> void:
 
 
 ## Retrieves a default dialogue sound to use based on a numerical NPC identifier
-static func _idmod(id:int) -> int:
+static func sound_from_id(id:int) -> AudioStream:
+	const AUDS:Array[AudioStream] = [
+		preload("uid://b3ixpp7kjia5k"),
+		preload("uid://dsn0n1srqm0ow"),
+		preload("uid://b60650li5d52q"),
+		preload("uid://dqs24itjujvno"),
+		preload("uid://d5d21n1acuqg"),
+	]
+	var out_idx:int = 0
 	if id == 39:
-		return 4
-	return id % 4
+		out_idx = 4
+	else:
+		out_idx = id % 4
+	return AUDS[out_idx]
 
 
 ## Sets the sound played when drawing dialogue to a given [AudioStream] based on its filename.
 ## Can also set a default sound based on a numerical identifier
 static func set_sound(id := "-1") -> void:
 	if is_instance_valid(instance):
-		const pth := "res://Assets/Sounds/Sfx"
-		const typ := [".ogg", ".wav", ".mp3"]
+		const PATH := "res://Assets/Sounds/Sfx"
+		const TYPE := [".ogg", ".wav", ".mp3"]
 		if id == "":
-			instance.sound.stream = preload("uid://b3ixpp7kjia5k")
+			instance.sound.stream = sound_from_id(0)
 		if id == "-1":
 			id = object_id
 		if id.is_valid_int():
 			var idi := id.to_int()
-			instance.sound.stream = [
-				preload("uid://b3ixpp7kjia5k"),
-				preload("uid://dsn0n1srqm0ow"),
-				preload("uid://b60650li5d52q"),
-				preload("uid://dqs24itjujvno"),
-				preload("uid://d5d21n1acuqg"),
-			][_idmod(idi)]
+			instance.sound.stream = sound_from_id(idi)
 		else:
 			id = id.remove_chars("/.\\,<>|\'[]{}-=_+()*&^%$#@!~`?;:")
-			for i in typ:
-				var ipth = pth + id + i
+			for i in TYPE:
+				var ipth = PATH + id + i
 				if ResourceLoader.exists(ipth):
 					instance.sound.stream = load(ipth)
 					return
-			instance.sound.stream = preload("uid://b3ixpp7kjia5k")
+			instance.sound.stream = sound_from_id(0)
 
 
 ## Sets a custom duration for any non-controlling dialogue to wait before advancing
