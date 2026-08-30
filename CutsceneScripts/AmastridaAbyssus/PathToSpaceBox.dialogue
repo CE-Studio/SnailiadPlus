@@ -3,7 +3,7 @@ do CutsceneController.lock_input()
 do CutsceneController.reset_textbox_color()
 do CutsceneController.set_textbox_frame(0)
 do CutsceneController.show_textbox()
-if not Statics.check_item(Item.ItemTypes.RAPID_FIRE)
+if not Statics.check_item(Item.ItemTypes.RAPID_FIRE) and not Statics.is_random_game
 	NPC42: Hey, {{Player.player_name}}![wait=0.15]  I heard a rumor\nthat the next room is too hard\nwithout "[color=#ffb23d]Rapid Fire[/color]"!!
 elif not Statics.get_world_flag(Statics.WorldFlags.DEFEATED_BOSS3)
 	NPC42: {{GlobalText.COL_MOON}}Moon Snail[/color] brought me here!\n[wait=0.15]Isn't he nice?[wait=0.15]  {{GlobalText.EFF_WAVE}}All the [color=#ff75f6]pink\ngrass[/color] I could ever eat!!

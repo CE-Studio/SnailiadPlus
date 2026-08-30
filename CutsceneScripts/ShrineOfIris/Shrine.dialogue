@@ -1,11 +1,11 @@
 ~ start
 match CutsceneController.object_id:
-	when "Set38Shell"
+	when "ShrineHandler"
 		do CutsceneController.set_actor("38")
 		if Statics.get_world_flag(Statics.WorldFlags.DEFEATED_BOSS4) != true:
 			do CutsceneController.perform_action("set_wont_talk", false)
 			do CutsceneController.perform_action("hide", false)
-		if Statics.check_item(Item.ItemTypes.HELIX_FRAGMENT) < 30
+		elif Statics.check_item(Item.ItemTypes.HELIX_FRAGMENT) < 30
 			do CutsceneController.perform_action("face_right", false)
 			do CutsceneController.perform_action("sleep", false)
 			do CutsceneController.perform_action("set_wont_float", false)
@@ -49,4 +49,10 @@ match CutsceneController.object_id:
 				NPC39: [wave amp=16 freq=1][speed=0.75]{{GlobalText.COL_MOON}}Moon Snail[/color] rests fitfully\nupon the shrine steps...  [wait=0.3][speed=1.0]Find 1\nmore {{GlobalText.COL_IRIS}}fragment[/color], {{Player.player_full_name}}!
 			else
 				NPC39: [wave amp=16 freq=1]Congratulations, {{Player.player_name}}![wait=0.25]  Thanks\nto you, {{GlobalText.COL_MOON}}Moon Snail[/color] is restored,\n[wait=0.15]and is now the {{GlobalText.COL_SUN}}Sun Snail[/color]!
+				if Statics.get_world_flag(Statics.WorldFlags.SEEN_IRIS_CREDITS) != true
+					do CutsceneController.hide_textbox()
+					do Statics.set_world_flag(Statics.WorldFlags.SEEN_IRIS_CREDITS, true)
+					do CutsceneController.set_actor("ShrineHandler")
+					do CutsceneController.perform_action("start_fade", false)
+					do wait(3.5)
 => END

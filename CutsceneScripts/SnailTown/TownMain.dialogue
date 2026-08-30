@@ -58,8 +58,7 @@ match CutsceneController.object_id
 			elif not Statics.get_world_flag(Statics.WorldFlags.TALKED_TO_IRIS)
 				NPC2: [color=#b9b8f7]I can see the future, {{Player.player_name}}![/color][wait=0.3]\nI see you heading precisely two\nscreens to the left of here!!
 			else
-				# WaveHere
-				NPC2: [color=#b9b8f7]I can see the future, {{Player.player_name}}![/color][wait=0.3]\nI see you having 18,000,000\nbaby {{Player.player_species_plural}}!![wait=0.25]  Congratulations!!
+				NPC2: [color=#b9b8f7]I can see the future, {{Player.player_name}}![/color][wait=0.3]\nI see you having 18,000,000\nbaby {{Player.player_species_plural}}!![wait=0.25]  {{GlobalText.EFF_WAVE}}Congratulations!!
 		else
 			NPC2: Yeah,[wait=0.25] I have no idea what's going\non here.[wait=0.3]  You're on your own,\n{{Player.player_name}}!
 	

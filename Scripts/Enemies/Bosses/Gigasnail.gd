@@ -273,7 +273,7 @@ func kill() -> void:
 		#SInput.read_inputs = false
 		PauseLayer.suppress_menuing = true
 		Statics.increment_igt = false
-		var fade:EndingFade = load("res://Scenes/UI/EndingComponents/EndingFade.tscn").instantiate()
+		var fade:EndingFade = load("uid://crgwv7a4ws03t").instantiate()
 		fade.explosion_point = position
 		GameCore.instance.add_child(fade)
 		#region Achievements

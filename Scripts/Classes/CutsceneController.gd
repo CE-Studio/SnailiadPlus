@@ -111,6 +111,9 @@ func _process(delta: float) -> void:
 				texlabel.skip_typing()
 			StaticProcess.cut_advance.emit()
 		_remote_skip_flag = false
+	
+	if UICore.instance:
+		notif.modulate.a = UICore.instance.modulate.a
 
 
 func _ready() -> void:

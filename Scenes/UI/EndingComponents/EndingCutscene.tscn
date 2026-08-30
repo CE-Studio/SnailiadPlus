@@ -516,7 +516,7 @@ tracks/4/keys = {
 "times": PackedFloat32Array(0, 0.1, 1.8, 16.8, 17),
 "transitions": PackedFloat32Array(1, 1, 0.35, 1, 1),
 "update": 0,
-"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 0.49803922), Color(1, 1, 1, 0.49803925), Color(1, 1, 1, 0.23529412)]
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 0.49803922), Color(1, 1, 1, 0.49803925), Color(1, 1, 1, 0)]
 }
 tracks/5/type = "value"
 tracks/5/imported = false
@@ -738,16 +738,16 @@ position = Vector2(200, 120)
 scale = Vector2(2, 2)
 texture = ExtResource("1_8ficc")
 
-[node name="EdgeFadeCover" type="Sprite2D" parent="." unique_id=889279033]
-modulate = Color(0, 0, 0, 1)
-position = Vector2(200, 120)
-texture = ExtResource("10_7865d")
-
 [node name="SkipFade" type="Sprite2D" parent="." unique_id=1010079891]
 modulate = Color(0, 0, 0, 0)
 position = Vector2(200, 120)
 scale = Vector2(2, 2)
 texture = ExtResource("1_8ficc")
+
+[node name="EdgeFadeCover" type="Sprite2D" parent="." unique_id=889279033]
+modulate = Color(0, 0, 0, 1)
+position = Vector2(200, 120)
+texture = ExtResource("10_7865d")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1274005023]
 libraries/ = SubResource("AnimationLibrary_ginrr")

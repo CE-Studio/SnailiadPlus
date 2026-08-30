@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bcnffsfter41s"]
 
-[ext_resource type="Script" uid="uid://nb8y0k81l61i" path="res://Scripts/NPC.gd" id="1_4a2w1"]
+[ext_resource type="Script" uid="uid://nb8y0k81l61i" path="res://Scripts/CutsceneControllables/NPC.gd" id="1_4a2w1"]
 [ext_resource type="Texture2D" uid="uid://cp668vus8s3n0" path="res://Assets/Images/Entities/NPC.png" id="2_4a2w1"]
 [ext_resource type="Texture2D" uid="uid://sy02axw6tn0g" path="res://Assets/Images/Blank.png" id="3_j2byn"]
 [ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_yb3dg"]

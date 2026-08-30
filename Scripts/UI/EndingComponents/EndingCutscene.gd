@@ -35,6 +35,8 @@ var char_timeout:float = 0.0
 var dialogue_visible:bool = false
 ## Will be set if the cutscene is currently being skipped
 var skipping:bool = false
+## Will be set by the preceeding [EndingFade] if the regular area music needs to be stopped
+var stop_music:bool = false
 
 
 ## The [AnimationPlayer] that drives most of the cutscene
@@ -64,7 +66,8 @@ var skipping:bool = false
 func _ready() -> void:
 	get_tree().paused = true
 	UICore.instance.cam.set_to_static_pos()
-	GameCore.instance.music_manager.stop_all()
+	if stop_music:
+		GameCore.instance.music_manager.stop_all()
 	cover.modulate.a = 1.0
 	first_moon.modulate.a = 0.0
 	spotlight.modulate.a = 0.0
@@ -73,6 +76,7 @@ func _ready() -> void:
 		is_sun = true
 		anim.play(&"Sun")
 		last_moon.play("sun")
+		skip_cover.modulate = Color(1.0, 1.0, 1.0, 0.0)
 	else:
 		anim.play(&"Moon")
 	dialogue.set_snaily_text("")

@@ -12,6 +12,7 @@
 [ext_resource type="Script" uid="uid://wsvamec27aoo" path="res://Scripts/Classes/TriggerTypes/CutsceneTrigger.gd" id="10_4lg8b"]
 [ext_resource type="Script" uid="uid://cj88whwwq3ivy" path="res://Scripts/Classes/TriggerTypes/AchievementTrigger.gd" id="11_4lg8b"]
 [ext_resource type="PackedScene" uid="uid://d142ll0y7eglf" path="res://Scenes/internals/DummyCutsceneControllable.tscn" id="11_a1pyx"]
+[ext_resource type="Script" uid="uid://du87t486otjte" path="res://Scripts/CutsceneControllables/ShrineHandler.gd" id="13_a1pyx"]
 
 [sub_resource type="Curve2D" id="Curve2D_67xdc"]
 resource_local_to_scene = true
@@ -137,4 +138,5 @@ achievement = 15
 
 [node name="DummyCutsceneControllable" parent="." unique_id=1305305038 instance=ExtResource("11_a1pyx")]
 position = Vector2(128, 256)
-identifier = &"Set38Shell"
+script = ExtResource("13_a1pyx")
+identifier = &"ShrineHandler"
