@@ -543,7 +543,7 @@ func _set_desc(id:int) -> void:
 		Item.ItemTypes.BOOMERANG:
 			desc_body.set_snaily_text(tr(&"These little things can pack quite the punch!  Their points and edges are refined to catch wind and foe alike.  When tossed at just the right distance, the turnaround can score some big damage!\n\n[color=#ffd48c]Hold the SHOOT button to fire"))
 		Item.ItemTypes.RAINBOW_WAVE:
-			desc_body.set_snaily_text(tr(&"It's said that those who do good in the eyes of Iris are offered a small piece of her power.  Lucky you!! These sharpened shards of solid light can cut through just about any shell, wall, or particularly stubborn slime.\n\n[color=#ffd48c]Hold the SHOOT button to fire"))
+			desc_body.set_snaily_text(tr(&"It's said that those who do good in the eyes of Iris are offered a small piece of her power.  Lucky you!!  These sharpened shards of solid light can cut through just about any shell, wall, or particularly stubborn slime.\n\n[color=#ffd48c]Hold the SHOOT button to fire"))
 		Item.ItemTypes.DEVASTATOR:
 			desc_body.set_snaily_text(tr(&"An old relic of unknown origin, said to empower the bearer with strength and fury to rival even the highest of gods.  At least, I think so; I may have slept through that class.  Regardless, having this on you powers up all of your attacks!  Neat, huh?"))
 		Item.ItemTypes.HIGH_JUMP:
@@ -576,7 +576,7 @@ func _set_desc(id:int) -> void:
 			if Statics.stack_shells:
 				desc_body.set_snaily_text(desc_body.text + stacked_shells)
 		Item.ItemTypes.GRAVITY_SHOCK:
-			desc_body.set_snaily_text(tr(&"A relic long thought lost, this item allows anyone to build immense amounts of power and release it in a fireball of sheer destruction.  Use this power wisely, and you can bring down even the toughest of foes and walls with ease!\n\n[color=#ffd48c]Gravity jump toward your current gravity to activate.  Move while it's active to steer."))
+			desc_body.set_snaily_text(tr(&"A relic long thought lost, this item allows anyone to build immense amounts of power and release it in a fireball of sheer destruction.  Use this power wisely, and you can bring down even the toughest of foes and walls with ease!\n\n[color=#ffd48c]Gravity jump toward your current gravity to activate.  Move while it's active to steer.  Jump while active to cancel early."))
 		Item.ItemTypes.NONE:
 			desc_body.set_snaily_text(tr(&"It's you!\nThis is your normal self; how you've always known yourself.  You can take a hit or two, but not much else.  But hey, that just means there's room to grow!"))
 			if Statics.get_world_flag(Statics.WorldFlags.DEFEATED_BOSS4):
