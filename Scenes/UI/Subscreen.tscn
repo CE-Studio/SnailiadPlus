@@ -7,15 +7,21 @@
 [ext_resource type="Texture2D" uid="uid://dgjnewivac4n" path="res://Assets/Images/UI/SubscreenBacking.png" id="5_c64hb"]
 [ext_resource type="PackedScene" uid="uid://b20cdl7cicldv" path="res://Scenes/UI/Minimap.tscn" id="5_cf02a"]
 [ext_resource type="PackedScene" uid="uid://dke6r2335reau" path="res://Scenes/internals/SnailyText.tscn" id="5_ndsvi"]
+[ext_resource type="Texture2D" uid="uid://8uhufh4gacu1" path="res://Assets/Images/UI/SubscreenItems.png" id="5_orj4x"]
 [ext_resource type="Texture2D" uid="uid://c75ua7v3gisrs" path="res://Assets/Images/UI/GenericHighlightBox.png" id="6_6yc3f"]
 [ext_resource type="Texture2D" uid="uid://bb8hyp40krwaw" path="res://Assets/Images/UI/SubscreenPlayers.png" id="6_teiof"]
 [ext_resource type="Texture2D" uid="uid://bx5a6muw3qefk" path="res://Assets/Images/UI/SubscreenSelector.png" id="8_f6p1s"]
+[ext_resource type="Texture2D" uid="uid://bcc7os4aj3twf" path="res://Assets/Images/UI/SubscreenCategorySeparator.png" id="8_w2fvd"]
 [ext_resource type="AudioStream" uid="uid://d2mf2pko44ryn" path="res://Assets/Sounds/Sfx/MenuBeep1.ogg" id="9_wlxts"]
 [ext_resource type="AudioStream" uid="uid://p3bp61rmw7rh" path="res://Assets/Sounds/Sfx/MenuBeep2.ogg" id="10_pai4i"]
+[ext_resource type="Texture2D" uid="uid://c0bmdadcra56t" path="res://Assets/Images/UI/SubscreenDescriptionPanel.png" id="11_t4fnx"]
 [ext_resource type="AudioStream" uid="uid://c1f8m5y7axavq" path="res://Assets/Sounds/Sfx/SubscreenUp.ogg" id="11_upi3e"]
 [ext_resource type="AudioStream" uid="uid://dgmxh721jnbu1" path="res://Assets/Sounds/Sfx/SubscreenDown.ogg" id="12_cf02a"]
+[ext_resource type="Texture2D" uid="uid://7agakwirr6k0" path="res://Assets/Images/UI/MinimapIcons.png" id="16_1vbq0"]
+[ext_resource type="AudioStream" uid="uid://qeulpy7lmi2y" path="res://Assets/Sounds/Sfx/SubscreenSwitch.ogg" id="16_j127p"]
 [ext_resource type="Texture2D" uid="uid://rhbdvj511ewo" path="res://Assets/Images/Items/HelixFragment.png" id="16_w2fvd"]
 [ext_resource type="Script" uid="uid://dqt4uo3ejug3v" path="res://Scripts/Classes/SnailyText.gd" id="17_j127p"]
+[ext_resource type="PackedScene" uid="uid://dlaal46coilv7" path="res://Scenes/UI/MapMarker.tscn" id="17_newu2"]
 [ext_resource type="Texture2D" uid="uid://ckwdit3ee0x5e" path="res://Assets/Images/UI/SubscreenItemFrame.png" id="17_w2fvd"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_or8ib"]
@@ -59,27 +65,27 @@ animations = [{
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xrgw3"]
 atlas = ExtResource("2_d38hq")
-region = Rect2(0, 0, 400, 240)
+region = Rect2(0, 0, 336, 216)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_t4fnx"]
 atlas = ExtResource("2_d38hq")
-region = Rect2(400, 0, 400, 240)
+region = Rect2(672, 0, 336, 216)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_orj4x"]
 atlas = ExtResource("2_d38hq")
-region = Rect2(0, 240, 400, 240)
+region = Rect2(0, 216, 336, 216)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7f5cc"]
 atlas = ExtResource("2_d38hq")
-region = Rect2(400, 240, 400, 240)
+region = Rect2(672, 216, 336, 216)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1vbq0"]
 atlas = ExtResource("2_d38hq")
-region = Rect2(0, 480, 400, 240)
+region = Rect2(0, 432, 336, 216)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_newu2"]
 atlas = ExtResource("2_d38hq")
-region = Rect2(400, 480, 400, 240)
+region = Rect2(672, 432, 336, 216)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_wkouj"]
 animations = [{
@@ -130,38 +136,6 @@ animations = [{
 "loop": 0,
 "name": &"5",
 "speed": 1.0
-}]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_j127p"]
-atlas = ExtResource("6_6yc3f")
-region = Rect2(0, 0, 20, 20)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_7kgud"]
-atlas = ExtResource("6_6yc3f")
-region = Rect2(20, 0, 20, 20)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_anv1y"]
-atlas = ExtResource("6_6yc3f")
-region = Rect2(0, 20, 20, 20)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_2dhju"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_j127p")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_7kgud")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_anv1y")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_7kgud")
-}],
-"loop": 1,
-"name": &"default",
-"speed": 2.0
 }]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_udyn1"]
@@ -239,12 +213,6 @@ animations = [{
 "speed": 1.0
 }]
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_j127p"]
-load_path = "res://.godot/imported/SubscreenSeparator.png-1266c91dfffeff7dc7e04f8404c475d3.ctex"
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_xrgw3"]
-load_path = "res://.godot/imported/SubscreenSeparator.png-1266c91dfffeff7dc7e04f8404c475d3.ctex"
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_upvem"]
 atlas = ExtResource("8_f6p1s")
 region = Rect2(0, 0, 8, 8)
@@ -275,6 +243,178 @@ animations = [{
 "loop": 1,
 "name": &"default",
 "speed": 8.0
+}]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wkouj"]
+content_margin_top = 4.0
+texture = ExtResource("11_t4fnx")
+texture_margin_left = 8.0
+texture_margin_top = 8.0
+texture_margin_right = 8.0
+texture_margin_bottom = 8.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_24u1n"]
+atlas = ExtResource("2_d38hq")
+region = Rect2(336, 0, 336, 216)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uoylh"]
+atlas = ExtResource("2_d38hq")
+region = Rect2(1008, 0, 336, 216)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nskp7"]
+atlas = ExtResource("2_d38hq")
+region = Rect2(336, 216, 336, 216)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_62tpf"]
+atlas = ExtResource("2_d38hq")
+region = Rect2(1008, 216, 336, 216)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0117y"]
+atlas = ExtResource("2_d38hq")
+region = Rect2(336, 432, 336, 216)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wvhlg"]
+atlas = ExtResource("2_d38hq")
+region = Rect2(1008, 432, 336, 216)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4u6py"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_24u1n")
+}],
+"loop": 0,
+"name": &"0",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uoylh")
+}],
+"loop": 0,
+"name": &"1",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nskp7")
+}],
+"loop": 0,
+"name": &"2",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_62tpf")
+}],
+"loop": 0,
+"name": &"3",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0117y")
+}],
+"loop": 0,
+"name": &"4",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wvhlg")
+}],
+"loop": 0,
+"name": &"5",
+"speed": 1.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j127p"]
+atlas = ExtResource("6_6yc3f")
+region = Rect2(0, 0, 20, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7kgud"]
+atlas = ExtResource("6_6yc3f")
+region = Rect2(20, 0, 20, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_anv1y"]
+atlas = ExtResource("6_6yc3f")
+region = Rect2(0, 20, 20, 20)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_2dhju"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j127p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7kgud")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_anv1y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7kgud")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 2.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n2mc3"]
+atlas = ExtResource("16_1vbq0")
+region = Rect2(0, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_olocb"]
+atlas = ExtResource("16_1vbq0")
+region = Rect2(8, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y3rru"]
+atlas = ExtResource("16_1vbq0")
+region = Rect2(16, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nhven"]
+atlas = ExtResource("16_1vbq0")
+region = Rect2(32, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d34em"]
+atlas = ExtResource("16_1vbq0")
+region = Rect2(40, 0, 8, 8)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_udyn1"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n2mc3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_olocb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y3rru")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y3rru")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_olocb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n2mc3")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nhven")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d34em")
+}],
+"loop": 1,
+"name": &"highlight",
+"speed": 2.0
 }]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qrnoe"]
@@ -341,81 +481,395 @@ animations = [{
 "speed": 24.0
 }]
 
-[node name="Subscreen" type="Node2D" unique_id=1432611865 node_paths=PackedStringArray("separators", "body", "player_icon", "header_name", "name_box", "name_text", "header_weapon", "slist_weapon", "tlist_weapon", "header_shell", "slist_shell", "tlist_shell", "header_ability", "slist_ability", "tlist_ability", "selector", "selector_spr", "sfx_move", "sfx_select", "sfx_open", "sfx_close", "sel_target_name", "sel_target_map", "map", "map_selector", "map_backing", "desc_name", "desc_body", "marker_text", "select_text", "map_text", "time_text", "item_text", "helix_count", "radar")]
+[sub_resource type="Animation" id="Animation_xrgw3"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MapBody:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(264, 132)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MapBody:z_index")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("InvBody:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(136, 132)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("InvBody:z_index")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("InvBody:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("MapBody:modulate")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_t4fnx"]
+resource_name = "init"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MapBody:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(264, 132)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MapBody:z_index")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("InvBody:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(136, 144)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("InvBody:z_index")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("InvBody:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0.49747366, 0.49747366, 0.49747366, 1)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("MapBody:modulate")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_orj4x"]
+resource_name = "swap"
+step = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MapBody:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(0.5, 2, 1),
+"update": 0,
+"values": [Vector2(264, 132), Vector2(384, 138), Vector2(264, 144)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MapBody:z_index")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.45, 0.55, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [1, 1, 0, 0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("InvBody:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(0.5, 2, 1),
+"update": 0,
+"values": [Vector2(136, 144), Vector2(16, 138), Vector2(136, 132)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("InvBody:z_index")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.45, 0.55, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 0, 1, 1]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("InvBody:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.3, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(0.49747366, 0.49747366, 0.49747366, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("MapBody:modulate")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.7, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(0.49747366, 0.49747366, 0.49747366, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_orj4x"]
+_data = {
+&"RESET": SubResource("Animation_xrgw3"),
+&"init": SubResource("Animation_t4fnx"),
+&"swap": SubResource("Animation_orj4x")
+}
+
+[node name="Subscreen" type="Node2D" unique_id=1432611865 node_paths=PackedStringArray("body_map", "body_inv", "player_icon", "header_name", "name_box", "name_text", "header_weapon", "slist_weapon", "tlist_weapon", "header_shell", "slist_shell", "tlist_shell", "header_ability", "slist_ability", "tlist_ability", "selector", "selector_spr", "sfx_move", "sfx_select", "sfx_open", "sfx_close", "sfx_switch", "sel_target_name", "map", "map_selector", "desc_panel", "desc_name", "desc_body", "prompts", "prompt_icon_texts", "prompt_desc_texts", "info_text", "map_text", "time_text", "item_text", "helix_count", "radar", "anim", "player_sprite", "item_sprites", "item_target")]
 process_mode = 3
 script = ExtResource("1_gcfo6")
-separators = [NodePath("GroupName"), NodePath("GroupWeapon"), NodePath("GroupShell"), NodePath("GroupAbility")]
-body = NodePath("Body")
-player_icon = NodePath("GroupName/PlayerIcon")
-header_name = NodePath("GroupName/HBox/HeaderName")
-name_box = NodePath("GroupName/Box")
-name_text = NodePath("GroupName/Box/Name")
-header_weapon = NodePath("GroupWeapon/HBox/HeaderWeapon")
-slist_weapon = NodePath("GroupWeapon/SpriteGroup")
-tlist_weapon = NodePath("GroupWeapon/TextGroup")
-header_shell = NodePath("GroupShell/HBox/HeaderShell")
-slist_shell = NodePath("GroupShell/SpriteGroup")
-tlist_shell = NodePath("GroupShell/TextGroup")
-header_ability = NodePath("GroupAbility/HBox/HeaderAbility")
-slist_ability = NodePath("GroupAbility/SpriteGroup")
-tlist_ability = NodePath("GroupAbility/TextGroup")
+body_map = NodePath("MapBody")
+body_inv = NodePath("InvBody")
+player_icon = NodePath("InvBody/GroupName/PlayerIcon")
+header_name = NodePath("InvBody/GroupName/HBox/HeaderName")
+name_box = NodePath("InvBody/GroupName/Box")
+name_text = NodePath("InvBody/GroupName/Box/Name")
+header_weapon = NodePath("InvBody/GroupWeapon/HBox/HeaderWeapon")
+slist_weapon = NodePath("InvBody/GroupWeapon/SpriteGroup")
+tlist_weapon = NodePath("InvBody/GroupWeapon/TextGroup")
+header_shell = NodePath("InvBody/GroupShell/HBox/HeaderShell")
+slist_shell = NodePath("InvBody/GroupShell/SpriteGroup")
+tlist_shell = NodePath("InvBody/GroupShell/TextGroup")
+header_ability = NodePath("InvBody/GroupAbility/HBox/HeaderAbility")
+slist_ability = NodePath("InvBody/GroupAbility/SpriteGroup")
+tlist_ability = NodePath("InvBody/GroupAbility/TextGroup")
 list_sprite_frames = SubResource("SpriteFrames_w2fvd")
-selector = NodePath("Selector")
-selector_spr = NodePath("Selector/Sprite")
+selector = NodePath("InvBody/Selector")
+selector_spr = NodePath("InvBody/Selector/Sprite")
 sfx_move = NodePath("AudioGroup/Move")
 sfx_select = NodePath("AudioGroup/Select")
 sfx_open = NodePath("AudioGroup/Open")
 sfx_close = NodePath("AudioGroup/Close")
-sel_target_name = NodePath("TargetName")
-sel_target_map = NodePath("TargetMap")
-map = NodePath("Minimap")
-map_selector = NodePath("MapSelector")
-map_backing = NodePath("MapBacking")
-desc_name = NodePath("ItemDesc/Name")
-desc_body = NodePath("ItemDesc/Body")
-marker_text = NodePath("MarkerPrompt/Text")
-select_text = NodePath("SelectionPrompt/Text")
-map_text = NodePath("MapRate/Text")
-time_text = NodePath("Time/Text")
-item_text = NodePath("ItemRate/Text")
+sfx_switch = NodePath("AudioGroup/Switch")
+sel_target_name = NodePath("InvBody/TargetName")
+map = NodePath("MapBody/Minimap")
+map_selector = NodePath("MapBody/MapSelector")
+desc_panel = NodePath("InvBody/DescPanel")
+desc_name = NodePath("InvBody/DescPanel/ItemDesc/Name")
+desc_body = NodePath("InvBody/DescPanel/ItemDesc/Body")
+prompts = [NodePath("MapBody/PromptMarkers"), NodePath("MapBody/PromptZoom"), NodePath("MapBody/PromptInv"), NodePath("InvBody/PromptRead"), NodePath("InvBody/PromptMap")]
+prompt_icon_texts = [NodePath("MapBody/PromptMarkers/Icon"), NodePath("MapBody/PromptZoom/Icon"), NodePath("MapBody/PromptInv/Icon"), NodePath("InvBody/PromptRead/Icon"), NodePath("InvBody/PromptMap/Icon")]
+prompt_desc_texts = [NodePath("MapBody/PromptMarkers/Desc"), NodePath("MapBody/PromptZoom/Desc"), NodePath("MapBody/PromptInv/Desc"), NodePath("InvBody/PromptRead/Desc"), NodePath("InvBody/PromptMap/Desc")]
+info_text = NodePath("MapBody/RunInfo")
+map_text = NodePath("MapBody/MapRate")
+time_text = NodePath("MapBody/InGameTime")
+item_text = NodePath("MapBody/ItemRate")
 helix_count = NodePath("HelixCount")
 radar = NodePath("Radar")
+anim = NodePath("AnimationPlayer")
+player_sprite = NodePath("InvBody/ItemGroup/Player")
+item_sprites = [NodePath("InvBody/ItemGroup/Peashooter"), NodePath("InvBody/ItemGroup/Boomerang"), NodePath("InvBody/ItemGroup/RainbowWave"), NodePath("InvBody/ItemGroup/Devastator"), NodePath("InvBody/ItemGroup/HighJump"), NodePath("InvBody/ItemGroup/ShellShield"), NodePath("InvBody/ItemGroup/RapidFire"), NodePath("InvBody/ItemGroup/Player"), NodePath("InvBody/ItemGroup/Player"), NodePath("InvBody/ItemGroup/Player"), NodePath("InvBody/ItemGroup/GravityShock"), null, null, null, null, NodePath("InvBody/ItemGroup/RadarShell"), NodePath("InvBody/ItemGroup/Broom")]
+item_target = NodePath("InvBody/ItemGroup/ItemTarget")
 
-[node name="Body" type="AnimatedSprite2D" parent="." unique_id=1185807939]
-position = Vector2(200, 144)
+[node name="InvBody" type="AnimatedSprite2D" parent="." unique_id=1832428136]
+position = Vector2(136, 132)
 sprite_frames = SubResource("SpriteFrames_wkouj")
 animation = &"0"
 script = ExtResource("3_j127p")
 metadata/_custom_type_script = "uid://boee2837la0pr"
 
-[node name="MapBacking" type="Sprite2D" parent="." unique_id=1670636641]
-position = Vector2(292, 116)
-texture = ExtResource("5_c64hb")
+[node name="ItemGroup" type="Node2D" parent="InvBody" unique_id=614621986]
+position = Vector2(16, 36)
 
-[node name="Minimap" parent="." unique_id=435565806 instance=ExtResource("5_cf02a")]
-position = Vector2(292, 116)
-subscreen_mode = true
+[node name="ItemTarget" type="Marker2D" parent="InvBody/ItemGroup" unique_id=2083999881]
+position = Vector2(108, 0)
 
-[node name="MapSelector" type="AnimatedSprite2D" parent="." unique_id=600969424]
-position = Vector2(192, 32)
-sprite_frames = SubResource("SpriteFrames_2dhju")
-autoplay = "default"
-frame = 1
-frame_progress = 0.39277387
-script = ExtResource("3_j127p")
-metadata/_custom_type_script = "uid://boee2837la0pr"
+[node name="Broom" type="Sprite2D" parent="InvBody/ItemGroup" unique_id=1749926654]
+y_sort_enabled = true
+position = Vector2(24, -13)
+texture = ExtResource("5_orj4x")
+hframes = 8
+vframes = 9
+frame = 56
 
-[node name="GroupName" type="Sprite2D" parent="." unique_id=1788600883]
-position = Vector2(37, 40)
+[node name="Player" type="Sprite2D" parent="InvBody/ItemGroup" unique_id=1197746799]
+y_sort_enabled = true
+texture = ExtResource("5_orj4x")
+hframes = 8
+vframes = 9
+
+[node name="Peashooter" type="Sprite2D" parent="InvBody/ItemGroup" unique_id=2096956137]
+y_sort_enabled = true
+position = Vector2(54, 22)
+texture = ExtResource("5_orj4x")
+hframes = 8
+vframes = 9
+frame = 57
+
+[node name="Boomerang" type="Sprite2D" parent="InvBody/ItemGroup" unique_id=1535974537]
+y_sort_enabled = true
+position = Vector2(-44, 19)
+texture = ExtResource("5_orj4x")
+hframes = 8
+vframes = 9
+frame = 58
+
+[node name="RainbowWave" type="Sprite2D" parent="InvBody/ItemGroup" unique_id=1786057024]
+y_sort_enabled = true
+position = Vector2(31, 40)
+texture = ExtResource("5_orj4x")
+hframes = 8
+vframes = 9
+frame = 59
+
+[node name="Devastator" type="Sprite2D" parent="InvBody/ItemGroup" unique_id=1348098423]
+y_sort_enabled = true
+position = Vector2(71, -8)
+texture = ExtResource("5_orj4x")
+hframes = 8
+vframes = 9
+frame = 60
+
+[node name="HighJump" type="Sprite2D" parent="InvBody/ItemGroup" unique_id=1149863212]
+y_sort_enabled = true
+position = Vector2(-77, -6)
+texture = ExtResource("5_orj4x")
+hframes = 8
+vframes = 9
+frame = 61
+
+[node name="ShellShield" type="Sprite2D" parent="InvBody/ItemGroup" unique_id=1978204787]
+y_sort_enabled = true
+position = Vector2(80, 35)
+texture = ExtResource("5_orj4x")
+hframes = 8
+vframes = 9
+frame = 62
+
+[node name="RapidFire" type="Sprite2D" parent="InvBody/ItemGroup" unique_id=1673570136]
+y_sort_enabled = true
+position = Vector2(-80, 31)
+texture = ExtResource("5_orj4x")
+hframes = 8
+vframes = 9
+frame = 63
+
+[node name="GravityShock" type="Sprite2D" parent="InvBody/ItemGroup" unique_id=247611652]
+y_sort_enabled = true
+position = Vector2(-12, 41)
+texture = ExtResource("5_orj4x")
+hframes = 8
+vframes = 9
+frame = 64
+
+[node name="RadarShell" type="Sprite2D" parent="InvBody/ItemGroup" unique_id=919691785]
+y_sort_enabled = true
+position = Vector2(-9, -8)
+texture = ExtResource("5_orj4x")
+hframes = 8
+vframes = 9
+frame = 65
+
+[node name="GroupName" type="Sprite2D" parent="InvBody" unique_id=1788600883]
+position = Vector2(-85, -91)
 texture = ExtResource("4_shvbi")
 
-[node name="HBox" type="HBoxContainer" parent="GroupName" unique_id=473917119]
-offset_left = -20.0
-offset_top = -9.0
-offset_right = 20.0
-offset_bottom = 31.0
+[node name="HBox" type="HBoxContainer" parent="InvBody/GroupName" unique_id=473917119]
+offset_left = -41.0
+offset_top = -10.0
+offset_right = -1.0
+offset_bottom = 30.0
 
-[node name="HeaderName" parent="GroupName/HBox" unique_id=1478387612 instance=ExtResource("5_ndsvi")]
+[node name="HeaderName" parent="InvBody/GroupName/HBox" unique_id=1478387612 instance=ExtResource("5_ndsvi")]
 custom_minimum_size = Vector2(24, 0)
 layout_mode = 2
 theme_override_font_sizes/normal_font_size = 8
@@ -424,37 +878,37 @@ text_scale = 1
 quick_load_text = "Name"
 shadow_scale = 1
 
-[node name="PlayerIcon" type="AnimatedSprite2D" parent="GroupName" unique_id=1364161667]
-position = Vector2(105, 7)
+[node name="PlayerIcon" type="AnimatedSprite2D" parent="InvBody/GroupName" unique_id=1364161667]
+position = Vector2(83, 6)
 sprite_frames = SubResource("SpriteFrames_bj8rp")
 animation = &"0"
 script = ExtResource("3_j127p")
 metadata/_custom_type_script = "uid://boee2837la0pr"
 
-[node name="Box" type="HBoxContainer" parent="GroupName" unique_id=1933244568]
-offset_left = -20.0
-offset_top = -2.0
-offset_right = 104.0
-offset_bottom = 38.0
+[node name="Box" type="HBoxContainer" parent="InvBody/GroupName" unique_id=1933244568]
+offset_left = -42.0
+offset_top = -3.0
+offset_right = 82.0
+offset_bottom = 37.0
 
-[node name="Name" parent="GroupName/Box" unique_id=1376708755 instance=ExtResource("5_ndsvi")]
+[node name="Name" parent="InvBody/GroupName/Box" unique_id=1376708755 instance=ExtResource("5_ndsvi")]
 custom_minimum_size = Vector2(124, 0)
 layout_mode = 2
 text = "Snaily Snail"
 quick_load_text = "subscreen_header_name"
 shadow_scale = 1
 
-[node name="GroupWeapon" type="Sprite2D" parent="." unique_id=360259077]
-position = Vector2(37, 72)
-texture = ExtResource("4_shvbi")
+[node name="GroupWeapon" type="Sprite2D" parent="InvBody" unique_id=360259077]
+position = Vector2(-103, -64)
+texture = ExtResource("8_w2fvd")
 
-[node name="HBox" type="HBoxContainer" parent="GroupWeapon" unique_id=889712318]
+[node name="HBox" type="HBoxContainer" parent="InvBody/GroupWeapon" unique_id=889712318]
 offset_left = -20.0
 offset_top = -9.0
 offset_right = 20.0
 offset_bottom = 31.0
 
-[node name="HeaderWeapon" parent="GroupWeapon/HBox" unique_id=1234057309 instance=ExtResource("5_ndsvi")]
+[node name="HeaderWeapon" parent="InvBody/GroupWeapon/HBox" unique_id=1234057309 instance=ExtResource("5_ndsvi")]
 custom_minimum_size = Vector2(36, 0)
 layout_mode = 2
 theme_override_font_sizes/normal_font_size = 8
@@ -463,27 +917,27 @@ text_scale = 1
 quick_load_text = "Weapon"
 shadow_scale = 1
 
-[node name="SpriteGroup" type="Node2D" parent="GroupWeapon" unique_id=1628522682]
+[node name="SpriteGroup" type="Node2D" parent="InvBody/GroupWeapon" unique_id=1628522682]
 position = Vector2(-7, 8)
 
-[node name="TextGroup" type="VBoxContainer" parent="GroupWeapon" unique_id=1416573038]
+[node name="TextGroup" type="VBoxContainer" parent="InvBody/GroupWeapon" unique_id=1416573038]
 offset_left = -13.0
 offset_top = 1.0
 offset_right = 27.0
 offset_bottom = 41.0
 theme_override_constants/separation = 2
 
-[node name="GroupShell" type="Sprite2D" parent="." unique_id=1354201681]
-position = Vector2(37, 122)
-texture = SubResource("CompressedTexture2D_j127p")
+[node name="GroupShell" type="Sprite2D" parent="InvBody" unique_id=1354201681]
+position = Vector2(-15, -64)
+texture = ExtResource("8_w2fvd")
 
-[node name="HBox" type="HBoxContainer" parent="GroupShell" unique_id=299919301]
+[node name="HBox" type="HBoxContainer" parent="InvBody/GroupShell" unique_id=299919301]
 offset_left = -20.0
 offset_top = -9.0
 offset_right = 20.0
 offset_bottom = 31.0
 
-[node name="HeaderShell" parent="GroupShell/HBox" unique_id=1139443393 instance=ExtResource("5_ndsvi")]
+[node name="HeaderShell" parent="InvBody/GroupShell/HBox" unique_id=1139443393 instance=ExtResource("5_ndsvi")]
 custom_minimum_size = Vector2(24, 0)
 layout_mode = 2
 theme_override_font_sizes/normal_font_size = 8
@@ -492,27 +946,27 @@ text_scale = 1
 quick_load_text = "Body"
 shadow_scale = 1
 
-[node name="SpriteGroup" type="Node2D" parent="GroupShell" unique_id=625487182]
+[node name="SpriteGroup" type="Node2D" parent="InvBody/GroupShell" unique_id=625487182]
 position = Vector2(-7, 8)
 
-[node name="TextGroup" type="VBoxContainer" parent="GroupShell" unique_id=1685009627]
+[node name="TextGroup" type="VBoxContainer" parent="InvBody/GroupShell" unique_id=1685009627]
 offset_left = -13.0
 offset_top = 1.0
 offset_right = 27.0
 offset_bottom = 41.0
 theme_override_constants/separation = 2
 
-[node name="GroupAbility" type="Sprite2D" parent="." unique_id=878290365]
-position = Vector2(37, 180)
-texture = SubResource("CompressedTexture2D_xrgw3")
+[node name="GroupAbility" type="Sprite2D" parent="InvBody" unique_id=878290365]
+position = Vector2(97, -64)
+texture = ExtResource("8_w2fvd")
 
-[node name="HBox" type="HBoxContainer" parent="GroupAbility" unique_id=981279041]
+[node name="HBox" type="HBoxContainer" parent="InvBody/GroupAbility" unique_id=981279041]
 offset_left = -20.0
 offset_top = -9.0
 offset_right = 20.0
 offset_bottom = 47.0
 
-[node name="HeaderAbility" parent="GroupAbility/HBox" unique_id=1377033938 instance=ExtResource("5_ndsvi")]
+[node name="HeaderAbility" parent="InvBody/GroupAbility/HBox" unique_id=1377033938 instance=ExtResource("5_ndsvi")]
 custom_minimum_size = Vector2(33, 0)
 layout_mode = 2
 theme_override_font_sizes/normal_font_size = 8
@@ -521,51 +975,170 @@ text_scale = 1
 quick_load_text = "Ability"
 shadow_scale = 1
 
-[node name="SpriteGroup" type="Node2D" parent="GroupAbility" unique_id=5874217]
+[node name="SpriteGroup" type="Node2D" parent="InvBody/GroupAbility" unique_id=5874217]
 position = Vector2(-7, 8)
 
-[node name="TextGroup" type="VBoxContainer" parent="GroupAbility" unique_id=1287169808]
+[node name="TextGroup" type="VBoxContainer" parent="InvBody/GroupAbility" unique_id=1287169808]
 offset_left = -13.0
 offset_top = 1.0
 offset_right = 27.0
 offset_bottom = 41.0
 theme_override_constants/separation = 2
 
-[node name="Selector" type="Node2D" parent="." unique_id=855667816]
-position = Vector2(10, 50)
+[node name="Selector" type="Node2D" parent="InvBody" unique_id=855667816]
+position = Vector2(-130, -82)
 
-[node name="Sprite" type="AnimatedSprite2D" parent="Selector" unique_id=1624626810]
+[node name="Sprite" type="AnimatedSprite2D" parent="InvBody/Selector" unique_id=1624626810]
 sprite_frames = SubResource("SpriteFrames_yoqk8")
 autoplay = "default"
 script = ExtResource("3_j127p")
 metadata/_custom_type_script = "uid://boee2837la0pr"
 
-[node name="TargetName" type="Marker2D" parent="." unique_id=2021148096]
-position = Vector2(10, 50)
+[node name="TargetName" type="Marker2D" parent="InvBody" unique_id=2021148096]
+position = Vector2(-130, -82)
 
-[node name="TargetMap" type="Marker2D" parent="." unique_id=1460963607]
-position = Vector2(180, 50)
+[node name="PromptRead" type="Node2D" parent="InvBody" unique_id=758307441]
+position = Vector2(64, -108)
 
-[node name="Node2D" type="Node2D" parent="." unique_id=614621986]
+[node name="Icon" type="RichTextLabel" parent="InvBody/PromptRead" unique_id=35009801]
+clip_contents = false
+offset_left = 6.0
+offset_right = 46.0
+offset_bottom = 40.0
+mouse_filter = 2
+theme_override_constants/line_separation = 0
+theme_override_font_sizes/normal_font_size = 16
+bbcode_enabled = true
+text = "Z"
+fit_content = true
+scroll_active = false
+script = ExtResource("17_j127p")
+shadow_scale = 1
+metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
 
-[node name="ItemDesc" type="VBoxContainer" parent="." unique_id=1616891023]
-offset_left = 196.0
-offset_top = 36.0
-offset_right = 236.0
-offset_bottom = 76.0
-theme_override_constants/separation = 24
+[node name="Dash" type="RichTextLabel" parent="InvBody/PromptRead" unique_id=647313748]
+clip_contents = false
+offset_left = 23.0
+offset_top = 6.0
+offset_right = 63.0
+offset_bottom = 46.0
+mouse_filter = 2
+theme_override_constants/line_separation = 0
+theme_override_font_sizes/normal_font_size = 8
+bbcode_enabled = true
+text = "-"
+fit_content = true
+scroll_active = false
+script = ExtResource("17_j127p")
+text_scale = 1
+shadow_scale = 1
+metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
 
-[node name="Name" parent="ItemDesc" unique_id=1267272580 instance=ExtResource("5_ndsvi")]
+[node name="Desc" type="RichTextLabel" parent="InvBody/PromptRead" unique_id=1411050051]
+custom_maximum_size = Vector2(64, -1)
+clip_contents = false
+offset_left = 30.0
+offset_top = -10.0
+offset_right = 94.0
+offset_bottom = 30.0
+mouse_filter = 2
+theme_override_constants/line_separation = 0
+theme_override_font_sizes/normal_font_size = 8
+bbcode_enabled = true
+text = "Read more"
+fit_content = true
+scroll_active = false
+vertical_alignment = 1
+script = ExtResource("17_j127p")
+text_scale = 1
+shadow_scale = 1
+metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
+
+[node name="PromptMap" type="Node2D" parent="InvBody" unique_id=1331684717]
+position = Vector2(64, -92)
+
+[node name="Icon" type="RichTextLabel" parent="InvBody/PromptMap" unique_id=1285544406]
+clip_contents = false
+offset_left = 6.0
+offset_right = 46.0
+offset_bottom = 40.0
+mouse_filter = 2
+theme_override_constants/line_separation = 0
+theme_override_font_sizes/normal_font_size = 16
+bbcode_enabled = true
+text = "V"
+fit_content = true
+scroll_active = false
+script = ExtResource("17_j127p")
+shadow_scale = 1
+metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
+
+[node name="Dash" type="RichTextLabel" parent="InvBody/PromptMap" unique_id=2128283117]
+clip_contents = false
+offset_left = 23.0
+offset_top = 6.0
+offset_right = 63.0
+offset_bottom = 46.0
+mouse_filter = 2
+theme_override_constants/line_separation = 0
+theme_override_font_sizes/normal_font_size = 8
+bbcode_enabled = true
+text = "-"
+fit_content = true
+scroll_active = false
+script = ExtResource("17_j127p")
+text_scale = 1
+shadow_scale = 1
+metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
+
+[node name="Desc" type="RichTextLabel" parent="InvBody/PromptMap" unique_id=942259562]
+custom_maximum_size = Vector2(64, -1)
+clip_contents = false
+offset_left = 30.0
+offset_top = -10.0
+offset_right = 94.0
+offset_bottom = 30.0
+mouse_filter = 2
+theme_override_constants/line_separation = 0
+theme_override_font_sizes/normal_font_size = 8
+bbcode_enabled = true
+text = "Map panel"
+fit_content = true
+scroll_active = false
+vertical_alignment = 1
+script = ExtResource("17_j127p")
+text_scale = 1
+shadow_scale = 1
+metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
+
+[node name="DescPanel" type="PanelContainer" parent="InvBody" unique_id=1437951060]
+z_index = 2
+offset_left = -128.0
+offset_top = 100.0
+offset_right = 80.0
+offset_bottom = 156.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_styles/panel = SubResource("StyleBoxTexture_wkouj")
+
+[node name="ItemDesc" type="VBoxContainer" parent="InvBody/DescPanel" unique_id=1616891023]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_constants/separation = 8
+
+[node name="Name" parent="InvBody/DescPanel/ItemDesc" unique_id=1267272580 instance=ExtResource("5_ndsvi")]
 custom_minimum_size = Vector2(192, 0)
 layout_mode = 2
+size_flags_vertical = 4
 text = "Item descriptions"
 max_width = 192
 shadow_scale = 1
 border_scale = 1
 
-[node name="Body" parent="ItemDesc" unique_id=442358089 instance=ExtResource("5_ndsvi")]
+[node name="Body" parent="InvBody/DescPanel/ItemDesc" unique_id=442358089 instance=ExtResource("5_ndsvi")]
 custom_minimum_size = Vector2(192, 0)
 layout_mode = 2
+size_flags_vertical = 4
 theme_override_constants/line_separation = 2
 theme_override_font_sizes/normal_font_size = 8
 text = "This is where descriptions of whatever item is selected will go!"
@@ -575,99 +1148,409 @@ shadow_scale = 1
 border_scale = 1
 line_separation = 2
 
-[node name="MarkerPrompt" type="HBoxContainer" parent="." unique_id=1346228483]
-custom_minimum_size = Vector2(200, 0)
-offset_left = 100.0
-offset_top = 203.0
-offset_right = 300.0
-offset_bottom = 243.0
-alignment = 2
+[node name="MapBody" type="AnimatedSprite2D" parent="." unique_id=1185807939]
+position = Vector2(264, 132)
+sprite_frames = SubResource("SpriteFrames_4u6py")
+animation = &"0"
+script = ExtResource("3_j127p")
+metadata/_custom_type_script = "uid://boee2837la0pr"
 
-[node name="Text" parent="MarkerPrompt" unique_id=588890642 instance=ExtResource("5_ndsvi")]
-custom_minimum_size = Vector2(200, 0)
-layout_mode = 2
+[node name="MapBacking" type="Sprite2D" parent="MapBody" unique_id=1670636641]
+modulate = Color(0, 0, 0, 0.49803922)
+position = Vector2(28, -16)
+texture = ExtResource("5_c64hb")
+
+[node name="Minimap" parent="MapBody" unique_id=435565806 instance=ExtResource("5_cf02a")]
+position = Vector2(28, -16)
+subscreen_mode = true
+
+[node name="MapSelector" type="AnimatedSprite2D" parent="MapBody" unique_id=600969424]
+position = Vector2(-72, -100)
+sprite_frames = SubResource("SpriteFrames_2dhju")
+autoplay = "default"
+frame = 1
+frame_progress = 0.39277387
+script = ExtResource("3_j127p")
+metadata/_custom_type_script = "uid://boee2837la0pr"
+
+[node name="Header1" type="RichTextLabel" parent="MapBody" unique_id=2112391614]
+clip_contents = false
+offset_left = -163.0
+offset_top = -105.0
+offset_right = -83.0
+offset_bottom = -97.0
+mouse_filter = 2
 theme_override_font_sizes/normal_font_size = 8
-text = "Z - Set markers"
-autowrap_mode = 0
-horizontal_alignment = 2
-max_width = 200
+bbcode_enabled = true
+text = "Your"
+fit_content = true
+scroll_active = false
+script = ExtResource("17_j127p")
 text_scale = 1
-quick_load_text = "Set markers - bind__UI_ACCEPT   Zoom - bind__STRAFE"
+shadow_scale = 1
+metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MapBody" unique_id=25502821]
+custom_minimum_size = Vector2(86, 0)
+custom_maximum_size = Vector2(86, -1)
+offset_left = -164.0
+offset_top = -101.0
+offset_right = -78.0
+offset_bottom = -37.0
+
+[node name="Header2" type="RichTextLabel" parent="MapBody/HBoxContainer" unique_id=637502434]
+clip_contents = false
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/line_separation = 0
+theme_override_font_sizes/normal_font_size = 16
+bbcode_enabled = true
+text = "Map"
+fit_content = true
+scroll_active = false
+script = ExtResource("17_j127p")
+shadow_scale = 1
+metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
+
+[node name="Header3" type="RichTextLabel" parent="MapBody/HBoxContainer" unique_id=541808246]
+clip_contents = false
+layout_mode = 2
+offset_transform_enabled = true
+offset_transform_position = Vector2(0, 8)
+mouse_filter = 2
+theme_override_constants/line_separation = 0
+theme_override_font_sizes/normal_font_size = 8
+bbcode_enabled = true
+text = "of"
+fit_content = true
+scroll_active = false
+script = ExtResource("17_j127p")
+text_scale = 1
+shadow_scale = 1
+metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MapBody" unique_id=546366996]
+custom_minimum_size = Vector2(86, 0)
+custom_maximum_size = Vector2(86, -1)
+offset_left = -163.0
+offset_top = -86.0
+offset_right = -77.0
+offset_bottom = -32.0
+theme_override_constants/separation = 2
+
+[node name="Header4" type="RichTextLabel" parent="MapBody/VBoxContainer" unique_id=2065550438]
+clip_contents = false
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/line_separation = 0
+theme_override_font_sizes/normal_font_size = 8
+bbcode_enabled = true
+text = "Snaily World!!"
+fit_content = true
+scroll_active = false
+script = ExtResource("17_j127p")
+text_scale = 1
+shadow_scale = 1
+metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
+
+[node name="TextureRect" type="TextureRect" parent="MapBody/VBoxContainer" unique_id=1349224718]
+layout_mode = 2
+texture = ExtResource("4_shvbi")
+stretch_mode = 2
+
+[node name="Legend" type="Node2D" parent="MapBody" unique_id=905370572]
+position = Vector2(-160, -64)
+
+[node name="SnailySprite2D" type="AnimatedSprite2D" parent="MapBody/Legend" unique_id=2040360455]
+sprite_frames = SubResource("SpriteFrames_udyn1")
+autoplay = "default"
+script = ExtResource("3_j127p")
+metadata/_custom_type_script = "uid://boee2837la0pr"
+
+[node name="MapMarker1" parent="MapBody/Legend" unique_id=1627086070 instance=ExtResource("17_newu2")]
+position = Vector2(0, 8)
+type = 2
+
+[node name="MapMarker2" parent="MapBody/Legend" unique_id=1765304071 instance=ExtResource("17_newu2")]
+position = Vector2(0, 16)
+
+[node name="MapMarker3" parent="MapBody/Legend" unique_id=1091855026 instance=ExtResource("17_newu2")]
+position = Vector2(0, 24)
+type = 1
+
+[node name="MapMarker4" parent="MapBody/Legend" unique_id=985311718 instance=ExtResource("17_newu2")]
+position = Vector2(0, 32)
+type = 4
+
+[node name="Dashes" type="RichTextLabel" parent="MapBody/Legend" unique_id=241329037]
+clip_contents = false
+offset_left = 7.0
+offset_top = -6.0
+offset_right = 47.0
+offset_bottom = 58.0
+mouse_filter = 2
+theme_override_font_sizes/normal_font_size = 8
+bbcode_enabled = true
+text = "-
+-
+-
+-
+-"
+fit_content = true
+scroll_active = false
+script = ExtResource("17_j127p")
+text_scale = 1
+shadow_scale = 1
+metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
+
+[node name="Labels" type="RichTextLabel" parent="MapBody/Legend" unique_id=569655771]
+clip_contents = false
+offset_left = 16.0
+offset_top = -6.0
+offset_right = 80.0
+offset_bottom = 58.0
+mouse_filter = 2
+theme_override_constants/line_separation = 0
+theme_override_font_sizes/normal_font_size = 8
+bbcode_enabled = true
+text = "You!!
+Item
+Save point
+Boss
+Marker"
+fit_content = true
+scroll_active = false
+script = ExtResource("17_j127p")
+text_scale = 1
+quick_load_text = "You!!\\nItem\\nSave point\\nBoss\\nMarker"
+shadow_scale = 1
+metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
+
+[node name="RunInfo" parent="MapBody" unique_id=326553468 instance=ExtResource("5_ndsvi")]
+offset_left = -136.0
+offset_top = 77.0
+offset_right = -36.0
+offset_bottom = 117.0
+theme_override_constants/line_separation = 0
+theme_override_font_sizes/normal_font_size = 8
+text = "Snaily
+Normal"
+horizontal_alignment = 2
+text_scale = 1
+quick_load_text = "%s\\n%s"
 shadow_scale = 1
 
-[node name="SelectionPrompt" type="HBoxContainer" parent="." unique_id=1531291598]
-custom_minimum_size = Vector2(200, 0)
-offset_left = 100.0
-offset_top = 219.0
-offset_right = 300.0
-offset_bottom = 259.0
-alignment = 2
-
-[node name="Text" parent="SelectionPrompt" unique_id=993632548 instance=ExtResource("5_ndsvi")]
-custom_minimum_size = Vector2(200, 0)
-layout_mode = 2
-theme_override_font_sizes/normal_font_size = 8
-text = "Z - Set markers"
-autowrap_mode = 0
-horizontal_alignment = 2
-max_width = 200
-text_scale = 1
-quick_load_text = "Swap selection - bind__LEFT bind__RIGHT"
-shadow_scale = 1
-
-[node name="MapRate" type="HBoxContainer" parent="." unique_id=1500175812]
+[node name="MapRate" parent="MapBody" unique_id=195253876 instance=ExtResource("5_ndsvi")]
 custom_minimum_size = Vector2(100, 0)
-offset_left = 292.0
-offset_top = 225.0
-offset_right = 392.0
-offset_bottom = 265.0
-alignment = 2
-
-[node name="Text" parent="MapRate" unique_id=195253876 instance=ExtResource("5_ndsvi")]
-custom_minimum_size = Vector2(100, 0)
-layout_mode = 2
+offset_left = -88.0
+offset_top = 77.0
+offset_right = 12.0
+offset_bottom = 117.0
 theme_override_font_sizes/normal_font_size = 8
-text = "Map - 0%"
+text = "Map
+0%"
 horizontal_alignment = 2
 text_scale = 1
-quick_load_text = "Map - %.1f%%"
+quick_load_text = "Map\\n%.1f%%"
 shadow_scale = 1
 
-[node name="ItemRate" type="HBoxContainer" parent="." unique_id=1464476090]
+[node name="ItemRate" parent="MapBody" unique_id=1149271177 instance=ExtResource("5_ndsvi")]
 custom_minimum_size = Vector2(100, 0)
-offset_left = 292.0
-offset_top = 217.0
-offset_right = 392.0
-offset_bottom = 257.0
-alignment = 2
-
-[node name="Text" parent="ItemRate" unique_id=1149271177 instance=ExtResource("5_ndsvi")]
-custom_minimum_size = Vector2(100, 0)
-layout_mode = 2
+offset_left = -40.0
+offset_top = 77.0
+offset_right = 60.0
+offset_bottom = 117.0
 theme_override_font_sizes/normal_font_size = 8
-text = "Items - 0%"
+text = "Items
+0%"
 horizontal_alignment = 2
 text_scale = 1
-quick_load_text = "Items - %.1f%%"
+quick_load_text = "Items\\n%.1f%%"
 shadow_scale = 1
 
-[node name="Time" type="HBoxContainer" parent="." unique_id=1369516568]
+[node name="InGameTime" parent="MapBody" unique_id=81741322 instance=ExtResource("5_ndsvi")]
 custom_minimum_size = Vector2(100, 0)
-offset_left = 292.0
-offset_top = 209.0
-offset_right = 392.0
-offset_bottom = 249.0
-alignment = 2
-
-[node name="Text" parent="Time" unique_id=81741322 instance=ExtResource("5_ndsvi")]
-custom_minimum_size = Vector2(100, 0)
-layout_mode = 2
+offset_left = 24.0
+offset_top = 77.0
+offset_right = 124.0
+offset_bottom = 117.0
 theme_override_font_sizes/normal_font_size = 8
-text = "Time - 0:00:00.00"
+text = "Time
+0:00:00.00"
 horizontal_alignment = 2
 text_scale = 1
-quick_load_text = "Time - %s"
+quick_load_text = "Time\\n%s"
 shadow_scale = 1
+
+[node name="PromptMarkers" type="Node2D" parent="MapBody" unique_id=205434859]
+position = Vector2(-168, 12)
+
+[node name="Icon" type="RichTextLabel" parent="MapBody/PromptMarkers" unique_id=104120513]
+clip_contents = false
+offset_left = 6.0
+offset_right = 46.0
+offset_bottom = 40.0
+mouse_filter = 2
+bbcode_enabled = true
+text = "Z"
+fit_content = true
+scroll_active = false
+script = ExtResource("17_j127p")
+shadow_scale = 1
+metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
+
+[node name="Dash" type="RichTextLabel" parent="MapBody/PromptMarkers" unique_id=2051335691]
+clip_contents = false
+offset_left = 23.0
+offset_top = 6.0
+offset_right = 63.0
+offset_bottom = 46.0
+mouse_filter = 2
+theme_override_constants/line_separation = 0
+theme_override_font_sizes/normal_font_size = 8
+bbcode_enabled = true
+text = "-"
+fit_content = true
+scroll_active = false
+script = ExtResource("17_j127p")
+text_scale = 1
+shadow_scale = 1
+metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
+
+[node name="Desc" type="RichTextLabel" parent="MapBody/PromptMarkers" unique_id=1246462581]
+custom_minimum_size = Vector2(64, 0)
+custom_maximum_size = Vector2(64, -1)
+clip_contents = false
+offset_left = 30.0
+offset_top = -10.0
+offset_right = 94.0
+offset_bottom = 30.0
+mouse_filter = 2
+theme_override_constants/line_separation = 0
+theme_override_font_sizes/normal_font_size = 8
+bbcode_enabled = true
+text = "Set Markers"
+fit_content = true
+scroll_active = false
+vertical_alignment = 1
+script = ExtResource("17_j127p")
+text_scale = 1
+shadow_scale = 1
+metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
+
+[node name="PromptZoom" type="Node2D" parent="MapBody" unique_id=1557623772]
+position = Vector2(-168, 32)
+
+[node name="Icon" type="RichTextLabel" parent="MapBody/PromptZoom" unique_id=490903651]
+clip_contents = false
+offset_left = 6.0
+offset_right = 46.0
+offset_bottom = 40.0
+mouse_filter = 2
+theme_override_constants/line_separation = 0
+theme_override_font_sizes/normal_font_size = 16
+bbcode_enabled = true
+text = "C"
+fit_content = true
+scroll_active = false
+script = ExtResource("17_j127p")
+shadow_scale = 1
+metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
+
+[node name="Dash" type="RichTextLabel" parent="MapBody/PromptZoom" unique_id=1808907550]
+clip_contents = false
+offset_left = 23.0
+offset_top = 6.0
+offset_right = 63.0
+offset_bottom = 46.0
+mouse_filter = 2
+theme_override_constants/line_separation = 0
+theme_override_font_sizes/normal_font_size = 8
+bbcode_enabled = true
+text = "-"
+fit_content = true
+scroll_active = false
+script = ExtResource("17_j127p")
+text_scale = 1
+shadow_scale = 1
+metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
+
+[node name="Desc" type="RichTextLabel" parent="MapBody/PromptZoom" unique_id=2022893522]
+custom_maximum_size = Vector2(64, -1)
+clip_contents = false
+offset_left = 30.0
+offset_top = -10.0
+offset_right = 94.0
+offset_bottom = 30.0
+mouse_filter = 2
+theme_override_constants/line_separation = 0
+theme_override_font_sizes/normal_font_size = 8
+bbcode_enabled = true
+text = "Zoom in"
+fit_content = true
+scroll_active = false
+vertical_alignment = 1
+script = ExtResource("17_j127p")
+text_scale = 1
+shadow_scale = 1
+metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
+
+[node name="PromptInv" type="Node2D" parent="MapBody" unique_id=1241328933]
+position = Vector2(-168, 52)
+
+[node name="Icon" type="RichTextLabel" parent="MapBody/PromptInv" unique_id=1481485287]
+clip_contents = false
+offset_left = 6.0
+offset_right = 46.0
+offset_bottom = 40.0
+mouse_filter = 2
+theme_override_constants/line_separation = 0
+theme_override_font_sizes/normal_font_size = 16
+bbcode_enabled = true
+text = "V"
+fit_content = true
+scroll_active = false
+script = ExtResource("17_j127p")
+shadow_scale = 1
+metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
+
+[node name="Dash" type="RichTextLabel" parent="MapBody/PromptInv" unique_id=306420140]
+clip_contents = false
+offset_left = 23.0
+offset_top = 6.0
+offset_right = 63.0
+offset_bottom = 46.0
+mouse_filter = 2
+theme_override_constants/line_separation = 0
+theme_override_font_sizes/normal_font_size = 8
+bbcode_enabled = true
+text = "-"
+fit_content = true
+scroll_active = false
+script = ExtResource("17_j127p")
+text_scale = 1
+shadow_scale = 1
+metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
+
+[node name="Desc" type="RichTextLabel" parent="MapBody/PromptInv" unique_id=1254882855]
+custom_maximum_size = Vector2(64, -1)
+clip_contents = false
+offset_left = 30.0
+offset_top = -10.0
+offset_right = 94.0
+offset_bottom = 30.0
+mouse_filter = 2
+theme_override_constants/line_separation = 0
+theme_override_font_sizes/normal_font_size = 8
+bbcode_enabled = true
+text = "Inventory panel"
+fit_content = true
+scroll_active = false
+vertical_alignment = 1
+script = ExtResource("17_j127p")
+text_scale = 1
+shadow_scale = 1
+metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
 
 [node name="AudioGroup" type="Node" parent="." unique_id=1315900716]
 
@@ -685,6 +1568,10 @@ bus = &"Sfx"
 
 [node name="Close" type="AudioStreamPlayer" parent="AudioGroup" unique_id=1297632802]
 stream = ExtResource("12_cf02a")
+bus = &"Sfx"
+
+[node name="Switch" type="AudioStreamPlayer" parent="AudioGroup" unique_id=148997971]
+stream = ExtResource("16_j127p")
 bus = &"Sfx"
 
 [node name="HelixIcon" type="AnimatedSprite2D" parent="." unique_id=1995789564]
@@ -730,3 +1617,7 @@ script = ExtResource("17_j127p")
 text_scale = 1
 border_scale = 1
 metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=721375734]
+libraries/ = SubResource("AnimationLibrary_orj4x")
+autoplay = &"init"

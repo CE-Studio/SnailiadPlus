@@ -33,8 +33,8 @@ const SELECTOR_LIST_OFFSET:Vector2i = Vector2(-20, -1)
 const SELECTOR_SPEED:float = 20.0
 const SUBSCREEN_ENTER_SPEED:float = 16.0
 const SUBSCREEN_INACTIVE_ACCEL:float = 16.0
-
-const MAP_TRANSPARENT:Color = Color(0.0, 0.0, 0.0, 0.0)
+const SUBSCREEN_SWITCH_SPEED:float = 3.5
+const DESC_PANEL_SPEED:float = 10.0
 
 enum MoveMode {
 	NONE = -1,
@@ -44,24 +44,27 @@ enum MoveMode {
 	GRID
 }
 
-var group_start_x:float = 0.0
 var elapsed:float = 0.0
-var selection_depth:int = -1
-var selectable_items:Array = [] # Formatting: [ SnailySprite2D, Int ]
-var selection:int = -1
-var list_focused:bool = false
+var selection_depth:int = 0
+var selectable_items:Array[Array] = [ [], [], [] ] # Formatting: [ SnailySprite2D, Int ]
+var selection:Vector2i = Vector2i(0, -1)
 var map_focused:bool = true
 var selector_target:Vector2i = Vector2.ZERO
 var map_sel_origin:Vector2i
 var map_selection:Vector2i = Vector2.ZERO
+var desc_panel_origin:Vector2
 var active:bool = true
 var exit_speed:float = 1.0
+var player_origin:Vector2
+var player_shell:int = 0
+var item_origins:Array[Vector2] = []
+var selected_item:Sprite2D
 
 var zoomed_map:Node2D = null
 var map_zoomed:bool = false
 
-@export var separators:Array[Sprite2D] = []
-@export var body:SnailySprite2D
+@export var body_map:SnailySprite2D
+@export var body_inv:SnailySprite2D
 @export var player_icon:SnailySprite2D
 @export var header_name:SnailyText
 @export var name_box:HBoxContainer
@@ -82,42 +85,58 @@ var map_zoomed:bool = false
 @export var sfx_select:AudioStreamPlayer
 @export var sfx_open:AudioStreamPlayer
 @export var sfx_close:AudioStreamPlayer
+@export var sfx_switch:AudioStreamPlayer
 @export var sel_target_name:Marker2D
-@export var sel_target_map:Marker2D
 @export var map:Minimap
 @export var map_selector:SnailySprite2D
-@export var map_backing:Sprite2D
+@export var desc_panel:PanelContainer
 @export var desc_name:SnailyText
 @export var desc_body:SnailyText
-@export var marker_text:SnailyText
-@export var select_text:SnailyText
+@export var prompts:Array[Node2D]
+@export var prompt_icon_texts:Array[SnailyText]
+@export var prompt_desc_texts:Array[SnailyText]
+@export var info_text:SnailyText
 @export var map_text:SnailyText
 @export var time_text:SnailyText
 @export var item_text:SnailyText
 @export var helix_count:SnailyText
 @export var radar:SnailyText
+@export var anim:AnimationPlayer
+@export var player_sprite:Sprite2D
+@export var item_sprites:Array[Sprite2D]
+@export var item_target:Marker2D
 
 @onready var zoomed_scn:PackedScene = preload("uid://b1u1t0hvg2fob")
 #endregion
 
 
 func _ready() -> void:
-	group_start_x = separators[0].position.x
 	var this_char = int(Statics.current_profile["character"])
-	body.play(str(this_char))
+	body_map.play(str(this_char))
+	body_inv.play(str(this_char))
 	player_icon.play(str(this_char))
 	name_text.set_snaily_text(GlobalText.get_player_name(this_char as Player.Players, true))
 	player_icon.position.x = name_box.position.x + name_text.get_width()
-	selector_target = sel_target_map.position
+	selector_target = sel_target_name.position
 	selector.position = selector_target
 	map_selector.visible = false
 	map_sel_origin = Vector2i(map.position) + map.MARKER_ZERO
 	map_selection = UICore.instance.minimap.last_player_pos
-	map_backing.visible = false
 	_init_item_slots()
+	if selectable_items[0].size() == 0: # If weapon list is empty,
+		selection.x = 1 # force selection to shell list to select normal shell
+	_set_map_prompts()
+	_set_inv_prompts()
+	_set_desc(-2)
 	desc_name.set_snaily_text("")
 	desc_body.set_snaily_text("")
+	desc_panel_origin = desc_panel.position
+	desc_panel.modulate.a = 0.0
 	sfx_open.play()
+	info_text.set_snaily_text(info_text.text % [
+		GlobalText.get_player_name(this_char),
+		GlobalText.difficulties[Statics.current_profile["difficulty"] as int]
+		])
 	map_text.set_snaily_text(map_text.text % Minimap.get_map_rate())
 	item_text.set_snaily_text(item_text.text % Statics.get_item_percentage())
 	time_text.set_snaily_text(time_text.text % Statics.get_igt_str())
@@ -131,6 +150,7 @@ func _ready() -> void:
 			radar.enable_rainbow_scroll()
 	else:
 		radar.visible = false
+	_init_item_sprites()
 
 
 func _process(delta: float) -> void:
@@ -145,9 +165,18 @@ func _process(delta: float) -> void:
 			zoomed_map.queue_free()
 			map_zoomed = false
 			return
+		if (selection_depth == 0 and not map_zoomed
+		and SInput.check_input(SInput.Inputs.STRAFE, true)):
+			sfx_select.play()
+			map_zoomed = true
+			zoomed_map = zoomed_scn.instantiate()
+			add_child(zoomed_map)
+			zoomed_map.position = Statics.VECTOR_CENTER
+			zoomed_map.init(map)
+			return
 		
 		var close_flag:bool = false
-		if selection_depth == 0:
+		if selection_depth == 0 and elapsed >= 0.125:
 			if (SInput.check_input(SInput.Inputs.MAP, true)
 			or SInput.check_input(SInput.Inputs.PAUSE, true)
 			or SInput.check_input(SInput.Inputs.UI_BACK, true)):
@@ -175,13 +204,31 @@ func _process(delta: float) -> void:
 		
 		position = position.lerp(Vector2.ZERO, SUBSCREEN_ENTER_SPEED * delta)
 		
-		if not map_zoomed and SInput.check_input(SInput.Inputs.STRAFE, true):
-			sfx_select.play()
-			map_zoomed = true
-			zoomed_map = zoomed_scn.instantiate()
-			add_child(zoomed_map)
-			zoomed_map.position = Statics.VECTOR_CENTER
-			zoomed_map.init(map)
+		if selection_depth == 0 and SInput.check_input(SInput.Inputs.SPEAK, true):
+			if map_focused:
+				anim.play("swap", -1, SUBSCREEN_SWITCH_SPEED)
+			else:
+				anim.play("swap", -1, -SUBSCREEN_SWITCH_SPEED, true)
+			map_focused = not map_focused
+			sfx_switch.play()
+		
+		var panel_y:float = desc_panel_origin.y
+		var panel_a:float = 0.0
+		if selection_depth == 1 and not map_focused:
+			panel_y -= desc_panel.size.y
+			panel_a = 1.0
+		desc_panel.position.y = lerpf(
+			desc_panel.position.y,
+			panel_y,
+			DESC_PANEL_SPEED * delta
+		)
+		desc_panel.modulate.a = lerpf(
+			desc_panel.modulate.a,
+			panel_a,
+			DESC_PANEL_SPEED * delta
+		)
+		
+		_update_item_sprites(delta)
 	else:
 		position.y += exit_speed
 		exit_speed *= 1.0 + (SUBSCREEN_INACTIVE_ACCEL * delta)
@@ -189,6 +236,7 @@ func _process(delta: float) -> void:
 			queue_free()
 
 
+## Adds all relevant list items for collected items to their respective categories
 func _init_item_slots() -> void:
 	var total:int = 0
 	var spr_offset:int = 0
@@ -199,7 +247,7 @@ func _init_item_slots() -> void:
 			var spr = _add_list_spr(slist_weapon, i, "weapon", spr_offset)
 			_add_list_text(tlist_weapon, GlobalText.get_item_name(i))
 			spr_offset += LIST_SPRITE_OFFSET
-			_add_item_selectable(spr, i)
+			_add_item_selectable(spr, i, 0)
 		total += count
 	if total == 0:
 		header_weapon.set_snaily_text(tr(&"?????"))
@@ -212,7 +260,7 @@ func _init_item_slots() -> void:
 			var spr = _add_list_spr(slist_shell, i, "body", spr_offset)
 			_add_list_text(tlist_shell, GlobalText.get_item_name(i, true))
 			spr_offset += LIST_SPRITE_OFFSET
-			_add_item_selectable(spr, i)
+			_add_item_selectable(spr, i, 1)
 		total += count
 	if total == 0:
 		header_shell.set_snaily_text(tr(&"?????"))
@@ -225,12 +273,13 @@ func _init_item_slots() -> void:
 			var spr = _add_list_spr(slist_ability, i, "ability", spr_offset)
 			_add_list_text(tlist_ability, GlobalText.get_item_name(i))
 			spr_offset += LIST_SPRITE_OFFSET
-			_add_item_selectable(spr, i)
+			_add_item_selectable(spr, i, 2)
 		total += count
 	if total == 0:
 		header_ability.set_snaily_text(tr(&"?????"))
 
 
+## Adds a new separator sprite to a category list
 func _add_list_spr(_group:Node2D, _id:int, _action:String, _y:int) -> SnailySprite2D:
 	var new_spr:SnailySprite2D = SnailySprite2D.new()
 	new_spr.sprite_frames = list_sprite_frames
@@ -241,6 +290,7 @@ func _add_list_spr(_group:Node2D, _id:int, _action:String, _y:int) -> SnailySpri
 	return new_spr
 
 
+## Adds a new text entry to a category list
 func _add_list_text(_group:VBoxContainer, _text:String) -> void:
 	var new_text:SnailyText = SnailyText.new()
 	new_text.shadow_scale = 1
@@ -249,10 +299,69 @@ func _add_list_text(_group:VBoxContainer, _text:String) -> void:
 	new_text.set_snaily_text(_text, true)
 
 
-func _add_item_selectable(_sprite:SnailySprite2D, _item_id:int) -> void:
-	selectable_items.append( [ _sprite, _item_id ] )
+## Marks a certain displayed item as able to be selected and read about
+func _add_item_selectable(_sprite:SnailySprite2D, _item_id:int, _column:int) -> void:
+	selectable_items[_column].append( [ _sprite, _item_id ] )
 
 
+## Properly registers all item sprites and sets their visibility depending on if you actually
+## have the specified item or not
+func _init_item_sprites() -> void:
+	player_origin = player_sprite.position
+	player_shell = Statics.get_shell_level(0 if Statics.stack_shells else 1)
+	if Statics.stack_shells and player_shell == 3:
+		player_shell = 4
+	player_sprite.frame_coords.x = player_shell
+	match Player.instance.who_i_is:
+		Player.Players.BLOBBY:
+			player_sprite.frame_coords.y = 5 if Statics.check_item(Item.ItemTypes.SHELL_SHIELD) else 4
+		Player.Players.LEECHY:
+			player_sprite.frame_coords.y = 6
+		_:
+			player_sprite.frame_coords.y = Player.instance.who_i_is as int
+	
+	for i in range(item_sprites.size()):
+		if item_sprites[i] != null:
+			item_origins.append(item_sprites[i].position)
+			item_sprites[i].visible = _get_item_count(i)
+		else:
+			item_origins.append(Vector2.ZERO)
+
+
+## Updates the position and modulate of all item sprites based on if they're selected or not
+func _update_item_sprites(delta:float) -> void:
+	var weight:float = DESC_PANEL_SPEED * delta
+	
+	var player_target:Vector2 = player_origin
+	var player_color:Color = Color.WHITE
+	if selected_item == player_sprite:
+		player_target = item_target.position
+	elif selected_item != null:
+		player_color = Color("3f3f3f")
+	player_sprite.position = Vector2(
+		lerpf(player_sprite.position.x, player_target.x, weight),
+		lerpf(player_sprite.position.y, player_target.y, weight)
+	)
+	player_sprite.modulate = player_sprite.modulate.lerp(player_color, weight)
+	
+	for i in item_sprites.size():
+		if item_sprites[i] != null and item_sprites[i] != player_sprite:
+			var spr:Sprite2D = item_sprites[i]
+			var this_target:Vector2 = item_origins[i]
+			var item_color:Color = Color.WHITE
+			if selected_item == spr:
+				this_target = item_target.position
+			elif selected_item != null:
+				item_color = Color("3f3f3f")
+			spr.position = Vector2(
+				lerpf(spr.position.x, this_target.x, weight),
+				lerpf(spr.position.y, this_target.y, weight)
+			)
+			spr.modulate = spr.modulate.lerp(item_color, weight)
+
+
+## Returns the current held count of a given item, with consideration for items of different
+## IDs that should be counted together as if they were of one type
 func _get_item_count(id:Item.ItemTypes) -> int:
 	if id == Item.ItemTypes.NONE:
 		return 1
@@ -264,6 +373,7 @@ func _get_item_count(id:Item.ItemTypes) -> int:
 	return count
 
 
+## Polls player input and shifts selection based on the current state of the subscreen
 func _test_for_move_selection() -> void:
 	if map_zoomed:
 		return
@@ -271,32 +381,8 @@ func _test_for_move_selection() -> void:
 	var move_mode:MoveMode = MoveMode.NONE
 	var grid_move:Vector2i = Vector2i.ZERO
 	
-	if list_focused:
-		if SInput.check_input(SInput.Inputs.RIGHT, true):
-			list_focused = false
-			map_focused = true
-			move_mode = MoveMode.MAP
-		elif SInput.check_input(SInput.Inputs.DOWN, true):
-			selection += 1
-			move_mode = MoveMode.LIST
-			if selection >= selectable_items.size():
-				selection = -1
-				move_mode = MoveMode.NAME
-		elif SInput.check_input(SInput.Inputs.UP, true):
-			selection -= 1
-			if selection == -1:
-				move_mode = MoveMode.NAME
-			else:
-				if selection < -1:
-					selection = selectable_items.size() - 1
-				move_mode = MoveMode.LIST
-	elif map_focused:
-		if selection_depth == 0:
-			if SInput.check_input(SInput.Inputs.LEFT, true):
-				list_focused = true
-				map_focused = false
-				move_mode = MoveMode.NAME if selection == -1 else MoveMode.LIST
-		elif selection_depth == 1:
+	if map_focused: # Map panel focused
+		if selection_depth == 1:
 			if SInput.check_input(SInput.Inputs.LEFT, true):
 				grid_move.x -= 1
 			if SInput.check_input(SInput.Inputs.RIGHT, true):
@@ -307,37 +393,42 @@ func _test_for_move_selection() -> void:
 				grid_move.y += 1
 			if grid_move != Vector2i.ZERO:
 				move_mode = MoveMode.GRID
+	elif selection_depth == 0: # Inventory panel focused
+		if SInput.check_input(SInput.Inputs.DOWN, true):
+			selection.y += 1
+			move_mode = MoveMode.LIST
+			if selection.y >= selectable_items[selection.x].size():
+				selection.y = -1
+				move_mode = MoveMode.NAME
+		if SInput.check_input(SInput.Inputs.UP, true):
+			selection.y -= 1
+			move_mode = MoveMode.NAME if selection.y == -1 else MoveMode.LIST
+			if selection.y < -1:
+				selection.y = selectable_items[selection.x].size() - 1
+		if SInput.check_input(SInput.Inputs.LEFT, true) and selection.y != -1:
+			selection.x -= 1
+			if selection.x < 0:
+				selection.x = selectable_items.size() - 1
+			if selection.y >= selectable_items[selection.x].size():
+				selection.y = selectable_items[selection.x].size() - 1
+			move_mode = MoveMode.LIST
+		if SInput.check_input(SInput.Inputs.RIGHT, true) and selection.y != -1:
+			selection.x += 1
+			if selection.x >= selectable_items.size():
+				selection.x = 0
+			if selection.y >= selectable_items[selection.x].size():
+				selection.y = selectable_items[selection.x].size() - 1
+			move_mode = MoveMode.LIST
 	
 	if move_mode != MoveMode.NONE:
 		sfx_move.play()
 	match move_mode:
 		MoveMode.LIST:
-			selector_target = selectable_items[selection][0].global_position
-			selector_target -= Vector2i(UICore.instance.global_position)
+			selector_target = selectable_items[selection.x][selection.y][0].global_position
+			selector_target -= Vector2i(body_inv.global_position)
 			selector_target += SELECTOR_LIST_OFFSET
-			_set_desc(selectable_items[selection][1])
-			map.modulate = MAP_TRANSPARENT
-			map.marker_group.visible = false
-			map_backing.visible = true
-			marker_text.visible = false
-			select_text.set_snaily_text(tr(&"Scroll selection - bind__UP bind__DOWN"))
 		MoveMode.NAME:
 			selector_target = sel_target_name.position
-			_set_desc(-2)
-			map.modulate = MAP_TRANSPARENT
-			map.marker_group.visible = false
-			map_backing.visible = true
-			marker_text.visible = false
-			select_text.set_snaily_text(tr(&"Scroll selection - bind__UP bind__DOWN"))
-		MoveMode.MAP:
-			selector_target = sel_target_map.position
-			desc_name.set_snaily_text("")
-			desc_body.set_snaily_text("")
-			map.modulate = Color.WHITE
-			map.marker_group.visible = true
-			map_backing.visible = false
-			marker_text.visible = true
-			select_text.set_snaily_text(tr(&"Swap selection - bind__LEFT bind__RIGHT"))
 		MoveMode.GRID:
 			map_selection += grid_move
 			if map_selection.x < 0:
@@ -351,31 +442,96 @@ func _test_for_move_selection() -> void:
 			map_selector.position = map_sel_origin + (map_selection * 8)
 
 
+## Polls player input and determines how to "select" whatever item may be hovered over
 func _test_for_selection_events() -> void:
 	if map_zoomed:
 		return
 	
-	match selection_depth:
-		0:
-			if map_focused and SInput.check_input(SInput.Inputs.UI_ACCEPT, true):
-				selection_depth += 1
-				sfx_select.play()
-				map_selector.visible = true
-				map_selector.position = map_sel_origin + (map_selection * 8)
-				marker_text.set_snaily_text(tr(&"Place/remove marker - bind__UI_ACCEPT"))
-				select_text.set_snaily_text(tr(&"Return - bind__UI_BACK"))
-		1:
-			if map_focused:
+	if map_focused:
+		match selection_depth:
+			0:
+				if SInput.check_input(SInput.Inputs.UI_ACCEPT, true):
+					selection_depth += 1
+					sfx_select.play()
+					map_selector.visible = true
+					map_selector.position = map_sel_origin + (map_selection * 8)
+					_set_map_prompts()
+			1:
 				if SInput.check_input(SInput.Inputs.UI_ACCEPT, true):
 					sfx_select.play()
 					map.update_p_marker_at_cell(map_selection)
 				elif SInput.check_input(SInput.Inputs.UI_BACK, true):
 					sfx_select.play()
+					map_selector.visible = false
 					selection_depth -= 1
-					marker_text.set_snaily_text(tr(&"Set markers - bind__UI_ACCEPT   Zoom - bind__STRAFE"))
-					select_text.set_snaily_text(tr(&"Swap selection - bind__LEFT bind__RIGHT"))
+					_set_map_prompts()
+	
+	elif SInput.check_input(SInput.Inputs.UI_ACCEPT, true):
+		match selection_depth:
+			0:
+				selection_depth += 1
+				sfx_select.play()
+				if selection.y == -1:
+					_set_desc(-2)
+					selected_item = player_sprite
+				else:
+					var id:int = selectable_items[selection.x][selection.y][1]
+					_set_desc(id)
+					selected_item = item_sprites[id]
+					match id:
+						Item.ItemTypes.ICE_SHELL: player_sprite.frame_coords.x = 1
+						Item.ItemTypes.GRAVITY_SHELL: player_sprite.frame_coords.x = 2
+						Item.ItemTypes.METAL_SHELL: player_sprite.frame_coords.x = 4
+						Item.ItemTypes.NONE:
+							player_sprite.frame_coords.x = 0
+							selected_item = player_sprite
+				desc_panel.size.y = 16
+				selected_item.z_index = 1
+			1:
+				selection_depth -= 1
+				sfx_select.play()
+				selected_item.z_index = 0
+				selected_item = null
+				player_sprite.frame_coords.x = player_shell
 
 
+## Updates the displayed icons and text for the prompts on the map panel based on the current
+## selection depth
+func _set_map_prompts() -> void:
+	match selection_depth:
+		0:
+			prompt_icon_texts[0].set_snaily_text("bind__ui_accept")
+			prompt_desc_texts[0].set_snaily_text(tr(&"Set markers"))
+			prompt_icon_texts[1].set_snaily_text("bind__strafe")
+			prompt_desc_texts[1].set_snaily_text(tr(&"Zoom in"))
+			prompts[2].visible = true
+			prompt_icon_texts[2].set_snaily_text("bind__speak")
+			prompt_desc_texts[2].set_snaily_text(tr(&"Inventory panel"))
+		1:
+			prompt_icon_texts[0].set_snaily_text("bind__ui_accept")
+			prompt_desc_texts[0].set_snaily_text(tr(&"Place/remove marker"))
+			prompt_icon_texts[1].set_snaily_text("bind__ui_back")
+			prompt_desc_texts[1].set_snaily_text(tr(&"Return"))
+			prompts[2].visible = false
+
+
+## Updates the displayed icons and text for the prompts on the inventory panel based on
+## the current selection depth
+func _set_inv_prompts() -> void:
+	match selection_depth:
+		0:
+			prompt_icon_texts[3].set_snaily_text("bind__ui_accept")
+			prompt_desc_texts[3].set_snaily_text(tr(&"Read more"))
+			prompts[4].visible = true
+			prompt_icon_texts[4].set_snaily_text("bind__speak")
+			prompt_desc_texts[4].set_snaily_text(tr(&"Map panel"))
+		1:
+			prompt_icon_texts[3].set_snaily_text("bind__ui_accept")
+			prompt_desc_texts[3].set_snaily_text(tr(&"Read less"))
+			prompts[4].visible = false
+
+
+## Writes the appropriate item description to the description text node based on the given item ID
 func _set_desc(id:int) -> void:
 	desc_name.visible = true
 	desc_name.set_snaily_text(GlobalText.get_item_name(id, true))

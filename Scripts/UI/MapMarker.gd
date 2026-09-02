@@ -19,6 +19,16 @@ var p_col:Color = Color.TRANSPARENT
 #endregion
 
 
+func _ready() -> void:
+	match type:
+		Minimap.MarkerTypes.SAVE: sprite.play("save")
+		Minimap.MarkerTypes.ITEM: sprite.play("item_normal")
+		Minimap.MarkerTypes.ITEM_COLLECTED: sprite.play("item_collected")
+		Minimap.MarkerTypes.BOSS: sprite.play("boss")
+		Minimap.MarkerTypes.UNKNOWN: sprite.play("unknown")
+		Minimap.MarkerTypes.P_MARKER: sprite.play("marker")
+
+
 func _process(delta: float) -> void:
 	if type == Minimap.MarkerTypes.P_MARKER:
 		if p_col != Color.TRANSPARENT:
