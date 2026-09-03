@@ -43,6 +43,7 @@ func _physics_process(delta: float) -> void:
 		hop_timeout -= delta
 		if hop_timeout <= QUIVER_THRESHOLD:
 			sprite.position.x = randf_range(-QUIVER_RANGE, QUIVER_RANGE)
+			play_anim("charge")
 		if hop_timeout <= 0.0:
 			sprite.position.x = 0.0
 			facing_right = Player.instance.position.x > position.x

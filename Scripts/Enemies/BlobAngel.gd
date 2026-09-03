@@ -10,6 +10,8 @@ const HOP_HEIGHTS:Array = [ 0.2, 0.3, 3.0, 0.2, 1.6, 0.4, 2.5, 2.7, 0.5 ]
 const GRAVITY:float = 1200.0
 const VEL_X:float = 100.0
 const JUMP_VEL_BASE:float = -200
+const QUIVER_THRESHOLD:float = 0.35
+const QUIVER_RANGE:float = 1.5
 const SHOT_TIMEOUT:float = 4.0
 const SHOT_COUNT:int = 4
 
@@ -45,7 +47,11 @@ func _physics_process(delta: float) -> void:
 	
 	if vis.is_on_screen():
 		hop_timeout -= delta
+		if hop_timeout <= QUIVER_THRESHOLD:
+			sprite.position.x = randf_range(-QUIVER_RANGE, QUIVER_RANGE)
+			play_anim("charge")
 		if hop_timeout <= 0.0:
+			sprite.position.x = 0.0
 			facing_right = GameCore.instance.player.position.x > position.x
 			body.velocity = Vector2(
 				VEL_X * (1 if facing_right else -1),
