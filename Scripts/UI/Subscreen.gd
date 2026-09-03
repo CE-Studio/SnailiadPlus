@@ -455,7 +455,6 @@ func _test_for_selection_events() -> void:
 					sfx_select.play()
 					map_selector.visible = true
 					map_selector.position = map_sel_origin + (map_selection * 8)
-					_set_map_prompts()
 			1:
 				if SInput.check_input(SInput.Inputs.UI_ACCEPT, true):
 					sfx_select.play()
@@ -464,7 +463,7 @@ func _test_for_selection_events() -> void:
 					sfx_select.play()
 					map_selector.visible = false
 					selection_depth -= 1
-					_set_map_prompts()
+		_set_map_prompts()
 	
 	elif SInput.check_input(SInput.Inputs.UI_ACCEPT, true):
 		match selection_depth:
@@ -493,6 +492,7 @@ func _test_for_selection_events() -> void:
 				selected_item.z_index = 0
 				selected_item = null
 				player_sprite.frame_coords.x = player_shell
+		_set_inv_prompts()
 
 
 ## Updates the displayed icons and text for the prompts on the map panel based on the current
