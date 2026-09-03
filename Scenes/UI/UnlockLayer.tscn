@@ -1,0 +1,125 @@
+[gd_scene format=3 uid="uid://bkj4in7wvipoi"]
+
+[ext_resource type="Texture2D" uid="uid://dmaptufh7rsw2" path="res://Assets/Images/UI/ScreenCover.png" id="1_cwhjw"]
+[ext_resource type="Texture2D" uid="uid://cv67pgk0cf0w4" path="res://Assets/Images/UI/FadeBorder.png" id="2_jvwba"]
+[ext_resource type="Texture2D" uid="uid://cc1665khnwbp7" path="res://Assets/Images/UI/Unlocks.png" id="3_3h556"]
+[ext_resource type="Script" uid="uid://boee2837la0pr" path="res://Scripts/Classes/SnailySprite.gd" id="4_jvwba"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3h556"]
+atlas = ExtResource("3_3h556")
+region = Rect2(288, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2r8eg"]
+atlas = ExtResource("3_3h556")
+region = Rect2(96, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hedds"]
+atlas = ExtResource("3_3h556")
+region = Rect2(288, 96, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lqi7j"]
+atlas = ExtResource("3_3h556")
+region = Rect2(192, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s6a87"]
+atlas = ExtResource("3_3h556")
+region = Rect2(0, 96, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_31kgw"]
+atlas = ExtResource("3_3h556")
+region = Rect2(0, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ltt0q"]
+atlas = ExtResource("3_3h556")
+region = Rect2(96, 96, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cnr54"]
+atlas = ExtResource("3_3h556")
+region = Rect2(192, 96, 96, 96)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wkouj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3h556")
+}],
+"loop": 1,
+"name": &"absurd_diff",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2r8eg")
+}],
+"loop": 1,
+"name": &"boss_rush",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hedds")
+}],
+"loop": 1,
+"name": &"chaos_mode",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lqi7j")
+}],
+"loop": 1,
+"name": &"char_sel",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s6a87")
+}],
+"loop": 1,
+"name": &"item_rando",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_31kgw")
+}],
+"loop": 1,
+"name": &"locked",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ltt0q")
+}],
+"loop": 1,
+"name": &"open_map",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cnr54")
+}],
+"loop": 1,
+"name": &"six_hundo",
+"speed": 1.0
+}]
+
+[node name="UnlockLayer" type="Node2D" unique_id=472986014]
+
+[node name="BackingFade" type="Sprite2D" parent="." unique_id=1824822088]
+modulate = Color(0, 0, 0, 0.49803922)
+position = Vector2(200, 120)
+scale = Vector2(2, 2)
+texture = ExtResource("1_cwhjw")
+
+[node name="EdgeFade" type="Sprite2D" parent="." unique_id=309520031]
+modulate = Color(0, 0, 0, 1)
+position = Vector2(200, 120)
+texture = ExtResource("2_jvwba")
+
+[node name="Frame" type="AnimatedSprite2D" parent="." unique_id=1696935723]
+position = Vector2(200, 120)
+sprite_frames = SubResource("SpriteFrames_wkouj")
+animation = &"locked"
+script = ExtResource("4_jvwba")
+metadata/_custom_type_script = "uid://boee2837la0pr"
