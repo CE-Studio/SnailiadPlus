@@ -1,9 +1,12 @@
 [gd_scene format=3 uid="uid://bkj4in7wvipoi"]
 
 [ext_resource type="Texture2D" uid="uid://dmaptufh7rsw2" path="res://Assets/Images/UI/ScreenCover.png" id="1_cwhjw"]
+[ext_resource type="Script" uid="uid://cln1nocfoompn" path="res://Scripts/UI/UnlockLayer.gd" id="1_hedds"]
 [ext_resource type="Texture2D" uid="uid://cv67pgk0cf0w4" path="res://Assets/Images/UI/FadeBorder.png" id="2_jvwba"]
 [ext_resource type="Texture2D" uid="uid://cc1665khnwbp7" path="res://Assets/Images/UI/Unlocks.png" id="3_3h556"]
 [ext_resource type="Script" uid="uid://boee2837la0pr" path="res://Scripts/Classes/SnailySprite.gd" id="4_jvwba"]
+[ext_resource type="Texture2D" uid="uid://dgo40o7duwbpi" path="res://Assets/Images/UI/UnlocksLock.png" id="5_3h556"]
+[ext_resource type="Script" uid="uid://dqt4uo3ejug3v" path="res://Scripts/Classes/SnailyText.gd" id="6_2r8eg"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3h556"]
 atlas = ExtResource("3_3h556")
@@ -104,7 +107,108 @@ animations = [{
 "speed": 1.0
 }]
 
-[node name="UnlockLayer" type="Node2D" unique_id=472986014]
+[sub_resource type="AtlasTexture" id="AtlasTexture_rthof"]
+atlas = ExtResource("5_3h556")
+region = Rect2(0, 80, 80, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rxi84"]
+atlas = ExtResource("5_3h556")
+region = Rect2(80, 80, 80, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ovbqf"]
+atlas = ExtResource("5_3h556")
+region = Rect2(160, 80, 80, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rb5ei"]
+atlas = ExtResource("5_3h556")
+region = Rect2(240, 80, 80, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_woj85"]
+atlas = ExtResource("5_3h556")
+region = Rect2(320, 80, 80, 80)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_rxi84"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rthof")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rxi84")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ovbqf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rb5ei")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_woj85")
+}],
+"loop": 1,
+"name": &"fall",
+"speed": 8.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0chbx"]
+atlas = ExtResource("5_3h556")
+region = Rect2(0, 0, 80, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_21dis"]
+atlas = ExtResource("5_3h556")
+region = Rect2(80, 0, 80, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xagw8"]
+atlas = ExtResource("5_3h556")
+region = Rect2(160, 0, 80, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hfdas"]
+atlas = ExtResource("5_3h556")
+region = Rect2(240, 0, 80, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_it1rt"]
+atlas = ExtResource("5_3h556")
+region = Rect2(320, 0, 80, 80)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_bj8rp"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0chbx")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_21dis")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xagw8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hfdas")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_it1rt")
+}],
+"loop": 1,
+"name": &"fall",
+"speed": 8.0
+}]
+
+[node name="UnlockLayer" type="Node2D" unique_id=472986014 node_paths=PackedStringArray("frame", "lock_body", "lock_arch", "backing_fade")]
+script = ExtResource("1_hedds")
+frame = NodePath("CenterParent/Frame")
+lock_body = NodePath("CenterParent/LockBody")
+lock_arch = NodePath("CenterParent/LockArch")
+backing_fade = NodePath("BackingFade")
 
 [node name="BackingFade" type="Sprite2D" parent="." unique_id=1824822088]
 modulate = Color(0, 0, 0, 0.49803922)
@@ -112,14 +216,91 @@ position = Vector2(200, 120)
 scale = Vector2(2, 2)
 texture = ExtResource("1_cwhjw")
 
+[node name="CenterParent" type="Node2D" parent="." unique_id=1319195959]
+position = Vector2(200, 120)
+
+[node name="Frame" type="AnimatedSprite2D" parent="CenterParent" unique_id=1696935723]
+sprite_frames = SubResource("SpriteFrames_wkouj")
+animation = &"locked"
+script = ExtResource("4_jvwba")
+metadata/_custom_type_script = "uid://boee2837la0pr"
+
+[node name="LockArch" type="AnimatedSprite2D" parent="CenterParent" unique_id=879970135]
+position = Vector2(0, -32)
+sprite_frames = SubResource("SpriteFrames_rxi84")
+script = ExtResource("4_jvwba")
+start_all_on_random_frame = true
+spawn_speed_variance = Vector2(0.8, 1.2)
+metadata/_custom_type_script = "uid://boee2837la0pr"
+
+[node name="LockBody" type="AnimatedSprite2D" parent="CenterParent" unique_id=546433497]
+sprite_frames = SubResource("SpriteFrames_bj8rp")
+script = ExtResource("4_jvwba")
+start_all_on_random_frame = true
+spawn_speed_variance = Vector2(0.8, 1.2)
+metadata/_custom_type_script = "uid://boee2837la0pr"
+
+[node name="TopTextGroup" type="Node2D" parent="." unique_id=1445923695]
+
+[node name="Condition" type="RichTextLabel" parent="TopTextGroup" unique_id=789925592]
+custom_minimum_size = Vector2(400, 0)
+custom_maximum_size = Vector2(400, -1)
+clip_contents = false
+offset_top = 24.0
+offset_right = 400.0
+offset_bottom = 64.0
+mouse_filter = 2
+theme_override_font_sizes/normal_font_size = 8
+bbcode_enabled = true
+text = "By meeting this condition,"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 1
+script = ExtResource("6_2r8eg")
+text_scale = 1
+border_scale = 1
+metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
+
+[node name="Unlocked" type="RichTextLabel" parent="TopTextGroup" unique_id=1555927334]
+custom_minimum_size = Vector2(400, 0)
+custom_maximum_size = Vector2(400, -1)
+clip_contents = false
+offset_top = 32.0
+offset_right = 400.0
+offset_bottom = 72.0
+mouse_filter = 2
+theme_override_constants/line_separation = 0
+theme_override_font_sizes/normal_font_size = 16
+bbcode_enabled = true
+text = "you've unlocked..."
+fit_content = true
+scroll_active = false
+horizontal_alignment = 1
+script = ExtResource("6_2r8eg")
+border_scale = 1
+metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
+
+[node name="Reward" type="RichTextLabel" parent="." unique_id=1768214198]
+custom_maximum_size = Vector2(400, -1)
+clip_contents = false
+offset_top = 184.0
+offset_right = 400.0
+offset_bottom = 224.0
+mouse_filter = 2
+theme_override_constants/line_separation = 0
+theme_override_font_sizes/normal_font_size = 16
+bbcode_enabled = true
+text = "Awesome reward!!"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 1
+script = ExtResource("6_2r8eg")
+border_scale = 1
+metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
+
 [node name="EdgeFade" type="Sprite2D" parent="." unique_id=309520031]
 modulate = Color(0, 0, 0, 1)
 position = Vector2(200, 120)
 texture = ExtResource("2_jvwba")
 
-[node name="Frame" type="AnimatedSprite2D" parent="." unique_id=1696935723]
-position = Vector2(200, 120)
-sprite_frames = SubResource("SpriteFrames_wkouj")
-animation = &"locked"
-script = ExtResource("4_jvwba")
-metadata/_custom_type_script = "uid://boee2837la0pr"
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1431603408]
