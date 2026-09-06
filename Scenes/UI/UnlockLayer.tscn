@@ -8,6 +8,9 @@
 [ext_resource type="Texture2D" uid="uid://dgo40o7duwbpi" path="res://Assets/Images/UI/UnlocksLock.png" id="5_3h556"]
 [ext_resource type="Script" uid="uid://dqt4uo3ejug3v" path="res://Scripts/Classes/SnailyText.gd" id="6_2r8eg"]
 
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_wkouj"]
+blend_mode = 1
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_3h556"]
 atlas = ExtResource("3_3h556")
 region = Rect2(288, 0, 96, 96)
@@ -20,13 +23,13 @@ region = Rect2(96, 0, 96, 96)
 atlas = ExtResource("3_3h556")
 region = Rect2(288, 96, 96, 96)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_lqi7j"]
-atlas = ExtResource("3_3h556")
-region = Rect2(192, 0, 96, 96)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_s6a87"]
 atlas = ExtResource("3_3h556")
 region = Rect2(0, 96, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lqi7j"]
+atlas = ExtResource("3_3h556")
+region = Rect2(192, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_31kgw"]
 atlas = ExtResource("3_3h556")
@@ -68,7 +71,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_lqi7j")
+"texture": SubResource("AtlasTexture_s6a87")
 }],
 "loop": 1,
 "name": &"char_sel",
@@ -76,7 +79,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_s6a87")
+"texture": SubResource("AtlasTexture_lqi7j")
 }],
 "loop": 1,
 "name": &"item_rando",
@@ -203,18 +206,135 @@ animations = [{
 "speed": 8.0
 }]
 
-[node name="UnlockLayer" type="Node2D" unique_id=472986014 node_paths=PackedStringArray("frame", "lock_body", "lock_arch", "backing_fade")]
+[sub_resource type="Animation" id="Animation_lqi7j"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:shake_strength")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:lock_arch_extension")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_hedds"]
+resource_name = "sequence"
+length = 5.0
+step = 0.01
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.7, 2.4),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"_set_stage_shake"
+}, {
+"args": [],
+"method": &"_set_stage_pop"
+}]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:shake_strength")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.7, 2.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 4.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:lock_arch_extension")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.7, 2.4),
+"transitions": PackedFloat32Array(4, 1),
+"update": 0,
+"values": [0.0, 16.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_lqi7j"]
+_data = {
+&"RESET": SubResource("Animation_lqi7j"),
+&"sequence": SubResource("Animation_hedds")
+}
+
+[node name="UnlockLayer" type="Node2D" unique_id=472986014 node_paths=PackedStringArray("frame", "lock_body", "lock_arch", "backing_fade", "top_text_group", "text_condition", "text_unlocked", "text_reward", "anim")]
 script = ExtResource("1_hedds")
 frame = NodePath("CenterParent/Frame")
 lock_body = NodePath("CenterParent/LockBody")
 lock_arch = NodePath("CenterParent/LockArch")
 backing_fade = NodePath("BackingFade")
+top_text_group = NodePath("TopTextGroup")
+text_condition = NodePath("TopTextGroup/Condition")
+text_unlocked = NodePath("TopTextGroup/Unlocked")
+text_reward = NodePath("Reward")
+anim = NodePath("AnimationPlayer")
 
 [node name="BackingFade" type="Sprite2D" parent="." unique_id=1824822088]
 modulate = Color(0, 0, 0, 0.49803922)
 position = Vector2(200, 120)
 scale = Vector2(2, 2)
 texture = ExtResource("1_cwhjw")
+
+[node name="BeamGroup" type="Node2D" parent="." unique_id=1954810489]
+position = Vector2(200, 120)
+
+[node name="Beam1" type="Polygon2D" parent="BeamGroup" unique_id=537859405]
+material = SubResource("CanvasItemMaterial_wkouj")
+color = Color(1, 1, 1, 0.6862745)
+polygon = PackedVector2Array(0, 0, -16, -288, 16, -288)
+uv = PackedVector2Array(-136, 48, -154, -33, -121, -30)
+
+[node name="Beam2" type="Polygon2D" parent="BeamGroup" unique_id=873131640]
+material = SubResource("CanvasItemMaterial_wkouj")
+color = Color(1, 1, 1, 0.6862745)
+polygon = PackedVector2Array(0, 0, -16, -288, 16, -288)
+uv = PackedVector2Array(-136, 48, -154, -33, -121, -30)
+
+[node name="Beam3" type="Polygon2D" parent="BeamGroup" unique_id=198184682]
+material = SubResource("CanvasItemMaterial_wkouj")
+color = Color(1, 1, 1, 0.6862745)
+polygon = PackedVector2Array(0, 0, -16, -288, 16, -288)
+uv = PackedVector2Array(-136, 48, -154, -33, -121, -30)
+
+[node name="Beam4" type="Polygon2D" parent="BeamGroup" unique_id=1139861165]
+material = SubResource("CanvasItemMaterial_wkouj")
+color = Color(1, 1, 1, 0.6862745)
+polygon = PackedVector2Array(0, 0, -48, -288, 48, -288)
+uv = PackedVector2Array(-136, 48, -154, -33, -121, -30)
+
+[node name="Beam5" type="Polygon2D" parent="BeamGroup" unique_id=514632792]
+material = SubResource("CanvasItemMaterial_wkouj")
+color = Color(1, 1, 1, 0.6862745)
+polygon = PackedVector2Array(0, 0, -48, -288, 48, -288)
+uv = PackedVector2Array(-136, 48, -154, -33, -121, -30)
 
 [node name="CenterParent" type="Node2D" parent="." unique_id=1319195959]
 position = Vector2(200, 120)
@@ -277,6 +397,7 @@ fit_content = true
 scroll_active = false
 horizontal_alignment = 1
 script = ExtResource("6_2r8eg")
+quick_load_text = "you've unlocked..."
 border_scale = 1
 metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
 
@@ -304,3 +425,4 @@ position = Vector2(200, 120)
 texture = ExtResource("2_jvwba")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1431603408]
+libraries/ = SubResource("AnimationLibrary_lqi7j")
