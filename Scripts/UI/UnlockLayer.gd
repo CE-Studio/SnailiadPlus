@@ -3,15 +3,17 @@ class_name UnlockLayer
 extends Node2D
 
 
-const GRAVITY:float = 480.0
-const POP_VEL_X:Vector2 = Vector2(80.0, 300.0)
-const POP_VEL_Y:Vector2 = Vector2(-320.0, -20.0)
+const GRAVITY:float = 1200.0
+const POP_VEL_X:Vector2 = Vector2(180.0, 600.0)
+const POP_VEL_Y:Vector2 = Vector2(-520.0, -60.0)
 const FRAME_START_Y_OFFSET:float = 240.0
 const TEXT_START_Y_OFFSET:float = -64.0
 const LOCK_ARCH_OFFSET:Vector2 = Vector2(0.0, -32.0)
 const FRAME_SHAKE_MULT:float = 1.5
 const BACK_FADE_COLOR:Color = Color("0000007f")
 const IN_LERP_RATE:float = 8.0
+const BEAM_ROT_SPEED:Vector2 = Vector2(40.0, 160.0)
+const BEAM_GROW_SPEED:float = 4.0
 
 enum Stages {
 	INIT,
@@ -27,6 +29,8 @@ var stage:Stages = Stages.INIT
 var lock_body_vel:Vector2 = Vector2.ZERO
 var lock_arch_vel:Vector2 = Vector2.ZERO
 var queue:Array[Statics.Unlocks] = []
+var beam_rot_speeds:Array[float] = []
+var visible_beams:int = 0
 @export var shake_strength:float = 0.0
 @export var lock_arch_extension:float = 0.0
 
@@ -39,12 +43,22 @@ var queue:Array[Statics.Unlocks] = []
 @export var text_unlocked:SnailyText
 @export var text_reward:SnailyText
 @export var anim:AnimationPlayer
+@export var beam_group:Node2D
+@export var beams:Array[Polygon2D] = []
+@export var sfx_beam1:AudioStreamPlayer
+@export var sfx_beam2:AudioStreamPlayer
+@export var sfx_beam3:AudioStreamPlayer
+@export var sfx_pop:AudioStreamPlayer
 
 
 func _ready() -> void:
 	queue.append(randi_range(0, 6) as Statics.Unlocks) # temp
 	backing_fade.modulate = Color(BACK_FADE_COLOR.r, BACK_FADE_COLOR.g, BACK_FADE_COLOR.b, 0.0)
 	_set_stage_init()
+	beam_group.visible = false
+	text_reward.visible = false
+	text_reward.set_default_flashy(2)
+	text_reward.enable_rainbow_scroll()
 
 
 func _process(delta: float) -> void:
@@ -68,6 +82,7 @@ func _process(delta: float) -> void:
 				randf_range(-1.0, 1.0),
 				randf_range(-1.0, 1.0)
 			).normalized() * weight)
+			_process_beams(delta)
 		Stages.POP:
 			lock_body.position += lock_body_vel * delta
 			lock_body_vel.y += GRAVITY * delta
@@ -121,6 +136,42 @@ func _set_frame_reward_anim() -> void:
 		Statics.Unlocks.CHAOS_MODE: frame.play("chaos_mode")
 
 
+func _init_beams() -> void:
+	beams.shuffle()
+	beam_rot_speeds.clear()
+	for beam in beams:
+		beam.rotation_degrees = randf() * 360.0
+		beam_rot_speeds.append(
+			randf_range(BEAM_ROT_SPEED.x, BEAM_ROT_SPEED.y) * (-1.0 if randf() < 0.5 else 1.0)
+		)
+		beam.scale = Vector2(0.1, 0.1)
+	visible_beams = 0
+
+
+func _show_beam(count:int, sound_id:int) -> void:
+	count = clampi(count, 0, beams.size())
+	visible_beams = clampi(visible_beams + count, 0, beams.size())
+	match sound_id:
+		0: sfx_beam1.play()
+		1: sfx_beam2.play()
+		2: sfx_beam3.play()
+
+
+func _hide_beams() -> void:
+	for beam in beams:
+		beam.scale = Vector2(0.1, 0.1)
+
+
+func _process_beams(delta:float) -> void:
+	for i in range(beams.size()):
+		if i >= visible_beams:
+			break
+		var beam:Polygon2D = beams[i]
+		beam.rotation_degrees += beam_rot_speeds[i] * delta
+		if beam.scale != Vector2.ONE:
+			beam.scale = beam.scale.move_toward(Vector2.ONE, BEAM_GROW_SPEED * delta)
+
+
 func _set_stage_init() -> void:
 	stage = Stages.INIT
 	frame.position.y = FRAME_START_Y_OFFSET
@@ -130,6 +181,7 @@ func _set_stage_init() -> void:
 	frame.play("locked")
 	lock_body.play("default")
 	lock_arch.play("default")
+	_init_beams()
 
 
 func _set_stage_in() -> void:
@@ -160,6 +212,12 @@ func _set_stage_pop() -> void:
 	)
 	if sign(lock_body_vel.x) == sign(lock_arch_vel.x):
 		lock_arch_vel.x *= -1
+	if lock_arch_vel.y > lock_body_vel.y:
+		var temp:float = lock_arch_vel.y
+		lock_arch_vel.y = lock_body_vel.y
+		lock_body_vel.y = temp
+	sfx_pop.play()
+	_hide_beams()
 
 
 func _set_stage_await() -> void:
