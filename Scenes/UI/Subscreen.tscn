@@ -555,6 +555,30 @@ tracks/5/keys = {
 "update": 0,
 "values": [Color(1, 1, 1, 1)]
 }
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("InvBody/Content:modulate")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("MapBody/Content:modulate")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
 
 [sub_resource type="Animation" id="Animation_t4fnx"]
 resource_name = "init"
@@ -625,6 +649,30 @@ tracks/5/path = NodePath("MapBody:modulate")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("InvBody/Content:modulate")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.49803922)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("MapBody/Content:modulate")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
@@ -706,6 +754,30 @@ tracks/5/keys = {
 "update": 0,
 "values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(0.49747366, 0.49747366, 0.49747366, 1)]
 }
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("MapBody/Content:modulate")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.7, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0.49803922)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("InvBody/Content:modulate")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0, 0.29999998, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.49803925), Color(1, 1, 1, 1), Color(1, 1, 1, 1)]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_orj4x"]
 _data = {
@@ -719,46 +791,46 @@ process_mode = 3
 script = ExtResource("1_gcfo6")
 body_map = NodePath("MapBody")
 body_inv = NodePath("InvBody")
-player_icon = NodePath("InvBody/GroupName/PlayerIcon")
-header_name = NodePath("InvBody/GroupName/HBox/HeaderName")
-name_box = NodePath("InvBody/GroupName/Box")
-name_text = NodePath("InvBody/GroupName/Box/Name")
-header_weapon = NodePath("InvBody/GroupWeapon/HBox/HeaderWeapon")
-slist_weapon = NodePath("InvBody/GroupWeapon/SpriteGroup")
-tlist_weapon = NodePath("InvBody/GroupWeapon/TextGroup")
-header_shell = NodePath("InvBody/GroupShell/HBox/HeaderShell")
-slist_shell = NodePath("InvBody/GroupShell/SpriteGroup")
-tlist_shell = NodePath("InvBody/GroupShell/TextGroup")
-header_ability = NodePath("InvBody/GroupAbility/HBox/HeaderAbility")
-slist_ability = NodePath("InvBody/GroupAbility/SpriteGroup")
-tlist_ability = NodePath("InvBody/GroupAbility/TextGroup")
+player_icon = NodePath("InvBody/Content/GroupName/PlayerIcon")
+header_name = NodePath("InvBody/Content/GroupName/HBox/HeaderName")
+name_box = NodePath("InvBody/Content/GroupName/Box")
+name_text = NodePath("InvBody/Content/GroupName/Box/Name")
+header_weapon = NodePath("InvBody/Content/GroupWeapon/HBox/HeaderWeapon")
+slist_weapon = NodePath("InvBody/Content/GroupWeapon/SpriteGroup")
+tlist_weapon = NodePath("InvBody/Content/GroupWeapon/TextGroup")
+header_shell = NodePath("InvBody/Content/GroupShell/HBox/HeaderShell")
+slist_shell = NodePath("InvBody/Content/GroupShell/SpriteGroup")
+tlist_shell = NodePath("InvBody/Content/GroupShell/TextGroup")
+header_ability = NodePath("InvBody/Content/GroupAbility/HBox/HeaderAbility")
+slist_ability = NodePath("InvBody/Content/GroupAbility/SpriteGroup")
+tlist_ability = NodePath("InvBody/Content/GroupAbility/TextGroup")
 list_sprite_frames = SubResource("SpriteFrames_w2fvd")
-selector = NodePath("InvBody/Selector")
-selector_spr = NodePath("InvBody/Selector/Sprite")
+selector = NodePath("InvBody/Content/Selector")
+selector_spr = NodePath("InvBody/Content/Selector/Sprite")
 sfx_move = NodePath("AudioGroup/Move")
 sfx_select = NodePath("AudioGroup/Select")
 sfx_open = NodePath("AudioGroup/Open")
 sfx_close = NodePath("AudioGroup/Close")
 sfx_switch = NodePath("AudioGroup/Switch")
-sel_target_name = NodePath("InvBody/TargetName")
-map = NodePath("MapBody/Minimap")
-map_selector = NodePath("MapBody/MapSelector")
-desc_panel = NodePath("InvBody/DescPanel")
-desc_name = NodePath("InvBody/DescPanel/ItemDesc/Name")
-desc_body = NodePath("InvBody/DescPanel/ItemDesc/Body")
-prompts = [NodePath("MapBody/PromptMarkers"), NodePath("MapBody/PromptZoom"), NodePath("MapBody/PromptInv"), NodePath("InvBody/PromptRead"), NodePath("InvBody/PromptMap")]
-prompt_icon_texts = [NodePath("MapBody/PromptMarkers/Icon"), NodePath("MapBody/PromptZoom/Icon"), NodePath("MapBody/PromptInv/Icon"), NodePath("InvBody/PromptRead/Icon"), NodePath("InvBody/PromptMap/Icon")]
-prompt_desc_texts = [NodePath("MapBody/PromptMarkers/Desc"), NodePath("MapBody/PromptZoom/Desc"), NodePath("MapBody/PromptInv/Desc"), NodePath("InvBody/PromptRead/Desc"), NodePath("InvBody/PromptMap/Desc")]
-info_text = NodePath("MapBody/RunInfo")
-map_text = NodePath("MapBody/MapRate")
-time_text = NodePath("MapBody/InGameTime")
-item_text = NodePath("MapBody/ItemRate")
+sel_target_name = NodePath("InvBody/Content/TargetName")
+map = NodePath("MapBody/Content/Minimap")
+map_selector = NodePath("MapBody/Content/MapSelector")
+desc_panel = NodePath("InvBody/Content/DescPanel")
+desc_name = NodePath("InvBody/Content/DescPanel/ItemDesc/Name")
+desc_body = NodePath("InvBody/Content/DescPanel/ItemDesc/Body")
+prompts = [NodePath("MapBody/Content/PromptMarkers"), NodePath("MapBody/Content/PromptZoom"), NodePath("MapBody/Content/PromptInv"), NodePath("InvBody/Content/PromptRead"), NodePath("InvBody/Content/PromptMap")]
+prompt_icon_texts = [NodePath("MapBody/Content/PromptMarkers/Icon"), NodePath("MapBody/Content/PromptZoom/Icon"), NodePath("MapBody/Content/PromptInv/Icon"), NodePath("InvBody/Content/PromptRead/Icon"), NodePath("InvBody/Content/PromptMap/Icon")]
+prompt_desc_texts = [NodePath("MapBody/Content/PromptMarkers/Desc"), NodePath("MapBody/Content/PromptZoom/Desc"), NodePath("MapBody/Content/PromptInv/Desc"), NodePath("InvBody/Content/PromptRead/Desc"), NodePath("InvBody/Content/PromptMap/Desc")]
+info_text = NodePath("MapBody/Content/RunInfo")
+map_text = NodePath("MapBody/Content/MapRate")
+time_text = NodePath("MapBody/Content/InGameTime")
+item_text = NodePath("MapBody/Content/ItemRate")
 helix_count = NodePath("HelixCount")
 radar = NodePath("Radar")
 anim = NodePath("AnimationPlayer")
-player_sprite = NodePath("InvBody/ItemGroup/Player")
-item_sprites = [NodePath("InvBody/ItemGroup/Peashooter"), NodePath("InvBody/ItemGroup/Boomerang"), NodePath("InvBody/ItemGroup/RainbowWave"), NodePath("InvBody/ItemGroup/Devastator"), NodePath("InvBody/ItemGroup/HighJump"), NodePath("InvBody/ItemGroup/ShellShield"), NodePath("InvBody/ItemGroup/RapidFire"), NodePath("InvBody/ItemGroup/Player"), NodePath("InvBody/ItemGroup/Player"), NodePath("InvBody/ItemGroup/Player"), NodePath("InvBody/ItemGroup/GravityShock"), null, null, null, null, NodePath("InvBody/ItemGroup/RadarShell"), NodePath("InvBody/ItemGroup/Broom")]
-item_target = NodePath("InvBody/ItemGroup/ItemTarget")
+player_sprite = NodePath("InvBody/Content/ItemGroup/Player")
+item_sprites = [NodePath("InvBody/Content/ItemGroup/Peashooter"), NodePath("InvBody/Content/ItemGroup/Boomerang"), NodePath("InvBody/Content/ItemGroup/RainbowWave"), NodePath("InvBody/Content/ItemGroup/Devastator"), NodePath("InvBody/Content/ItemGroup/HighJump"), NodePath("InvBody/Content/ItemGroup/ShellShield"), NodePath("InvBody/Content/ItemGroup/RapidFire"), NodePath("InvBody/Content/ItemGroup/Player"), NodePath("InvBody/Content/ItemGroup/Player"), NodePath("InvBody/Content/ItemGroup/Player"), NodePath("InvBody/Content/ItemGroup/GravityShock"), null, null, null, null, NodePath("InvBody/Content/ItemGroup/RadarShell"), NodePath("InvBody/Content/ItemGroup/Broom")]
+item_target = NodePath("InvBody/Content/ItemGroup/ItemTarget")
 
 [node name="InvBody" type="AnimatedSprite2D" parent="." unique_id=1832428136]
 position = Vector2(136, 132)
@@ -767,13 +839,15 @@ animation = &"0"
 script = ExtResource("3_j127p")
 metadata/_custom_type_script = "uid://boee2837la0pr"
 
-[node name="ItemGroup" type="Node2D" parent="InvBody" unique_id=614621986]
+[node name="Content" type="Node2D" parent="InvBody" unique_id=2031005092]
+
+[node name="ItemGroup" type="Node2D" parent="InvBody/Content" unique_id=614621986]
 position = Vector2(16, 36)
 
-[node name="ItemTarget" type="Marker2D" parent="InvBody/ItemGroup" unique_id=2083999881]
+[node name="ItemTarget" type="Marker2D" parent="InvBody/Content/ItemGroup" unique_id=2083999881]
 position = Vector2(108, 0)
 
-[node name="Broom" type="Sprite2D" parent="InvBody/ItemGroup" unique_id=1749926654]
+[node name="Broom" type="Sprite2D" parent="InvBody/Content/ItemGroup" unique_id=1749926654]
 y_sort_enabled = true
 position = Vector2(24, -13)
 texture = ExtResource("5_orj4x")
@@ -781,13 +855,13 @@ hframes = 8
 vframes = 9
 frame = 56
 
-[node name="Player" type="Sprite2D" parent="InvBody/ItemGroup" unique_id=1197746799]
+[node name="Player" type="Sprite2D" parent="InvBody/Content/ItemGroup" unique_id=1197746799]
 y_sort_enabled = true
 texture = ExtResource("5_orj4x")
 hframes = 8
 vframes = 9
 
-[node name="Peashooter" type="Sprite2D" parent="InvBody/ItemGroup" unique_id=2096956137]
+[node name="Peashooter" type="Sprite2D" parent="InvBody/Content/ItemGroup" unique_id=2096956137]
 y_sort_enabled = true
 position = Vector2(54, 22)
 texture = ExtResource("5_orj4x")
@@ -795,7 +869,7 @@ hframes = 8
 vframes = 9
 frame = 57
 
-[node name="Boomerang" type="Sprite2D" parent="InvBody/ItemGroup" unique_id=1535974537]
+[node name="Boomerang" type="Sprite2D" parent="InvBody/Content/ItemGroup" unique_id=1535974537]
 y_sort_enabled = true
 position = Vector2(-44, 19)
 texture = ExtResource("5_orj4x")
@@ -803,7 +877,7 @@ hframes = 8
 vframes = 9
 frame = 58
 
-[node name="RainbowWave" type="Sprite2D" parent="InvBody/ItemGroup" unique_id=1786057024]
+[node name="RainbowWave" type="Sprite2D" parent="InvBody/Content/ItemGroup" unique_id=1786057024]
 y_sort_enabled = true
 position = Vector2(31, 40)
 texture = ExtResource("5_orj4x")
@@ -811,7 +885,7 @@ hframes = 8
 vframes = 9
 frame = 59
 
-[node name="Devastator" type="Sprite2D" parent="InvBody/ItemGroup" unique_id=1348098423]
+[node name="Devastator" type="Sprite2D" parent="InvBody/Content/ItemGroup" unique_id=1348098423]
 y_sort_enabled = true
 position = Vector2(71, -8)
 texture = ExtResource("5_orj4x")
@@ -819,7 +893,7 @@ hframes = 8
 vframes = 9
 frame = 60
 
-[node name="HighJump" type="Sprite2D" parent="InvBody/ItemGroup" unique_id=1149863212]
+[node name="HighJump" type="Sprite2D" parent="InvBody/Content/ItemGroup" unique_id=1149863212]
 y_sort_enabled = true
 position = Vector2(-77, -6)
 texture = ExtResource("5_orj4x")
@@ -827,7 +901,7 @@ hframes = 8
 vframes = 9
 frame = 61
 
-[node name="ShellShield" type="Sprite2D" parent="InvBody/ItemGroup" unique_id=1978204787]
+[node name="ShellShield" type="Sprite2D" parent="InvBody/Content/ItemGroup" unique_id=1978204787]
 y_sort_enabled = true
 position = Vector2(80, 35)
 texture = ExtResource("5_orj4x")
@@ -835,7 +909,7 @@ hframes = 8
 vframes = 9
 frame = 62
 
-[node name="RapidFire" type="Sprite2D" parent="InvBody/ItemGroup" unique_id=1673570136]
+[node name="RapidFire" type="Sprite2D" parent="InvBody/Content/ItemGroup" unique_id=1673570136]
 y_sort_enabled = true
 position = Vector2(-80, 31)
 texture = ExtResource("5_orj4x")
@@ -843,7 +917,7 @@ hframes = 8
 vframes = 9
 frame = 63
 
-[node name="GravityShock" type="Sprite2D" parent="InvBody/ItemGroup" unique_id=247611652]
+[node name="GravityShock" type="Sprite2D" parent="InvBody/Content/ItemGroup" unique_id=247611652]
 y_sort_enabled = true
 position = Vector2(-12, 41)
 texture = ExtResource("5_orj4x")
@@ -851,7 +925,7 @@ hframes = 8
 vframes = 9
 frame = 64
 
-[node name="RadarShell" type="Sprite2D" parent="InvBody/ItemGroup" unique_id=919691785]
+[node name="RadarShell" type="Sprite2D" parent="InvBody/Content/ItemGroup" unique_id=919691785]
 y_sort_enabled = true
 position = Vector2(-9, -8)
 texture = ExtResource("5_orj4x")
@@ -859,17 +933,17 @@ hframes = 8
 vframes = 9
 frame = 65
 
-[node name="GroupName" type="Sprite2D" parent="InvBody" unique_id=1788600883]
+[node name="GroupName" type="Sprite2D" parent="InvBody/Content" unique_id=1788600883]
 position = Vector2(-85, -91)
 texture = ExtResource("4_shvbi")
 
-[node name="HBox" type="HBoxContainer" parent="InvBody/GroupName" unique_id=473917119]
+[node name="HBox" type="HBoxContainer" parent="InvBody/Content/GroupName" unique_id=473917119]
 offset_left = -41.0
 offset_top = -10.0
 offset_right = -1.0
 offset_bottom = 30.0
 
-[node name="HeaderName" parent="InvBody/GroupName/HBox" unique_id=1478387612 instance=ExtResource("5_ndsvi")]
+[node name="HeaderName" parent="InvBody/Content/GroupName/HBox" unique_id=1478387612 instance=ExtResource("5_ndsvi")]
 custom_minimum_size = Vector2(24, 0)
 layout_mode = 2
 theme_override_font_sizes/normal_font_size = 8
@@ -878,37 +952,37 @@ text_scale = 1
 quick_load_text = "Name"
 shadow_scale = 1
 
-[node name="PlayerIcon" type="AnimatedSprite2D" parent="InvBody/GroupName" unique_id=1364161667]
+[node name="PlayerIcon" type="AnimatedSprite2D" parent="InvBody/Content/GroupName" unique_id=1364161667]
 position = Vector2(83, 6)
 sprite_frames = SubResource("SpriteFrames_bj8rp")
 animation = &"0"
 script = ExtResource("3_j127p")
 metadata/_custom_type_script = "uid://boee2837la0pr"
 
-[node name="Box" type="HBoxContainer" parent="InvBody/GroupName" unique_id=1933244568]
+[node name="Box" type="HBoxContainer" parent="InvBody/Content/GroupName" unique_id=1933244568]
 offset_left = -42.0
 offset_top = -3.0
 offset_right = 82.0
 offset_bottom = 37.0
 
-[node name="Name" parent="InvBody/GroupName/Box" unique_id=1376708755 instance=ExtResource("5_ndsvi")]
+[node name="Name" parent="InvBody/Content/GroupName/Box" unique_id=1376708755 instance=ExtResource("5_ndsvi")]
 custom_minimum_size = Vector2(124, 0)
 layout_mode = 2
 text = "Snaily Snail"
 quick_load_text = "subscreen_header_name"
 shadow_scale = 1
 
-[node name="GroupWeapon" type="Sprite2D" parent="InvBody" unique_id=360259077]
+[node name="GroupWeapon" type="Sprite2D" parent="InvBody/Content" unique_id=360259077]
 position = Vector2(-103, -64)
 texture = ExtResource("8_w2fvd")
 
-[node name="HBox" type="HBoxContainer" parent="InvBody/GroupWeapon" unique_id=889712318]
+[node name="HBox" type="HBoxContainer" parent="InvBody/Content/GroupWeapon" unique_id=889712318]
 offset_left = -20.0
 offset_top = -9.0
 offset_right = 20.0
 offset_bottom = 31.0
 
-[node name="HeaderWeapon" parent="InvBody/GroupWeapon/HBox" unique_id=1234057309 instance=ExtResource("5_ndsvi")]
+[node name="HeaderWeapon" parent="InvBody/Content/GroupWeapon/HBox" unique_id=1234057309 instance=ExtResource("5_ndsvi")]
 custom_minimum_size = Vector2(36, 0)
 layout_mode = 2
 theme_override_font_sizes/normal_font_size = 8
@@ -917,27 +991,27 @@ text_scale = 1
 quick_load_text = "Weapon"
 shadow_scale = 1
 
-[node name="SpriteGroup" type="Node2D" parent="InvBody/GroupWeapon" unique_id=1628522682]
+[node name="SpriteGroup" type="Node2D" parent="InvBody/Content/GroupWeapon" unique_id=1628522682]
 position = Vector2(-7, 8)
 
-[node name="TextGroup" type="VBoxContainer" parent="InvBody/GroupWeapon" unique_id=1416573038]
+[node name="TextGroup" type="VBoxContainer" parent="InvBody/Content/GroupWeapon" unique_id=1416573038]
 offset_left = -13.0
 offset_top = 1.0
 offset_right = 27.0
 offset_bottom = 41.0
 theme_override_constants/separation = 2
 
-[node name="GroupShell" type="Sprite2D" parent="InvBody" unique_id=1354201681]
+[node name="GroupShell" type="Sprite2D" parent="InvBody/Content" unique_id=1354201681]
 position = Vector2(-15, -64)
 texture = ExtResource("8_w2fvd")
 
-[node name="HBox" type="HBoxContainer" parent="InvBody/GroupShell" unique_id=299919301]
+[node name="HBox" type="HBoxContainer" parent="InvBody/Content/GroupShell" unique_id=299919301]
 offset_left = -20.0
 offset_top = -9.0
 offset_right = 20.0
 offset_bottom = 31.0
 
-[node name="HeaderShell" parent="InvBody/GroupShell/HBox" unique_id=1139443393 instance=ExtResource("5_ndsvi")]
+[node name="HeaderShell" parent="InvBody/Content/GroupShell/HBox" unique_id=1139443393 instance=ExtResource("5_ndsvi")]
 custom_minimum_size = Vector2(24, 0)
 layout_mode = 2
 theme_override_font_sizes/normal_font_size = 8
@@ -946,27 +1020,27 @@ text_scale = 1
 quick_load_text = "Body"
 shadow_scale = 1
 
-[node name="SpriteGroup" type="Node2D" parent="InvBody/GroupShell" unique_id=625487182]
+[node name="SpriteGroup" type="Node2D" parent="InvBody/Content/GroupShell" unique_id=625487182]
 position = Vector2(-7, 8)
 
-[node name="TextGroup" type="VBoxContainer" parent="InvBody/GroupShell" unique_id=1685009627]
+[node name="TextGroup" type="VBoxContainer" parent="InvBody/Content/GroupShell" unique_id=1685009627]
 offset_left = -13.0
 offset_top = 1.0
 offset_right = 27.0
 offset_bottom = 41.0
 theme_override_constants/separation = 2
 
-[node name="GroupAbility" type="Sprite2D" parent="InvBody" unique_id=878290365]
+[node name="GroupAbility" type="Sprite2D" parent="InvBody/Content" unique_id=878290365]
 position = Vector2(97, -64)
 texture = ExtResource("8_w2fvd")
 
-[node name="HBox" type="HBoxContainer" parent="InvBody/GroupAbility" unique_id=981279041]
+[node name="HBox" type="HBoxContainer" parent="InvBody/Content/GroupAbility" unique_id=981279041]
 offset_left = -20.0
 offset_top = -9.0
 offset_right = 20.0
 offset_bottom = 47.0
 
-[node name="HeaderAbility" parent="InvBody/GroupAbility/HBox" unique_id=1377033938 instance=ExtResource("5_ndsvi")]
+[node name="HeaderAbility" parent="InvBody/Content/GroupAbility/HBox" unique_id=1377033938 instance=ExtResource("5_ndsvi")]
 custom_minimum_size = Vector2(33, 0)
 layout_mode = 2
 theme_override_font_sizes/normal_font_size = 8
@@ -975,32 +1049,32 @@ text_scale = 1
 quick_load_text = "Ability"
 shadow_scale = 1
 
-[node name="SpriteGroup" type="Node2D" parent="InvBody/GroupAbility" unique_id=5874217]
+[node name="SpriteGroup" type="Node2D" parent="InvBody/Content/GroupAbility" unique_id=5874217]
 position = Vector2(-7, 8)
 
-[node name="TextGroup" type="VBoxContainer" parent="InvBody/GroupAbility" unique_id=1287169808]
+[node name="TextGroup" type="VBoxContainer" parent="InvBody/Content/GroupAbility" unique_id=1287169808]
 offset_left = -13.0
 offset_top = 1.0
 offset_right = 27.0
 offset_bottom = 41.0
 theme_override_constants/separation = 2
 
-[node name="Selector" type="Node2D" parent="InvBody" unique_id=855667816]
+[node name="Selector" type="Node2D" parent="InvBody/Content" unique_id=855667816]
 position = Vector2(-130, -82)
 
-[node name="Sprite" type="AnimatedSprite2D" parent="InvBody/Selector" unique_id=1624626810]
+[node name="Sprite" type="AnimatedSprite2D" parent="InvBody/Content/Selector" unique_id=1624626810]
 sprite_frames = SubResource("SpriteFrames_yoqk8")
 autoplay = "default"
 script = ExtResource("3_j127p")
 metadata/_custom_type_script = "uid://boee2837la0pr"
 
-[node name="TargetName" type="Marker2D" parent="InvBody" unique_id=2021148096]
+[node name="TargetName" type="Marker2D" parent="InvBody/Content" unique_id=2021148096]
 position = Vector2(-130, -82)
 
-[node name="PromptRead" type="Node2D" parent="InvBody" unique_id=758307441]
+[node name="PromptRead" type="Node2D" parent="InvBody/Content" unique_id=758307441]
 position = Vector2(64, -108)
 
-[node name="Icon" type="RichTextLabel" parent="InvBody/PromptRead" unique_id=35009801]
+[node name="Icon" type="RichTextLabel" parent="InvBody/Content/PromptRead" unique_id=35009801]
 clip_contents = false
 offset_left = 6.0
 offset_right = 46.0
@@ -1016,7 +1090,7 @@ script = ExtResource("17_j127p")
 shadow_scale = 1
 metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
 
-[node name="Dash" type="RichTextLabel" parent="InvBody/PromptRead" unique_id=647313748]
+[node name="Dash" type="RichTextLabel" parent="InvBody/Content/PromptRead" unique_id=647313748]
 clip_contents = false
 offset_left = 23.0
 offset_top = 6.0
@@ -1034,7 +1108,7 @@ text_scale = 1
 shadow_scale = 1
 metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
 
-[node name="Desc" type="RichTextLabel" parent="InvBody/PromptRead" unique_id=1411050051]
+[node name="Desc" type="RichTextLabel" parent="InvBody/Content/PromptRead" unique_id=1411050051]
 custom_maximum_size = Vector2(64, -1)
 clip_contents = false
 offset_left = 30.0
@@ -1054,10 +1128,10 @@ text_scale = 1
 shadow_scale = 1
 metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
 
-[node name="PromptMap" type="Node2D" parent="InvBody" unique_id=1331684717]
+[node name="PromptMap" type="Node2D" parent="InvBody/Content" unique_id=1331684717]
 position = Vector2(64, -92)
 
-[node name="Icon" type="RichTextLabel" parent="InvBody/PromptMap" unique_id=1285544406]
+[node name="Icon" type="RichTextLabel" parent="InvBody/Content/PromptMap" unique_id=1285544406]
 clip_contents = false
 offset_left = 6.0
 offset_right = 46.0
@@ -1073,7 +1147,7 @@ script = ExtResource("17_j127p")
 shadow_scale = 1
 metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
 
-[node name="Dash" type="RichTextLabel" parent="InvBody/PromptMap" unique_id=2128283117]
+[node name="Dash" type="RichTextLabel" parent="InvBody/Content/PromptMap" unique_id=2128283117]
 clip_contents = false
 offset_left = 23.0
 offset_top = 6.0
@@ -1091,7 +1165,7 @@ text_scale = 1
 shadow_scale = 1
 metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
 
-[node name="Desc" type="RichTextLabel" parent="InvBody/PromptMap" unique_id=942259562]
+[node name="Desc" type="RichTextLabel" parent="InvBody/Content/PromptMap" unique_id=942259562]
 custom_maximum_size = Vector2(64, -1)
 clip_contents = false
 offset_left = 30.0
@@ -1111,7 +1185,7 @@ text_scale = 1
 shadow_scale = 1
 metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
 
-[node name="DescPanel" type="PanelContainer" parent="InvBody" unique_id=1437951060]
+[node name="DescPanel" type="PanelContainer" parent="InvBody/Content" unique_id=1437951060]
 z_index = 2
 offset_left = -128.0
 offset_top = 100.0
@@ -1121,12 +1195,12 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_styles/panel = SubResource("StyleBoxTexture_wkouj")
 
-[node name="ItemDesc" type="VBoxContainer" parent="InvBody/DescPanel" unique_id=1616891023]
+[node name="ItemDesc" type="VBoxContainer" parent="InvBody/Content/DescPanel" unique_id=1616891023]
 layout_mode = 2
 size_flags_vertical = 4
 theme_override_constants/separation = 8
 
-[node name="Name" parent="InvBody/DescPanel/ItemDesc" unique_id=1267272580 instance=ExtResource("5_ndsvi")]
+[node name="Name" parent="InvBody/Content/DescPanel/ItemDesc" unique_id=1267272580 instance=ExtResource("5_ndsvi")]
 custom_minimum_size = Vector2(192, 0)
 layout_mode = 2
 size_flags_vertical = 4
@@ -1135,7 +1209,7 @@ max_width = 192
 shadow_scale = 1
 border_scale = 1
 
-[node name="Body" parent="InvBody/DescPanel/ItemDesc" unique_id=442358089 instance=ExtResource("5_ndsvi")]
+[node name="Body" parent="InvBody/Content/DescPanel/ItemDesc" unique_id=442358089 instance=ExtResource("5_ndsvi")]
 custom_minimum_size = Vector2(192, 0)
 layout_mode = 2
 size_flags_vertical = 4
@@ -1155,16 +1229,19 @@ animation = &"0"
 script = ExtResource("3_j127p")
 metadata/_custom_type_script = "uid://boee2837la0pr"
 
-[node name="MapBacking" type="Sprite2D" parent="MapBody" unique_id=1670636641]
+[node name="Content" type="Node2D" parent="MapBody" unique_id=1387340282]
+
+[node name="MapBacking" type="Sprite2D" parent="MapBody/Content" unique_id=1670636641]
+visible = false
 modulate = Color(0, 0, 0, 0.49803922)
 position = Vector2(28, -16)
 texture = ExtResource("5_c64hb")
 
-[node name="Minimap" parent="MapBody" unique_id=435565806 instance=ExtResource("5_cf02a")]
+[node name="Minimap" parent="MapBody/Content" unique_id=435565806 instance=ExtResource("5_cf02a")]
 position = Vector2(28, -16)
 subscreen_mode = true
 
-[node name="MapSelector" type="AnimatedSprite2D" parent="MapBody" unique_id=600969424]
+[node name="MapSelector" type="AnimatedSprite2D" parent="MapBody/Content" unique_id=600969424]
 position = Vector2(-72, -100)
 sprite_frames = SubResource("SpriteFrames_2dhju")
 autoplay = "default"
@@ -1173,7 +1250,7 @@ frame_progress = 0.39277387
 script = ExtResource("3_j127p")
 metadata/_custom_type_script = "uid://boee2837la0pr"
 
-[node name="Header1" type="RichTextLabel" parent="MapBody" unique_id=2112391614]
+[node name="Header1" type="RichTextLabel" parent="MapBody/Content" unique_id=2112391614]
 clip_contents = false
 offset_left = -163.0
 offset_top = -105.0
@@ -1190,7 +1267,7 @@ text_scale = 1
 shadow_scale = 1
 metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MapBody" unique_id=25502821]
+[node name="HBoxContainer" type="HBoxContainer" parent="MapBody/Content" unique_id=25502821]
 custom_minimum_size = Vector2(86, 0)
 custom_maximum_size = Vector2(86, -1)
 offset_left = -164.0
@@ -1198,7 +1275,7 @@ offset_top = -101.0
 offset_right = -78.0
 offset_bottom = -37.0
 
-[node name="Header2" type="RichTextLabel" parent="MapBody/HBoxContainer" unique_id=637502434]
+[node name="Header2" type="RichTextLabel" parent="MapBody/Content/HBoxContainer" unique_id=637502434]
 clip_contents = false
 layout_mode = 2
 mouse_filter = 2
@@ -1212,7 +1289,7 @@ script = ExtResource("17_j127p")
 shadow_scale = 1
 metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
 
-[node name="Header3" type="RichTextLabel" parent="MapBody/HBoxContainer" unique_id=541808246]
+[node name="Header3" type="RichTextLabel" parent="MapBody/Content/HBoxContainer" unique_id=541808246]
 clip_contents = false
 layout_mode = 2
 offset_transform_enabled = true
@@ -1229,7 +1306,7 @@ text_scale = 1
 shadow_scale = 1
 metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MapBody" unique_id=546366996]
+[node name="VBoxContainer" type="VBoxContainer" parent="MapBody/Content" unique_id=546366996]
 custom_minimum_size = Vector2(86, 0)
 custom_maximum_size = Vector2(86, -1)
 offset_left = -163.0
@@ -1238,7 +1315,7 @@ offset_right = -77.0
 offset_bottom = -32.0
 theme_override_constants/separation = 2
 
-[node name="Header4" type="RichTextLabel" parent="MapBody/VBoxContainer" unique_id=2065550438]
+[node name="Header4" type="RichTextLabel" parent="MapBody/Content/VBoxContainer" unique_id=2065550438]
 clip_contents = false
 layout_mode = 2
 mouse_filter = 2
@@ -1253,36 +1330,36 @@ text_scale = 1
 shadow_scale = 1
 metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
 
-[node name="TextureRect" type="TextureRect" parent="MapBody/VBoxContainer" unique_id=1349224718]
+[node name="TextureRect" type="TextureRect" parent="MapBody/Content/VBoxContainer" unique_id=1349224718]
 layout_mode = 2
 texture = ExtResource("4_shvbi")
 stretch_mode = 2
 
-[node name="Legend" type="Node2D" parent="MapBody" unique_id=905370572]
+[node name="Legend" type="Node2D" parent="MapBody/Content" unique_id=905370572]
 position = Vector2(-160, -64)
 
-[node name="SnailySprite2D" type="AnimatedSprite2D" parent="MapBody/Legend" unique_id=2040360455]
+[node name="SnailySprite2D" type="AnimatedSprite2D" parent="MapBody/Content/Legend" unique_id=2040360455]
 sprite_frames = SubResource("SpriteFrames_udyn1")
 autoplay = "default"
 script = ExtResource("3_j127p")
 metadata/_custom_type_script = "uid://boee2837la0pr"
 
-[node name="MapMarker1" parent="MapBody/Legend" unique_id=1627086070 instance=ExtResource("17_newu2")]
+[node name="MapMarker1" parent="MapBody/Content/Legend" unique_id=1627086070 instance=ExtResource("17_newu2")]
 position = Vector2(0, 8)
 type = 2
 
-[node name="MapMarker2" parent="MapBody/Legend" unique_id=1765304071 instance=ExtResource("17_newu2")]
+[node name="MapMarker2" parent="MapBody/Content/Legend" unique_id=1765304071 instance=ExtResource("17_newu2")]
 position = Vector2(0, 16)
 
-[node name="MapMarker3" parent="MapBody/Legend" unique_id=1091855026 instance=ExtResource("17_newu2")]
+[node name="MapMarker3" parent="MapBody/Content/Legend" unique_id=1091855026 instance=ExtResource("17_newu2")]
 position = Vector2(0, 24)
 type = 1
 
-[node name="MapMarker4" parent="MapBody/Legend" unique_id=985311718 instance=ExtResource("17_newu2")]
+[node name="MapMarker4" parent="MapBody/Content/Legend" unique_id=985311718 instance=ExtResource("17_newu2")]
 position = Vector2(0, 32)
 type = 4
 
-[node name="Dashes" type="RichTextLabel" parent="MapBody/Legend" unique_id=241329037]
+[node name="Dashes" type="RichTextLabel" parent="MapBody/Content/Legend" unique_id=241329037]
 clip_contents = false
 offset_left = 7.0
 offset_top = -6.0
@@ -1303,7 +1380,7 @@ text_scale = 1
 shadow_scale = 1
 metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
 
-[node name="Labels" type="RichTextLabel" parent="MapBody/Legend" unique_id=569655771]
+[node name="Labels" type="RichTextLabel" parent="MapBody/Content/Legend" unique_id=569655771]
 clip_contents = false
 offset_left = 16.0
 offset_top = -6.0
@@ -1326,7 +1403,7 @@ quick_load_text = "You!!\\nItem\\nSave point\\nBoss\\nMarker"
 shadow_scale = 1
 metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
 
-[node name="RunInfo" parent="MapBody" unique_id=326553468 instance=ExtResource("5_ndsvi")]
+[node name="RunInfo" parent="MapBody/Content" unique_id=326553468 instance=ExtResource("5_ndsvi")]
 offset_left = -136.0
 offset_top = 77.0
 offset_right = -36.0
@@ -1340,7 +1417,7 @@ text_scale = 1
 quick_load_text = "%s\\n%s"
 shadow_scale = 1
 
-[node name="MapRate" parent="MapBody" unique_id=195253876 instance=ExtResource("5_ndsvi")]
+[node name="MapRate" parent="MapBody/Content" unique_id=195253876 instance=ExtResource("5_ndsvi")]
 custom_minimum_size = Vector2(100, 0)
 offset_left = -88.0
 offset_top = 77.0
@@ -1354,7 +1431,7 @@ text_scale = 1
 quick_load_text = "Map\\n%.1f%%"
 shadow_scale = 1
 
-[node name="ItemRate" parent="MapBody" unique_id=1149271177 instance=ExtResource("5_ndsvi")]
+[node name="ItemRate" parent="MapBody/Content" unique_id=1149271177 instance=ExtResource("5_ndsvi")]
 custom_minimum_size = Vector2(100, 0)
 offset_left = -40.0
 offset_top = 77.0
@@ -1368,7 +1445,7 @@ text_scale = 1
 quick_load_text = "Items\\n%.1f%%"
 shadow_scale = 1
 
-[node name="InGameTime" parent="MapBody" unique_id=81741322 instance=ExtResource("5_ndsvi")]
+[node name="InGameTime" parent="MapBody/Content" unique_id=81741322 instance=ExtResource("5_ndsvi")]
 custom_minimum_size = Vector2(100, 0)
 offset_left = 24.0
 offset_top = 77.0
@@ -1382,10 +1459,10 @@ text_scale = 1
 quick_load_text = "Time\\n%s"
 shadow_scale = 1
 
-[node name="PromptMarkers" type="Node2D" parent="MapBody" unique_id=205434859]
+[node name="PromptMarkers" type="Node2D" parent="MapBody/Content" unique_id=205434859]
 position = Vector2(-168, 12)
 
-[node name="Icon" type="RichTextLabel" parent="MapBody/PromptMarkers" unique_id=104120513]
+[node name="Icon" type="RichTextLabel" parent="MapBody/Content/PromptMarkers" unique_id=104120513]
 clip_contents = false
 offset_left = 6.0
 offset_right = 46.0
@@ -1399,7 +1476,7 @@ script = ExtResource("17_j127p")
 shadow_scale = 1
 metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
 
-[node name="Dash" type="RichTextLabel" parent="MapBody/PromptMarkers" unique_id=2051335691]
+[node name="Dash" type="RichTextLabel" parent="MapBody/Content/PromptMarkers" unique_id=2051335691]
 clip_contents = false
 offset_left = 23.0
 offset_top = 6.0
@@ -1417,7 +1494,7 @@ text_scale = 1
 shadow_scale = 1
 metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
 
-[node name="Desc" type="RichTextLabel" parent="MapBody/PromptMarkers" unique_id=1246462581]
+[node name="Desc" type="RichTextLabel" parent="MapBody/Content/PromptMarkers" unique_id=1246462581]
 custom_minimum_size = Vector2(64, 0)
 custom_maximum_size = Vector2(64, -1)
 clip_contents = false
@@ -1438,10 +1515,10 @@ text_scale = 1
 shadow_scale = 1
 metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
 
-[node name="PromptZoom" type="Node2D" parent="MapBody" unique_id=1557623772]
+[node name="PromptZoom" type="Node2D" parent="MapBody/Content" unique_id=1557623772]
 position = Vector2(-168, 32)
 
-[node name="Icon" type="RichTextLabel" parent="MapBody/PromptZoom" unique_id=490903651]
+[node name="Icon" type="RichTextLabel" parent="MapBody/Content/PromptZoom" unique_id=490903651]
 clip_contents = false
 offset_left = 6.0
 offset_right = 46.0
@@ -1457,7 +1534,7 @@ script = ExtResource("17_j127p")
 shadow_scale = 1
 metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
 
-[node name="Dash" type="RichTextLabel" parent="MapBody/PromptZoom" unique_id=1808907550]
+[node name="Dash" type="RichTextLabel" parent="MapBody/Content/PromptZoom" unique_id=1808907550]
 clip_contents = false
 offset_left = 23.0
 offset_top = 6.0
@@ -1475,7 +1552,7 @@ text_scale = 1
 shadow_scale = 1
 metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
 
-[node name="Desc" type="RichTextLabel" parent="MapBody/PromptZoom" unique_id=2022893522]
+[node name="Desc" type="RichTextLabel" parent="MapBody/Content/PromptZoom" unique_id=2022893522]
 custom_maximum_size = Vector2(64, -1)
 clip_contents = false
 offset_left = 30.0
@@ -1495,10 +1572,10 @@ text_scale = 1
 shadow_scale = 1
 metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
 
-[node name="PromptInv" type="Node2D" parent="MapBody" unique_id=1241328933]
+[node name="PromptInv" type="Node2D" parent="MapBody/Content" unique_id=1241328933]
 position = Vector2(-168, 52)
 
-[node name="Icon" type="RichTextLabel" parent="MapBody/PromptInv" unique_id=1481485287]
+[node name="Icon" type="RichTextLabel" parent="MapBody/Content/PromptInv" unique_id=1481485287]
 clip_contents = false
 offset_left = 6.0
 offset_right = 46.0
@@ -1514,7 +1591,7 @@ script = ExtResource("17_j127p")
 shadow_scale = 1
 metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
 
-[node name="Dash" type="RichTextLabel" parent="MapBody/PromptInv" unique_id=306420140]
+[node name="Dash" type="RichTextLabel" parent="MapBody/Content/PromptInv" unique_id=306420140]
 clip_contents = false
 offset_left = 23.0
 offset_top = 6.0
@@ -1532,7 +1609,7 @@ text_scale = 1
 shadow_scale = 1
 metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
 
-[node name="Desc" type="RichTextLabel" parent="MapBody/PromptInv" unique_id=1254882855]
+[node name="Desc" type="RichTextLabel" parent="MapBody/Content/PromptInv" unique_id=1254882855]
 custom_maximum_size = Vector2(64, -1)
 clip_contents = false
 offset_left = 30.0
