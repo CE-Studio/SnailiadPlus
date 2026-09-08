@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://cln1nocfoompn" path="res://Scripts/UI/UnlockLayer.gd" id="1_hedds"]
 [ext_resource type="Texture2D" uid="uid://cv67pgk0cf0w4" path="res://Assets/Images/UI/FadeBorder.png" id="2_jvwba"]
 [ext_resource type="Texture2D" uid="uid://cc1665khnwbp7" path="res://Assets/Images/UI/Unlocks.png" id="3_3h556"]
+[ext_resource type="Material" uid="uid://bj1jqi3180tg5" path="res://Resources/EnemyFlashMat.tres" id="3_cnr54"]
 [ext_resource type="Script" uid="uid://boee2837la0pr" path="res://Scripts/Classes/SnailySprite.gd" id="4_jvwba"]
 [ext_resource type="Texture2D" uid="uid://dgo40o7duwbpi" path="res://Assets/Images/UI/UnlocksLock.png" id="5_3h556"]
 [ext_resource type="Script" uid="uid://dqt4uo3ejug3v" path="res://Scripts/Classes/SnailyText.gd" id="6_2r8eg"]
@@ -272,6 +273,18 @@ tracks/4/keys = {
 "update": 1,
 "values": [true]
 }
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("CenterParent/Frame:material:shader_parameter/flash_color")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 1)]
+}
 
 [sub_resource type="Animation" id="Animation_hedds"]
 resource_name = "sequence"
@@ -284,7 +297,7 @@ tracks/0/path = NodePath(".")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0.7, 0.8, 1.6, 2.5, 3.8),
+"times": PackedFloat32Array(0.7, 0.8, 1.7, 2.6, 3.9),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "values": [{
 "args": [],
@@ -293,10 +306,10 @@ tracks/0/keys = {
 "args": [1, 0],
 "method": &"_show_beam"
 }, {
-"args": [1, 1],
+"args": [1, 1, 2.0],
 "method": &"_show_beam"
 }, {
-"args": [2, 2],
+"args": [2, 2, 3.0],
 "method": &"_show_beam"
 }, {
 "args": [],
@@ -310,7 +323,7 @@ tracks/1/path = NodePath(".:shake_strength")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0.7, 3.8),
+"times": PackedFloat32Array(0.7, 3.9),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [0.0, 4.0]
@@ -322,7 +335,7 @@ tracks/2/path = NodePath(".:lock_arch_extension")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0.7, 3.8),
+"times": PackedFloat32Array(0.7, 3.9),
 "transitions": PackedFloat32Array(4, 1),
 "update": 0,
 "values": [0.0, 16.0]
@@ -334,7 +347,7 @@ tracks/3/path = NodePath("FrontFlash:modulate")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 2.9, 3.8, 4.8),
+"times": PackedFloat32Array(0, 3, 3.9, 4.9),
 "transitions": PackedFloat32Array(1, 4, 0.5, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
@@ -358,10 +371,22 @@ tracks/5/path = NodePath("Reward:visible")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(0, 3.8),
+"times": PackedFloat32Array(0, 3.9),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [false, true]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("CenterParent/Frame:material:shader_parameter/flash_color")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.8, 1.1, 1.7, 2.1000001, 2.6, 3.1, 3.8, 3.9, 4.4),
+"transitions": PackedFloat32Array(0, 1, 0, 1, 0, 1, 1, 0, 1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(0.24840015, 0.24840018, 0.24840015, 1), Color(0, 0, 0, 1), Color(0.41598073, 0.41598034, 0.41598052, 1), Color(0, 0, 0, 1), Color(0.73300546, 0.7330054, 0.7330054, 1), Color(0, 0, 0, 1), Color(0.6789437, 0.6789437, 0.6789437, 1), Color(1, 1, 1, 1), Color(0, 0, 0, 1)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_lqi7j"]
@@ -370,7 +395,7 @@ _data = {
 &"sequence": SubResource("Animation_hedds")
 }
 
-[node name="UnlockLayer" type="Node2D" unique_id=472986014 node_paths=PackedStringArray("frame", "lock_body", "lock_arch", "backing_fade", "top_text_group", "text_condition", "text_unlocked", "text_reward", "anim", "beam_group", "beams", "sfx_beam1", "sfx_beam2", "sfx_beam3", "sfx_pop")]
+[node name="UnlockLayer" type="Node2D" unique_id=472986014 node_paths=PackedStringArray("frame", "lock_body", "lock_arch", "backing_fade", "top_text_group", "text_condition", "text_unlocked", "text_reward", "anim", "center_group", "beam_group", "beams", "sfx_beam1", "sfx_beam2", "sfx_beam3", "sfx_pop")]
 script = ExtResource("1_hedds")
 frame = NodePath("CenterParent/Frame")
 lock_body = NodePath("CenterParent/LockBody")
@@ -381,6 +406,7 @@ text_condition = NodePath("TopTextGroup/Condition")
 text_unlocked = NodePath("TopTextGroup/Unlocked")
 text_reward = NodePath("Reward")
 anim = NodePath("AnimationPlayer")
+center_group = NodePath("CenterParent")
 beam_group = NodePath("BeamGroup")
 beams = [NodePath("BeamGroup/Beam1"), NodePath("BeamGroup/Beam2"), NodePath("BeamGroup/Beam3"), NodePath("BeamGroup/Beam4"), NodePath("BeamGroup/Beam5")]
 sfx_beam1 = NodePath("Beam1")
@@ -431,6 +457,7 @@ uv = PackedVector2Array(-136, 48, -154, -33, -121, -30)
 position = Vector2(200, 120)
 
 [node name="Frame" type="AnimatedSprite2D" parent="CenterParent" unique_id=1696935723]
+material = ExtResource("3_cnr54")
 sprite_frames = SubResource("SpriteFrames_wkouj")
 animation = &"locked"
 script = ExtResource("4_jvwba")
@@ -539,3 +566,17 @@ bus = &"Sfx"
 [node name="Pop" type="AudioStreamPlayer" parent="." unique_id=1960019536]
 stream = ExtResource("11_rxi84")
 bus = &"Sfx"
+
+[node name="SnailyText" type="RichTextLabel" parent="." unique_id=211998541]
+clip_contents = false
+offset_left = 8.0
+offset_top = 176.0
+offset_right = 272.0
+offset_bottom = 240.0
+mouse_filter = 2
+bbcode_enabled = true
+text = "Make it so that you have to mash a button to break the lock. That'd be really cool"
+fit_content = true
+scroll_active = false
+script = ExtResource("6_2r8eg")
+metadata/_custom_type_script = "uid://dqt4uo3ejug3v"

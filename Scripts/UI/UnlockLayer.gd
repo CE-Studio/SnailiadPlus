@@ -14,6 +14,8 @@ const BACK_FADE_COLOR:Color = Color("0000007f")
 const IN_LERP_RATE:float = 8.0
 const BEAM_ROT_SPEED:Vector2 = Vector2(40.0, 160.0)
 const BEAM_GROW_SPEED:float = 4.0
+const CENTER_JOLT_STRENGTH:float = 6.0
+const CENTER_JOLY_RETURN:float = 7.5
 
 enum Stages {
 	INIT,
@@ -31,6 +33,8 @@ var lock_arch_vel:Vector2 = Vector2.ZERO
 var queue:Array[Statics.Unlocks] = []
 var beam_rot_speeds:Array[float] = []
 var visible_beams:int = 0
+var center_default:Vector2 = Vector2.ZERO
+var center_offset:Vector2 = Vector2.ZERO
 @export var shake_strength:float = 0.0
 @export var lock_arch_extension:float = 0.0
 
@@ -43,6 +47,7 @@ var visible_beams:int = 0
 @export var text_unlocked:SnailyText
 @export var text_reward:SnailyText
 @export var anim:AnimationPlayer
+@export var center_group:Node2D
 @export var beam_group:Node2D
 @export var beams:Array[Polygon2D] = []
 @export var sfx_beam1:AudioStreamPlayer
@@ -59,6 +64,7 @@ func _ready() -> void:
 	text_reward.visible = false
 	text_reward.set_default_flashy(2)
 	text_reward.enable_rainbow_scroll()
+	center_default = center_group.position
 
 
 func _process(delta: float) -> void:
@@ -73,6 +79,8 @@ func _process(delta: float) -> void:
 			_set_lock_pos(frame.position)
 			top_text_group.position = top_text_group.position.lerp(Vector2.ZERO, weight)
 		Stages.SHAKE:
+			center_group.position = center_default + center_offset
+			center_offset = center_offset.lerp(Vector2.ZERO, CENTER_JOLY_RETURN * delta)
 			var weight:float = randf() * shake_strength
 			frame.position = Vector2(
 				randf_range(-1.0, 1.0),
@@ -148,13 +156,14 @@ func _init_beams() -> void:
 	visible_beams = 0
 
 
-func _show_beam(count:int, sound_id:int) -> void:
+func _show_beam(count:int, sound_id:int, jolt_mult:float = 1.0) -> void:
 	count = clampi(count, 0, beams.size())
 	visible_beams = clampi(visible_beams + count, 0, beams.size())
 	match sound_id:
 		0: sfx_beam1.play()
 		1: sfx_beam2.play()
 		2: sfx_beam3.play()
+	center_offset = Vector2(CENTER_JOLT_STRENGTH, 0.0).rotated(randf() * TAU) * jolt_mult
 
 
 func _hide_beams() -> void:
@@ -180,7 +189,9 @@ func _set_stage_init() -> void:
 	top_text_group.position.y = TEXT_START_Y_OFFSET
 	frame.play("locked")
 	lock_body.play("default")
+	lock_body.flip_h = false
 	lock_arch.play("default")
+	lock_body.flip_h = false
 	_init_beams()
 
 
@@ -199,17 +210,20 @@ func _set_stage_shake() -> void:
 func _set_stage_pop() -> void:
 	stage = Stages.POP
 	_set_frame_reward_anim()
+	center_group.position = center_default
 	frame.position = Vector2.ZERO
 	lock_body.play("fall")
 	lock_body_vel = Vector2(
 		randf_range(POP_VEL_X.x, POP_VEL_X.y) * (-1.0 if randf() < 0.5 else 1.0),
 		randf_range(POP_VEL_Y.x, POP_VEL_Y.y)
 	)
+	lock_body.flip_h = lock_body_vel.x < 0
 	lock_arch.play("fall")
 	lock_arch_vel = Vector2(
 		randf_range(POP_VEL_X.x, POP_VEL_X.y) * (-1.0 if randf() < 0.5 else 1.0),
 		randf_range(POP_VEL_Y.x, POP_VEL_Y.y)
 	)
+	lock_arch.flip_h = lock_arch_vel.x < 0
 	if sign(lock_body_vel.x) == sign(lock_arch_vel.x):
 		lock_arch_vel.x *= -1
 	if lock_arch_vel.y > lock_body_vel.y:
