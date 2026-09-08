@@ -45,7 +45,7 @@ var sent_entry_once:bool = false
 var damaged_this_tick:bool = false
 var lifetime:float = 0.0
 
-var flash_mat:Material = preload("res://Resources/EnemyFlashMat.tres")
+var flash_mat:Material = preload("uid://bj1jqi3180tg5")
 
 enum ElementTypes {
 	ICE,

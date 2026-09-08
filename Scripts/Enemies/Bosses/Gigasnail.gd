@@ -119,9 +119,9 @@ var area_rect:RectangleShape2D = null
 @onready var sfx_gravjump:AudioStreamPlayer = $"AudioGroup/GravJump"
 @onready var sfx_stomp:AudioStreamPlayer = $"AudioGroup/Stomp"
 @onready var sfx_sleep:AudioStreamPlayer = $"AudioGroup/Sleep"
-@onready var wave:PackedScene = preload("uid://dl78x5wkkhuaw")
-@onready var pea:PackedScene = preload("uid://bfcp7a8s4r5gk")
-@onready var zzz:PackedScene = preload("uid://bjlbeu1oity8p")
+@onready var wave:PackedScene = load("uid://dl78x5wkkhuaw")
+@onready var pea:PackedScene = load("uid://bfcp7a8s4r5gk")
+@onready var zzz:PackedScene = load("uid://bjlbeu1oity8p")
 #endregion
 
 

@@ -67,7 +67,7 @@ var desc_mode:int = 0
 ## Parent node for all achievement icons
 @onready var icon_group:Node2D = $"../IconGroup"
 ## Scene reference for the achievement icon
-@onready var icon_scene:PackedScene = preload("uid://blm214ukusxkj")
+@onready var icon_scene:PackedScene = load("uid://blm214ukusxkj")
 #endregion
 
 

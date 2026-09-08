@@ -36,8 +36,8 @@ var blink_timeout:float = 0.0
 var grav_shock_kill:bool = false
 var grav_shock_dir:Vector2 = Vector2.ZERO
 
-@onready var hand:PackedScene = preload("uid://bjgywgga30eg1")
-@onready var boomerang:PackedScene = preload("uid://bcgwxtcgdpoep")
+@onready var hand:PackedScene = load("uid://bjgywgga30eg1")
+@onready var boomerang:PackedScene = load("uid://bcgwxtcgdpoep")
 @export var eyes:SnailySprite2D
 @export var hand_group:Node2D
 #endregion

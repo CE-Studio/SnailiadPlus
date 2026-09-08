@@ -55,7 +55,7 @@ var afterimage_tick:int = 0
 ## The area used to detect if this bullet is on-screen
 @onready var vis:VisibleOnScreenNotifier2D = $"VisibleOnScreenNotifier2D"
 ## The sound played when this bullet despawns after a collision with an entity or world geometry
-@onready var sfx_despawn:AudioStream = preload("uid://jy74nugtx5w1")
+@onready var sfx_despawn:AudioStream = load("uid://jy74nugtx5w1")
 ## Persistent reference to the [PlayerBulletAfterimage] scene
 @onready var afterimage:PackedScene = preload("uid://dpwnugjso664")
 #endregion

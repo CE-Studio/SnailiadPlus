@@ -22,7 +22,7 @@ var off_screen_time:float = 0.0
 var shot_timeout:float = SHOT_TIMEOUT
 
 @export var sfx_chirp:AudioStreamPlayer
-@onready var donut:PackedScene = preload("uid://cr8jpfivtdpnw")
+@onready var donut:PackedScene = load("uid://cr8jpfivtdpnw")
 #endregion
 
 

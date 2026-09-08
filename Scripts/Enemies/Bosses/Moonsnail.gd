@@ -116,9 +116,9 @@ var most_recent_vert:Statics.DirsCardinal = Statics.DirsCardinal.NONE
 @onready var cast0:RayCast2D = $"CastGroup/RayCast2D0"
 @onready var cast1:RayCast2D = $"CastGroup/RayCast2D1"
 @onready var cast2:RayCast2D = $"CastGroup/RayCast2D2"
-@onready var boomerang:PackedScene = preload("res://Scenes/Entities/Bullets/Enemy/EnemyBulletBoomerangRed.tscn")
-@onready var shadow_wave:PackedScene = preload("res://Scenes/Entities/Bullets/Enemy/EnemyBulletShadowWave.tscn")
-@onready var donut:PackedScene = preload("res://Scenes/Entities/Bullets/Enemy/EnemyBulletDonutRotaryChaser.tscn")
+@onready var boomerang:PackedScene = load("uid://d0r1jtwy6e5rq")
+@onready var shadow_wave:PackedScene = load("uid://to26wfc5ofk5")
+@onready var donut:PackedScene = load("uid://buae50mtgkrf5")
 @onready var debug_label:SnailyText = $"DebugLabel"
 #endregion
 

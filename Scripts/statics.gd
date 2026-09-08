@@ -130,8 +130,8 @@ static var palette:Image = preload("uid://b8qaimtfk0ndf")
 static var missing := preload("uid://rdi8ck7qb61x")
 
 
-static var disconnected_sound := preload("uid://cscnnpsomiw4i")
-static var damage_number := preload("uid://u13oxny8a4rn")
+static var disconnected_sound := load("uid://cscnnpsomiw4i")
+static var damage_number := load("uid://u13oxny8a4rn")
 
 
 static var current_area:int = 0

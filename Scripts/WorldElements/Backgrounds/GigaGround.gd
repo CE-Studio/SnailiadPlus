@@ -22,7 +22,7 @@ var extend_dir:Vector2 = Vector2.RIGHT
 @export var surface:Statics.DirsSurface
 
 @onready var sprites:Array[SnailySprite2D] = []
-@onready var circle:PackedScene = preload("uid://c2d3jobu0nn2a")
+@onready var circle:PackedScene = load("uid://c2d3jobu0nn2a")
 #endregion
 
 

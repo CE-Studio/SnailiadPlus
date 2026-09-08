@@ -87,7 +87,7 @@ var display_enemies:Array[Enemy] = []
 
 
 ## Quick reference to the custom text scene
-@onready var text_scene:PackedScene = preload("res://Scenes/internals/SnailyText.tscn")
+@onready var text_scene:PackedScene = load("res://Scenes/internals/SnailyText.tscn")
 ## Container holding all selectable text
 @export var scroll_list:VBoxContainer
 ## Sound that plays when an item in the list is selected

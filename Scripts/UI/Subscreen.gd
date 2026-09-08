@@ -106,7 +106,7 @@ var map_zoomed:bool = false
 @export var item_sprites:Array[Sprite2D]
 @export var item_target:Marker2D
 
-@onready var zoomed_scn:PackedScene = preload("uid://b1u1t0hvg2fob")
+@onready var zoomed_scn:PackedScene = load("uid://b1u1t0hvg2fob")
 #endregion
 
 

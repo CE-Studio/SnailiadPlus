@@ -76,9 +76,9 @@ func instantiate() -> void:
 	save_icon.visible = false
 	bestiary_icon.visible = false
 	
-	flashy_popup_scene = preload("uid://cst46kauimrf6")
-	color_popup_scene = preload("uid://b84helaw7ial0")
-	boss_bar = preload("uid://d0moh826bija1")
+	flashy_popup_scene = load("uid://cst46kauimrf6")
+	color_popup_scene = load("uid://b84helaw7ial0")
+	boss_bar = load("uid://d0moh826bija1")
 	
 	set_all_visibility_from_settings.call_deferred()
 

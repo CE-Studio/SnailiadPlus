@@ -289,7 +289,7 @@ func _create_credits() -> void:
 		39:
 			_add_pixel_person("broomie")
 			_add_label(tr(&"Broomietunes"))
-			_add_label(tr(&"Wrote a bunch of new songs for the new content and has excellent game design sense"), 1)
+			_add_label(tr(&"Wrote a bunch of new songs and sounds, and has excellent game design sense"), 1)
 			_add_y(PIXEL_PEOPLE_SPACING_Y)
 		40:
 			_add_pixel_person("orange")

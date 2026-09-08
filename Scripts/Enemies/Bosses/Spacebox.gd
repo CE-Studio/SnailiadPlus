@@ -55,9 +55,9 @@ var accel_dir:Vector2 = Vector2.ZERO
 @onready var sfx_summon:AudioStreamPlayer = $"Summon"
 @onready var sfx_stomp:AudioStreamPlayer = $"Stomp"
 @onready var shield_layer:Node2D = $"ShieldLayer"
-@onready var donut:PackedScene = preload("uid://cpp1rm5lkd443")
-@onready var shield_scn:PackedScene = preload("uid://ka2xpbxbm32q")
-@onready var babybox_scn:PackedScene = preload("uid://4w6iyanqj1ks")
+@onready var donut:PackedScene = load("uid://cpp1rm5lkd443")
+@onready var shield_scn:PackedScene = load("uid://ka2xpbxbm32q")
+@onready var babybox_scn:PackedScene = load("uid://4w6iyanqj1ks")
 #endregion
 
 

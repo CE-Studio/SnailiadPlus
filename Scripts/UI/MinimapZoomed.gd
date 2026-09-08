@@ -17,7 +17,7 @@ const SPEED:float = 128.0
 @export var arrow_d:SnailySprite2D
 @export var arrow_l:SnailySprite2D
 @export var arrow_r:SnailySprite2D
-@onready var marker_scene:PackedScene = preload("uid://dlaal46coilv7")
+@onready var marker_scene:PackedScene = load("uid://dlaal46coilv7")
 
 
 func _ready() -> void:

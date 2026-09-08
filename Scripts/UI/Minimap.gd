@@ -99,7 +99,7 @@ var player_marker_sprites:Array = []
 @export var marker_group:Node2D
 @export var p_marker_group:Node2D
 @export var name_text:SnailyText
-@onready var marker_scene:PackedScene = preload("uid://dlaal46coilv7")
+@onready var marker_scene:PackedScene = load("uid://dlaal46coilv7")
 #endregion
 
 

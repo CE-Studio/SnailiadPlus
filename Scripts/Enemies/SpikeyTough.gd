@@ -48,7 +48,7 @@ var stopped:bool = false
 @onready var cast_cw_back:RayCast2D = $"CastGroup/CWBack"
 @onready var cast_ccw_back:RayCast2D = $"CastGroup/CCWBack"
 @onready var cast_center:RayCast2D = $"CastGroup/Center"
-@onready var pea:PackedScene = preload("res://Scenes/Entities/Bullets/Enemy/EnemyBulletPea.tscn")
+@onready var pea:PackedScene = load("uid://ypf8dhvoybdu")
 #endregion
 
 

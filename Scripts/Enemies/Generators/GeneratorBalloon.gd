@@ -19,7 +19,7 @@ var timeout:float = 0.0
 var pointer:int = 0
 
 @onready var spr:Sprite2D = $"Sprite2D"
-@onready var enemy:PackedScene = preload("res://Scenes/Entities/Enemies/Balloon.tscn")
+@onready var enemy:PackedScene = load("uid://cjla3pfitceec")
 #endregion
 
 
