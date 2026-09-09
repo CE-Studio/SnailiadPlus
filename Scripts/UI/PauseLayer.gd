@@ -4,6 +4,10 @@ extends Node2D
 
 
 #region Variables
+const MENU:PackedScene = preload("uid://c84sydpddlb6c")
+const SUBSCREEN:PackedScene = preload("uid://dpfe8sxp7e2kp")
+const DEBUG:PackedScene = preload("uid://c0jv4y1p8dri1")
+
 var subscreen:Subscreen = null
 
 ## If [code]true[/code], will prevent any menu from being opened even when the player has control.
@@ -11,9 +15,6 @@ static var suppress_menuing:bool = false
 
 @onready var cam:UICore = UICore.instance
 @onready var game:GameCore = GameCore.instance
-@onready var menu_scene:PackedScene = load("uid://c84sydpddlb6c")
-@onready var subscreen_scene:PackedScene = load("uid://dpfe8sxp7e2kp")
-@onready var debug_scene:PackedScene = load("uid://c0jv4y1p8dri1")
 #endregion
 
 
@@ -26,16 +27,16 @@ func _physics_process(_delta: float) -> void:
 		return
 	if SInput.input_just_pressed(SInput.Inputs.PAUSE) and not get_tree().paused:
 		pause_fade_in()
-		add_child(menu_scene.instantiate())
+		add_child(MENU.instantiate())
 		cam.minimap.process_mode = Node.PROCESS_MODE_INHERIT
 	if SInput.input_just_pressed(SInput.Inputs.MAP) and not get_tree().paused:
 		pause_fade_in()
-		subscreen = subscreen_scene.instantiate()
+		subscreen = SUBSCREEN.instantiate()
 		add_child(subscreen)
 		subscreen.position = Vector2(0, 240)
 	if SInput.input_just_pressed(SInput.Inputs.DEBUG) and not get_tree().paused:
 		pause_no_fade()
-		add_child(debug_scene.instantiate())
+		add_child(DEBUG.instantiate())
 
 
 func pause_fade_in() -> void:

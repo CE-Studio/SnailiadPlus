@@ -11,6 +11,7 @@ const FOCUS_COLOR_SPEED:float = 4.5
 const SELECTOR_WIGGLE_SPEED:float = 3.8
 const SELECTOR_EASE_RATE:float = 20.0
 const SELECTOR_Y_MARGIN:int = 20
+const TEXT_SCENE:PackedScene = preload("uid://dke6r2335reau")
 const ENTRIES:Array = [
 	Enemy.EnemyTypes.SPIKEY_COMMON,
 	Enemy.EnemyTypes.SPIKEY_TOUGH,
@@ -86,8 +87,6 @@ var selection:int = 0
 var display_enemies:Array[Enemy] = []
 
 
-## Quick reference to the custom text scene
-@onready var text_scene:PackedScene = load("res://Scenes/internals/SnailyText.tscn")
 ## Container holding all selectable text
 @export var scroll_list:VBoxContainer
 ## Sound that plays when an item in the list is selected
@@ -120,7 +119,7 @@ func _ready() -> void:
 			entry_states.append(false)
 		else:
 			entry_states.append(true)
-		var new_text:SnailyText = text_scene.instantiate()
+		var new_text:SnailyText = TEXT_SCENE.instantiate()
 		new_text.text_scale = 1
 		new_text.max_width = 112
 		new_text.name = str(i)

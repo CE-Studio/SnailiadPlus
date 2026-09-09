@@ -67,6 +67,9 @@ const DECISION_TABLE:Array[float] = [
 	0.6904605229, 0.6808205255, 0.6856147591, 0.299675182,  0.8012191872, 0.804475971,
 	0.1926201715, 0.8868517061, 0.8347136807, 0.1512707539,
 ]
+const WAVE:PackedScene = preload("uid://dl78x5wkkhuaw")
+const PEA:PackedScene = preload("uid://bfcp7a8s4r5gk")
+const ZZZ:PackedScene = preload("uid://bjlbeu1oity8p")
 
 
 @export var stomp_targets:Array[EntityTarget]
@@ -119,9 +122,6 @@ var area_rect:RectangleShape2D = null
 @onready var sfx_gravjump:AudioStreamPlayer = $"AudioGroup/GravJump"
 @onready var sfx_stomp:AudioStreamPlayer = $"AudioGroup/Stomp"
 @onready var sfx_sleep:AudioStreamPlayer = $"AudioGroup/Sleep"
-@onready var wave:PackedScene = load("uid://dl78x5wkkhuaw")
-@onready var pea:PackedScene = load("uid://bfcp7a8s4r5gk")
-@onready var zzz:PackedScene = load("uid://bjlbeu1oity8p")
 #endregion
 
 
@@ -356,7 +356,7 @@ func _shoot_wave() -> void:
 			dir = Vector2.DOWN if facing_left else Vector2.UP
 		Statics.DirsSurface.CEILING:
 			dir = Vector2.RIGHT if facing_left else Vector2.LEFT
-	_shoot(wave, dir, WAVE_SPEED)
+	_shoot(WAVE, dir, WAVE_SPEED)
 
 
 func _pick_stomp_target() -> void:
@@ -626,7 +626,7 @@ func _update_strafe(delta:float) -> void:
 	strafe_theta_vel += strafe_theta_accel * delta * boss_speed
 	if mode_elapsed > START_ATTACK_TIME and aimed and strafe_timeout <= 0.0:
 		strafe_timeout = STRAFE_TIMEOUT
-		_shoot_360_cluster(pea, strafe_theta, STRAFE_SPEED, strafe_spoke_count)
+		_shoot_360_cluster(PEA, strafe_theta, STRAFE_SPEED, strafe_spoke_count)
 	if mode_timeout < 0.0:
 		if phase > 0 and _get_decision() > 0.74:
 			_set_mode(BossMode.SLEEP)
@@ -686,7 +686,7 @@ func _update_sleep(delta:float) -> void:
 	if stomped:
 		zzz_timeout -= delta * boss_speed
 		if zzz_timeout <= 0.0 and zzz_count > 0:
-			_shoot(zzz, Vector2(position.x + 40.0 + ZZZ_BUFFER * zzz_i, position.y), 3.0)
+			_shoot(ZZZ, Vector2(position.x + 40.0 + ZZZ_BUFFER * zzz_i, position.y), 3.0)
 			zzz_timeout = ZZZ_TIMEOUT
 			zzz_count -= 1
 			zzz_i += 1

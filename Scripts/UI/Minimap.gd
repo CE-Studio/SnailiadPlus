@@ -35,6 +35,7 @@ const FADE_SPEED:float = 3.5
 #const SUBSCREEN_MOVE_SPEED:float = 16.0
 #const SUBSCREEN_MOD_TOLERANCE:float = Statics.FRAC_64
 const P_MARKER_ID_OFFSET:int = 100
+const MARKER_SCENE:PackedScene = preload("uid://dlaal46coilv7")
 
 const DEFAULT_MAP:Array = [
 #	 0   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18  19  20  21  22  23  24  25
@@ -99,7 +100,6 @@ var player_marker_sprites:Array = []
 @export var marker_group:Node2D
 @export var p_marker_group:Node2D
 @export var name_text:SnailyText
-@onready var marker_scene:PackedScene = load("uid://dlaal46coilv7")
 #endregion
 
 
@@ -152,7 +152,7 @@ func log_markers() -> void:
 	for i in range(marker_positions.size()):
 		if ((marker_positions[i] is Array and marker_positions[i][0] > MarkerTypes.NONE)
 		or marker_positions[i] > MarkerTypes.NONE):
-			var new_marker:MapMarker = marker_scene.instantiate()
+			var new_marker:MapMarker = MARKER_SCENE.instantiate()
 			marker_group.add_child(new_marker)
 			new_marker.position = screen_pos * 8
 			if marker_positions[i] is Array:
@@ -204,7 +204,7 @@ func update_p_marker_layer() -> void:
 	var cell_coords:Vector2i = Vector2i.ZERO
 	for i in cur_map.size():
 		if cur_map[i] >= P_MARKER_ID_OFFSET - 1 and player_marker_sprites[i] == null:
-			var new_marker:MapMarker = marker_scene.instantiate()
+			var new_marker:MapMarker = MARKER_SCENE.instantiate()
 			p_marker_group.add_child(new_marker)
 			new_marker.position = cell_coords * 8
 			new_marker.type = MarkerTypes.P_MARKER

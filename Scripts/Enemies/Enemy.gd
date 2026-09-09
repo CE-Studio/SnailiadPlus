@@ -11,6 +11,12 @@ const DAMAGE_FLASH_COLOR:Color = Color(0.9, 0.9, 0.9)
 const DAMAGE_FLASH_STRENGTH:float = 0.9
 const DAMAGE_FADE_DECAY:float = 10.0
 const PARRY_DAMAGE_MULT:float = 8.0
+const SFX_PING:AudioStream = preload("uid://da0tclibjxftr")
+const SFX_KILL:AudioStream = preload("uid://bt37e4rs2jw1g")
+const SFX_HIT1:AudioStream = preload("uid://br8snm0iqts4g")
+const SFX_HIT2:AudioStream = preload("uid://fxp56us7em3w")
+const SFX_HIT3:AudioStream = preload("uid://cbkqdrvlo8gbo")
+const SFX_HIT4:AudioStream = preload("uid://brxaghtx4yim")
 
 @export var max_health:int
 @export var max_health_easy:int
@@ -74,13 +80,7 @@ var hard_mode:bool = false
 var flash_color:Color = Color.BLACK
 var flash_strength:float = 0.0
 
-@onready var sfx_ping:AudioStream = preload("uid://da0tclibjxftr")
-@onready var sfx_kill:AudioStream = preload("uid://bt37e4rs2jw1g")
-@onready var sfx_hit1:AudioStream = preload("uid://br8snm0iqts4g")
-@onready var sfx_hit2:AudioStream = preload("uid://fxp56us7em3w")
-@onready var sfx_hit3:AudioStream = preload("uid://cbkqdrvlo8gbo")
-@onready var sfx_hit4:AudioStream = preload("uid://brxaghtx4yim")
-@onready var hit_sounds:Array = [ sfx_hit1, sfx_hit2, sfx_hit3, sfx_hit4 ]
+@onready var hit_sounds:Array = [ SFX_HIT1, SFX_HIT2, SFX_HIT3, SFX_HIT4 ]
 
 var my_type:EnemyTypes
 enum EnemyTypes {
@@ -244,7 +244,7 @@ func _physics_process(delta) -> void:
 					max_color = this_color
 			else:
 				if make_sound_on_ping and not ping_played and not bullet is PlayerBulletAfterimage:
-					Statics.play_sfx_disconnected(sfx_ping)
+					Statics.play_sfx_disconnected(SFX_PING)
 				ping_played  = true
 				if max_damage == 0:
 					max_color = Statics.get_color(Vector2i(3, 0))
@@ -258,7 +258,7 @@ func _physics_process(delta) -> void:
 						max_damage = this_damage
 				else:
 					if make_sound_on_ping and not ping_played:
-						Statics.play_sfx_disconnected(sfx_ping)
+						Statics.play_sfx_disconnected(SFX_PING)
 					ping_played  = true
 				if (not can_be_pierced and not bullet.always_pierce) or bullet.single_hit:
 					ebullets_to_despawn.append(bullet)
@@ -363,7 +363,7 @@ func _spawn_damage_num(num:int, color:Color) -> void:
 
 
 func kill() -> void:
-	Statics.play_sfx_disconnected(sfx_kill)
+	Statics.play_sfx_disconnected(SFX_KILL)
 	if my_type != EnemyTypes.NONE:
 		Statics.add_bestiary_entry(my_type)
 	for i in range(kill_particle_count):

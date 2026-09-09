@@ -43,6 +43,9 @@ const DEATH_MOVE_TIME:float = 3.25
 const DEATH_FADE_START:float = 2.5
 const DEATH_FADE_END:float = 4.5
 const DEATH_FADE_COLOR:Color = Color("00c2f7")
+const BOOMERANG:PackedScene = preload("uid://d0r1jtwy6e5rq")
+const SHADOW_WAVE:PackedScene = preload("uid://to26wfc5ofk5")
+const DONUT:PackedScene = preload("uid://buae50mtgkrf5")
 
 enum BossMode {
 	INTRO,
@@ -116,9 +119,6 @@ var most_recent_vert:Statics.DirsCardinal = Statics.DirsCardinal.NONE
 @onready var cast0:RayCast2D = $"CastGroup/RayCast2D0"
 @onready var cast1:RayCast2D = $"CastGroup/RayCast2D1"
 @onready var cast2:RayCast2D = $"CastGroup/RayCast2D2"
-@onready var boomerang:PackedScene = load("uid://d0r1jtwy6e5rq")
-@onready var shadow_wave:PackedScene = load("uid://to26wfc5ofk5")
-@onready var donut:PackedScene = load("uid://buae50mtgkrf5")
 @onready var debug_label:SnailyText = $"DebugLabel"
 #endregion
 
@@ -278,7 +278,7 @@ func _set_mode(new_mode:BossMode, try_shoot:bool = false) -> void:
 func _check_shoot_donuts() -> void:
 	if ring_timeout <= 0.0:
 		ring_timeout = RING_TIMEOUT
-		bullets.append_array(_shoot_360_cluster_rotary(donut, Vector2(2.2, 0), 16.0, RING_COUNT))
+		bullets.append_array(_shoot_360_cluster_rotary(DONUT, Vector2(2.2, 0), 16.0, RING_COUNT))
 
 
 func _attack(delta:float) -> void:
@@ -328,9 +328,9 @@ func _attack(delta:float) -> void:
 		Statics.DirsCompass.NW: aim_vector = -Statics.VECTOR_DIAG
 	match current_weapon:
 		1:
-			bullets.append(_shoot(boomerang, aim_vector, WEAPON_SPEED[1]))
+			bullets.append(_shoot(BOOMERANG, aim_vector, WEAPON_SPEED[1]))
 		2:
-			bullets.append(_shoot(shadow_wave, aim_vector, WEAPON_SPEED[2]))
+			bullets.append(_shoot(SHADOW_WAVE, aim_vector, WEAPON_SPEED[2]))
 	weapon_cooldown = WEAPON_COOLDOWNS[current_weapon] * 0.5
 
 

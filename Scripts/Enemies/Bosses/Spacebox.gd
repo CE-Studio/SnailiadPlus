@@ -20,6 +20,9 @@ const SHOT_TIMEOUTS:Array[float] = [0.6, 0.2]
 const SHAKE_TIMELINE:Array[float] = [4.0, 0.7]
 const SHIELD_EXTENTS:Vector2 = Vector2(72, 72)
 const DIAG_SLOPE:Vector2 = Vector2(22.5, 19.0)
+const DOUNT:PackedScene = preload("uid://cpp1rm5lkd443")
+const SHIELD:PackedScene = preload("uid://ka2xpbxbm32q")
+const BABYBOX:PackedScene = preload("uid://4w6iyanqj1ks")
 
 const DECISION_TABLE:Array[float] = [
 	0.1640168826, 0.3892556902, 0.0336081053, 0.2246864975, 0.5434009453, 0.4227320437, 0.1017472328, 0.2041907897, 0.9950191347, 0.3634705228,
@@ -55,9 +58,6 @@ var accel_dir:Vector2 = Vector2.ZERO
 @onready var sfx_summon:AudioStreamPlayer = $"Summon"
 @onready var sfx_stomp:AudioStreamPlayer = $"Stomp"
 @onready var shield_layer:Node2D = $"ShieldLayer"
-@onready var donut:PackedScene = load("uid://cpp1rm5lkd443")
-@onready var shield_scn:PackedScene = load("uid://ka2xpbxbm32q")
-@onready var babybox_scn:PackedScene = load("uid://4w6iyanqj1ks")
 #endregion
 
 
@@ -179,7 +179,7 @@ func check_add_shields() -> void:
 	if expected_count > MAX_SHIELDS_ACTIVE:
 		expected_count = MAX_SHIELDS_ACTIVE
 	while expected_count > shield_count:
-		var shield:Node2D = shield_scn.instantiate()
+		var shield:Node2D = SHIELD.instantiate()
 		shield_layer.add_child(shield)
 		shields.append(shield)
 		shield_count += 1
@@ -222,7 +222,7 @@ func make_babyboxes() -> void:
 
 
 func spawn_new_babybox(_position:Vector2, axis:bool) -> void:
-	var new_babybox:SpaceboxBabybox = babybox_scn.instantiate()
+	var new_babybox:SpaceboxBabybox = BABYBOX.instantiate()
 	new_babybox.boss = self
 	new_babybox.last_mode = Statics.DirsCompass.N if axis else Statics.DirsCompass.W
 	GameCore.instance.current_room.layer_ground.add_child(new_babybox)
@@ -248,7 +248,7 @@ func check_shoot(delta:float) -> void:
 				is_shooting = false
 				cluster_timeout = CLUSTER_TIMEOUT
 			shot_timeout = SHOT_TIMEOUTS[phase]
-			bullets.append(_shoot(donut, Vector2(4.0, TAU / shot_max * shot_count), 60.0))
+			bullets.append(_shoot(DOUNT, Vector2(4.0, TAU / shot_max * shot_count), 60.0))
 
 
 func check_mode(delta:float) -> void:

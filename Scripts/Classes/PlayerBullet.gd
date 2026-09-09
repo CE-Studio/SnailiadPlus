@@ -8,6 +8,10 @@ extends Node2D
 #region Variables
 const TICKS_BETWEEN_AFTERIMAGES:int = 4
 const ANGLE_DEADZONE:float = 0.3827
+## The sound played when this bullet despawns after a collision with an entity or world geometry
+const SFX_DESPAWN:AudioStream = preload("uid://jy74nugtx5w1")
+## Persistent reference to the [PlayerBulletAfterimage] scene
+const AFTERIMAGE:PackedScene = preload("uid://dpwnugjso664")
 
 @export_flags("Broom", "Peashooter", "Boomerang", "Rainbow Wave") var type:int = 0
 @export var damage:int = 0
@@ -54,10 +58,6 @@ var afterimage_tick:int = 0
 @onready var sfx_shoot_power:AudioStreamPlayer = $"AudioGroup/ShootPower"
 ## The area used to detect if this bullet is on-screen
 @onready var vis:VisibleOnScreenNotifier2D = $"VisibleOnScreenNotifier2D"
-## The sound played when this bullet despawns after a collision with an entity or world geometry
-@onready var sfx_despawn:AudioStream = load("uid://jy74nugtx5w1")
-## Persistent reference to the [PlayerBulletAfterimage] scene
-@onready var afterimage:PackedScene = preload("uid://dpwnugjso664")
 #endregion
 
 
@@ -102,7 +102,7 @@ func _physics_process(delta: float) -> void:
 	elif _can_create_afterimages():
 		afterimage_tick += 1
 		if afterimage_tick >= TICKS_BETWEEN_AFTERIMAGES:
-			var new_afterimage:PlayerBulletAfterimage = afterimage.instantiate()
+			var new_afterimage:PlayerBulletAfterimage = AFTERIMAGE.instantiate()
 			GameCore.instance.current_room.layer_ground.add_child(new_afterimage)
 			new_afterimage.position = position
 			new_afterimage._spawn_afterimage(self)
@@ -116,7 +116,7 @@ func despawn(loudly:bool = false) -> void:
 			randf_range(-despawn_offset.x, despawn_offset.x),
 			randf_range(-despawn_offset.y, despawn_offset.y)
 		) + position)
-		Statics.play_sfx_disconnected(sfx_despawn)
+		Statics.play_sfx_disconnected(SFX_DESPAWN)
 	queue_free()
 
 ## Rotates the bullet's hitbox to match the given direction, usually in accordance with

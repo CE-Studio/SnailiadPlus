@@ -9,6 +9,7 @@ const WEAPON_SPEED = 90
 const SHOT_TIMEOUT = 1.5
 const SIN_ACCEL = 700
 const MAX_OFF_SCREEN_TIME = 3.0
+const DONUT:PackedScene = preload("uid://cr8jpfivtdpnw")
 
 var velocity:Vector2 = Vector2.ZERO
 var theta:float = 0.0
@@ -22,7 +23,6 @@ var off_screen_time:float = 0.0
 var shot_timeout:float = SHOT_TIMEOUT
 
 @export var sfx_chirp:AudioStreamPlayer
-@onready var donut:PackedScene = load("uid://cr8jpfivtdpnw")
 #endregion
 
 
@@ -70,7 +70,7 @@ func _process(delta: float) -> void:
 					shot_timeout = SHOT_TIMEOUT
 					var player_pos = GameCore.instance.player.position
 					var target = Vector2(player_pos - position).normalized()
-					_shoot(donut, target, WEAPON_SPEED)
+					_shoot(DONUT, target, WEAPON_SPEED)
 		else:
 			off_screen_time += delta
 			if off_screen_time >= MAX_OFF_SCREEN_TIME:

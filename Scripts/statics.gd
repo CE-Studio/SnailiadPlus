@@ -103,6 +103,9 @@ const AREA_LOCATIONS:Array = [
 	[[],           [56],                                 []],       # Shrine of Iris
 ]
 
+const PALETTE:Image = preload("uid://b8qaimtfk0ndf")
+const DISCONNECTED_SOUND:PackedScene = preload("uid://cscnnpsomiw4i")
+const DAMAGE_NUMBER:PackedScene = preload("uid://u13oxny8a4rn")
 
 
 static var main_menu_booted_once:bool = false
@@ -125,14 +128,6 @@ static var stack_weapons:bool = true
 static var stack_weapon_mods:bool = true
 
 # Block of vars from musicParent to healthOrbPointer
-
-static var palette:Image = preload("uid://b8qaimtfk0ndf")
-static var missing := preload("uid://rdi8ck7qb61x")
-
-
-static var disconnected_sound := load("uid://cscnnpsomiw4i")
-static var damage_number := load("uid://u13oxny8a4rn")
-
 
 static var current_area:int = 0
 static var current_subarea:int = 0
@@ -715,7 +710,7 @@ static func play_sfx_disconnected(sound:AudioStream, vol:float = 1.0) -> void:
 		if sfx.stream == sound:
 			active_sounds_of_type += 1
 	if active_sounds_of_type < 2:
-		var new_discon_sound:AudioStreamPlayer = disconnected_sound.instantiate()
+		var new_discon_sound:AudioStreamPlayer = DISCONNECTED_SOUND.instantiate()
 		GameCore.instance.sfx_group.add_child(new_discon_sound)
 		new_discon_sound.load_and_play(sound, vol)
 
@@ -796,8 +791,8 @@ static func colorize_sprite(spritesheet:Texture2D, _palette:Texture2D, row_id:in
 
 
 static func get_color(coords:Vector2i) -> Color:
-	if not palette: return Color.WHITE
-	return palette.get_pixelv(coords)
+	if not PALETTE: return Color.WHITE
+	return PALETTE.get_pixelv(coords)
 
 
 static func get_all_children(_node:Node) -> Array[Node]:

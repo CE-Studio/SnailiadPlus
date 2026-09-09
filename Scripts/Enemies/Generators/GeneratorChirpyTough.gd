@@ -14,12 +14,12 @@ const TIMEOUTS:Array = [
 	0.53726, 0.78544, 0.60425, 0.83512, 0.01696, 0.10451, 0.01513, 0.78678, 0.51617, 0.24251
 ]
 const BASE_TIMEOUT:float = 7.0
+const ENEMY:PackedScene = preload("uid://dsjg815uv2bmi")
 
 var timeout:float = 0.0
 var pointer:int = 0
 
 @onready var spr:Sprite2D = $"Sprite2D"
-@onready var enemy:PackedScene = load("uid://dsjg815uv2bmi")
 #endregion
 
 
@@ -52,7 +52,7 @@ func _physics_process(delta: float) -> void:
 				x_offset = -x_offset
 			else:
 				return
-		var new_chirpy:ChirpyTough = enemy.instantiate()
+		var new_chirpy:ChirpyTough = ENEMY.instantiate()
 		new_chirpy.position = cam_center + Vector2(x_offset, randf_range(-120.0, 120.0))
 		GameCore.instance.current_room.layer_ground.add_child(new_chirpy)
 		new_chirpy.get_going()

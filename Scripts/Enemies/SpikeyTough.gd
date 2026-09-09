@@ -15,6 +15,7 @@ const STOP_TIMEOUT_SLOW = 5.0
 const START_TIMEOUT_SLOW = 1.0
 const STOP_TIMEOUT_FAST = 3.0
 const START_TIMEOUT_FAST = 0.2
+const PEA:PackedScene = preload("uid://ypf8dhvoybdu")
 const PEA_SPEED = 80.0
 const PEA_MOD = 2.3
 
@@ -48,7 +49,6 @@ var stopped:bool = false
 @onready var cast_cw_back:RayCast2D = $"CastGroup/CWBack"
 @onready var cast_ccw_back:RayCast2D = $"CastGroup/CCWBack"
 @onready var cast_center:RayCast2D = $"CastGroup/Center"
-@onready var pea:PackedScene = load("uid://ypf8dhvoybdu")
 #endregion
 
 
@@ -102,7 +102,7 @@ func _physics_process(delta: float) -> void:
 		if vis.is_on_screen():
 			var target = Vector2(GameCore.instance.player.position - position).normalized()
 			var speed = PEA_SPEED * (PEA_MOD if hard_mode else 1.0)
-			_shoot(pea, target, speed)
+			_shoot(PEA, target, speed)
 	
 	if is_falling:
 		vel += GRAVITY * delta

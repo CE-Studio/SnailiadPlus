@@ -5,6 +5,8 @@ extends VBoxContainer
 #region Variables
 const ICON_RADII:Vector2i = Vector2i(254, 80)
 const THETA_EASE_RATE:float = 10.0
+## Scene reference for the achievement icon
+const ICON_SCENE:PackedScene = preload("uid://blm214ukusxkj")
 
 ## Array of translatable strings for each achievement, containing each achievement's
 ## name, unlock hint, and description
@@ -66,8 +68,6 @@ var desc_mode:int = 0
 @onready var desc_text:SnailyText = $"Description/Text"
 ## Parent node for all achievement icons
 @onready var icon_group:Node2D = $"../IconGroup"
-## Scene reference for the achievement icon
-@onready var icon_scene:PackedScene = load("uid://blm214ukusxkj")
 #endregion
 
 
@@ -96,7 +96,7 @@ func _ready() -> void:
 	
 	theta_add_value = TAU / float(achievement_count)
 	for i in range(achievement_count):
-		var new_icon:AchievementIcon = icon_scene.instantiate()
+		var new_icon:AchievementIcon = ICON_SCENE.instantiate()
 		icon_group.add_child(new_icon)
 		icons.append(new_icon)
 		new_icon.play("selected" if i == 0 else "idle")

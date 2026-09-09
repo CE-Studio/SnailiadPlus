@@ -35,6 +35,7 @@ const SUBSCREEN_ENTER_SPEED:float = 16.0
 const SUBSCREEN_INACTIVE_ACCEL:float = 16.0
 const SUBSCREEN_SWITCH_SPEED:float = 3.5
 const DESC_PANEL_SPEED:float = 10.0
+const ZOOMED_SCENE:PackedScene = preload("uid://b1u1t0hvg2fob")
 
 enum MoveMode {
 	NONE = -1,
@@ -105,8 +106,6 @@ var map_zoomed:bool = false
 @export var player_sprite:Sprite2D
 @export var item_sprites:Array[Sprite2D]
 @export var item_target:Marker2D
-
-@onready var zoomed_scn:PackedScene = load("uid://b1u1t0hvg2fob")
 #endregion
 
 
@@ -169,7 +168,7 @@ func _process(delta: float) -> void:
 		and SInput.check_input(SInput.Inputs.STRAFE, true)):
 			sfx_select.play()
 			map_zoomed = true
-			zoomed_map = zoomed_scn.instantiate()
+			zoomed_map = ZOOMED_SCENE.instantiate()
 			add_child(zoomed_map)
 			zoomed_map.position = Statics.VECTOR_CENTER
 			zoomed_map.init(map)

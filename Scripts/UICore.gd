@@ -9,10 +9,9 @@ const BL_TEXT_ORIGIN:Vector2 = Vector2(3, -12)
 const BL_TEXT_OFFSETS:Vector2 = Vector2(0, -8)
 const BL_TEXT_OFFSETS_LARGE:Vector2 = Vector2(0, -20)
 const MINIMAL_SHAKE_MOD:float = 0.4
-
-var flashy_popup_scene:PackedScene
-var color_popup_scene:PackedScene
-var boss_bar:PackedScene
+const FLASHY_POPUP:PackedScene = preload("uid://cst46kauimrf6")
+const COLOR_POPUP:PackedScene = preload("uid://b84helaw7ial0")
+const BOSS_BAR:PackedScene = preload("uid://d0moh826bija1")
 
 var active_area_label:Node
 var active_boss_bar:BossHealthBar
@@ -76,9 +75,7 @@ func instantiate() -> void:
 	save_icon.visible = false
 	bestiary_icon.visible = false
 	
-	flashy_popup_scene = load("uid://cst46kauimrf6")
-	color_popup_scene = load("uid://b84helaw7ial0")
-	boss_bar = load("uid://d0moh826bija1")
+	
 	
 	set_all_visibility_from_settings.call_deferred()
 
@@ -174,18 +171,18 @@ func set_border_anim(anim_id:int) -> void:
 
 
 func show_flashy_popup(text:String) -> void:
-	var popup_label = flashy_popup_scene.instantiate()
+	var popup_label = FLASHY_POPUP.instantiate()
 	popup_layer.add_child(popup_label)
 	popup_label.instance(text)
 	popup_label.position = Vector2i(200, 180)
 
 
 func show_item_collection_text(item_label:String, is_100:bool) -> void:
-	var header_label = flashy_popup_scene.instantiate()
+	var header_label = FLASHY_POPUP.instantiate()
 	popup_layer.add_child(header_label)
 	header_label.instance(item_label)
 	header_label.position = Vector2i(200, 166)
-	var percentage_label = flashy_popup_scene.instantiate()
+	var percentage_label = FLASHY_POPUP.instantiate()
 	popup_layer.add_child(percentage_label)
 	if is_100:
 		percentage_label.instance(tr(&"Item collection 100% complete!!\nFind the Shrine of Iris!!"),
@@ -198,7 +195,7 @@ func show_item_collection_text(item_label:String, is_100:bool) -> void:
 
 func show_area_text(area_id:int) -> void:
 	clear_area_text()
-	var area_label:ColorPopup = color_popup_scene.instantiate()
+	var area_label:ColorPopup = COLOR_POPUP.instantiate()
 	popup_layer.add_child(area_label)
 	var area_color:Color = Color.WHITE
 	match area_id:
@@ -223,7 +220,7 @@ func show_area_text(area_id:int) -> void:
 			bookend.position = Vector2i(roundi(text_width * (-0.5 if (i == 0) else 0.5)) + 1, 3)
 		
 		if Statics.get_world_flag(Statics.WorldFlags.DEFEATED_BOSS4):
-			var collection_label:ColorPopup = color_popup_scene.instantiate()
+			var collection_label:ColorPopup = COLOR_POPUP.instantiate()
 			area_label.add_child(collection_label)
 			var ratio:Vector2i = Statics.get_area_item_ratio(area_id)
 			var ratio_text:String = tr(&"Items found: %d/%d") % [ratio.x, ratio.y]
@@ -239,7 +236,7 @@ func clear_area_text() -> void:
 func show_boss_bar(boss:Boss, hide_minimap:bool = true) -> BossHealthBar:
 	clear_area_text()
 	clear_boss_bar()
-	active_boss_bar = boss_bar.instantiate()
+	active_boss_bar = BOSS_BAR.instantiate()
 	popup_layer.add_child(active_boss_bar)
 	active_boss_bar.position = Vector2(200, _tl.position.y)
 	active_boss_bar.instance(boss)

@@ -11,6 +11,7 @@ const FADE_ALPHA:float = 0.25
 const FADE_MIN:float = 32.0
 const FADE_DISTANCE:float = 64.0
 const FLASH_PROXIMITY:float = 20.0
+const CIRCLE:PackedScene = preload("uid://c2d3jobu0nn2a")
 
 var effect_dir:Vector2 = Vector2.DOWN
 var anim_prefix:String = "floor"
@@ -22,7 +23,6 @@ var extend_dir:Vector2 = Vector2.RIGHT
 @export var surface:Statics.DirsSurface
 
 @onready var sprites:Array[SnailySprite2D] = []
-@onready var circle:PackedScene = load("uid://c2d3jobu0nn2a")
 #endregion
 
 
@@ -58,7 +58,7 @@ func _spawn_circles() -> void:
 	var placed_all:bool = false
 	var shimmer_state:bool = true
 	while not placed_all:
-		var new_spr:SnailySprite2D = circle.instantiate()
+		var new_spr:SnailySprite2D = CIRCLE.instantiate()
 		new_spr.position = start + (length * extend_dir)
 		new_spr.play(anim_prefix + str(randi_range(0, 4)))
 		new_spr.shimmer = shimmer_state

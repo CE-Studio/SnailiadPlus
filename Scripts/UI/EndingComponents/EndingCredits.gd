@@ -57,9 +57,6 @@ var can_scroll_manually:bool = false
 @export var tilemap:TileMapLayer
 ## The stats screen
 @export var stats:EndingStats
-
-## Quick reference to the custom text scene
-@onready var text:PackedScene = load("uid://dke6r2335reau")
 #endregion
 
 

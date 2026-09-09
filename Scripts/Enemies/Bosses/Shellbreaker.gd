@@ -19,6 +19,8 @@ const HAND_RADIUS_BASE:float = 40.0
 const HAND_RADIUS_MOD:float = 90.0
 const BLINK_TIMEOUT_MAX:float = 3.0
 const GRAV_SHOCK_AHEAD_RADIUS:float = 24.0
+const HAND:PackedScene = preload("uid://bjgywgga30eg1")
+const BOOMERANG:PackedScene = preload("uid://bcgwxtcgdpoep")
 
 var hands:Array[Enemy] = []
 var hand_thetas:Array[float] = []
@@ -36,8 +38,6 @@ var blink_timeout:float = 0.0
 var grav_shock_kill:bool = false
 var grav_shock_dir:Vector2 = Vector2.ZERO
 
-@onready var hand:PackedScene = load("uid://bjgywgga30eg1")
-@onready var boomerang:PackedScene = load("uid://bcgwxtcgdpoep")
 @export var eyes:SnailySprite2D
 @export var hand_group:Node2D
 #endregion
@@ -61,7 +61,7 @@ func _ready() -> void:
 			SHOT_COUNT[i] *= 3
 	call_deferred("play_phase_anim", "idle")
 	for i in HAND_COUNT:
-		var new_hand:Node2D = hand.instantiate()
+		var new_hand:Node2D = HAND.instantiate()
 		hands.append(new_hand)
 		hand_thetas.append(0.0)
 		hand_theta_speeds.append(2.5 + i * 0.75)
@@ -200,7 +200,7 @@ func try_shoot() -> void:
 
 func shoot(angle:float) -> void:
 	var direction:Vector2 = Vector2(cos(angle), sin(angle))
-	bullets.append(_shoot(boomerang, direction, WEAPON_SPEED))
+	bullets.append(_shoot(BOOMERANG, direction, WEAPON_SPEED))
 
 
 func play_phase_anim(anim_name:String = "", set_as_current:bool = true) -> String:

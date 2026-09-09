@@ -8,6 +8,8 @@ extends Node2D
 #region Variables
 const TICKS_BETWEEN_AFTERIMAGES:int = 4
 const ANGLE_DEADZONE:float = 0.3827
+## A persistent reference to the [EnemyBulletAfterimage] scene
+const AFTERIMAGE:PackedScene = preload("uid://bcpnu7gti14ph")
 
 @export var damage:int = 0
 @export var rush_damage:int = 0
@@ -42,8 +44,8 @@ var source_enemy:Enemy
 var has_been_parried:bool = false
 ## Will be set to [code]true[/code] if this bullet is currently overlapping the player's hitbox
 var intersecting_player:bool = false
-## If this bullet is set to create afterimage hitboxes, this value tracks how many frames have passed
-## since the last afterimage was spawned
+## If this bullet is set to create AFTERIMAGE hitboxes, this value tracks how many frames have passed
+## since the last AFTERIMAGE was spawned
 var afterimage_tick:int = 0
 ## Will be set to [code]true[/code] if this bullet's animation has been previously inferred from
 ## its travel direction
@@ -68,8 +70,6 @@ enum PBulletInteractions {
 @onready var sfx:AudioStreamPlayer = $"AudioGroup/Shoot"
 ## The area that is read to determine if the bullet is currently on-screen
 @onready var vis:VisibleOnScreenNotifier2D = $"VisibleOnScreenNotifier2D"
-## A persistent reference to the [EnemyBulletAfterimage] scene
-@onready var afterimage:PackedScene = preload("uid://bcpnu7gti14ph")
 #endregion
 
 
@@ -123,7 +123,7 @@ func _physics_process(delta: float) -> void:
 	if afterimages:
 		afterimage_tick += 1
 		if afterimage_tick >= TICKS_BETWEEN_AFTERIMAGES:
-			var new_afterimage:EnemyBulletAfterimage = afterimage.instantiate()
+			var new_afterimage:EnemyBulletAfterimage = AFTERIMAGE.instantiate()
 			GameCore.instance.current_room.layer_ground.add_child(new_afterimage)
 			new_afterimage.position = position
 			new_afterimage._spawn_afterimage(self)

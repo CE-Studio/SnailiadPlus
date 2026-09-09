@@ -14,12 +14,12 @@ const TIMEOUTS:Array = [
 	0.53726, 0.78544, 0.60425, 0.83512, 0.01696, 0.10451, 0.01513, 0.78678, 0.51617, 0.24251
 ]
 const BASE_TIMEOUT:float = 18.0
+const ENEMY:PackedScene = preload("uid://cpb8dlhby3uuf")
 
 var timeout:float = 0.0
 var pointer:int = 0
 
 @onready var spr:Sprite2D = $"Sprite2D"
-@onready var enemy:PackedScene = load("uid://cpb8dlhby3uuf")
 #endregion
 
 
@@ -45,7 +45,7 @@ func _physics_process(delta: float) -> void:
 		pointer = (pointer + 1) % TIMEOUTS.size()
 		timeout = TIMEOUTS[pointer] * BASE_TIMEOUT * (0.5 if hard_mode else 1.0)
 		var cam_center = UICore.instance.get_cam_center_pos()
-		var new_ghostball:Ghostball = enemy.instantiate()
+		var new_ghostball:Ghostball = ENEMY.instantiate()
 		new_ghostball.position = cam_center + Vector2(randf_range(-200.0, 200.0), 120 + 48)
 		GameCore.instance.current_room.layer_ground.add_child(new_ghostball)
 		new_ghostball.spawn_drift_amount = Ghostball.SPAWN_DRIFT_DIST

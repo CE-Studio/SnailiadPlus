@@ -3,7 +3,7 @@ class_name MinimapZoomed
 extends Node2D
 
 
-const MARKER_PATH:String = "res://Assets/Images/UI/MinimapIconsZoomed.json"
+const MARKER_SCENE:PackedScene = preload("uid://dlaal46coilv7")
 const BOUNDS:Vector2 = Vector2(96, 112)
 const SPEED:float = 128.0
 
@@ -17,7 +17,6 @@ const SPEED:float = 128.0
 @export var arrow_d:SnailySprite2D
 @export var arrow_l:SnailySprite2D
 @export var arrow_r:SnailySprite2D
-@onready var marker_scene:PackedScene = load("uid://dlaal46coilv7")
 
 
 func _ready() -> void:
@@ -38,14 +37,14 @@ func init(minimap:Minimap) -> void:
 		if this_marker.type == minimap.MarkerTypes.ITEM:
 			draw_marker = not minimap.empty_locations.has(this_marker.data[0])
 		if draw_marker and this_marker.modulate.a == 1.0:
-			var new_marker:MapMarker = marker_scene.instantiate()
+			var new_marker:MapMarker = MARKER_SCENE.instantiate()
 			new_marker.type = this_marker.type
 			marker_group.add_child(new_marker)
 			new_marker.sprite.play("zoom_" + this_marker.sprite.animation)
 			new_marker.position = this_marker.position * 2.0
 	for this_marker in minimap.player_marker_sprites:
 		if this_marker != null:
-			var new_marker:MapMarker = marker_scene.instantiate()
+			var new_marker:MapMarker = MARKER_SCENE.instantiate()
 			new_marker.type = this_marker.type
 			marker_group.add_child(new_marker)
 			new_marker.sprite.play("zoom_marker")
