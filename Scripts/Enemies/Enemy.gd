@@ -355,7 +355,7 @@ func _spawn_damage_num(num:int, color:Color) -> void:
 	and last_damage_num.is_below_hit_threshold()):
 		last_damage_num.add(num)
 		return
-	var new_num:DamageNumber = Statics.damage_number.instantiate()
+	var new_num:DamageNumber = Statics.DAMAGE_NUMBER.instantiate()
 	GameCore.instance.current_room.layer_ground.add_child(new_num)
 	new_num.position = position + Vector2(0, -8)
 	new_num.instance(num, color)

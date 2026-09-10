@@ -28,6 +28,7 @@ var read_inputs:bool = true:
 		if not value:
 			read_esc = value
 var read_esc:bool = false
+var unlock_layer:UnlockLayer
 
 var music:AudioStreamPlayer
 

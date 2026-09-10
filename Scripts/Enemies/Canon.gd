@@ -91,7 +91,7 @@ func aim() -> void:
 func kill() -> void:
 	if invulnerable:
 		return
-	Statics.play_sfx_disconnected(sfx_kill)
+	Statics.play_sfx_disconnected(SFX_KILL)
 	if my_type != EnemyTypes.NONE:
 		Statics.add_bestiary_entry(my_type)
 	for i in range(kill_particle_count):

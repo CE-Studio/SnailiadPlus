@@ -9,9 +9,13 @@
 [ext_resource type="Texture2D" uid="uid://dgo40o7duwbpi" path="res://Assets/Images/UI/UnlocksLock.png" id="5_3h556"]
 [ext_resource type="Script" uid="uid://dqt4uo3ejug3v" path="res://Scripts/Classes/SnailyText.gd" id="6_2r8eg"]
 [ext_resource type="AudioStream" uid="uid://dcaxru2j3i7c7" path="res://Assets/Sounds/Sfx/UnlockBeam1.ogg" id="8_ltt0q"]
+[ext_resource type="Texture2D" uid="uid://bg12eipvp0s3v" path="res://UI/DialogueAdvance.png" id="9_0chbx"]
 [ext_resource type="AudioStream" uid="uid://csrxjg6w01kce" path="res://Assets/Sounds/Sfx/UnlockBeam2.ogg" id="9_cnr54"]
+[ext_resource type="Texture2D" uid="uid://yfl2e05fbk1a" path="res://Assets/Images/UI/MashPrompt.png" id="9_ovbqf"]
 [ext_resource type="AudioStream" uid="uid://065dnrss4ngr" path="res://Assets/Sounds/Sfx/UnlockBeam3.ogg" id="10_rthof"]
 [ext_resource type="AudioStream" uid="uid://biu5pqlddj71j" path="res://Assets/Sounds/Sfx/UnlockReveal.ogg" id="11_rxi84"]
+[ext_resource type="AudioStream" uid="uid://bu0q7fot8qj24" path="res://Assets/Sounds/Sfx/UnlockBeam4.ogg" id="12_rxi84"]
+[ext_resource type="AudioStream" uid="uid://binhhu1vx2tfh" path="res://Assets/Sounds/Sfx/UnlockBeam5.ogg" id="13_0chbx"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_wkouj"]
 blend_mode = 1
@@ -211,6 +215,50 @@ animations = [{
 "speed": 8.0
 }]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_drmyu"]
+atlas = ExtResource("9_ovbqf")
+region = Rect2(0, 0, 28, 20)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_abo5f"]
+atlas = ExtResource("9_ovbqf")
+region = Rect2(0, 20, 28, 20)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_w7pfk"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_drmyu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_abo5f")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 16.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6npg4"]
+atlas = ExtResource("9_0chbx")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s6s6g"]
+atlas = ExtResource("9_0chbx")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_2dhju"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6npg4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s6s6g")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 3.0
+}]
+
 [sub_resource type="Animation" id="Animation_lqi7j"]
 length = 0.001
 tracks/0/type = "value"
@@ -264,7 +312,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Reward:visible")
+tracks/4/path = NodePath("BottomTextGroup/Reward:visible")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -284,6 +332,717 @@ tracks/5/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Color(0, 0, 0, 1)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("MashPrompt:visible")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("BottomTextGroup/Elaboration:modulate")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("CenterParent/Frame:position")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("TopTextGroup:position")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("BottomTextGroup:position")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_rxi84"]
+resource_name = "break0"
+step = 0.1
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [1],
+"method": &"_show_beam"
+}]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:shake_strength")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.8]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:lock_arch_extension")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(4),
+"update": 0,
+"values": [0.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("FrontFlash:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("BeamGroup:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("BottomTextGroup/Reward:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(),
+"transitions": PackedFloat32Array(),
+"update": 1,
+"values": []
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("CenterParent/Frame:material:shader_parameter/flash_color")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 0),
+"update": 0,
+"values": [Color(0.24840015, 0.24840018, 0.24840015, 1), Color(0, 0, 0, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_0chbx"]
+resource_name = "break1"
+step = 0.1
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [1],
+"method": &"_show_beam"
+}]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:shake_strength")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.6]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:lock_arch_extension")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(4),
+"update": 0,
+"values": [0.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("FrontFlash:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("BeamGroup:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("BottomTextGroup/Reward:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(),
+"transitions": PackedFloat32Array(),
+"update": 1,
+"values": []
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("CenterParent/Frame:material:shader_parameter/flash_color")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 0),
+"update": 0,
+"values": [Color(0.3366076, 0.33660764, 0.33660752, 1), Color(0, 0, 0, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_ovbqf"]
+resource_name = "break2"
+step = 0.1
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [1],
+"method": &"_show_beam"
+}]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:shake_strength")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [2.4]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:lock_arch_extension")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(4),
+"update": 0,
+"values": [4.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("FrontFlash:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("BeamGroup:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("BottomTextGroup/Reward:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(),
+"transitions": PackedFloat32Array(),
+"update": 1,
+"values": []
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("CenterParent/Frame:material:shader_parameter/flash_color")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 0),
+"update": 0,
+"values": [Color(0.41215247, 0.41215247, 0.41215247, 1), Color(0, 0, 0, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_rb5ei"]
+resource_name = "break3"
+step = 0.1
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [2],
+"method": &"_show_beam"
+}]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:shake_strength")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [3.6]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:lock_arch_extension")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(4),
+"update": 0,
+"values": [10.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("FrontFlash:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("BeamGroup:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("BottomTextGroup/Reward:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(),
+"transitions": PackedFloat32Array(),
+"update": 1,
+"values": []
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("CenterParent/Frame:material:shader_parameter/flash_color")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.6),
+"transitions": PackedFloat32Array(1, 0),
+"update": 0,
+"values": [Color(0.5689727, 0.56897277, 0.56897265, 1), Color(0, 0, 0, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_woj85"]
+resource_name = "break4"
+length = 6.0
+step = 0.1
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.3000002, 3.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"values": [{
+"args": [2],
+"method": &"_show_beam"
+}, {
+"args": [],
+"method": &"_set_stage_pop"
+}, {
+"args": [],
+"method": &"_set_stage_await"
+}]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:shake_strength")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [4.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:lock_arch_extension")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [16.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("FrontFlash:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.4000001, 1.3000002, 2.3000002),
+"transitions": PackedFloat32Array(4, 0.5, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("BeamGroup:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(),
+"transitions": PackedFloat32Array(),
+"update": 1,
+"values": []
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("BottomTextGroup/Reward:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 1.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("CenterParent/Frame:material:shader_parameter/flash_color")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.49999976, 1.1999998, 1.3, 1.8),
+"transitions": PackedFloat32Array(0.5, 1, 0, 1, 1),
+"update": 0,
+"values": [Color(0.8819366, 0.8819366, 0.88193655, 1), Color(0, 0, 0, 1), Color(0.6789437, 0.6789437, 0.6789437, 1), Color(1, 1, 1, 1), Color(0, 0, 0, 1)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("MashPrompt:visible")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("BottomTextGroup/Elaboration:modulate")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(3, 3.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_cnr54"]
+resource_name = "init"
+length = 2.0
+step = 0.1
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.7),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"_set_stage_shake"
+}]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:shake_strength")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:lock_arch_extension")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(4),
+"update": 0,
+"values": [0.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("FrontFlash:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("BeamGroup:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("BottomTextGroup/Reward:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("CenterParent/Frame:material:shader_parameter/flash_color")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(0),
+"update": 0,
+"values": [Color(0, 0, 0, 1)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("MashPrompt:visible")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0, 1.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+
+[sub_resource type="Animation" id="Animation_21dis"]
+resource_name = "out"
+length = 0.5
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CenterParent/Frame:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(3, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -200)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TopTextGroup:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(3, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -64)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("BottomTextGroup:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(3, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 80)]
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.5),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"_check_next"
+}]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("BeamGroup:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
 }
 
 [sub_resource type="Animation" id="Animation_hedds"]
@@ -367,7 +1126,7 @@ tracks/4/keys = {
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("Reward:visible")
+tracks/5/path = NodePath("BottomTextGroup/Reward:visible")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
@@ -392,27 +1151,35 @@ tracks/6/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_lqi7j"]
 _data = {
 &"RESET": SubResource("Animation_lqi7j"),
+&"break0": SubResource("Animation_rxi84"),
+&"break1": SubResource("Animation_0chbx"),
+&"break2": SubResource("Animation_ovbqf"),
+&"break3": SubResource("Animation_rb5ei"),
+&"break4": SubResource("Animation_woj85"),
+&"init": SubResource("Animation_cnr54"),
+&"out": SubResource("Animation_21dis"),
 &"sequence": SubResource("Animation_hedds")
 }
 
-[node name="UnlockLayer" type="Node2D" unique_id=472986014 node_paths=PackedStringArray("frame", "lock_body", "lock_arch", "backing_fade", "top_text_group", "text_condition", "text_unlocked", "text_reward", "anim", "center_group", "beam_group", "beams", "sfx_beam1", "sfx_beam2", "sfx_beam3", "sfx_pop")]
+[node name="UnlockLayer" type="Node2D" unique_id=472986014 node_paths=PackedStringArray("frame", "lock_body", "lock_arch", "backing_fade", "top_text_group", "bottom_text_group", "text_condition", "text_unlocked", "text_reward", "text_elaboration", "anim", "center_group", "beam_group", "beams", "sfx_beams", "sfx_pop", "advance_prompt")]
 script = ExtResource("1_hedds")
 frame = NodePath("CenterParent/Frame")
 lock_body = NodePath("CenterParent/LockBody")
 lock_arch = NodePath("CenterParent/LockArch")
 backing_fade = NodePath("BackingFade")
 top_text_group = NodePath("TopTextGroup")
+bottom_text_group = NodePath("BottomTextGroup")
 text_condition = NodePath("TopTextGroup/Condition")
 text_unlocked = NodePath("TopTextGroup/Unlocked")
-text_reward = NodePath("Reward")
+text_reward = NodePath("BottomTextGroup/Reward")
+text_elaboration = NodePath("BottomTextGroup/Elaboration")
 anim = NodePath("AnimationPlayer")
 center_group = NodePath("CenterParent")
 beam_group = NodePath("BeamGroup")
-beams = [NodePath("BeamGroup/Beam1"), NodePath("BeamGroup/Beam2"), NodePath("BeamGroup/Beam3"), NodePath("BeamGroup/Beam4"), NodePath("BeamGroup/Beam5")]
-sfx_beam1 = NodePath("Beam1")
-sfx_beam2 = NodePath("Beam2")
-sfx_beam3 = NodePath("Beam3")
+beams = [NodePath("BeamGroup/Beam1"), NodePath("BeamGroup/Beam2"), NodePath("BeamGroup/Beam3"), NodePath("BeamGroup/Beam4"), NodePath("BeamGroup/Beam5"), NodePath("BeamGroup/Beam6"), NodePath("BeamGroup/Beam7")]
+sfx_beams = [NodePath("Beam1"), NodePath("Beam2"), NodePath("Beam3"), NodePath("Beam4"), NodePath("Beam5")]
 sfx_pop = NodePath("Pop")
+advance_prompt = NodePath("AdvancePrompt")
 
 [node name="BackingFade" type="Sprite2D" parent="." unique_id=1824822088]
 modulate = Color(0, 0, 0, 0.49803922)
@@ -441,13 +1208,25 @@ color = Color(1, 1, 1, 0.6862745)
 polygon = PackedVector2Array(0, 0, -16, -288, 16, -288)
 uv = PackedVector2Array(-136, 48, -154, -33, -121, -30)
 
-[node name="Beam4" type="Polygon2D" parent="BeamGroup" unique_id=1139861165]
+[node name="Beam4" type="Polygon2D" parent="BeamGroup" unique_id=1038402646]
+material = SubResource("CanvasItemMaterial_wkouj")
+color = Color(1, 1, 1, 0.6862745)
+polygon = PackedVector2Array(0, 0, -16, -288, 16, -288)
+uv = PackedVector2Array(-136, 48, -154, -33, -121, -30)
+
+[node name="Beam5" type="Polygon2D" parent="BeamGroup" unique_id=1139861165]
 material = SubResource("CanvasItemMaterial_wkouj")
 color = Color(1, 1, 1, 0.6862745)
 polygon = PackedVector2Array(0, 0, -48, -288, 48, -288)
 uv = PackedVector2Array(-136, 48, -154, -33, -121, -30)
 
-[node name="Beam5" type="Polygon2D" parent="BeamGroup" unique_id=514632792]
+[node name="Beam6" type="Polygon2D" parent="BeamGroup" unique_id=514632792]
+material = SubResource("CanvasItemMaterial_wkouj")
+color = Color(1, 1, 1, 0.6862745)
+polygon = PackedVector2Array(0, 0, -48, -288, 48, -288)
+uv = PackedVector2Array(-136, 48, -154, -33, -121, -30)
+
+[node name="Beam7" type="Polygon2D" parent="BeamGroup" unique_id=686967366]
 material = SubResource("CanvasItemMaterial_wkouj")
 color = Color(1, 1, 1, 0.6862745)
 polygon = PackedVector2Array(0, 0, -48, -288, 48, -288)
@@ -519,7 +1298,9 @@ quick_load_text = "you've unlocked..."
 border_scale = 1
 metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
 
-[node name="Reward" type="RichTextLabel" parent="." unique_id=1768214198]
+[node name="BottomTextGroup" type="Node2D" parent="." unique_id=645681510]
+
+[node name="Reward" type="RichTextLabel" parent="BottomTextGroup" unique_id=1768214198]
 custom_maximum_size = Vector2(400, -1)
 clip_contents = false
 offset_top = 184.0
@@ -537,6 +1318,25 @@ script = ExtResource("6_2r8eg")
 border_scale = 1
 metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
 
+[node name="Elaboration" type="RichTextLabel" parent="BottomTextGroup" unique_id=1301994051]
+custom_maximum_size = Vector2(400, -1)
+clip_contents = false
+offset_top = 208.0
+offset_right = 400.0
+offset_bottom = 248.0
+mouse_filter = 2
+theme_override_constants/line_separation = 0
+theme_override_font_sizes/normal_font_size = 8
+bbcode_enabled = true
+text = "Find it in this menu!"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 1
+script = ExtResource("6_2r8eg")
+text_scale = 1
+border_scale = 1
+metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
+
 [node name="FrontFlash" type="Sprite2D" parent="." unique_id=962611085]
 modulate = Color(1, 1, 1, 0)
 position = Vector2(200, 120)
@@ -547,6 +1347,22 @@ texture = ExtResource("1_cwhjw")
 modulate = Color(0, 0, 0, 1)
 position = Vector2(200, 120)
 texture = ExtResource("2_jvwba")
+
+[node name="MashPrompt" type="AnimatedSprite2D" parent="." unique_id=614020944]
+visible = false
+position = Vector2(376, 216)
+sprite_frames = SubResource("SpriteFrames_w7pfk")
+autoplay = "default"
+script = ExtResource("4_jvwba")
+metadata/_custom_type_script = "uid://boee2837la0pr"
+
+[node name="AdvancePrompt" type="AnimatedSprite2D" parent="." unique_id=1907570927]
+visible = false
+position = Vector2(376, 216)
+sprite_frames = SubResource("SpriteFrames_2dhju")
+autoplay = "default"
+script = ExtResource("4_jvwba")
+metadata/_custom_type_script = "uid://boee2837la0pr"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1431603408]
 libraries/ = SubResource("AnimationLibrary_lqi7j")
@@ -563,20 +1379,14 @@ bus = &"Sfx"
 stream = ExtResource("10_rthof")
 bus = &"Sfx"
 
+[node name="Beam4" type="AudioStreamPlayer" parent="." unique_id=2021305115]
+stream = ExtResource("12_rxi84")
+bus = &"Sfx"
+
+[node name="Beam5" type="AudioStreamPlayer" parent="." unique_id=1792808737]
+stream = ExtResource("13_0chbx")
+bus = &"Sfx"
+
 [node name="Pop" type="AudioStreamPlayer" parent="." unique_id=1960019536]
 stream = ExtResource("11_rxi84")
 bus = &"Sfx"
-
-[node name="SnailyText" type="RichTextLabel" parent="." unique_id=211998541]
-clip_contents = false
-offset_left = 8.0
-offset_top = 176.0
-offset_right = 272.0
-offset_bottom = 240.0
-mouse_filter = 2
-bbcode_enabled = true
-text = "Make it so that you have to mash a button to break the lock. That'd be really cool"
-fit_content = true
-scroll_active = false
-script = ExtResource("6_2r8eg")
-metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
