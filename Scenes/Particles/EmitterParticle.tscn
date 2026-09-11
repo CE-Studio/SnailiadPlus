@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://drytxpkkgapem"]
+
+[ext_resource type="Texture2D" uid="uid://bdpjsk8bgx3ib" path="res://Assets/Images/Particles/Dot.png" id="1_5oy2q"]
+[ext_resource type="Script" uid="uid://dm58t8lonq2e6" path="res://Scripts/Particles/EmitterParticle.gd" id="2_ei6bh"]
+
+[node name="EmitterParticle" type="Sprite2D" unique_id=1759230845]
+texture = ExtResource("1_5oy2q")
+hframes = 4
+frame = 3
+script = ExtResource("2_ei6bh")

@@ -70,7 +70,7 @@ func _process(delta: float) -> void:
 	if Engine.is_editor_hint():
 		return
 
-	if parent_layer.meta_info.size() > 0 and parent_layer.can_focus:
+	if parent_layer.meta_info.size() > 0 and parent_layer.can_focus and parent_layer.menu.read_inputs:
 		if focused and parent_layer.meta_info[1] <= 0:
 			if (SInput.check_input(SInput.Inputs.UI_ACCEPT, true)
 			or (mouse_over and SInput.check_input(SInput.Inputs.UI_CLICK, true))):

@@ -10,7 +10,7 @@ const FRAME_START_Y_OFFSET:float = 240.0
 const TEXT_START_Y_OFFSET:float = -64.0
 const LOCK_ARCH_OFFSET:Vector2 = Vector2(0.0, -32.0)
 const FRAME_SHAKE_MULT:float = 1.5
-const BACK_FADE_COLOR:Color = Color("0000007f")
+const BACK_FADE_COLOR:Color = Color("000000bf")
 const IN_LERP_RATE:float = 8.0
 const BEAM_ROT_SPEED:Vector2 = Vector2(40.0, 160.0)
 const BEAM_GROW_SPEED:float = 4.0
@@ -52,6 +52,7 @@ var break_progress:int = 0
 @export var text_unlocked:SnailyText
 @export var text_reward:SnailyText
 @export var text_elaboration:SnailyText
+@export var particles:CPUParticles2D
 @export var anim:AnimationPlayer
 @export var center_group:Node2D
 @export var beam_group:Node2D
@@ -62,8 +63,6 @@ var break_progress:int = 0
 
 
 func _ready() -> void:
-	queue.append(randi_range(0, 6) as Statics.Unlocks) # temp
-	queue.append(randi_range(0, 6) as Statics.Unlocks) # temp
 	backing_fade.modulate = Color(BACK_FADE_COLOR.r, BACK_FADE_COLOR.g, BACK_FADE_COLOR.b, 0.0)
 	_set_stage_init()
 	beam_group.visible = false

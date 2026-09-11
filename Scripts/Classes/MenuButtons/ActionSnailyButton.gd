@@ -32,7 +32,7 @@ func _ready() -> void:
 
 
 func _process(_delta: float) -> void:
-	if focused and not disabled and life_frames >= REQ_LIFE_FRAMES:
+	if focused and not disabled and life_frames >= REQ_LIFE_FRAMES and parent_layer.menu.read_inputs:
 		if (mouse_over and (SInput.input_just_pressed(SInput.Inputs.UI_CLICK))
 		or SInput.input_just_pressed(SInput.Inputs.UI_ACCEPT)):
 			if quick_load_layer.strip_edges() != "":

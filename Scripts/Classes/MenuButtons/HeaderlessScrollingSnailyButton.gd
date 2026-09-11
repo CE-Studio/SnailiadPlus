@@ -81,7 +81,8 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	if not Engine.is_editor_hint():
-		if (focused and not disabled and life_frames >= REQ_LIFE_FRAMES) or selected:
+		if (((focused and not disabled and life_frames >= REQ_LIFE_FRAMES) or selected)
+		and parent_layer.menu.read_inputs):
 			var suppress_deselect:bool = selected and (arrow_hover_state[0] or arrow_hover_state[1])
 			if (mouse_over and (SInput.input_just_pressed(SInput.Inputs.UI_CLICK) and not suppress_deselect)
 			or SInput.input_just_pressed(SInput.Inputs.UI_ACCEPT)

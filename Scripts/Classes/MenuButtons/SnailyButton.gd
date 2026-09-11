@@ -27,7 +27,8 @@ var origin:Vector2
 var can_focus:bool = true:
 	set(value):
 		can_focus = value
-		focus_mode = Control.FOCUS_ALL if value else Control.FOCUS_NONE
+		if not has_focus():
+			focus_mode = Control.FOCUS_ALL if value else Control.FOCUS_NONE
 		if value:
 			life_frames = 0
 ## The [MenuLayer] that this button is assigned to
@@ -99,6 +100,8 @@ func relinquish_focus_neighbors() -> void:
 
 ## Called when the mouse rolls over this button
 func _on_mouse_over() -> void:
+	if not parent_layer.menu.read_inputs:
+		return
 	mouse_over = true
 	if can_focus and not disabled:
 		grab_focus()

@@ -10,6 +10,7 @@ const LAYER_PATH = "res://Scenes/UI/MenuLayers/%s.tscn"
 const SELECTOR_MOVE_RATE = 20
 const SELECTOR_OFFSET = Vector2i(16, -2)
 const HIDE_FADE_RATE = 16
+const UNLOCK_LAYER:PackedScene = preload("uid://bkj4in7wvipoi")
 
 @export var is_main_menu:bool = false
 
@@ -81,6 +82,7 @@ func _ready() -> void:
 			$"VersionWarnPanel".queue_free()
 			is_main_awaiting_input = false
 			spawn_menu()
+			_check_unlocks()
 
 	else:
 		title.position.y = TITLE_REST_Y
@@ -100,7 +102,8 @@ func _process(delta: float) -> void:
 			and spawn_buffer_frames <= 0 and read_inputs):
 				spawn_menu()
 				is_main_awaiting_input = false
-	if not is_main_awaiting_input:
+				_check_unlocks()
+	elif not is_main_awaiting_input:
 		if is_main_menu:
 			title.position.y = lerpf(title.position.y, TITLE_REST_Y, TITLE_MOVE_RATE * delta)
 		if ((SInput.input_just_pressed(SInput.Inputs.PAUSE) or SInput.input_just_pressed(SInput.Inputs.UI_BACK))
@@ -128,22 +131,23 @@ func _process(delta: float) -> void:
 				var new_pos = selector_pos.lerp(destination, SELECTOR_MOVE_RATE * delta)
 				selectors[i].global_position = new_pos
 
-		if SInput.just_pressed_as_echo("left") or SInput.just_pressed_as_echo("ui_left"):
-			if focused_node.focus_neighbor_left != ^"":
-				var left:Control = focused_node.get_node(focused_node.focus_neighbor_left)
-				left.grab_focus()
-		if SInput.just_pressed_as_echo("right") or SInput.just_pressed_as_echo("ui_right"):
-			if focused_node.focus_neighbor_right != ^"":
-				var right:Control = focused_node.get_node(focused_node.focus_neighbor_right)
-				right.grab_focus()
-		if SInput.just_pressed_as_echo("up") or SInput.just_pressed_as_echo("ui_up"):
-			if focused_node.focus_neighbor_top != ^"":
-				var up:Control = focused_node.get_node(focused_node.focus_neighbor_top)
-				up.grab_focus()
-		if SInput.just_pressed_as_echo("down") or SInput.just_pressed_as_echo("ui_down"):
-			if focused_node.focus_neighbor_bottom != ^"":
-				var down:Control = focused_node.get_node(focused_node.focus_neighbor_bottom)
-				down.grab_focus()
+		if read_inputs:
+			if SInput.just_pressed_as_echo("left") or SInput.just_pressed_as_echo("ui_left"):
+				if focused_node.focus_neighbor_left != ^"":
+					var left:Control = focused_node.get_node(focused_node.focus_neighbor_left)
+					left.grab_focus()
+			if SInput.just_pressed_as_echo("right") or SInput.just_pressed_as_echo("ui_right"):
+				if focused_node.focus_neighbor_right != ^"":
+					var right:Control = focused_node.get_node(focused_node.focus_neighbor_right)
+					right.grab_focus()
+			if SInput.just_pressed_as_echo("up") or SInput.just_pressed_as_echo("ui_up"):
+				if focused_node.focus_neighbor_top != ^"":
+					var up:Control = focused_node.get_node(focused_node.focus_neighbor_top)
+					up.grab_focus()
+			if SInput.just_pressed_as_echo("down") or SInput.just_pressed_as_echo("ui_down"):
+				if focused_node.focus_neighbor_bottom != ^"":
+					var down:Control = focused_node.get_node(focused_node.focus_neighbor_bottom)
+					down.grab_focus()
 
 	if spawn_buffer_frames > 0:
 		spawn_buffer_frames -= 1
@@ -264,3 +268,32 @@ func save_profile(id:int) -> void:
 func play_save_anim() -> void:
 	save_icon.visible = true
 	save_icon.play("default")
+
+
+func _check_unlocks() -> void:
+	if not unlock_layer:
+		for unlock in range(Statics.Unlocks.size()):
+			if not (unlock == Statics.Unlocks.BOSS_RUSH or unlock == Statics.Unlocks.CHAR_SEL
+			or unlock == Statics.Unlocks.OPEN_MAP): # TEMP
+				continue # Constricting available unlocks to what's actually in the game for now
+			var can:bool = Statics.can_unlock(unlock as Statics.Unlocks)
+			var has:bool = Statics.has_unlock(unlock as Statics.Unlocks)
+			if can and not has:
+				if not unlock_layer:
+					read_inputs = false
+					active_layer.can_focus = false
+					unlock_layer = UNLOCK_LAYER.instantiate()
+				unlock_layer.queue.append(unlock as Statics.Unlocks)
+		if unlock_layer:
+			add_child(unlock_layer)
+			unlock_layer.finished.connect(_return_from_unlocks)
+			var tween:Tween = get_tree().create_tween()
+			tween.tween_property(music, "volume_linear", 0.4, 0.75)
+
+
+func _return_from_unlocks() -> void:
+	read_inputs = true
+	active_layer.can_focus = true
+	unlock_layer = null
+	var tween:Tween = get_tree().create_tween()
+	tween.tween_property(music, "volume_linear", 1.0, 0.75)
