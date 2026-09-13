@@ -391,9 +391,9 @@ static func delete_profile(iprofile:int) -> void:
 
 
 static func has_unlock(unlock:Unlocks) -> bool:
-	if len(data_records["unlocks"]) < unlock:
-		return false
-	return data_records["unlocks"].has(unlock)
+	if unlock < len(data_records["unlocks"]):
+		return data_records["unlocks"][unlock]
+	return false
 
 
 static func can_unlock(unlock:Unlocks) -> bool:

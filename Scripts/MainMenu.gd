@@ -284,6 +284,7 @@ func _check_unlocks() -> void:
 					active_layer.can_focus = false
 					unlock_layer = UNLOCK_LAYER.instantiate()
 				unlock_layer.queue.append(unlock as Statics.Unlocks)
+				Statics.add_unlock(unlock as Statics.Unlocks)
 		if unlock_layer:
 			add_child(unlock_layer)
 			unlock_layer.finished.connect(_return_from_unlocks)
@@ -297,3 +298,4 @@ func _return_from_unlocks() -> void:
 	unlock_layer = null
 	var tween:Tween = get_tree().create_tween()
 	tween.tween_property(music, "volume_linear", 1.0, 0.75)
+	Statics.save_records()

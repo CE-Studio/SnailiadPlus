@@ -132,19 +132,19 @@ func _set_text() -> void:
 		Statics.Unlocks.ITEM_RANDO:
 			text_condition.set_snaily_text(tr(&"By collecting all items,"))
 			text_reward.set_snaily_text(tr(&"Randomizer Mode!!"))
-			text_elaboration.set_snaily_text(tr(&"Find it in the new game options!"))
+			text_elaboration.set_snaily_text(tr(&"Find it in the new game modifiers!"))
 		Statics.Unlocks.OPEN_MAP:
 			text_condition.set_snaily_text(tr(&"By filling out the map completely,"))
 			text_reward.set_snaily_text(tr(&"Open Map!!"))
-			text_elaboration.set_snaily_text(tr(&"Find it in the new game options!"))
+			text_elaboration.set_snaily_text(tr(&"Find it in the new game modifiers!"))
 		Statics.Unlocks.SIX_HUNDO:
 			text_condition.set_snaily_text(tr(&"By beating the game with a new character,"))
 			text_reward.set_snaily_text(tr(&"600% Mode!!"))
-			text_elaboration.set_snaily_text(tr(&"Find it in the new game options!"))
+			text_elaboration.set_snaily_text(tr(&"Find it in the new game modifiers!"))
 		Statics.Unlocks.CHAOS_MODE:
 			text_condition.set_snaily_text(tr(&"By beating the game on Absurd Difficulty,"))
 			text_reward.set_snaily_text(tr(&"Chaos Mode!!"))
-			text_elaboration.set_snaily_text(tr(&"Find it in the new game options!"))
+			text_elaboration.set_snaily_text(tr(&"Find it in the new game modifiers!"))
 
 
 func _set_frame_reward_anim() -> void:
