@@ -1,0 +1,230 @@
+[gd_scene format=3 uid="uid://bi1cdukxisqvd"]
+
+[ext_resource type="Script" uid="uid://ctjp7bvs7a7gg" path="res://Scripts/UI/MenuLayer.gd" id="1_5j63t"]
+[ext_resource type="Script" uid="uid://dv2vqc3ogof47" path="res://Scripts/UI/MenuLayers/BossRush.gd" id="2_hae35"]
+[ext_resource type="PackedScene" uid="uid://cethpj66nvp1o" path="res://Scenes/UI/ActionSnailyButton.tscn" id="3_hae35"]
+[ext_resource type="Texture2D" uid="uid://cr0jsmlvl76vh" path="res://Assets/Images/BayerDither.png" id="4_vda6x"]
+[ext_resource type="Texture2D" uid="uid://dmaptufh7rsw2" path="res://Assets/Images/UI/ScreenCover.png" id="5_ctfpw"]
+[ext_resource type="AudioStream" uid="uid://p3bp61rmw7rh" path="res://Assets/Sounds/Sfx/MenuBeep2.ogg" id="6_ctfpw"]
+[ext_resource type="AudioStream" uid="uid://dxayfmkjcwusk" path="res://Assets/Sounds/Sfx/BossrushStart.ogg" id="7_5vr5a"]
+
+[sub_resource type="Animation" id="Animation_5vr5a"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Fade:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 512)]
+}
+
+[sub_resource type="Animation" id="Animation_a6f0h"]
+resource_name = "fade"
+length = 3.0000000000000004
+step = 0.025
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Fade:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 0.525, 0.55, 0.575, 0.6, 0.625, 0.65, 0.675, 0.7, 0.725, 0.75, 0.775, 0.8, 0.825, 0.85, 0.875, 0.9, 0.925, 0.95, 0.975, 1, 1.025, 1.05, 1.075, 1.1, 1.125, 1.15, 1.175, 1.2, 1.225, 1.25, 1.275),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [Vector2(0, 512), Vector2(0, 496), Vector2(0, 480), Vector2(0, 464), Vector2(0, 448), Vector2(0, 432), Vector2(0, 416), Vector2(0, 400), Vector2(0, 384), Vector2(0, 368), Vector2(0, 352), Vector2(0, 336), Vector2(0, 320), Vector2(0, 304), Vector2(0, 288), Vector2(0, 272), Vector2(0, 256), Vector2(0, 240), Vector2(0, 224), Vector2(0, 208), Vector2(0, 192), Vector2(0, 176), Vector2(0, 160), Vector2(0, 144), Vector2(0, 128), Vector2(0, 112), Vector2(0, 96), Vector2(0, 80), Vector2(0, 64), Vector2(0, 48), Vector2(0, 32), Vector2(0, 16), Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_absdq"]
+_data = {
+&"RESET": SubResource("Animation_5vr5a"),
+&"fade": SubResource("Animation_a6f0h")
+}
+
+[node name="BossRush" type="Node2D" unique_id=1415419949]
+script = ExtResource("1_5j63t")
+
+[node name="MainVBox" type="VBoxContainer" parent="." unique_id=337386258 node_paths=PackedStringArray("anim", "sfx_select", "sfx_start")]
+custom_minimum_size = Vector2(400, 0)
+offset_top = 70.0
+offset_right = 400.0
+offset_bottom = 220.0
+alignment = 1
+script = ExtResource("2_hae35")
+anim = NodePath("../AnimationPlayer")
+sfx_select = NodePath("../Select")
+sfx_start = NodePath("../Start")
+
+[node name="Header1" parent="MainVBox" unique_id=56127056 instance=ExtResource("3_hae35")]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+button_text = "Are you sure?\\nBoss Rush is really hard!!"
+disabled = true
+hide_frame = true
+
+[node name="HSeparator" type="HSeparator" parent="MainVBox" unique_id=503223226]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Yes" parent="MainVBox" unique_id=414475534 instance=ExtResource("3_hae35")]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../No")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../No")
+focus_next = NodePath("../No")
+focus_previous = NodePath("../No")
+button_text = "Yes, I'm ready!!"
+hide_frame = true
+
+[node name="No" parent="MainVBox" unique_id=1138333082 instance=ExtResource("3_hae35")]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../Yes")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../Yes")
+focus_next = NodePath("../Yes")
+focus_previous = NodePath("../Yes")
+button_text = "No, I'm afraid :("
+back_one_layer = true
+grab_focus_on_load = true
+hide_frame = true
+
+[node name="Fade" type="Node2D" parent="." unique_id=591997537]
+z_index = 200
+position = Vector2(0, 512)
+
+[node name="Dither0" type="Sprite2D" parent="Fade" unique_id=2133392894]
+position = Vector2(-8, -128)
+texture = ExtResource("4_vda6x")
+
+[node name="Dither1" type="Sprite2D" parent="Fade" unique_id=1575528241]
+position = Vector2(8, -128)
+texture = ExtResource("4_vda6x")
+
+[node name="Dither2" type="Sprite2D" parent="Fade" unique_id=736494696]
+position = Vector2(24, -128)
+texture = ExtResource("4_vda6x")
+
+[node name="Dither3" type="Sprite2D" parent="Fade" unique_id=1889871554]
+position = Vector2(40, -128)
+texture = ExtResource("4_vda6x")
+
+[node name="Dither4" type="Sprite2D" parent="Fade" unique_id=339495789]
+position = Vector2(56, -128)
+texture = ExtResource("4_vda6x")
+
+[node name="Dither5" type="Sprite2D" parent="Fade" unique_id=1180801298]
+position = Vector2(72, -128)
+texture = ExtResource("4_vda6x")
+
+[node name="Dither6" type="Sprite2D" parent="Fade" unique_id=1702365373]
+position = Vector2(88, -128)
+texture = ExtResource("4_vda6x")
+
+[node name="Dither7" type="Sprite2D" parent="Fade" unique_id=1194487883]
+position = Vector2(104, -128)
+texture = ExtResource("4_vda6x")
+
+[node name="Dither8" type="Sprite2D" parent="Fade" unique_id=636198052]
+position = Vector2(120, -128)
+texture = ExtResource("4_vda6x")
+
+[node name="Dither9" type="Sprite2D" parent="Fade" unique_id=599388627]
+position = Vector2(136, -128)
+texture = ExtResource("4_vda6x")
+
+[node name="Dither10" type="Sprite2D" parent="Fade" unique_id=833771650]
+position = Vector2(152, -128)
+texture = ExtResource("4_vda6x")
+
+[node name="Dither11" type="Sprite2D" parent="Fade" unique_id=1827661368]
+position = Vector2(168, -128)
+texture = ExtResource("4_vda6x")
+
+[node name="Dither12" type="Sprite2D" parent="Fade" unique_id=892153531]
+position = Vector2(184, -128)
+texture = ExtResource("4_vda6x")
+
+[node name="Dither13" type="Sprite2D" parent="Fade" unique_id=343822116]
+position = Vector2(200, -128)
+texture = ExtResource("4_vda6x")
+
+[node name="Dither14" type="Sprite2D" parent="Fade" unique_id=839620743]
+position = Vector2(216, -128)
+texture = ExtResource("4_vda6x")
+
+[node name="Dither15" type="Sprite2D" parent="Fade" unique_id=2095830659]
+position = Vector2(232, -128)
+texture = ExtResource("4_vda6x")
+
+[node name="Dither16" type="Sprite2D" parent="Fade" unique_id=1707754527]
+position = Vector2(248, -128)
+texture = ExtResource("4_vda6x")
+
+[node name="Dither17" type="Sprite2D" parent="Fade" unique_id=68956775]
+position = Vector2(264, -128)
+texture = ExtResource("4_vda6x")
+
+[node name="Dither18" type="Sprite2D" parent="Fade" unique_id=2145078274]
+position = Vector2(280, -128)
+texture = ExtResource("4_vda6x")
+
+[node name="Dither19" type="Sprite2D" parent="Fade" unique_id=1041858537]
+position = Vector2(296, -128)
+texture = ExtResource("4_vda6x")
+
+[node name="Dither20" type="Sprite2D" parent="Fade" unique_id=30266384]
+position = Vector2(312, -128)
+texture = ExtResource("4_vda6x")
+
+[node name="Dither21" type="Sprite2D" parent="Fade" unique_id=1412411450]
+position = Vector2(328, -128)
+texture = ExtResource("4_vda6x")
+
+[node name="Dither22" type="Sprite2D" parent="Fade" unique_id=26433747]
+position = Vector2(344, -128)
+texture = ExtResource("4_vda6x")
+
+[node name="Dither23" type="Sprite2D" parent="Fade" unique_id=966125603]
+position = Vector2(360, -128)
+texture = ExtResource("4_vda6x")
+
+[node name="Dither24" type="Sprite2D" parent="Fade" unique_id=614198509]
+position = Vector2(376, -128)
+texture = ExtResource("4_vda6x")
+
+[node name="Dither25" type="Sprite2D" parent="Fade" unique_id=888205711]
+position = Vector2(392, -128)
+texture = ExtResource("4_vda6x")
+
+[node name="Dither26" type="Sprite2D" parent="Fade" unique_id=481480223]
+position = Vector2(408, -128)
+texture = ExtResource("4_vda6x")
+
+[node name="Solid" type="Sprite2D" parent="Fade" unique_id=313398846]
+modulate = Color(0, 0, 0, 1)
+position = Vector2(200, 120)
+scale = Vector2(1.08, 1.1333333)
+texture = ExtResource("5_ctfpw")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1694309602]
+libraries/ = SubResource("AnimationLibrary_absdq")
+
+[node name="Select" type="AudioStreamPlayer" parent="." unique_id=998975798]
+stream = ExtResource("6_ctfpw")
+bus = &"Sfx"
+
+[node name="Start" type="AudioStreamPlayer" parent="." unique_id=598857106]
+stream = ExtResource("7_5vr5a")
+bus = &"Sfx"
+
+[connection signal="button_pressed" from="MainVBox/Yes" to="MainVBox" method="on_yes_pressed"]
