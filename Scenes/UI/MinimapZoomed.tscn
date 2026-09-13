@@ -165,7 +165,7 @@ arrow_l = NodePath("ArrowLeft")
 arrow_r = NodePath("ArrowRight")
 
 [node name="BG" type="Sprite2D" parent="." unique_id=1955870700]
-modulate = Color(0, 0, 0, 0.6666667)
+modulate = Color(0, 0, 0, 0.7882353)
 scale = Vector2(2, 2)
 texture = ExtResource("1_lyu63")
 
