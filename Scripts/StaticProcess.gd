@@ -3,9 +3,9 @@
 extends Node
 
 
-var template_general
-var template_profile
-var template_records
+var template_general:Dictionary[String, Variant]
+var template_profile:Dictionary[String, Variant]
+var template_records:Dictionary[String, Variant]
 
 var sounds_played_this_frame:Array[String] = []
 

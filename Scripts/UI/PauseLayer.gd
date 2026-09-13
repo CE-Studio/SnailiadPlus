@@ -23,18 +23,18 @@ func _physics_process(_delta: float) -> void:
 		cam = UICore.instance
 	if not game and GameCore.instance:
 		game = GameCore.instance
-	if suppress_menuing:
+	if suppress_menuing or get_tree().paused:
 		return
-	if SInput.input_just_pressed(SInput.Inputs.PAUSE) and not get_tree().paused:
+	if SInput.input_just_pressed(SInput.Inputs.PAUSE):
 		pause_fade_in()
 		add_child(MENU.instantiate())
 		cam.minimap.process_mode = Node.PROCESS_MODE_INHERIT
-	if SInput.input_just_pressed(SInput.Inputs.MAP) and not get_tree().paused:
+	if SInput.input_just_pressed(SInput.Inputs.MAP) and not Statics.is_in_boss_rush:
 		pause_fade_in()
 		subscreen = SUBSCREEN.instantiate()
 		add_child(subscreen)
 		subscreen.position = Vector2(0, 240)
-	if SInput.input_just_pressed(SInput.Inputs.DEBUG) and not get_tree().paused:
+	if SInput.input_just_pressed(SInput.Inputs.DEBUG):
 		pause_no_fade()
 		add_child(DEBUG.instantiate())
 

@@ -195,6 +195,8 @@ func show_item_collection_text(item_label:String, is_100:bool) -> void:
 
 func show_area_text(area_id:int) -> void:
 	clear_area_text()
+	if Statics.is_in_boss_rush:
+		return
 	var area_label:ColorPopup = COLOR_POPUP.instantiate()
 	popup_layer.add_child(area_label)
 	var area_color:Color = Color.WHITE

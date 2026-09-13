@@ -88,6 +88,7 @@ const WORLD_SPAWN:Array = [
 	[ "SnailTown/TownMain", 640, 600 ], # Blobby
 	[ "SnailTown/TownMain", 640, 600 ], # Leechy
 ]
+const RUSH_SPAWN:Array = [ "BossRush/Entrance", 56, 136 ]
 
 
 ## Maximum counts of each item in Item.ItemTypes for a save to be considered 100% complete
@@ -388,6 +389,11 @@ static func delete_profile(iprofile:int) -> void:
 		return
 	var file := "user://" + save_prefix + "/Profile" + str(iprofile) + ".json"
 	DirAccess.remove_absolute(file)
+
+
+static func setup_bossrush_profile(character:int) -> void:
+	current_profile = StaticProcess.template_profile.duplicate()
+	current_profile["character"] = character
 
 
 static func has_unlock(unlock:Unlocks) -> bool:
