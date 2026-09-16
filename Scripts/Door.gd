@@ -36,6 +36,7 @@ const SPAWN_CLOSE_RADIUS = 70
 	"Shellbreaker", "Stompy", "Space Box", "Moon Snail"
 ) var required_boss:int
 @export_range(0, 3) var rando_sphere:int
+@export var close_if_unarmed:bool = false
 
 var is_open:bool = false
 var is_locked:bool = false
@@ -115,6 +116,14 @@ func _check_boss_locked() -> bool:
 func _process(_delta: float) -> void:
 	if spawned_open and is_open:
 		if position.distance_to(GameCore.instance.player.position) > SPAWN_CLOSE_RADIUS:
+			close()
+	if is_open and close_if_unarmed:
+		if (Statics.check_item(Item.ItemTypes.PEASHOOTER) == 0
+		and Statics.check_item(Item.ItemTypes.BOOMERANG) == 0
+		and Statics.check_item(Item.ItemTypes.RAINBOW_WAVE) == 0
+		and Statics.check_item(Item.ItemTypes.GRAVITY_SHOCK) == 0
+		and Statics.check_item(Item.ItemTypes.SECRET_BOOMERANG) == 0
+		and Statics.check_item(Item.ItemTypes.DEBUG_WAVE) == 0):
 			close()
 
 

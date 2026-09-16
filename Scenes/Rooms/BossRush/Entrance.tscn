@@ -177,6 +177,7 @@ tile_set = ExtResource("2_v0hpu")
 
 [node name="Door" parent="GroundLayer" unique_id=1487118064 instance=ExtResource("3_kqh6v")]
 position = Vector2(392, 120)
+close_if_unarmed = true
 
 [node name="Item" parent="GroundLayer" unique_id=1822403756 instance=ExtResource("4_u23um")]
 position = Vector2(30, 56)
@@ -442,7 +443,6 @@ mouse_filter = 2
 bbcode_enabled = true
 text = "Todo:
 - Item shelf node
-- Items togglable in rush mode?
 - UI reconfiguration in rush mode
 - IGT rush mode handling"
 fit_content = true
