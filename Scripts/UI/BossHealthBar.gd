@@ -155,6 +155,8 @@ func _toggle_outro_shake(lite:bool = false) -> void:
 		_update_main(_get_bar_pos_from_ratio(0))
 		if not lite:
 			anim.play("Defeated")
+		if Statics.is_in_boss_rush:
+			Statics.increment_boss_rush_timer = false
 	else:
 		boss_name_container.position = Vector2.ZERO
 		defeated_container.position = defeated_origin

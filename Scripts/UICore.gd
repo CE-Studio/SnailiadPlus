@@ -263,7 +263,8 @@ func show_boss_bar(boss:Boss, hide_minimap:bool = true) -> BossHealthBar:
 func clear_boss_bar() -> void:
 	if active_boss_bar != null:
 		active_boss_bar.queue_free()
-	minimap.update_visible_from_settings(1.0)
+	if not Statics.is_in_boss_rush:
+		minimap.update_visible_from_settings(1.0)
 
 
 func call_screen_shake_radial(timeline:Array[float], mode:ShakeCallMode) -> void:

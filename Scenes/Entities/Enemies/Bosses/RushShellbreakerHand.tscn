@@ -1,47 +1,47 @@
-[gd_scene format=3 uid="uid://bjgywgga30eg1"]
+[gd_scene format=3 uid="uid://cwsbut5tpyf3f"]
 
-[ext_resource type="Script" uid="uid://pjdou48esmui" path="res://Scripts/Enemies/Bosses/ShellbreakerHand.gd" id="1_c3pwi"]
-[ext_resource type="Script" uid="uid://boee2837la0pr" path="res://Scripts/Classes/SnailySprite.gd" id="3_beswn"]
-[ext_resource type="Texture2D" uid="uid://duqqgrfyg1ij" path="res://Assets/Images/Entities/Boss1Hand.png" id="3_t5rnc"]
+[ext_resource type="Script" uid="uid://pjdou48esmui" path="res://Scripts/Enemies/Bosses/ShellbreakerHand.gd" id="1_k8q53"]
+[ext_resource type="Texture2D" uid="uid://c0pqix4u5nxss" path="res://Assets/Images/Entities/Boss1RushHand.png" id="2_k8q53"]
+[ext_resource type="Script" uid="uid://boee2837la0pr" path="res://Scripts/Classes/SnailySprite.gd" id="3_atlhc"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vj7im"]
 size = Vector2(24, 24)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_c3pwi"]
-atlas = ExtResource("3_t5rnc")
+[sub_resource type="AtlasTexture" id="AtlasTexture_wl222"]
+atlas = ExtResource("2_k8q53")
 region = Rect2(0, 0, 24, 24)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_t5rnc"]
-atlas = ExtResource("3_t5rnc")
+[sub_resource type="AtlasTexture" id="AtlasTexture_atlhc"]
+atlas = ExtResource("2_k8q53")
 region = Rect2(24, 0, 24, 24)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_q7w5a"]
-atlas = ExtResource("3_t5rnc")
+[sub_resource type="AtlasTexture" id="AtlasTexture_sct0e"]
+atlas = ExtResource("2_k8q53")
 region = Rect2(48, 0, 24, 24)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_wkouj"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_c3pwi")
+"texture": SubResource("AtlasTexture_wl222")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_t5rnc")
+"texture": SubResource("AtlasTexture_atlhc")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_q7w5a")
+"texture": SubResource("AtlasTexture_sct0e")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_t5rnc")
+"texture": SubResource("AtlasTexture_atlhc")
 }],
 "loop": 1,
 "name": &"default",
 "speed": 12.0
 }]
 
-[node name="ShellbreakerHand" type="Node2D" unique_id=1842650276 node_paths=PackedStringArray("col", "hitbox", "sprite", "vis")]
+[node name="RushShellbreakerHand" type="Node2D" unique_id=1842650276 node_paths=PackedStringArray("col", "hitbox", "sprite", "vis")]
 z_index = -1
-script = ExtResource("1_c3pwi")
+script = ExtResource("1_k8q53")
 max_health = 100
 attack = 1
 defense = 1000
@@ -67,5 +67,5 @@ scale = Vector2(1.2, 1.2)
 [node name="SnailySprite2D" type="AnimatedSprite2D" parent="." unique_id=466548308]
 sprite_frames = SubResource("SpriteFrames_wkouj")
 autoplay = "default"
-script = ExtResource("3_beswn")
+script = ExtResource("3_atlhc")
 metadata/_custom_type_script = "uid://boee2837la0pr"

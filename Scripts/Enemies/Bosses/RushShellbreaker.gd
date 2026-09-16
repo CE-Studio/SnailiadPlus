@@ -1,16 +1,16 @@
 # Copyright 2026 CE-Studio: AGPL-3.0-only
 # Original code Copyright 2011 Auriplane, used with permission
-class_name Shellbreaker
+class_name RushShellbreaker
 extends Boss
 
 
 #region Variables
-var HAND_COUNT:int = 3
-var SHOT_COUNT:Array[int] = [ 5, 14, 41 ]
-var SHOT_DELAY:float = 0.8
-const SHOT_DELAY_MULTS:Array[float] = [ 0.6, 0.28, 0.1 ]
-const PATTERN_DELAY:float = 3.0
-const WEAPON_SPEED:float = 270.0
+var HAND_COUNT:int = 12
+var SHOT_COUNT:Array[int] = [ 12, 21, 48 ]
+var SHOT_DELAY:float = 0.3
+const SHOT_DELAY_MULTS:Array[float] = [ 0.6, 0.28, 0.19 ]
+const PATTERN_DELAY:float = 5.0
+const WEAPON_SPEED:float = 330.0
 const PATH_RADIUS:Vector2 = Vector2(144, 112)
 const PATH_RADIUS_CYCLE_MULT:float = 0.4286
 const PATTERN_COUNT:int = 4
@@ -19,7 +19,7 @@ const HAND_RADIUS_BASE:float = 40.0
 const HAND_RADIUS_MOD:float = 90.0
 const BLINK_TIMEOUT_MAX:float = 3.0
 const GRAV_SHOCK_AHEAD_RADIUS:float = 24.0
-const HAND:PackedScene = preload("uid://bjgywgga30eg1")
+const HAND:PackedScene = preload("uid://cwsbut5tpyf3f")
 const BOOMERANG:PackedScene = preload("uid://bcgwxtcgdpoep")
 
 var hands:Array[Enemy] = []
@@ -48,7 +48,7 @@ func _ready() -> void:
 		queue_free()
 		return
 	
-	my_type = EnemyTypes.SHELLBREAKER
+	my_type = EnemyTypes.SHELLBREAKER_RUSH
 	super.spawn()
 	
 	eyes.position = Vector2.ZERO
@@ -73,8 +73,6 @@ func _ready() -> void:
 		for _hand in hands:
 			_hand.z_index = 0
 	else:
-		if not Statics.is_in_boss_rush:
-			GameCore.instance.music_manager.play_song(battle_music)
 		health_bar = UICore.instance.show_boss_bar(self)
 	
 	nodes_to_wiggle.append(sprite)
@@ -141,33 +139,6 @@ func _process(delta: float) -> void:
 		hands[i].can_be_pierced = hand_radius_target == 0.0
 
 
-func _physics_process(delta) -> void:
-	if grav_shock_kill:
-		return
-	for bullet in intersecting_pbullets:
-		if bullet is PlayerBulletGravShock:
-			grav_shock_kill = true
-			match Player.instance.gravity_dir:
-				Statics.DirsSurface.FLOOR:
-					play_phase_anim("shock_down")
-					grav_shock_dir = Vector2.DOWN
-				Statics.DirsSurface.LWALL:
-					play_phase_anim("shock_left")
-					grav_shock_dir = Vector2.LEFT
-				Statics.DirsSurface.RWALL:
-					play_phase_anim("shock_right")
-					grav_shock_dir = Vector2.RIGHT
-				Statics.DirsSurface.CEILING:
-					play_phase_anim("shock_up")
-					grav_shock_dir = Vector2.UP
-			eyes.visible = false
-			for _hand in hands:
-				_hand.kill()
-			hands.clear()
-			return
-	super(delta)
-
-
 func try_shoot() -> void:
 	if intro_delay:
 		return
@@ -231,7 +202,6 @@ func get_aim_dir() -> float:
 
 func kill() -> void:
 	if not in_death_anim:
-		UICore.instance.achievement_core.check_add(AchievementCore.Achievements.BEAT_SHELLBREAKER)
 		if health_bar:
 			health_bar._toggle_outro_shake()
 		sprite.play("defeat")
@@ -241,8 +211,5 @@ func kill() -> void:
 			_hand.kill()
 		hands.clear()
 		Statics.spawn_particle("ExplosionBossDefeat", Room.Layers.GROUND, position)
-		GameCore.instance.music_manager.stop_all(true)
 		Statics.set_world_flag(Statics.WorldFlags.DEFEATED_BOSS1, true)
-	else:
-		GameCore.instance.music_manager.play_song(GameCore.instance.current_room.song_change)
 	super()
