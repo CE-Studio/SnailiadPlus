@@ -121,7 +121,6 @@ func _process(_delta: float) -> void:
 		if (Statics.check_item(Item.ItemTypes.PEASHOOTER) == 0
 		and Statics.check_item(Item.ItemTypes.BOOMERANG) == 0
 		and Statics.check_item(Item.ItemTypes.RAINBOW_WAVE) == 0
-		and Statics.check_item(Item.ItemTypes.GRAVITY_SHOCK) == 0
 		and Statics.check_item(Item.ItemTypes.SECRET_BOOMERANG) == 0
 		and Statics.check_item(Item.ItemTypes.DEBUG_WAVE) == 0):
 			close()

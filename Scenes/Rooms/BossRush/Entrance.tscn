@@ -4,6 +4,7 @@
 [ext_resource type="TileSet" uid="uid://blc8cnjdu7uh3" path="res://Resources/Tilesheet.tres" id="2_v0hpu"]
 [ext_resource type="Script" uid="uid://cr2gkkgjq8ypb" path="res://Scripts/Classes/CameraBorder.gd" id="3_e1y5m"]
 [ext_resource type="PackedScene" uid="uid://brx6hvienl8qy" path="res://Scenes/Entities/Door.tscn" id="3_kqh6v"]
+[ext_resource type="Script" uid="uid://cj07xa2ufocl4" path="res://Scripts/Classes/ItemShelf.gd" id="4_81178"]
 [ext_resource type="PackedScene" uid="uid://cudp1y80hdc5x" path="res://Scenes/Entities/Item.tscn" id="4_u23um"]
 [ext_resource type="PackedScene" uid="uid://c2845y87tiqct" path="res://Scenes/Environments/ParticleLayers/StarLayer.tscn" id="6_dr86b"]
 [ext_resource type="PackedScene" uid="uid://ck2f53pdjx88q" path="res://Scenes/internals/RoomTransitionTrigger.tscn" id="7_u23um"]
@@ -179,59 +180,65 @@ tile_set = ExtResource("2_v0hpu")
 position = Vector2(392, 120)
 close_if_unarmed = true
 
-[node name="Item" parent="GroundLayer" unique_id=1822403756 instance=ExtResource("4_u23um")]
-position = Vector2(30, 56)
+[node name="ItemShelf" type="Node2D" parent="GroundLayer" unique_id=310483480]
+position = Vector2(200, 64)
+script = ExtResource("4_81178")
+x_buffer = 24.0
+y_retract = 16.0
+metadata/_custom_type_script = "uid://cj07xa2ufocl4"
+
+[node name="Item" parent="GroundLayer/ItemShelf" unique_id=1822403756 instance=ExtResource("4_u23um")]
+position = Vector2(-170, 0)
 type = 13
 
-[node name="Item2" parent="GroundLayer" unique_id=800160163 instance=ExtResource("4_u23um")]
-position = Vector2(370, 56)
-type = 13
-location_id = 1
-
-[node name="Item3" parent="GroundLayer" unique_id=664929034 instance=ExtResource("4_u23um")]
-position = Vector2(64, 56)
+[node name="Item3" parent="GroundLayer/ItemShelf" unique_id=664929034 instance=ExtResource("4_u23um")]
+position = Vector2(-136, 0)
 type = 8
 location_id = 2
 
-[node name="Item4" parent="GroundLayer" unique_id=26443785 instance=ExtResource("4_u23um")]
-position = Vector2(98, 56)
+[node name="Item4" parent="GroundLayer/ItemShelf" unique_id=26443785 instance=ExtResource("4_u23um")]
+position = Vector2(-102, 0)
 type = 5
 location_id = 3
 
-[node name="Item5" parent="GroundLayer" unique_id=1006652643 instance=ExtResource("4_u23um")]
-position = Vector2(132, 56)
+[node name="Item5" parent="GroundLayer/ItemShelf" unique_id=1006652643 instance=ExtResource("4_u23um")]
+position = Vector2(-68, 0)
 type = 4
 location_id = 4
 
-[node name="Item6" parent="GroundLayer" unique_id=1756566865 instance=ExtResource("4_u23um")]
-position = Vector2(166, 56)
+[node name="Item6" parent="GroundLayer/ItemShelf" unique_id=1756566865 instance=ExtResource("4_u23um")]
+position = Vector2(-34, 0)
 type = 6
 location_id = 5
 
-[node name="Item7" parent="GroundLayer" unique_id=1034164596 instance=ExtResource("4_u23um")]
-position = Vector2(200, 56)
+[node name="Item7" parent="GroundLayer/ItemShelf" unique_id=1034164596 instance=ExtResource("4_u23um")]
 type = 3
 location_id = 6
 
-[node name="Item8" parent="GroundLayer" unique_id=1561361269 instance=ExtResource("4_u23um")]
-position = Vector2(234, 56)
+[node name="Item8" parent="GroundLayer/ItemShelf" unique_id=1561361269 instance=ExtResource("4_u23um")]
+position = Vector2(34, 0)
 type = 10
 location_id = 7
 
-[node name="Item9" parent="GroundLayer" unique_id=1783080237 instance=ExtResource("4_u23um")]
-position = Vector2(268, 56)
+[node name="Item9" parent="GroundLayer/ItemShelf" unique_id=1783080237 instance=ExtResource("4_u23um")]
+position = Vector2(68, 0)
 type = 0
 location_id = 8
 
-[node name="Item10" parent="GroundLayer" unique_id=1109666493 instance=ExtResource("4_u23um")]
-position = Vector2(302, 56)
+[node name="Item10" parent="GroundLayer/ItemShelf" unique_id=1109666493 instance=ExtResource("4_u23um")]
+position = Vector2(102, 0)
 type = 1
 location_id = 9
 
-[node name="Item11" parent="GroundLayer" unique_id=1062105593 instance=ExtResource("4_u23um")]
-position = Vector2(336, 56)
+[node name="Item11" parent="GroundLayer/ItemShelf" unique_id=1062105593 instance=ExtResource("4_u23um")]
+position = Vector2(136, 0)
 type = 2
 location_id = 10
+
+[node name="Item2" parent="GroundLayer/ItemShelf" unique_id=800160163 instance=ExtResource("4_u23um")]
+position = Vector2(170, 0)
+type = 13
+location_id = 1
 
 [node name="FG1Layer" type="Parallax2D" parent="." unique_id=605789709]
 z_index = 100
