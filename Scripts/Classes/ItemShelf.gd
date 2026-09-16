@@ -62,11 +62,12 @@ func _calculate_new_targets() -> void:
 	for i in range(x_pos.size()):
 		target_pos[i] = Vector2(x_pos[i], 0.0)
 		if i == nearest_item:
+			target_pos[i].y += y_retract
 			continue
 		var abs_id:int = absi(i - nearest_item)
 		var x_weight:float = clampf(inverse_lerp(x_buffer_fade, 0, abs_id), 0.0, 1.0)
 		x_weight = ease(x_weight, 4.0)
 		var x_sign:int = -1 if i < nearest_item else 1
 		target_pos[i].x += lerpf(0.0, x_buffer, x_weight) * x_sign
-		target_pos[i].y -= y_retract
+		#target_pos[i].y -= y_retract
 		target_pos[i].y += lerpf(0.0, y_retract_mod, x_weight)

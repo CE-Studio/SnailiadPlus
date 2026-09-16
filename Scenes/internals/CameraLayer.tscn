@@ -2896,7 +2896,7 @@ animations = [{
 "speed": 1.0
 }]
 
-[node name="CameraLayer" type="Node2D" unique_id=1777678961 node_paths=PackedStringArray("_tl", "_tr", "_bl", "_br", "cam", "heart_group", "color_cover", "save_icon", "bestiary_icon", "minimap", "border", "darkness_layer", "popup_layer", "pause_layer", "particle_layer", "achievement_core", "weapon_icons", "igt", "igt_text", "fps", "fps_text", "input_display")]
+[node name="CameraLayer" type="Node2D" unique_id=1777678961 node_paths=PackedStringArray("_tl", "_tr", "_bl", "_br", "cam", "heart_group", "color_cover", "save_icon", "bestiary_icon", "minimap", "border", "darkness_layer", "popup_layer", "pause_layer", "particle_layer", "achievement_core", "weapon_icons", "igt", "igt_text", "fps", "fps_text", "rush_igt", "rush_igt_text", "input_display")]
 z_index = 1000
 z_as_relative = false
 script = ExtResource("1_vjeh6")
@@ -2921,6 +2921,8 @@ igt = NodePath("BL/InGameTime")
 igt_text = NodePath("BL/InGameTime/Text")
 fps = NodePath("BL/Framerate")
 fps_text = NodePath("BL/Framerate/Text")
+rush_igt = NodePath("TR/BossRushTime")
+rush_igt_text = NodePath("TR/BossRushTime/Text")
 input_display = NodePath("BL/InputDisplay")
 area_bookend_frames = SubResource("SpriteFrames_umg6w")
 
@@ -3002,6 +3004,20 @@ position = Vector2(400, 0)
 
 [node name="Minimap" parent="TR" unique_id=408040295 instance=ExtResource("8_g8fv5")]
 position = Vector2(-32, 24)
+
+[node name="BossRushTime" type="HBoxContainer" parent="TR" unique_id=2090096409]
+offset_left = -304.0
+offset_right = -4.0
+offset_bottom = 96.0
+
+[node name="Text" parent="TR/BossRushTime" unique_id=326553468 instance=ExtResource("3_bgnuu")]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_constants/line_separation = 0
+text = "0:00.00"
+horizontal_alignment = 2
+max_width = 300
+border_scale = 1
 
 [node name="PopupLayer" type="Node2D" parent="." unique_id=412208806]
 

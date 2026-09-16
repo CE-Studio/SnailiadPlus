@@ -61,6 +61,8 @@ static var instance:UICore
 @export var igt_text:SnailyText
 @export var fps:HBoxContainer
 @export var fps_text:SnailyText
+@export var rush_igt:HBoxContainer
+@export var rush_igt_text:SnailyText
 @export var input_display:InputDisplay
 @export var area_bookend_frames:SpriteFrames
 #endregion
@@ -75,7 +77,8 @@ func instantiate() -> void:
 	save_icon.visible = false
 	bestiary_icon.visible = false
 	
-	
+	if not Statics.is_in_boss_rush:
+		rush_igt.visible = false
 	
 	set_all_visibility_from_settings.call_deferred()
 
@@ -106,6 +109,13 @@ func _process(delta: float) -> void:
 			else:
 				igt.modulate = Color.WHITE
 	
+	#Boss Rush-specific IGT is similarly counted up in GameCore.gd
+	if Statics.is_in_boss_rush:
+		if Statics.increment_boss_rush_timer:
+			rush_igt_text.modulate = Color.WHITE
+		else:
+			rush_igt_text.modulate = Color("c8c0c0")
+	
 	tick_screen_shake(delta)
 	
 	if Statics.invincibility:
@@ -130,7 +140,10 @@ func set_all_visibility_from_settings() -> void:
 	igt.position = BL_TEXT_ORIGIN
 	fps.position = BL_TEXT_ORIGIN
 	
-	minimap.update_visible_from_settings(minimap.fade_override)
+	if Statics.is_in_boss_rush:
+		minimap.update_visible(0)
+	else:
+		minimap.update_visible_from_settings(minimap.fade_override)
 	
 	input_display.visible = false
 	if ProjectSettings.get_setting("game/ui/keymap"):
@@ -139,7 +152,7 @@ func set_all_visibility_from_settings() -> void:
 		fps.position.y += BL_TEXT_OFFSETS_LARGE.y
 	
 	igt.visible = false
-	if ProjectSettings.get_setting("game/ui/in_game_time"):
+	if ProjectSettings.get_setting("game/ui/in_game_time") and not Statics.is_in_boss_rush:
 		igt.visible = true
 		fps.position.y += BL_TEXT_OFFSETS.y
 	

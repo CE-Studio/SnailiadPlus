@@ -86,7 +86,7 @@ func _ready() -> void:
 			anim = "rainbow_wave"
 		ItemTypes.DEVASTATOR:
 			anim = "devastator"
-			box.shape.size = Vector2(44, 28)
+			box.shape.size = Vector2(28, 44)
 		ItemTypes.HIGH_JUMP:
 			anim = "high_jump"
 			if character == Player.Players.BLOBBY:

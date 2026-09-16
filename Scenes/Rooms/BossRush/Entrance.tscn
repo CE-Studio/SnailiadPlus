@@ -181,7 +181,7 @@ position = Vector2(392, 120)
 close_if_unarmed = true
 
 [node name="ItemShelf" type="Node2D" parent="GroundLayer" unique_id=310483480]
-position = Vector2(200, 64)
+position = Vector2(200, 56)
 script = ExtResource("4_81178")
 x_buffer = 24.0
 y_retract = 16.0
@@ -438,21 +438,4 @@ script = ExtResource("10_8fgm4")
 text_scale = 4
 quick_load_text = "Boss Rush"
 border_scale = 2
-metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
-
-[node name="SnailyText2" type="RichTextLabel" parent="." unique_id=964522432]
-clip_contents = false
-offset_left = 16.0
-offset_top = 168.0
-offset_right = 396.75983
-offset_bottom = 281.32904
-mouse_filter = 2
-bbcode_enabled = true
-text = "Todo:
-- Item shelf node
-- UI reconfiguration in rush mode
-- IGT rush mode handling"
-fit_content = true
-scroll_active = false
-script = ExtResource("10_8fgm4")
 metadata/_custom_type_script = "uid://dqt4uo3ejug3v"

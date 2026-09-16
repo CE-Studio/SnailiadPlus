@@ -33,7 +33,8 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	if Statics.increment_igt:
+	if ((not Statics.is_in_boss_rush and Statics.increment_igt)
+	or Statics.is_in_boss_rush and Statics.increment_boss_rush_timer):
 		inc_game_time(delta)
 	room_time += delta
 	handle_cheats()
@@ -56,6 +57,8 @@ func inc_game_time(delta:float) -> void:
 	if UICore.instance:
 		var time_str:String = Statics.get_igt_str()
 		UICore.instance.igt_text.set_snaily_text(time_str)
+		if Statics.is_in_boss_rush:
+			UICore.instance.rush_igt_text.set_snaily_text(time_str)
 
 
 func spawn_room(path:String, entrance:int = -1, offset:Vector2 = Vector2.ZERO) -> void:

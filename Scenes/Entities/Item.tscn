@@ -25,6 +25,7 @@
 [ext_resource type="Texture2D" uid="uid://b44wc0pl0cccv" path="res://Assets/Images/Items/WallGrab.png" id="22_s0lth"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qdhsi"]
+resource_local_to_scene = true
 size = Vector2(28, 28)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_so0qk"]
