@@ -6,6 +6,10 @@ extends Node2D
 
 
 #region Variables
+const COLLECTED_A_BASE:float = 0.45
+const COLLECTED_A_MAGNITUDE:float = 0.15
+const COLLECTED_A_TIME:float = 4.0
+
 enum ItemTypes {
 	PEASHOOTER,        #  0
 	BOOMERANG,         #  1
@@ -42,13 +46,16 @@ var name_str:String = ""
 @export_flags("Easy", "Normal", "Insane") var difficulty_reqs = 7
 @export_flags("Snaily", "Sluggy", "Upside", "Leggy", "Blobby", "Leechy") var character_reqs = 63
 
-@onready var jingle_minor:AudioStream = load("res://Assets/Sounds/Music/MinorItemJingle.ogg")
-@onready var jingle_major:AudioStream = load("res://Assets/Sounds/Music/MajorItemJingle.ogg")
+@onready var jingle_minor:AudioStream = load("uid://b6cebrmjxbn7u")
+@onready var jingle_major:AudioStream = load("uid://bqx5qjvh7aygo")
+@onready var toggle_on:AudioStream = load("uid://ddckyte25i1xg")
+@onready var toggle_off:AudioStream = load("uid://b5b1oq4qp8ejr")
 @onready var sprite:SnailySprite2D = $"SnailySprite2D"
 @onready var box:CollisionShape2D = $"Area2D/CollisionShape2D"
 @onready var timer:Timer = $"CollectTimer"
 
 var collected:bool = false
+var elapsed:float = 0.0
 
 const HOVER_DIS:int = 24
 const HOVER_EASE:float = 12.5
@@ -58,9 +65,11 @@ const HOVER_EASE:float = 12.5
 func _ready() -> void:
 	if GameCore.instance == null:
 		return
-	if (difficulty_reqs & (1 << int(Statics.current_profile["difficulty"])) == 0
+	if Statics.check_location_collected(location_id):
+		if Statics.is_in_boss_rush: collected = true
+		else: return
+	elif (difficulty_reqs & (1 << int(Statics.current_profile["difficulty"])) == 0
 	or character_reqs & (1 << int(Statics.current_profile["character"])) == 0
-	or Statics.check_location_collected(location_id)
 	or type == ItemTypes.NONE):
 		queue_free()
 		return
@@ -131,9 +140,20 @@ func _ready() -> void:
 	sprite.play(anim)
 
 	UICore.instance.darkness_layer.add_source(self, 48)
+	
+	elapsed += fmod(position.x * 0.025, TAU)
 
 
 func _process(delta: float) -> void:
+	if Statics.is_in_boss_rush:
+		if not collected:
+			modulate.a = 1.0
+			return
+		modulate.a = COLLECTED_A_BASE + (sin(elapsed) * COLLECTED_A_MAGNITUDE)
+		elapsed += delta * COLLECTED_A_TIME
+		if elapsed > TAU:
+			elapsed -= TAU
+		return
 	if collected:
 		var target_pos = GameCore.instance.player.position
 		match GameCore.instance.player.gravity_dir:
@@ -151,83 +171,21 @@ func _process(delta: float) -> void:
 func _on_player_entered(_body: Node2D) -> void:
 	if not collected:
 		collected = true
-		var played_unique_dust:bool = false
-		timer.start()
-		if is_super_unique:
-			Statics.play_sfx_disconnected(jingle_major)
-			SInput.read_inputs = false
+		if not Statics.is_in_boss_rush:
+			timer.start()
+			if is_super_unique:
+				Statics.play_sfx_disconnected(jingle_major)
+				SInput.read_inputs = false
+			else:
+				Statics.play_sfx_disconnected(jingle_minor)
 		else:
-			Statics.play_sfx_disconnected(jingle_minor)
-
-		Statics.add_item(type, 1)
-		Statics.mark_item_location(location_id)
-		Statics.current_profile["item_rate"] = Statics.get_item_percentage()
-		match type:
-			ItemTypes.PEASHOOTER:
-				if Statics.stack_weapons or (GameCore.instance.player.selected_weapon < 2):
-					if not Player.instance.is_equipped(1):
-						GameCore.instance.player._toggle_weapon(1)
-			ItemTypes.BOOMERANG:
-				if Statics.stack_weapons or (GameCore.instance.player.selected_weapon < 4):
-					if not Player.instance.is_equipped(2):
-						GameCore.instance.player._toggle_weapon(2)
-			ItemTypes.RAINBOW_WAVE:
-				if Statics.stack_weapons or (GameCore.instance.player.selected_weapon < 8):
-					if not Player.instance.is_equipped(3):
-						GameCore.instance.player._toggle_weapon(3)
-			#ItemTypes.DEVASTATOR:
-			#ItemTypes.HIGH_JUMP:
-			#ItemTypes.SHELL_SHIELD:
-			#ItemTypes.RAPID_FIRE:
-			ItemTypes.ICE_SHELL:
-				if is_super_unique:
-					played_unique_dust = true
-					Statics.spawn_particle("ShellUpEffect", Room.Layers.GROUND, position, [1, true, true, 1])
-			ItemTypes.GRAVITY_SHELL:
-				if is_super_unique:
-					played_unique_dust = true
-					var anim_id:int = 0
-					match int(Statics.current_profile["character"]):
-						Player.Players.UPSIDE:
-							anim_id = 4
-						Player.Players.LEGGY:
-							anim_id = 5
-						Player.Players.BLOBBY:
-							anim_id = 6
-						_:
-							anim_id = 2
-					Statics.spawn_particle("ShellUpEffect", Room.Layers.GROUND, position, [anim_id, true, true, 2])
-			ItemTypes.METAL_SHELL:
-				if is_super_unique:
-					played_unique_dust = true
-					Statics.spawn_particle("ShellUpEffect", Room.Layers.GROUND, position, [3, true, true, 3])
-			ItemTypes.GRAVITY_SHOCK:
-				AchievementCore.instance.check_add(AchievementCore.Achievements.GRAVITY_SHOCK)
-			ItemTypes.SECRET_BOOMERANG:
-				if Statics.stack_weapons or (GameCore.instance.player.selected_weapon < 4):
-					if not Player.instance.is_equipped(2):
-						GameCore.instance.player._toggle_weapon(2)
-				AchievementCore.instance.check_add(AchievementCore.Achievements.SECRET_BOOMERANG)
-			ItemTypes.DEBUG_WAVE:
-				if Statics.stack_weapons or (GameCore.instance.player.selected_weapon < 8):
-					if not Player.instance.is_equipped(3):
-						GameCore.instance.player._toggle_weapon(3)
-			ItemTypes.HEART_CONTAINER:
-				if not Statics.is_in_boss_rush:
-					name_str = tr(&"Heart Container #%d") % Statics.check_item(Item.ItemTypes.HEART_CONTAINER)
-				GameCore.instance.player.max_health += Statics.HEALTH_PER_HEART[Statics.current_profile["difficulty"]]
-				GameCore.instance.player.health = GameCore.instance.player.max_health
-				UICore.instance.heart_group.draw_new_hearts()
-			ItemTypes.HELIX_FRAGMENT:
-				if not Statics.is_in_boss_rush:
-					name_str = tr(&"Helix Fragment #%d") % Statics.check_item(Item.ItemTypes.HELIX_FRAGMENT)
-			#ItemTypes.RADAR_SHELL:
-			#ItemTypes.WEAPON_LOCK_TRAP:
-			#ItemTypes.GRAVITY_LOCK_TRAP:
-			#ItemTypes.LULLABY_TRAP:
-			#ItemTypes.SPIDER_TRAP:
-			#ItemTypes.WARP_TRAP:
-			#_:
+			Statics.play_sfx_disconnected(toggle_on)
+		
+		var played_unique_dust:bool = _add_to_inventory()
+		
+		if Statics.is_in_boss_rush:
+			return
+		
 		if is_super_unique and not played_unique_dust:
 			Statics.spawn_particle("ShellUpEffect", Room.Layers.GROUND, position, [0, true, true])
 		var is_100_rate:bool = Statics.get_item_percentage(0, true, true) == 100.0
@@ -239,6 +197,147 @@ func _on_player_entered(_body: Node2D) -> void:
 		if is_100_rate:
 			AchievementCore.instance.check_add(AchievementCore.Achievements.ITEMS_100)
 			Statics.add_unlock_condition(Statics.Unlocks.ITEM_RANDO)
+	
+	elif collected and Statics.is_in_boss_rush:
+		collected = false
+		Statics.play_sfx_disconnected(toggle_off)
+		_remove_from_inventory()
+
+
+func _add_to_inventory() -> bool:
+	Statics.add_item(type, 1)
+	Statics.mark_item_location(location_id)
+	Statics.current_profile["item_rate"] = Statics.get_item_percentage()
+	
+	var played_unique_dust:bool = false
+	match type:
+		ItemTypes.PEASHOOTER:
+			if Statics.stack_weapons or (GameCore.instance.player.selected_weapon < 2):
+				if not Player.instance.is_equipped(1):
+					GameCore.instance.player._toggle_weapon(1)
+		ItemTypes.BOOMERANG:
+			if Statics.stack_weapons or (GameCore.instance.player.selected_weapon < 4):
+				if not Player.instance.is_equipped(2):
+					GameCore.instance.player._toggle_weapon(2)
+		ItemTypes.RAINBOW_WAVE:
+			if Statics.stack_weapons or (GameCore.instance.player.selected_weapon < 8):
+				if not Player.instance.is_equipped(3):
+					GameCore.instance.player._toggle_weapon(3)
+		#ItemTypes.DEVASTATOR:
+		#ItemTypes.HIGH_JUMP:
+		#ItemTypes.SHELL_SHIELD:
+		#ItemTypes.RAPID_FIRE:
+		ItemTypes.ICE_SHELL:
+			if is_super_unique and not Statics.is_in_boss_rush:
+				played_unique_dust = true
+				Statics.spawn_particle("ShellUpEffect", Room.Layers.GROUND, position, [1, true, true, 1])
+			elif Statics.is_in_boss_rush:
+				Player.instance.update_shell_displayed(1, 2)
+		ItemTypes.GRAVITY_SHELL:
+			if is_super_unique and not Statics.is_in_boss_rush:
+				played_unique_dust = true
+				var anim_id:int = 0
+				match int(Statics.current_profile["character"]):
+					Player.Players.UPSIDE:
+						anim_id = 4
+					Player.Players.LEGGY:
+						anim_id = 5
+					Player.Players.BLOBBY:
+						anim_id = 6
+					_:
+						anim_id = 2
+				Statics.spawn_particle("ShellUpEffect", Room.Layers.GROUND, position, [anim_id, true, true, 2])
+			elif Statics.is_in_boss_rush:
+				Player.instance.update_shell_displayed(2, 2)
+		ItemTypes.METAL_SHELL:
+			if is_super_unique and not Statics.is_in_boss_rush:
+				played_unique_dust = true
+				Statics.spawn_particle("ShellUpEffect", Room.Layers.GROUND, position, [3, true, true, 3])
+			elif Statics.is_in_boss_rush:
+				Player.instance.update_shell_displayed(3, 2)
+		ItemTypes.GRAVITY_SHOCK:
+			AchievementCore.instance.check_add(AchievementCore.Achievements.GRAVITY_SHOCK)
+		ItemTypes.SECRET_BOOMERANG:
+			if Statics.stack_weapons or (GameCore.instance.player.selected_weapon < 4):
+				if not Player.instance.is_equipped(2):
+					GameCore.instance.player._toggle_weapon(2)
+			AchievementCore.instance.check_add(AchievementCore.Achievements.SECRET_BOOMERANG)
+		ItemTypes.DEBUG_WAVE:
+			if Statics.stack_weapons or (GameCore.instance.player.selected_weapon < 8):
+				if not Player.instance.is_equipped(3):
+					GameCore.instance.player._toggle_weapon(3)
+		ItemTypes.HEART_CONTAINER:
+			if not Statics.is_in_boss_rush:
+				name_str = tr(&"Heart Container #%d") % Statics.check_item(Item.ItemTypes.HEART_CONTAINER)
+			GameCore.instance.player.max_health += Statics.HEALTH_PER_HEART[Statics.current_profile["difficulty"]]
+			GameCore.instance.player.health = GameCore.instance.player.max_health
+			UICore.instance.heart_group.draw_new_hearts()
+		ItemTypes.HELIX_FRAGMENT:
+			if not Statics.is_in_boss_rush:
+				name_str = tr(&"Helix Fragment #%d") % Statics.check_item(Item.ItemTypes.HELIX_FRAGMENT)
+		#ItemTypes.RADAR_SHELL:
+		#ItemTypes.WEAPON_LOCK_TRAP:
+		#ItemTypes.GRAVITY_LOCK_TRAP:
+		#ItemTypes.LULLABY_TRAP:
+		#ItemTypes.SPIDER_TRAP:
+		#ItemTypes.WARP_TRAP:
+		#_:
+	return played_unique_dust
+
+
+func _remove_from_inventory() -> void:
+	Statics.remove_item(type, 1)
+	Statics.mark_item_location(location_id, false)
+	Statics.current_profile["item_rate"] = Statics.get_item_percentage()
+	
+	match type:
+		ItemTypes.PEASHOOTER:
+			if Statics.stack_weapons or (GameCore.instance.player.selected_weapon < 2):
+				if Player.instance.is_equipped(1):
+					GameCore.instance.player._toggle_weapon(1)
+		ItemTypes.BOOMERANG:
+			if Statics.stack_weapons or (GameCore.instance.player.selected_weapon < 4):
+				if Player.instance.is_equipped(2):
+					GameCore.instance.player._toggle_weapon(2)
+		ItemTypes.RAINBOW_WAVE:
+			if Statics.stack_weapons or (GameCore.instance.player.selected_weapon < 8):
+				if Player.instance.is_equipped(3):
+					GameCore.instance.player._toggle_weapon(3)
+		#ItemTypes.DEVASTATOR:
+		#ItemTypes.HIGH_JUMP:
+		#ItemTypes.SHELL_SHIELD:
+		#ItemTypes.RAPID_FIRE:
+		ItemTypes.ICE_SHELL:
+			if Statics.is_in_boss_rush:
+				Player.instance.update_shell_displayed(1, 2)
+		ItemTypes.GRAVITY_SHELL:
+			if Statics.is_in_boss_rush:
+				Player.instance.update_shell_displayed(2, 2)
+		ItemTypes.METAL_SHELL:
+			if Statics.is_in_boss_rush:
+				Player.instance.update_shell_displayed(3, 2)
+		#ItemTypes.GRAVITY_SHOCK:
+		ItemTypes.SECRET_BOOMERANG:
+			if Statics.stack_weapons or (GameCore.instance.player.selected_weapon < 4):
+				if Player.instance.is_equipped(2):
+					GameCore.instance.player._toggle_weapon(2)
+			AchievementCore.instance.check_add(AchievementCore.Achievements.SECRET_BOOMERANG)
+		ItemTypes.DEBUG_WAVE:
+			if Statics.stack_weapons or (GameCore.instance.player.selected_weapon < 8):
+				if Player.instance.is_equipped(3):
+					GameCore.instance.player._toggle_weapon(3)
+		ItemTypes.HEART_CONTAINER:
+			GameCore.instance.player.max_health -= Statics.HEALTH_PER_HEART[Statics.current_profile["difficulty"]]
+			GameCore.instance.player.health = GameCore.instance.player.max_health
+			UICore.instance.heart_group.draw_new_hearts()
+		#ItemTypes.HELIX_FRAGMENT:
+		#ItemTypes.RADAR_SHELL:
+		#ItemTypes.WEAPON_LOCK_TRAP:
+		#ItemTypes.GRAVITY_LOCK_TRAP:
+		#ItemTypes.LULLABY_TRAP:
+		#ItemTypes.SPIDER_TRAP:
+		#ItemTypes.WARP_TRAP:
+		#_:
 
 
 func _on_collect_timer_timeout() -> void:
