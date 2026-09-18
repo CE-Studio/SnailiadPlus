@@ -5,7 +5,7 @@
 [ext_resource type="Resource" uid="uid://ddwwwcpns6cwp" path="res://CutsceneScripts/BossRush/Boss1.dialogue" id="2_eq5cl"]
 [ext_resource type="PackedScene" uid="uid://brx6hvienl8qy" path="res://Scenes/Entities/Door.tscn" id="3_1cvpg"]
 [ext_resource type="Script" uid="uid://cr2gkkgjq8ypb" path="res://Scripts/Classes/CameraBorder.gd" id="3_co0eo"]
-[ext_resource type="PackedScene" uid="uid://b8hvxjbf4w0e3" path="res://Scenes/Entities/Enemies/Bosses/RushShellbreaker.tscn" id="4_m6txg"]
+[ext_resource type="PackedScene" uid="uid://b8hvxjbf4w0e3" path="res://Scenes/Entities/Enemies/Bosses/ShellbreakerRush.tscn" id="4_m6txg"]
 [ext_resource type="PackedScene" uid="uid://b5idqni0vwlyv" path="res://Scenes/Entities/CCPlayer.tscn" id="5_wato6"]
 [ext_resource type="PackedScene" uid="uid://biwfp80q8y8j3" path="res://Scenes/internals/Triggers/Trigger.tscn" id="6_m6txg"]
 [ext_resource type="PackedScene" uid="uid://c2845y87tiqct" path="res://Scenes/Environments/ParticleLayers/StarLayer.tscn" id="6_wato6"]

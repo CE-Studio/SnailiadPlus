@@ -1,6 +1,6 @@
 # Copyright 2026 CE-Studio: AGPL-3.0-only
 # Original code Copyright 2011 Auriplane, used with permission
-class_name Stompy
+class_name StompyRush
 extends Boss
 
 
@@ -56,7 +56,7 @@ var intro_from_left:bool = false
 var legacy_intro:bool = false
 var set_intro:bool = false
 var attack_mode:int = 0
-var boss_speed:float = 0.6
+var boss_speed:float = 1.1
 var elapsed:float = 0.0
 var boss_mode:BossMode = BossMode.INTRO
 var next_step_is_left:bool = false
@@ -88,10 +88,10 @@ var stomp_timeout_index_r:int = 34
 var raise_timeout_r:int = 0
 var played_fall_on_step_r:bool = false
 
-@onready var foot_l:StompyFoot = $"FootL"
-@onready var foot_r:StompyFoot = $"FootR"
-@onready var eye_l:StompyEye = $"EyeL"
-@onready var eye_r:StompyEye = $"EyeR"
+@onready var foot_l:StompyRushFoot = $"FootL"
+@onready var foot_r:StompyRushFoot = $"FootR"
+@onready var eye_l:StompyRushEye = $"EyeL"
+@onready var eye_r:StompyRushEye = $"EyeR"
 @onready var sfx_stomp:AudioStreamPlayer = $"Stomp"
 @onready var debug_states:RichTextLabel = $"DebugFootState"
 #endregion
@@ -102,7 +102,7 @@ func _ready() -> void:
 		queue_free()
 		return
 	
-	my_type = EnemyTypes.STOMPY
+	my_type = EnemyTypes.STOMPY_RUSH
 	super.spawn()
 	
 	foot_l.boss = self
@@ -507,9 +507,9 @@ func advance_phase(count:int = 1) -> void:
 	eye_l.update_phase()
 	eye_r.update_phase()
 	if phase == 1:
-		boss_speed += 0.2
+		boss_speed = 1.3
 	elif phase == 2:
-		boss_speed += 0.3
+		boss_speed = 1.4
 
 
 func _shake() -> void:
@@ -524,7 +524,7 @@ func _spawn_cannons() -> void:
 	if Statics.current_profile["character"] == Player.Players.UPSIDE:
 		y = 160.0
 		target_dir = Statics.DirsSurface.FLOOR
-	for x in [ -224.0, -128.0, 128.0, 224.0 ]:
+	for x in [ -224.0, -172.0, -128.0, -80.0, 80.0, 128.0, 172.0, 224.0 ]:
 		var new_cannon:Canon = cannon.instantiate()
 		new_cannon.base_dir = target_dir
 		new_cannon.position = position + Vector2(x, y)
@@ -545,8 +545,5 @@ func kill() -> void:
 			_cannon.kill()
 		Statics.spawn_particle("ExplosionBossDefeat", Room.Layers.GROUND, position + foot_l.position)
 		Statics.spawn_particle("ExplosionBossDefeat", Room.Layers.GROUND, position + foot_r.position, [false])
-		GameCore.instance.music_manager.stop_all(true)
 		Statics.set_world_flag(Statics.WorldFlags.DEFEATED_BOSS2, true)
-	else:
-		GameCore.instance.music_manager.play_song(GameCore.instance.current_room.song_change)
 	super()

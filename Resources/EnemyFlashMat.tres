@@ -5,4 +5,4 @@
 [resource]
 resource_local_to_scene = true
 shader = ExtResource("1_7qnnv")
-shader_parameter/flash_color = Color(0, 0, 0, 1)
+shader_parameter/flash_color = Color(0, 0, 0, 2)

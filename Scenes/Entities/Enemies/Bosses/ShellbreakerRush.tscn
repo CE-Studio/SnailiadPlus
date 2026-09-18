@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://b8hvxjbf4w0e3"]
 
-[ext_resource type="Script" uid="uid://dyfuy33jhrwt5" path="res://Scripts/Enemies/Bosses/RushShellbreaker.gd" id="1_c6csd"]
+[ext_resource type="Script" uid="uid://dyfuy33jhrwt5" path="res://Scripts/Enemies/Bosses/ShellbreakerRush.gd" id="1_c6csd"]
 [ext_resource type="Material" uid="uid://bj1jqi3180tg5" path="res://Resources/EnemyFlashMat.tres" id="2_c6csd"]
 [ext_resource type="Texture2D" uid="uid://du31kwsdxskbq" path="res://Assets/Images/Entities/Boss1Rush.png" id="3_c6csd"]
 [ext_resource type="Script" uid="uid://boee2837la0pr" path="res://Scripts/Classes/SnailySprite.gd" id="4_vdhbb"]

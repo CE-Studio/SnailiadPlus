@@ -1,0 +1,63 @@
+[gd_scene format=3 uid="uid://dx7oofnef03s7"]
+
+[ext_resource type="Script" uid="uid://cnockas5d4n1i" path="res://Scripts/Enemies/Bosses/StompyRush.gd" id="1_1orog"]
+[ext_resource type="PackedScene" uid="uid://cn5sbqogvu4b6" path="res://Scenes/Entities/Enemies/Bosses/StompyRushFoot.tscn" id="2_1orog"]
+[ext_resource type="PackedScene" uid="uid://c2wfb8unb8x0r" path="res://Scenes/Entities/Enemies/Bosses/StompyRushEye.tscn" id="3_3d67u"]
+[ext_resource type="Texture2D" uid="uid://dby1olsbvjdjh" path="res://Editor/EditorMarkers/StompyPlacementGuide.png" id="4_h8c61"]
+[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="5_u8eba"]
+[ext_resource type="AudioStream" uid="uid://ceqtn3682frsa" path="res://Assets/Sounds/Sfx/Stomp.ogg" id="6_j7hpf"]
+
+[node name="StompyRush" type="Node2D" unique_id=1750670965]
+z_index = 125
+script = ExtResource("1_1orog")
+battle_music = 9
+phase_changes = Array[float]([0.66, 0.28])
+max_health = 10000
+max_health_hard = 4000
+defense = 5
+invulnerable = true
+can_damage = false
+kill_particle_range = Vector2i(0, 0)
+kill_particle_types = Array[String]([])
+kill_particle_count = 0
+
+[node name="FootL" parent="." unique_id=1149713511 instance=ExtResource("2_1orog")]
+position = Vector2(-128, 104)
+left = true
+
+[node name="FootR" parent="." unique_id=656020639 instance=ExtResource("2_1orog")]
+position = Vector2(128, 104)
+
+[node name="EyeL" parent="." unique_id=566129591 instance=ExtResource("3_3d67u")]
+position = Vector2(-72, 16)
+left = true
+
+[node name="EyeR" parent="." unique_id=1693738820 instance=ExtResource("3_3d67u")]
+position = Vector2(72, 16)
+
+[node name="MarkerSprite" type="Sprite2D" parent="." unique_id=241722727]
+position = Vector2(0, 80)
+texture = ExtResource("4_h8c61")
+script = ExtResource("5_u8eba")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"
+
+[node name="Stomp" type="AudioStreamPlayer" parent="." unique_id=89515552]
+stream = ExtResource("6_j7hpf")
+bus = &"Sfx"
+
+[node name="DebugFootState" type="RichTextLabel" parent="." unique_id=1104082744]
+visible = false
+custom_minimum_size = Vector2(256, 64)
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -64.0
+offset_top = 56.0
+offset_right = 64.0
+offset_bottom = 96.0
+grow_horizontal = 2
+theme_override_constants/outline_size = 2
+text = "Main - Stomp
+Left - stomp
+Right - stomp"
+horizontal_alignment = 1

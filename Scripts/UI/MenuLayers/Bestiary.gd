@@ -58,11 +58,11 @@ const ENTRIES:Array = [
 	Enemy.EnemyTypes.MOONSNAIL,
 	Enemy.EnemyTypes.GIGASNAIL,
 	#Enemy.EnemyTypes.COSMICSNAIL,
-	#Enemy.EnemyTypes.SHELLBREAKER_RUSH,
-	#Enemy.EnemyTypes.STOMPY_RUSH,
-	#Enemy.EnemyTypes.SPACEBOX_RUSH,
-	#Enemy.EnemyTypes.MOONSNAIL_RUSH,
-	#Enemy.EnemyTypes.GIGASNAIL_RUSH,
+	Enemy.EnemyTypes.SHELLBREAKER_RUSH,
+	Enemy.EnemyTypes.STOMPY_RUSH,
+	Enemy.EnemyTypes.SPACEBOX_RUSH,
+	Enemy.EnemyTypes.MOONSNAIL_RUSH,
+	Enemy.EnemyTypes.GIGASNAIL_RUSH,
 ]
 
 ## The home menu layer
@@ -358,6 +358,11 @@ func _get_name(key:String) -> StringName:
 		"spaceboxBabybox": return tr(&"Babybox")
 		"moonsnail": return tr(&"Moon Snail")
 		"gigasnail": return tr(&"Giga Snail")
+		"shellbreakerRush": return tr(&"Super Shellbreaker")
+		"stompyRush": return tr(&"Vis Vires")
+		"spaceboxRush": return tr(&"Time Cube")
+		"moonsnailRush": return tr(&"Sun Snail")
+		"gigasnailRush": return tr(&"Giga Sun Snail")
 		"none": return tr(&"-- ??? --")
 	return tr(&"Unrecognized")
 
@@ -408,5 +413,10 @@ func _get_desc(key:String) -> StringName:
 		"spaceboxBabybox": return tr(&"Habitat: A.Abyssus\nAge: 6 seconds\nIntentions: unknowable\n\nA small satellite drone emitted by Space Box to aid its guard duty.  It has limited intelligence if any, and seems to aimlessly drift from wall to wall without purpose.  Even still, Space Box harbors an emotional attachment to it.")
 		"moonsnail": return tr(&"Habitat: L.Lirata\nStrength: formidable\nMotive: unknown\n\nOnce the absolute peak of mortal snaildom, something happened in Moon Snail's psyche to twist his once-holy powers into a force of malice.  The only way to reverse such a change would be to subdue him, though few can stand to pose a challenge.")
 		"gigasnail": return tr(&"Habitat: L.Lirata\nPower: heightened, unstable\nRage: building rapidly\n\nRound two, fight!!  Not one to give up easily, Moon Snail's back with a brand-new bag of tricks.  This upgraded form makes him invincible in his shell, and powers his attacks beyond any normal snail's.  It makes one wonder where this power comes from...")
+		"shellbreakerRush": return tr(&"Habitat: ???\nDefenses: highly improved\nAmmo supply: somehow bigger\n\nThis hardened mirror of Shellbreaker sports a tougher, layered shell much like a jawbreaker.  And yet, their ability to float remains unimpeded.  To match their more aggressive nature, their favorite genre has changed to breakcore.")
+		"stompyRush": return tr(&"Habitat: ???\nSkin: durable\nCold: maybe\n\nMuch like its mainland counterpart, this strange creature is a biological enigma.  It stands guard in the strange realm it calls home, awaiting any challengers it can stamp into the ground.  Stay alert!!")
+		"spaceboxRush": return tr(&"Habitat: ???\n")
+		"moonsnailRush": return tr(&"")
+		"gigasnailRush": return tr(&"")
 		"none": return tr(&"\n\nThis entry has not been discovered yet")
 	return tr(&"This slot is missing an entry.  Either something was misspelled or it simply does not exist.")

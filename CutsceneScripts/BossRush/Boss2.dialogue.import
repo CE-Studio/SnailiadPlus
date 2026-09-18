@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://glbqjm82r2ui"
+path="res://.godot/imported/Boss2.dialogue-b721571906c8b77d2fb4340a640fb746.tres"
+
+[deps]
+
+source_file="res://CutsceneScripts/BossRush/Boss2.dialogue"
+dest_files=["res://.godot/imported/Boss2.dialogue-b721571906c8b77d2fb4340a640fb746.tres"]
+
+[params]
+
+defaults=true

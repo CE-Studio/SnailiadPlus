@@ -1,0 +1,401 @@
+[gd_scene format=3 uid="uid://c2wfb8unb8x0r"]
+
+[ext_resource type="Script" uid="uid://bmj7w73pxvyrd" path="res://Scripts/Enemies/Bosses/StompyRushEye.gd" id="1_88gmy"]
+[ext_resource type="Material" uid="uid://bj1jqi3180tg5" path="res://Resources/EnemyFlashMat.tres" id="2_88gmy"]
+[ext_resource type="Texture2D" uid="uid://6wqyp032xldt" path="res://Assets/Images/Entities/Boss2RushEye.png" id="3_88gmy"]
+[ext_resource type="Script" uid="uid://boee2837la0pr" path="res://Scripts/Classes/SnailySprite.gd" id="4_x4j1p"]
+[ext_resource type="Texture2D" uid="uid://dkic1efov3fbh" path="res://Assets/Images/Entities/Boss2RushPupil.png" id="5_5o7lq"]
+[ext_resource type="Texture2D" uid="uid://dxsnxmadodpr1" path="res://Assets/Images/Entities/Boss2RushEyelid.png" id="6_x4j1p"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mxpcm"]
+size = Vector2(100, 52)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_atbu1"]
+atlas = ExtResource("3_88gmy")
+region = Rect2(0, 0, 100, 52)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_mnaxl"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_atbu1")
+}],
+"loop": 1,
+"name": &"defeat_left",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_atbu1")
+}],
+"loop": 1,
+"name": &"defeat_right",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_atbu1")
+}],
+"loop": 1,
+"name": &"p0_left",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_atbu1")
+}],
+"loop": 1,
+"name": &"p0_right",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_atbu1")
+}],
+"loop": 1,
+"name": &"p1_left",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_atbu1")
+}],
+"loop": 1,
+"name": &"p1_right",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_atbu1")
+}],
+"loop": 1,
+"name": &"p2_left",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_atbu1")
+}],
+"loop": 1,
+"name": &"p2_right",
+"speed": 1.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d6k66"]
+atlas = ExtResource("5_5o7lq")
+region = Rect2(0, 0, 100, 52)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tbccu"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d6k66")
+}],
+"loop": 1,
+"name": &"defeat_left",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d6k66")
+}],
+"loop": 1,
+"name": &"defeat_right",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d6k66")
+}],
+"loop": 1,
+"name": &"p0_left",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d6k66")
+}],
+"loop": 1,
+"name": &"p0_right",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d6k66")
+}],
+"loop": 1,
+"name": &"p1_left",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d6k66")
+}],
+"loop": 1,
+"name": &"p1_right",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d6k66")
+}],
+"loop": 1,
+"name": &"p2_left",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d6k66")
+}],
+"loop": 1,
+"name": &"p2_right",
+"speed": 1.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_73hwx"]
+atlas = ExtResource("6_x4j1p")
+region = Rect2(0, 0, 100, 52)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p2o0v"]
+atlas = ExtResource("6_x4j1p")
+region = Rect2(200, 52, 100, 52)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5ve21"]
+atlas = ExtResource("6_x4j1p")
+region = Rect2(200, 0, 100, 52)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4x5av"]
+atlas = ExtResource("6_x4j1p")
+region = Rect2(0, 52, 100, 52)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kamw6"]
+atlas = ExtResource("6_x4j1p")
+region = Rect2(0, 104, 100, 52)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eyt4c"]
+atlas = ExtResource("6_x4j1p")
+region = Rect2(0, 0, 100, 52)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cx3xt"]
+atlas = ExtResource("6_x4j1p")
+region = Rect2(0, 52, 100, 52)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l4jyt"]
+atlas = ExtResource("6_x4j1p")
+region = Rect2(0, 104, 100, 52)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5hvrb"]
+atlas = ExtResource("6_x4j1p")
+region = Rect2(0, 52, 100, 52)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0lglv"]
+atlas = ExtResource("6_x4j1p")
+region = Rect2(0, 0, 100, 52)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r7n7d"]
+atlas = ExtResource("6_x4j1p")
+region = Rect2(0, 52, 100, 52)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wyhf5"]
+atlas = ExtResource("6_x4j1p")
+region = Rect2(0, 104, 100, 52)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fif2n"]
+atlas = ExtResource("6_x4j1p")
+region = Rect2(0, 0, 100, 52)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o8tiw"]
+atlas = ExtResource("6_x4j1p")
+region = Rect2(0, 52, 100, 52)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0kj7t"]
+atlas = ExtResource("6_x4j1p")
+region = Rect2(0, 104, 100, 52)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f5a35"]
+atlas = ExtResource("6_x4j1p")
+region = Rect2(0, 52, 100, 52)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8d5it"]
+atlas = ExtResource("6_x4j1p")
+region = Rect2(0, 0, 100, 52)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8dq5x"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_73hwx")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p2o0v")
+}],
+"loop": 1,
+"name": &"defeat_left",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5ve21")
+}],
+"loop": 1,
+"name": &"defeat_right",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4x5av")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kamw6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4x5av")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eyt4c")
+}],
+"loop": 0,
+"name": &"p0_left_blink",
+"speed": 20.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cx3xt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l4jyt")
+}],
+"loop": 0,
+"name": &"p0_left_close",
+"speed": 20.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5hvrb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0lglv")
+}],
+"loop": 0,
+"name": &"p0_left_open",
+"speed": 20.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r7n7d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wyhf5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r7n7d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fif2n")
+}],
+"loop": 0,
+"name": &"p0_right_blink",
+"speed": 20.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o8tiw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0kj7t")
+}],
+"loop": 0,
+"name": &"p0_right_close",
+"speed": 20.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f5a35")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8d5it")
+}],
+"loop": 0,
+"name": &"p0_right_open",
+"speed": 20.0
+}]
+
+[node name="StompyRushEye" type="Node2D" unique_id=566129591 node_paths=PackedStringArray("spr_group", "pupil", "eyelid", "hitbox", "sprite", "vis")]
+script = ExtResource("1_88gmy")
+left = null
+clip_eye = null
+spr_group = NodePath("SpriteGroup")
+pupil = NodePath("SpriteGroup/Pupil")
+eyelid = NodePath("SpriteGroup/Eyelid")
+max_health = 2000
+max_health_easy = null
+max_health_hard = 4000
+attack = null
+defense = 5
+weaknesses = null
+resistances = null
+immunities = null
+parry_resist = null
+can_be_pierced = null
+make_sound_on_ping = null
+invulnerable = null
+can_damage = false
+shield_entity = null
+interact_with_environments = null
+health_orb_value = null
+light_radius = null
+my_element = null
+kill_particle_range = Vector2i(0, 0)
+kill_particle_types = Array[String]([])
+kill_particle_count = 0
+grant_bestiary_without_defeat = null
+display_mode = null
+hitbox = NodePath("Area2D")
+sprite = NodePath("SpriteGroup/Eye")
+vis = NodePath("VisibleOnScreenNotifier2D")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=1818548532]
+collision_layer = 64
+collision_mask = 44
+
+[node name="HitBox" type="CollisionShape2D" parent="Area2D" unique_id=1021529040]
+shape = SubResource("RectangleShape2D_mxpcm")
+debug_color = Color(0.976471, 0, 0.415686, 0.419608)
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=29931932]
+scale = Vector2(2.4, 2.4)
+rect = Rect2(-20, -10, 40, 20)
+
+[node name="SpriteGroup" type="Node2D" parent="." unique_id=868863574]
+
+[node name="Eye" type="AnimatedSprite2D" parent="SpriteGroup" unique_id=2024288807]
+clip_children = 2
+material = ExtResource("2_88gmy")
+sprite_frames = SubResource("SpriteFrames_mnaxl")
+animation = &"p0_left"
+script = ExtResource("4_x4j1p")
+metadata/_custom_type_script = "uid://boee2837la0pr"
+
+[node name="Pupil" type="AnimatedSprite2D" parent="SpriteGroup" unique_id=714198210]
+material = ExtResource("2_88gmy")
+sprite_frames = SubResource("SpriteFrames_tbccu")
+animation = &"p0_left"
+script = ExtResource("4_x4j1p")
+metadata/_custom_type_script = "uid://boee2837la0pr"
+
+[node name="Eyelid" type="AnimatedSprite2D" parent="SpriteGroup" unique_id=1455227943]
+material = ExtResource("2_88gmy")
+sprite_frames = SubResource("SpriteFrames_8dq5x")
+script = ExtResource("4_x4j1p")
+infer_new = true
+replace_key = "p0_"
+add_count = 2
+rect_offset = Vector2i(100, 0)
+source = ExtResource("6_x4j1p")
+specialized_keys = Array[String](["p1_", "p2_"])
+metadata/_custom_type_script = "uid://boee2837la0pr"
