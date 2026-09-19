@@ -19,6 +19,7 @@ const HAND_RADIUS_BASE:float = 40.0
 const HAND_RADIUS_MOD:float = 90.0
 const BLINK_TIMEOUT_MAX:float = 3.0
 const GRAV_SHOCK_AHEAD_RADIUS:float = 24.0
+const SPEED_MOD:float = 1.15
 const HAND:PackedScene = preload("uid://cwsbut5tpyf3f")
 const BOOMERANG:PackedScene = preload("uid://bcgwxtcgdpoep")
 
@@ -82,13 +83,13 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	if grav_shock_kill:
-		if Player.instance.grav_shock_state == 2:
-			position = Player.instance.position + grav_shock_dir * GRAV_SHOCK_AHEAD_RADIUS
-		else:
-			sprite.visible = false
-			kill()
-		return
+	#if grav_shock_kill:
+	#	if Player.instance.grav_shock_state == 2:
+	#		position = Player.instance.position + grav_shock_dir * GRAV_SHOCK_AHEAD_RADIUS
+	#	else:
+	#		sprite.visible = false
+	#		kill()
+	#	return
 	
 	super(delta)
 	if not Engine.is_editor_hint():
@@ -103,6 +104,7 @@ func _process(delta: float) -> void:
 	if not ai_active and not display_mode:
 		return
 	
+	delta *= SPEED_MOD
 	shot_timeout -= delta
 	shot_pattern_timeout -= delta
 	
