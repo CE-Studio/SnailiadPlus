@@ -54,6 +54,7 @@ func _ready() -> void:
 		Statics.active_room = $"TitleRoom"
 		Statics.active_room.spawn(true)
 		get_tree().paused = false
+		Statics.is_in_boss_rush = false
 		music = $"MenuLoop"
 		if not Statics.main_menu_booted_once:
 			var saved_ver := Statics.parse_version_to_array(ProjectSettings.get_setting("application/config/old_version"))
@@ -179,7 +180,7 @@ func spawn_menu() -> void:
 			$"ColorCover".set_new_fade($"ColorCover".end_color, Color(0.0, 0.0, 0.0, 0.0), 0.25)
 		if not Statics.main_menu_booted_once:
 			Statics.save_general()
-			Statics.current_profile = Statics.data_profile1.duplicate()
+			Statics.current_profile = Statics.data_profile1.duplicate(true)
 		Statics.main_menu_booted_once = true
 		create_layer("Main")
 

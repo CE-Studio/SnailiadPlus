@@ -1,6 +1,0 @@
-~ start
-do Statics.set_world_flag(Statics.WorldFlags.DEFEATED_BOSS1, false)
-do Statics.set_world_flag(Statics.WorldFlags.DEFEATED_BOSS2, false)
-do Statics.set_world_flag(Statics.WorldFlags.DEFEATED_BOSS3, false)
-do Statics.set_world_flag(Statics.WorldFlags.DEFEATED_BOSS4, false)
-=> END

@@ -191,6 +191,7 @@ enum WorldFlags {
 	DEFEATED_BOSS4,
 	SEEN_GRAVITY_CUTSCENE,
 	SEEN_IRIS_CREDITS,
+	SEEN_BOSS_RUSH_INTRO,
 }
 
 enum CutsceneFlags {
@@ -354,19 +355,19 @@ static func save_profile(iprofile:int) -> void:
 				data_profile1["cutscene_flags"] = CutsceneController.save_flags()
 			file.store_string(JSON.stringify(data_profile1, "\t", false))
 			if current_profile_id == 1:
-				data_profile1 = current_profile.duplicate()
+				data_profile1 = current_profile.duplicate(true)
 		2:
 			if iprofile == current_profile_id:
 				data_profile2["cutscene_flags"] = CutsceneController.save_flags()
 			file.store_string(JSON.stringify(data_profile2, "\t", false))
 			if current_profile_id == 2:
-				data_profile2 = current_profile.duplicate()
+				data_profile2 = current_profile.duplicate(true)
 		3:
 			if iprofile == current_profile_id:
 				data_profile3["cutscene_flags"] = CutsceneController.save_flags()
 			file.store_string(JSON.stringify(data_profile3, "\t", false))
 			if current_profile_id == 3:
-				data_profile3 = current_profile.duplicate()
+				data_profile3 = current_profile.duplicate(true)
 	file.close()
 
 
@@ -392,7 +393,7 @@ static func delete_profile(iprofile:int) -> void:
 
 
 static func setup_bossrush_profile(character:int) -> void:
-	current_profile = StaticProcess.template_profile.duplicate()
+	current_profile = StaticProcess.template_profile.duplicate(true)
 	current_profile["character"] = character
 	current_profile["save_room"] = RUSH_SPAWN[0]
 	current_profile["save_coords"] = Vector2(RUSH_SPAWN[1], RUSH_SPAWN[2])

@@ -274,22 +274,22 @@ func _on_panel_yes(_value) -> void:
 				file_to_copy = Statics.data_profile3
 		match button_selection.y:
 			1:
-				Statics.data_profile1 = file_to_copy.duplicate()
+				Statics.data_profile1 = file_to_copy.duplicate(true)
 			2:
-				Statics.data_profile2 = file_to_copy.duplicate()
+				Statics.data_profile2 = file_to_copy.duplicate(true)
 			3:
-				Statics.data_profile3 = file_to_copy.duplicate()
+				Statics.data_profile3 = file_to_copy.duplicate(true)
 		layer.menu.save_profile(button_selection.y)
 		sfx_copy.play()
 	elif layer_state == LayerState.ERASE:
 		Statics.delete_profile(button_selection.x)
 		match  button_selection.x:
 			1:
-				Statics.data_profile1 = StaticProcess.template_profile.duplicate()
+				Statics.data_profile1 = StaticProcess.template_profile.duplicate(true)
 			2:
-				Statics.data_profile2 = StaticProcess.template_profile.duplicate()
+				Statics.data_profile2 = StaticProcess.template_profile.duplicate(true)
 			3:
-				Statics.data_profile3 = StaticProcess.template_profile.duplicate()
+				Statics.data_profile3 = StaticProcess.template_profile.duplicate(true)
 		layer.menu.play_save_anim()
 		sfx_erase.play()
 	defocus_panel()

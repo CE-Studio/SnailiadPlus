@@ -1,7 +1,6 @@
 [gd_scene format=4 uid="uid://cya2pbxyeam5r"]
 
 [ext_resource type="Script" uid="uid://cmoi4oc2h2p3l" path="res://Scripts/Room.gd" id="1_e03i5"]
-[ext_resource type="Resource" uid="uid://cwlwy5d0nij3u" path="res://CutsceneScripts/BossRush/Entrance.dialogue" id="2_778sc"]
 [ext_resource type="TileSet" uid="uid://blc8cnjdu7uh3" path="res://Resources/Tilesheet.tres" id="2_v0hpu"]
 [ext_resource type="Script" uid="uid://cr2gkkgjq8ypb" path="res://Scripts/Classes/CameraBorder.gd" id="3_e1y5m"]
 [ext_resource type="PackedScene" uid="uid://brx6hvienl8qy" path="res://Scenes/Entities/Door.tscn" id="3_kqh6v"]
@@ -12,8 +11,6 @@
 [ext_resource type="Texture2D" uid="uid://cr0jsmlvl76vh" path="res://Assets/Images/BayerDither.png" id="8_s2vrf"]
 [ext_resource type="Texture2D" uid="uid://dmaptufh7rsw2" path="res://Assets/Images/UI/ScreenCover.png" id="9_8fgm4"]
 [ext_resource type="Script" uid="uid://dqt4uo3ejug3v" path="res://Scripts/Classes/SnailyText.gd" id="10_8fgm4"]
-[ext_resource type="PackedScene" uid="uid://dkdexfbemo04x" path="res://Scenes/internals/Triggers/CutsceneTrigger.tscn" id="12_i165k"]
-[ext_resource type="PackedScene" uid="uid://d142ll0y7eglf" path="res://Scenes/internals/DummyCutsceneControllable.tscn" id="13_778sc"]
 
 [sub_resource type="Curve2D" id="Curve2D_67xdc"]
 resource_local_to_scene = true
@@ -139,6 +136,19 @@ script/source = "# Copyright 2026 CE-Studio: AGPL-3.0-only
 extends AnimationPlayer
 
 
+func _ready() -> void:
+	Statics.increment_boss_rush_timer = false
+	Statics.current_profile[\"game_time\"] = [ 0.0, 0.0, 0.0 ]
+	Statics.set_world_flag(Statics.WorldFlags.DEFEATED_BOSS1, false)
+	Statics.set_world_flag(Statics.WorldFlags.DEFEATED_BOSS2, false)
+	Statics.set_world_flag(Statics.WorldFlags.DEFEATED_BOSS3, false)
+	Statics.set_world_flag(Statics.WorldFlags.DEFEATED_BOSS4, false)
+	if Statics.get_world_flag(Statics.WorldFlags.SEEN_BOSS_RUSH_INTRO) == false:
+		Statics.set_world_flag(Statics.WorldFlags.SEEN_BOSS_RUSH_INTRO, true)
+		SInput.read_inputs = false
+		play(\"start\")
+
+
 func enable_input() -> void:
 	SInput.read_inputs = true
 "
@@ -147,7 +157,6 @@ func enable_input() -> void:
 z_as_relative = false
 script = ExtResource("1_e03i5")
 area_id = 6
-cutscene_script = ExtResource("2_778sc")
 song_change = 17
 tiled_corner = Vector2i(498, 127)
 tiled_range = Vector2i(25, 15)
@@ -421,7 +430,6 @@ texture = ExtResource("9_8fgm4")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=543685597]
 libraries/ = SubResource("AnimationLibrary_i165k")
-autoplay = &"start"
 script = SubResource("GDScript_8fgm4")
 
 [node name="SnailyText" type="RichTextLabel" parent="." unique_id=1189105645]
@@ -431,7 +439,7 @@ custom_maximum_size = Vector2(400, -1)
 clip_contents = false
 offset_top = 88.0
 offset_right = 400.0
-offset_bottom = 127.99995
+offset_bottom = 127.99994
 mouse_filter = 2
 theme_override_font_sizes/normal_font_size = 32
 bbcode_enabled = true
@@ -444,15 +452,6 @@ text_scale = 4
 quick_load_text = "Boss Rush"
 border_scale = 2
 metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
-
-[node name="CutsceneTrigger" parent="." unique_id=5522885 node_paths=PackedStringArray("actor") instance=ExtResource("12_i165k")]
-position = Vector2(56, 136)
-scale = Vector2(12, 12)
-actor = NodePath("../BossResetter")
-
-[node name="BossResetter" parent="." unique_id=1305305038 instance=ExtResource("13_778sc")]
-position = Vector2(-72, 152)
-identifier = &"ResetBosses"
 
 [node name="SnailyText2" type="RichTextLabel" parent="." unique_id=1542149827]
 custom_minimum_size = Vector2(374, 0)
