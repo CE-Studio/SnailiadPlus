@@ -16,8 +16,10 @@ const STATIC_POSITION:Vector2 = Statics.VECTOR_CENTER
 @export var static_position:bool = false
 @export var move_with_camera:bool = false
 @export var wrap_at_edges:bool = true
+@export var vary_pos_on_wrap:bool = false
 @export var z_override:int = 0
 @export var always_process:bool = false
+@export_range(0.0, 256.0, 16.0) var wrap_bound_extension:float = 0.0
 
 var active_particles:Array[Particle] = []
 var spawn_cooldown:float = 0.0
@@ -59,26 +61,33 @@ func _process(delta: float) -> void:
 	
 	var cam_center:Vector2 = STATIC_POSITION
 	var wrap_offset:Vector2 = Vector2.ZERO
+	var this_bounds:Vector2 = Vector2(
+		WRAP_BOUNDS.x + wrap_bound_extension,
+		WRAP_BOUNDS.y + wrap_bound_extension
+	)
+	var this_distance:Vector2 = Vector2(
+		WRAP_DIST.x + (wrap_bound_extension * 2.0),
+		WRAP_DIST.y + (wrap_bound_extension * 2.0)
+	)
 	if UICore.instance:
 		var center:Vector2 = UICore.instance.get_cam_center_pos()
 		if move_with_camera:
 			cam_center = center
 		else:
 			wrap_offset = center - STATIC_POSITION
-	#if static_position:
-	#	cam_center = STATIC_POSITION
-	#elif move_with_camera:
-	#	cam_center = STATIC_POSITION
 	if wrap_at_edges:
 		for particle in active_particles:
-			while particle.global_position.x < cam_center.x - WRAP_BOUNDS.x + wrap_offset.x:
-				particle.position.x += WRAP_DIST.x
-			while particle.global_position.x > cam_center.x + WRAP_BOUNDS.x + wrap_offset.x:
-				particle.position.x -= WRAP_DIST.x
-			while particle.global_position.y < cam_center.y - WRAP_BOUNDS.y + wrap_offset.y:
-				particle.position.y += WRAP_DIST.y
-			while particle.global_position.y > cam_center.y + WRAP_BOUNDS.y + wrap_offset.y:
-				particle.position.y -= WRAP_DIST.y
+			var pos:Vector2 = particle.position
+			while particle.global_position.x < cam_center.x - this_bounds.x + wrap_offset.x:
+				particle.position.x += this_distance.x
+			while particle.global_position.x > cam_center.x + this_bounds.x + wrap_offset.x:
+				particle.position.x -= this_distance.x
+			while particle.global_position.y < cam_center.y - this_bounds.y + wrap_offset.y:
+				particle.position.y += this_distance.y
+			while particle.global_position.y > cam_center.y + this_bounds.y + wrap_offset.y:
+				particle.position.y -= this_distance.y
+			if particle.position != pos:
+				_tick_wrapped_particle(particle, particle.position - pos)
 
 
 func _spawn_one() -> void:
@@ -94,6 +103,21 @@ func _spawn_one() -> void:
 	else:
 		new_particle = Statics.spawn_particle(this_particle, Room.Layers.GROUND, spawn_pos)
 	active_particles.append(new_particle)
+
+
+func _tick_wrapped_particle(_particle:Particle, _difference:Vector2) -> void:
+	if vary_pos_on_wrap:
+		var cam_center:Vector2 = STATIC_POSITION
+		if move_with_camera:
+			cam_center = UICore.instance.get_cam_center_pos()
+		var bounds:Vector2 = Vector2(
+			WRAP_BOUNDS.x + wrap_bound_extension - 16,
+			WRAP_BOUNDS.y + wrap_bound_extension - 16
+		)
+		if abs(_difference.x) > abs(_difference.y):
+			_particle.position.y = cam_center.y + randf_range(-bounds.y, bounds.y)
+		else:
+			_particle.position.x = cam_center.x + randf_range(-bounds.x, bounds.x)
 
 
 func despawn() -> void:

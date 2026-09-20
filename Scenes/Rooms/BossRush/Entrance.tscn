@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://cr0jsmlvl76vh" path="res://Assets/Images/BayerDither.png" id="8_s2vrf"]
 [ext_resource type="Texture2D" uid="uid://dmaptufh7rsw2" path="res://Assets/Images/UI/ScreenCover.png" id="9_8fgm4"]
 [ext_resource type="Script" uid="uid://dqt4uo3ejug3v" path="res://Scripts/Classes/SnailyText.gd" id="10_8fgm4"]
+[ext_resource type="PackedScene" uid="uid://coi4u67v7e750" path="res://Scenes/Environments/ParticleLayers/ScrollingTilesLayer.tscn" id="12_1e3dg"]
 
 [sub_resource type="Curve2D" id="Curve2D_67xdc"]
 resource_local_to_scene = true
@@ -171,6 +172,7 @@ collision_enabled = false
 
 [node name="BG2Layer" type="Parallax2D" parent="." unique_id=1904771785]
 z_index = -200
+scroll_scale = Vector2(0.4, 0.4)
 
 [node name="Map" type="TileMapLayer" parent="BG2Layer" unique_id=1400754498]
 tile_set = ExtResource("2_v0hpu")
@@ -178,6 +180,7 @@ collision_enabled = false
 
 [node name="BG1Layer" type="Parallax2D" parent="." unique_id=1262202409]
 z_index = -100
+scroll_scale = Vector2(0.7, 0.7)
 
 [node name="Map" type="TileMapLayer" parent="BG1Layer" unique_id=1409559763]
 tile_set = ExtResource("2_v0hpu")
@@ -287,6 +290,9 @@ script = ExtResource("3_e1y5m")
 position = Vector2(56, 136)
 
 [node name="StarLayer" parent="." unique_id=532173821 instance=ExtResource("6_dr86b")]
+
+[node name="ScrollingTilesLayer" parent="." unique_id=2124390826 instance=ExtResource("12_1e3dg")]
+position = Vector2(32, 0)
 
 [node name="RoomTransitionTrigger" parent="." unique_id=1758231165 instance=ExtResource("7_u23um")]
 position = Vector2(400, 120)

@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://coi4u67v7e750"]
+
+[ext_resource type="Script" uid="uid://dpvgfw4qt4f15" path="res://Scripts/Particles/ParticleLayers/ScrollingTilesLayer.gd" id="1_2ibuw"]
+[ext_resource type="Texture2D" uid="uid://1cp6g7ylt0i3" path="res://Editor/EditorMarkers/ScrollingTilesLayer.png" id="2_2ibuw"]
+[ext_resource type="Script" uid="uid://b63lo60i7kt7f" path="res://Editor/scripts/markersprite.gd" id="3_slb6u"]
+
+[node name="ScrollingTilesLayer" type="Node2D" unique_id=532173821]
+z_index = 500
+z_as_relative = false
+script = ExtResource("1_2ibuw")
+particles = Array[String](["ScrollingTile"])
+particle_count = 12
+vary_pos_on_wrap = true
+wrap_bound_extension = 96.0
+
+[node name="MarkerSprite" type="Sprite2D" parent="." unique_id=1311714626]
+texture = ExtResource("2_2ibuw")
+script = ExtResource("3_slb6u")
+metadata/_custom_type_script = "uid://b63lo60i7kt7f"

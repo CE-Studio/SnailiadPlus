@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://ck2f53pdjx88q" path="res://Scenes/internals/RoomTransitionTrigger.tscn" id="5_hup1u"]
 [ext_resource type="PackedScene" uid="uid://dx7oofnef03s7" path="res://Scenes/Entities/Enemies/Bosses/StompyRush.tscn" id="7_a8pyy"]
 [ext_resource type="PackedScene" uid="uid://d142ll0y7eglf" path="res://Scenes/internals/DummyCutsceneControllable.tscn" id="8_jqt46"]
+[ext_resource type="PackedScene" uid="uid://coi4u67v7e750" path="res://Scenes/Environments/ParticleLayers/ScrollingTilesLayer.tscn" id="8_kjdp4"]
 [ext_resource type="PackedScene" uid="uid://biwfp80q8y8j3" path="res://Scenes/internals/Triggers/Trigger.tscn" id="9_6ttlh"]
 [ext_resource type="Script" uid="uid://wsvamec27aoo" path="res://Scripts/Classes/TriggerTypes/CutsceneTrigger.gd" id="10_kjdp4"]
 [ext_resource type="PackedScene" uid="uid://b5idqni0vwlyv" path="res://Scenes/Entities/CCPlayer.tscn" id="11_x4qbe"]
@@ -117,6 +118,7 @@ collision_enabled = false
 
 [node name="BG2Layer" type="Parallax2D" parent="." unique_id=1904771785]
 z_index = -200
+scroll_scale = Vector2(0.4, 0.4)
 
 [node name="Map" type="TileMapLayer" parent="BG2Layer" unique_id=1400754498]
 tile_set = ExtResource("2_mqtx5")
@@ -124,6 +126,7 @@ collision_enabled = false
 
 [node name="BG1Layer" type="Parallax2D" parent="." unique_id=1262202409]
 z_index = -100
+scroll_scale = Vector2(0.7, 0.7)
 
 [node name="Map" type="TileMapLayer" parent="BG1Layer" unique_id=1409559763]
 tile_set = ExtResource("2_mqtx5")
@@ -184,6 +187,11 @@ position = Vector2(752, 200)
 
 [node name="StarLayer" parent="." unique_id=532173821 instance=ExtResource("4_fgek5")]
 direction = 4
+
+[node name="ScrollingTilesLayer" parent="." unique_id=1872800410 instance=ExtResource("8_kjdp4")]
+position = Vector2(32, 0)
+density = 1.5
+vertical = 1
 
 [node name="RoomTransitionTrigger" parent="." unique_id=1758231165 instance=ExtResource("5_hup1u")]
 position = Vector2(816, 56)

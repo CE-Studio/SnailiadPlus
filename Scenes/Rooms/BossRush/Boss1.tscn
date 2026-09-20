@@ -12,6 +12,7 @@
 [ext_resource type="Script" uid="uid://wsvamec27aoo" path="res://Scripts/Classes/TriggerTypes/CutsceneTrigger.gd" id="7_eq5cl"]
 [ext_resource type="PackedScene" uid="uid://d142ll0y7eglf" path="res://Scenes/internals/DummyCutsceneControllable.tscn" id="8_lhkjr"]
 [ext_resource type="PackedScene" uid="uid://ck2f53pdjx88q" path="res://Scenes/internals/RoomTransitionTrigger.tscn" id="9_bugfo"]
+[ext_resource type="PackedScene" uid="uid://coi4u67v7e750" path="res://Scenes/Environments/ParticleLayers/ScrollingTilesLayer.tscn" id="9_lhkjr"]
 
 [sub_resource type="Curve2D" id="Curve2D_67xdc"]
 resource_local_to_scene = true
@@ -108,6 +109,7 @@ collision_enabled = false
 
 [node name="BG2Layer" type="Parallax2D" parent="." unique_id=1904771785]
 z_index = -200
+scroll_scale = Vector2(0.4, 0.4)
 
 [node name="Map" type="TileMapLayer" parent="BG2Layer" unique_id=1400754498]
 tile_set = ExtResource("2_835oc")
@@ -115,6 +117,7 @@ collision_enabled = false
 
 [node name="BG1Layer" type="Parallax2D" parent="." unique_id=1262202409]
 z_index = -100
+scroll_scale = Vector2(0.7, 0.7)
 
 [node name="Map" type="TileMapLayer" parent="BG1Layer" unique_id=1409559763]
 tile_set = ExtResource("2_835oc")
@@ -186,6 +189,11 @@ exit_room = "uid://c7lehn04ojihn"
 [node name="StarLayer" parent="." unique_id=532173821 instance=ExtResource("6_wato6")]
 density = 1.6
 direction = 3
+
+[node name="ScrollingTilesLayer" parent="." unique_id=2125976047 instance=ExtResource("9_lhkjr")]
+position = Vector2(32, 0)
+density = 1.5
+horizontal = 3
 
 [node name="CCPlayer" parent="." unique_id=1255845674 instance=ExtResource("5_wato6")]
 position = Vector2(16, 200)
