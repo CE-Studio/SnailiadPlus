@@ -538,7 +538,9 @@ func kill() -> void:
 		if health_bar:
 			health_bar._toggle_outro_shake()
 		foot_l.sprite.play("defeat_left")
+		foot_l.can_damage = false
 		foot_r.sprite.play("defeat_right")
+		foot_r.can_damage = false
 		eye_l.set_death_pose.call_deferred()
 		eye_r.set_death_pose.call_deferred()
 		for _cannon in cannons:
