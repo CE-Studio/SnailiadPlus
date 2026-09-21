@@ -1,0 +1,6 @@
+~ start
+do CutsceneController.lock_input()
+do CutsceneController.trigger_animation("IntroDefault", true)
+do CutsceneController.set_camera_focus_player()
+set Statics.increment_boss_rush_timer = true
+=> END

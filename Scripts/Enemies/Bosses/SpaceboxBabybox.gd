@@ -11,7 +11,7 @@ const ACCEL:Array[float] = [400.0, 500.0]
 var mode_timeout:float = MODE_TIMEOUT
 var last_mode:Statics.DirsCompass = Statics.DirsCompass.NONE
 var current_mode:Statics.DirsCompass = Statics.DirsCompass.NONE
-var boss:Spacebox = null
+var boss:Boss = null
 var last_action:String = ""
 var accel_dir:Vector2 = Vector2.ZERO
 

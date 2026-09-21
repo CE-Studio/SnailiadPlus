@@ -1,0 +1,175 @@
+[gd_scene format=3 uid="uid://bqn60v4ab6tvn"]
+
+[ext_resource type="Script" uid="uid://cqliimvj68ekg" path="res://Scripts/Enemies/Bosses/SpaceboxBabybox.gd" id="1_w7e3l"]
+[ext_resource type="Material" uid="uid://bj1jqi3180tg5" path="res://Resources/EnemyFlashMat.tres" id="2_kkc3s"]
+[ext_resource type="Texture2D" uid="uid://u2fvex03akpk" path="res://Assets/Images/Entities/Boss3RushBabybox.png" id="3_kkc3s"]
+[ext_resource type="Script" uid="uid://boee2837la0pr" path="res://Scripts/Classes/SnailySprite.gd" id="4_xo37x"]
+[ext_resource type="AudioStream" uid="uid://ceqtn3682frsa" path="res://Assets/Sounds/Sfx/Stomp.ogg" id="5_fvenl"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vj7im"]
+size = Vector2(64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ykiyg"]
+atlas = ExtResource("3_kkc3s")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xo37x"]
+atlas = ExtResource("3_kkc3s")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fvenl"]
+atlas = ExtResource("3_kkc3s")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lxptt"]
+atlas = ExtResource("3_kkc3s")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b7hji"]
+atlas = ExtResource("3_kkc3s")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wkouj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ykiyg")
+}],
+"loop": 1,
+"name": &"display",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ykiyg")
+}],
+"loop": 1,
+"name": &"p0_D_land",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ykiyg")
+}],
+"loop": 1,
+"name": &"p0_D_move",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ykiyg")
+}],
+"loop": 1,
+"name": &"p0_L_land",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ykiyg")
+}],
+"loop": 1,
+"name": &"p0_L_move",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ykiyg")
+}],
+"loop": 1,
+"name": &"p0_R_land",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ykiyg")
+}],
+"loop": 1,
+"name": &"p0_R_move",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ykiyg")
+}],
+"loop": 1,
+"name": &"p0_U_land",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ykiyg")
+}],
+"loop": 1,
+"name": &"p0_U_move",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xo37x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fvenl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lxptt")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b7hji")
+}],
+"loop": 0,
+"name": &"p0_spawn",
+"speed": 20.0
+}]
+
+[node name="SpaceboxRushBabybox" type="CharacterBody2D" unique_id=9073554 node_paths=PackedStringArray("col", "body", "hitbox", "sprite", "vis")]
+z_index = 121
+collision_layer = 64
+collision_mask = 3
+script = ExtResource("1_w7e3l")
+max_health = 450
+attack = 2
+defense = 9
+kill_particle_range = Vector2i(16, 16)
+kill_particle_types = Array[String](["ExplosionBig", "ExplosionHuge"])
+kill_particle_count = 8
+col = NodePath("BodyBox")
+body = NodePath(".")
+hitbox = NodePath("Area2D")
+sprite = NodePath("SnailySprite2D")
+vis = NodePath("VisibleOnScreenNotifier2D")
+
+[node name="BodyBox" type="CollisionShape2D" parent="." unique_id=1741564860]
+shape = SubResource("RectangleShape2D_vj7im")
+debug_color = Color(0.976471, 0, 0.415686, 0.419608)
+
+[node name="Area2D" type="Area2D" parent="." unique_id=2091410869]
+collision_layer = 64
+collision_mask = 44
+
+[node name="HitBox" type="CollisionShape2D" parent="Area2D" unique_id=1500857718]
+shape = SubResource("RectangleShape2D_vj7im")
+debug_color = Color(0.976471, 0, 0.415686, 0.419608)
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1456542275]
+scale = Vector2(1.2, 1.2)
+rect = Rect2(-26.666666, -26.666666, 53.333332, 53.333332)
+
+[node name="HandGroup" type="Node2D" parent="." unique_id=1022105799]
+
+[node name="SnailySprite2D" type="AnimatedSprite2D" parent="." unique_id=1737745460]
+material = ExtResource("2_kkc3s")
+sprite_frames = SubResource("SpriteFrames_wkouj")
+animation = &"display"
+script = ExtResource("4_xo37x")
+infer_new = true
+replace_key = "p0_"
+add_count = 1
+rect_offset = Vector2i(0, 64)
+source = ExtResource("3_kkc3s")
+specialized_keys = Array[String](["p1_"])
+metadata/_custom_type_script = "uid://boee2837la0pr"
+
+[node name="Stomp" type="AudioStreamPlayer" parent="." unique_id=219756953]
+stream = ExtResource("5_fvenl")
+volume_db = -4.0
+bus = &"Sfx"

@@ -260,7 +260,7 @@ location_id = 1
 z_index = 100
 
 [node name="Map" type="TileMapLayer" parent="FG1Layer" unique_id=1611616391]
-tile_map_data = PackedByteArray("AAAZAAYAAAAKANMAAAAZAAcAAAAKANQAAAAZAAgAAAAKANUAAAAaAAYAAAALANMAAAAaAAcAAAALANQAAAAaAAgAAAALANUAAAAbAAYAAAAMANMAAAAbAAcAAAAMANQAAAAbAAgAAAAMANUAAAA=")
+tile_map_data = PackedByteArray("AAAZAAYAAAAKANMAAAAZAAcAAAAKANQAAAAZAAgAAAAKANUAAAAaAAYAAAALANMAAAAaAAcAAAALANQAAAAaAAgAAAALANUAAAAbAAYAAAAMANMAAAAbAAcAAAAMANQAAAAbAAgAAAAMANUAAAD9/wkAAAAFACkAAAD+/wkAAAAFACkAAAD//wkAAAAFACkAAAAAAAkAAAAFACkAAAABAAkAAAAFACkAAAACAAkAAAAFACkAAAADAAkAAAAFACkAAAAEAAkAAAAFACkAAAAFAAkAAAAFACkAAAAGAAkAAAAFACkAAAAHAAkAAAAFACkAAAAIAAkAAAAFACkAAAAJAAkAAAAFACkAAAAKAAkAAAAFACkAAAALAAkAAAAFACkAAAAMAAkAAAAFACkAAAANAAkAAAAFACkAAAAOAAkAAAAFACkAAAAPAAkAAAAFACkAAAAQAAkAAAAFACkAAAARAAkAAAAFACkAAAASAAkAAAAFACkAAAATAAkAAAAFACkAAAAUAAkAAAAFACkAAAAVAAkAAAAFACkAAAAWAAkAAAAFACkAAAAXAAkAAAAFACkAAAAYAAkAAAAFACkAAAAZAAkAAAAFACkAAAAaAAkAAAAFACkAAAAbAAkAAAAFACkAAAA=")
 tile_set = ExtResource("2_v0hpu")
 collision_enabled = false
 
@@ -457,23 +457,4 @@ script = ExtResource("10_8fgm4")
 text_scale = 4
 quick_load_text = "Boss Rush"
 border_scale = 2
-metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
-
-[node name="SnailyText2" type="RichTextLabel" parent="." unique_id=1542149827]
-custom_minimum_size = Vector2(374, 0)
-clip_contents = false
-offset_left = 8.0
-offset_top = 128.0
-offset_right = 48.0
-offset_bottom = 168.0
-mouse_filter = 2
-bbcode_enabled = true
-text = "todo:
-- test dying and respawning works
-- ssb timeout fix
-- anim plays once"
-fit_content = true
-scroll_active = false
-script = ExtResource("10_8fgm4")
-max_width = 374
 metadata/_custom_type_script = "uid://dqt4uo3ejug3v"

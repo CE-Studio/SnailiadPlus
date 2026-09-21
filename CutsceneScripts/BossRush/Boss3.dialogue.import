@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://bvkrc57mvvs2t"
+path="res://.godot/imported/Boss3.dialogue-4ad8bfd68db31427026ace252fcf2e66.tres"
+
+[deps]
+
+source_file="res://CutsceneScripts/BossRush/Boss3.dialogue"
+dest_files=["res://.godot/imported/Boss3.dialogue-4ad8bfd68db31427026ace252fcf2e66.tres"]
+
+[params]
+
+defaults=true
