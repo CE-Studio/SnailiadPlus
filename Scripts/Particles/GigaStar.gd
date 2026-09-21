@@ -25,7 +25,7 @@ var weight_smash:float = 0.0
 var weight_strafe:float = 0.0
 var weight_sleep:float = 0.0
 
-var boss:Gigasnail
+var boss:Boss
 
 
 func _spawn(_data:Array) -> void:
