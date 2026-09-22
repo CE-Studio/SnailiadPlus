@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://ctjp7bvs7a7gg" path="res://Scripts/UI/MenuLayer.gd" id="1_2jr0a"]
 [ext_resource type="PackedScene" uid="uid://cethpj66nvp1o" path="res://Scenes/UI/ActionSnailyButton.tscn" id="2_7o8a0"]
 
-[node name="Main" type="Node2D" unique_id=147070852]
+[node name="RushPause" type="Node2D" unique_id=147070852]
 script = ExtResource("1_2jr0a")
 
 [node name="MainVBox" type="VBoxContainer" parent="." unique_id=229268017]
@@ -36,8 +36,8 @@ focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../Options")
 focus_next = NodePath("../Options")
 focus_previous = NodePath("../Return")
-button_text = "Warp somewhere"
-quick_load_layer = "ProfileWarp"
+button_text = "Restart Boss Rush"
+quick_load_layer = "RushRestart"
 hide_frame = true
 
 [node name="HSeparator" type="HSeparator" parent="MainVBox" unique_id=536728503]
@@ -51,18 +51,35 @@ layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../Restart")
 focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../Museum")
+focus_next = NodePath("../Museum")
 focus_previous = NodePath("../Restart")
 button_text = "Options"
 quick_load_layer = "Options"
+hide_frame = true
+
+[node name="Museum" parent="MainVBox" unique_id=1748040070 instance=ExtResource("2_7o8a0")]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../Options")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../Quit")
+focus_next = NodePath("../Quit")
+focus_previous = NodePath("../Options")
+button_text = "Museum"
+quick_load_layer = "Museum"
 hide_frame = true
 
 [node name="Quit" parent="MainVBox" unique_id=1306334097 instance=ExtResource("2_7o8a0")]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../Museum")
 focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../Return")
 focus_next = NodePath("../Return")
+focus_previous = NodePath("../Museum")
 button_text = "Quit to main menu"
-quick_load_layer = "QuitToMenu"
+quick_load_layer = "QuitToMenuFromRush"
 hide_frame = true

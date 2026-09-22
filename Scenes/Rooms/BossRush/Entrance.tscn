@@ -138,6 +138,8 @@ extends AnimationPlayer
 
 
 func _ready() -> void:
+	get_tree().paused = false
+	GameCore.instance.music_manager.set_global_volume(1.0)
 	Statics.increment_boss_rush_timer = false
 	Statics.current_profile[\"game_time\"] = [ 0.0, 0.0, 0.0 ]
 	Statics.set_world_flag(Statics.WorldFlags.DEFEATED_BOSS1, false)

@@ -89,7 +89,10 @@ func _ready() -> void:
 		title.position.y = TITLE_REST_Y
 		selectors[0].play(str(int(Statics.current_profile["character"])))
 		selectors[1].play(str(int(Statics.current_profile["character"])))
-		create_layer("MainAlt")
+		if Statics.is_in_boss_rush:
+			create_layer("RushPause")
+		else:
+			create_layer("MainAlt")
 
 
 func _process(delta: float) -> void:

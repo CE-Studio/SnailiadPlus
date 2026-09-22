@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://ctjp7bvs7a7gg" path="res://Scripts/UI/MenuLayer.gd" id="1_l8yce"]
 [ext_resource type="PackedScene" uid="uid://cethpj66nvp1o" path="res://Scenes/UI/ActionSnailyButton.tscn" id="2_0j8kw"]
 
-[node name="Main" type="Node2D" unique_id=147070852]
+[node name="MainAlt" type="Node2D" unique_id=147070852]
 script = ExtResource("1_l8yce")
 
 [node name="MainVBox" type="VBoxContainer" parent="." unique_id=229268017]

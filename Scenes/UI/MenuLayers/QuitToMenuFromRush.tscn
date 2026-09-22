@@ -1,0 +1,61 @@
+[gd_scene format=3 uid="uid://cysnt3m0qra0l"]
+
+[ext_resource type="Script" uid="uid://ctjp7bvs7a7gg" path="res://Scripts/UI/MenuLayer.gd" id="1_ik7uu"]
+[ext_resource type="Script" uid="uid://d2am8osmsm34i" path="res://Scripts/UI/MenuLayers/QuitToMenu.gd" id="2_h1nv0"]
+[ext_resource type="PackedScene" uid="uid://cethpj66nvp1o" path="res://Scenes/UI/ActionSnailyButton.tscn" id="3_vmhrh"]
+
+[node name="QuitToMenu" type="Node2D" unique_id=32144782]
+script = ExtResource("1_ik7uu")
+
+[node name="MainVBox" type="VBoxContainer" parent="." unique_id=1028666044]
+custom_minimum_size = Vector2(400, 0)
+offset_top = 70.0
+offset_right = 400.0
+offset_bottom = 220.0
+alignment = 1
+script = ExtResource("2_h1nv0")
+
+[node name="Header" parent="MainVBox" unique_id=764426934 instance=ExtResource("3_vmhrh")]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+button_text = "Really return to menu?"
+disabled = true
+hide_frame = true
+
+[node name="HSeparator" type="HSeparator" parent="MainVBox" unique_id=1843195488]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="QuitNoSave" parent="MainVBox" unique_id=1004659804 instance=ExtResource("3_vmhrh")]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../Back")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../Back")
+focus_next = NodePath("../Back")
+focus_previous = NodePath("../Back")
+button_text = "Yeah, quit please"
+hide_frame = true
+
+[node name="Back" parent="MainVBox" unique_id=1138879477 instance=ExtResource("3_vmhrh")]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../QuitNoSave")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../QuitNoSave")
+focus_next = NodePath("../QuitNoSave")
+focus_previous = NodePath("../QuitNoSave")
+button_text = "Back to pause menu"
+back_one_layer = true
+grab_focus_on_load = true
+hide_frame = true
+
+[node name="Timer" type="Timer" parent="MainVBox" unique_id=1567030703]
+wait_time = 1.5
+one_shot = true
+
+[connection signal="button_pressed" from="MainVBox/QuitNoSave" to="MainVBox" method="_on_quit_no_save"]
+[connection signal="timeout" from="MainVBox/Timer" to="MainVBox" method="_on_timer_timeout"]
