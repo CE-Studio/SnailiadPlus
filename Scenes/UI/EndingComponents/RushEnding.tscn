@@ -1,0 +1,160 @@
+[gd_scene format=3 uid="uid://bq22wyy1xows5"]
+
+[ext_resource type="Script" uid="uid://cwtaojfxfhswb" path="res://Scripts/UI/EndingComponents/RushEnding.gd" id="1_y451y"]
+[ext_resource type="Texture2D" uid="uid://dmaptufh7rsw2" path="res://Assets/Images/UI/ScreenCover.png" id="2_eaunt"]
+[ext_resource type="Texture2D" uid="uid://dv7mahgbkjte6" path="res://Assets/Images/Entities/Boss4Rush.png" id="3_42gfh"]
+[ext_resource type="Script" uid="uid://boee2837la0pr" path="res://Scripts/Classes/SnailySprite.gd" id="4_x6s00"]
+[ext_resource type="AudioStream" uid="uid://du3qhjd888o6a" path="res://Assets/Sounds/Sfx/SunDeath.ogg" id="5_mjr64"]
+[ext_resource type="Script" uid="uid://dqt4uo3ejug3v" path="res://Scripts/Classes/SnailyText.gd" id="6_eaunt"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nqkxp"]
+atlas = ExtResource("3_42gfh")
+region = Rect2(0, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_owata"]
+atlas = ExtResource("3_42gfh")
+region = Rect2(96, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0g1a5"]
+atlas = ExtResource("3_42gfh")
+region = Rect2(64, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jvgr4"]
+atlas = ExtResource("3_42gfh")
+region = Rect2(32, 64, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3p7na"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nqkxp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_owata")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0g1a5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jvgr4")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 20.0
+}]
+
+[sub_resource type="Animation" id="Animation_2fht1"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SunDeath:playing")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_c1sr8"]
+resource_name = "anim"
+length = 20.0
+step = 0.025
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 3.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 0), Color(0, 0, 0, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SunDeath:playing")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(4),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(1, 4),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"fade_ui_out"
+}, {
+"args": [],
+"method": &"kill_sun"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_y18ao"]
+_data = {
+&"RESET": SubResource("Animation_2fht1"),
+&"anim": SubResource("Animation_c1sr8")
+}
+
+[node name="RushEnding" type="Node2D" unique_id=605841645 node_paths=PackedStringArray("sun")]
+z_index = 110
+script = ExtResource("1_y451y")
+sun = NodePath("Sun")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=486193880]
+modulate = Color(0, 0, 0, 0)
+position = Vector2(200, 120)
+scale = Vector2(2, 2)
+texture = ExtResource("2_eaunt")
+
+[node name="Sun" type="AnimatedSprite2D" parent="." unique_id=908365434]
+sprite_frames = SubResource("SpriteFrames_3p7na")
+autoplay = "default"
+script = ExtResource("4_x6s00")
+metadata/_custom_type_script = "uid://boee2837la0pr"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1780324768]
+libraries/ = SubResource("AnimationLibrary_y18ao")
+autoplay = &"anim"
+
+[node name="SunDeath" type="AudioStreamPlayer" parent="." unique_id=1596157313]
+stream = ExtResource("5_mjr64")
+bus = &"Sfx"
+
+[node name="SnailyText" type="RichTextLabel" parent="." unique_id=2033402202]
+clip_contents = false
+offset_right = 360.0
+offset_bottom = 144.0
+mouse_filter = 2
+bbcode_enabled = true
+text = "Add polygons to make expanding light ball in the middle"
+fit_content = true
+scroll_active = false
+script = ExtResource("6_eaunt")
+metadata/_custom_type_script = "uid://dqt4uo3ejug3v"

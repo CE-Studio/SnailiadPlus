@@ -25,8 +25,8 @@ const WAVE_TIMEOUT:float = 1.0
 const ZZZ_TIMEOUT:float = 0.3
 const ZZZ_MAX:int = 3
 const ZZZ_BUFFER:float = 24.0
-const INTRO_DELAY:float = 1.25
-const INTRO_END:float = 4.0
+const INTRO_DELAY:float = 0.5
+const INTRO_END:float = 3.25
 const STRAFE_TIMEOUT:float = 0.03
 const STRAFE_SPEED:float = 400.0
 const STRAFE_TARGET_PROX:float = 10.0
@@ -270,12 +270,13 @@ func kill() -> void:
 			Room.Layers.FG1, position, [true, DEATH_TIME, true, true])
 		UICore.instance.call_screen_shake_radial([2.0, DEATH_TIME, 2.0, 0.0, 0.0], UICore.ShakeCallMode.OVERWRITE_ALL)
 		GameCore.instance.music_manager.stop_all(true)
-		#SInput.read_inputs = false
+		SInput.read_inputs = false
 		PauseLayer.suppress_menuing = true
 		Statics.increment_igt = false
-		#var fade:EndingFade = load("uid://crgwv7a4ws03t").instantiate()
-		#fade.explosion_point = position
-		#GameCore.instance.add_child(fade)
+		Statics.increment_boss_rush_timer = false
+		var fade:RushEnding = load("uid://bq22wyy1xows5").instantiate()
+		fade.set_sun_pos(position)
+		GameCore.instance.add_child(fade)
 		AchievementCore.instance.check_add(AchievementCore.Achievements.BOSS_RUSH)
 		Statics.add_unlock_condition(Statics.Unlocks.CHAR_SEL)
 		Statics.increment_boss_rush_timer = false

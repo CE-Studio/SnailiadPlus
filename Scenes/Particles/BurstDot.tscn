@@ -1,0 +1,119 @@
+[gd_scene format=3 uid="uid://d3r12mx3tsi53"]
+
+[ext_resource type="Script" uid="uid://w22xiohcmmek" path="res://Scripts/Particles/BurstDot.gd" id="1_fscnt"]
+[ext_resource type="Texture2D" uid="uid://bdpjsk8bgx3ib" path="res://Assets/Images/Particles/Dot.png" id="2_2f610"]
+[ext_resource type="Script" uid="uid://boee2837la0pr" path="res://Scripts/Classes/SnailySprite.gd" id="3_up3eu"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dlbby"]
+atlas = ExtResource("2_2f610")
+region = Rect2(24, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lh0v0"]
+atlas = ExtResource("2_2f610")
+region = Rect2(16, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3qiiv"]
+atlas = ExtResource("2_2f610")
+region = Rect2(8, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kcg7p"]
+atlas = ExtResource("2_2f610")
+region = Rect2(16, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pp5ow"]
+atlas = ExtResource("2_2f610")
+region = Rect2(8, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ajdhy"]
+atlas = ExtResource("2_2f610")
+region = Rect2(0, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ramd2"]
+atlas = ExtResource("2_2f610")
+region = Rect2(8, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b70f0"]
+atlas = ExtResource("2_2f610")
+region = Rect2(0, 0, 8, 8)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wkouj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dlbby")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dlbby")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lh0v0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3qiiv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3qiiv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lh0v0")
+}],
+"loop": 1,
+"name": &"pulse_big",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kcg7p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kcg7p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pp5ow")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ajdhy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ajdhy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pp5ow")
+}],
+"loop": 1,
+"name": &"pulse_med",
+"speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ramd2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b70f0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_b70f0")
+}],
+"loop": 1,
+"name": &"pulse_small",
+"speed": 4.0
+}]
+
+[node name="BurstDot" type="Node2D" unique_id=171062163 node_paths=PackedStringArray("sprite", "timer")]
+script = ExtResource("1_fscnt")
+sprite = NodePath("SnailySprite2D")
+timer = NodePath("Timer")
+anim_speed_min = 0.7999999999999999
+anim_speed_max = 2.0
+
+[node name="SnailySprite2D" type="AnimatedSprite2D" parent="." unique_id=2072250247]
+sprite_frames = SubResource("SpriteFrames_wkouj")
+animation = &"pulse_big"
+script = ExtResource("3_up3eu")
+start_all_on_random_frame = true
+autoplay_any_on_spawn = true
+metadata/_custom_type_script = "uid://boee2837la0pr"
+
+[node name="Timer" type="Timer" parent="." unique_id=2138370153]
+wait_time = 5.0
+one_shot = true
