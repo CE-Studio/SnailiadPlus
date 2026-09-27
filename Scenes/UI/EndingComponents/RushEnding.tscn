@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://dv7mahgbkjte6" path="res://Assets/Images/Entities/Boss4Rush.png" id="3_42gfh"]
 [ext_resource type="Script" uid="uid://boee2837la0pr" path="res://Scripts/Classes/SnailySprite.gd" id="4_x6s00"]
 [ext_resource type="AudioStream" uid="uid://du3qhjd888o6a" path="res://Assets/Sounds/Sfx/SunDeath.ogg" id="5_mjr64"]
-[ext_resource type="Script" uid="uid://dqt4uo3ejug3v" path="res://Scripts/Classes/SnailyText.gd" id="6_eaunt"]
+[ext_resource type="Texture2D" uid="uid://cv67pgk0cf0w4" path="res://Assets/Images/UI/FadeBorder.png" id="6_eaunt"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_nqkxp"]
 atlas = ExtResource("3_42gfh")
@@ -69,6 +69,90 @@ tracks/1/keys = {
 "update": 1,
 "values": [false]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CenterFlashOuter:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CenterFlashInner:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("CenterFlashInner:scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("CenterFlashOuter:scale")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("CenterFlashOuter:visible")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("CenterFlashInner:color")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("EdgeFadeCover:visible")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="Animation" id="Animation_c1sr8"]
 resource_name = "anim"
@@ -115,6 +199,90 @@ tracks/2/keys = {
 "method": &"kill_sun"
 }]
 }
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CenterFlashOuter:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(3.5, 9.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 3.1415927]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("CenterFlashInner:rotation")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(3.75, 8.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, -4.712389]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("CenterFlashInner:scale")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(5, 5.7000003, 6.6, 8),
+"transitions": PackedFloat32Array(0.6, -2.5, 8, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0.62, 0.62), Vector2(0.55, 0.55), Vector2(18, 18)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("CenterFlashOuter:scale")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 5, 5.8, 6.45, 8),
+"transitions": PackedFloat32Array(1, 0.4, -2.5, 5, 1),
+"update": 0,
+"values": [Vector2(1e-05, 1e-05), Vector2(0, 0), Vector2(1, 1), Vector2(0.9, 0.9), Vector2(18, 18)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("CenterFlashOuter:visible")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0, 8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("CenterFlashInner:color")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0, 8, 8.400001),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("EdgeFadeCover:visible")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0, 4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_y18ao"]
 _data = {
@@ -122,10 +290,12 @@ _data = {
 &"anim": SubResource("Animation_c1sr8")
 }
 
-[node name="RushEnding" type="Node2D" unique_id=605841645 node_paths=PackedStringArray("sun")]
+[node name="RushEnding" type="Node2D" unique_id=605841645 node_paths=PackedStringArray("sun", "poly_outer", "poly_inner")]
 z_index = 110
 script = ExtResource("1_y451y")
 sun = NodePath("Sun")
+poly_outer = NodePath("CenterFlashOuter")
+poly_inner = NodePath("CenterFlashInner")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=486193880]
 modulate = Color(0, 0, 0, 0)
@@ -147,14 +317,18 @@ autoplay = &"anim"
 stream = ExtResource("5_mjr64")
 bus = &"Sfx"
 
-[node name="SnailyText" type="RichTextLabel" parent="." unique_id=2033402202]
-clip_contents = false
-offset_right = 360.0
-offset_bottom = 144.0
-mouse_filter = 2
-bbcode_enabled = true
-text = "Add polygons to make expanding light ball in the middle"
-fit_content = true
-scroll_active = false
-script = ExtResource("6_eaunt")
-metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
+[node name="CenterFlashOuter" type="Polygon2D" parent="." unique_id=3521936]
+position = Vector2(200, 120)
+color = Color(1, 1, 1, 0.49803922)
+polygon = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+uv = PackedVector2Array(19, -47, 54, -49, 48, -25, 19, -30)
+
+[node name="CenterFlashInner" type="Polygon2D" parent="." unique_id=1163986282]
+z_index = 100
+position = Vector2(200, 120)
+polygon = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+
+[node name="EdgeFadeCover" type="Sprite2D" parent="." unique_id=1501185398]
+modulate = Color(0, 0, 0, 1)
+position = Vector2(200, 120)
+texture = ExtResource("6_eaunt")
