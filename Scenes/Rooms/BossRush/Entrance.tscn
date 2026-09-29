@@ -137,6 +137,9 @@ script/source = "# Copyright 2026 CE-Studio: AGPL-3.0-only
 extends AnimationPlayer
 
 
+@export var shock:Item
+
+
 func _ready() -> void:
 	get_tree().paused = false
 	GameCore.instance.music_manager.set_global_volume(1.0)
@@ -150,6 +153,8 @@ func _ready() -> void:
 		Statics.set_world_flag(Statics.WorldFlags.SEEN_BOSS_RUSH_INTRO, true)
 		SInput.read_inputs = false
 		play(\"start\")
+	if not Statics.check_achievement(AchievementCore.Achievements.GRAVITY_SHOCK):
+		shock.queue_free()
 
 
 func enable_input() -> void:
@@ -436,9 +441,10 @@ position = Vector2(231.99998, 120)
 scale = Vector2(1.24, 1.1333333)
 texture = ExtResource("9_8fgm4")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=543685597]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=543685597 node_paths=PackedStringArray("shock")]
 libraries/ = SubResource("AnimationLibrary_i165k")
 script = SubResource("GDScript_8fgm4")
+shock = NodePath("../GroundLayer/ItemShelf/Item8")
 
 [node name="SnailyText" type="RichTextLabel" parent="." unique_id=1189105645]
 z_index = 600
@@ -447,7 +453,7 @@ custom_maximum_size = Vector2(400, -1)
 clip_contents = false
 offset_top = 88.0
 offset_right = 400.0
-offset_bottom = 127.99994
+offset_bottom = 133.0
 mouse_filter = 2
 theme_override_font_sizes/normal_font_size = 32
 bbcode_enabled = true

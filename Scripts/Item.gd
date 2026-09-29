@@ -66,8 +66,11 @@ func _ready() -> void:
 	if GameCore.instance == null:
 		return
 	if Statics.check_location_collected(location_id):
-		if Statics.is_in_boss_rush: collected = true
-		else: return
+		if Statics.is_in_boss_rush:
+			collected = true
+		else:
+			queue_free()
+			return
 	elif (difficulty_reqs & (1 << int(Statics.current_profile["difficulty"])) == 0
 	or character_reqs & (1 << int(Statics.current_profile["character"])) == 0
 	or type == ItemTypes.NONE):
