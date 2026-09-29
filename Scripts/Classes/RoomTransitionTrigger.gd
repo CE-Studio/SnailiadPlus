@@ -34,7 +34,8 @@ func _process(_delta: float) -> void:
 
 ## Called when the player or any enemy enters this trigger's area
 func _on_player_enter(_body):
-	if exit_room != "" and not_exiting and spawn_buffer_frames == 0:
+	if (exit_room != "" and not_exiting and spawn_buffer_frames == 0
+	and not CutsceneController.running):
 		not_exiting = false
 		var offset = GameCore.instance.player.body.global_position - area.global_position
 		UICore.instance.color_cover.call_thread_safe("set_color", Color8(0, 0, 0, 120))
