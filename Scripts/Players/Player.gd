@@ -1651,7 +1651,7 @@ func is_equipped(id:int) -> bool:
 
 
 func _shoot(_bullet_id:int, normalized_velocity:Vector2, pos:Vector2 = body.position) -> float:
-	if GameCore.instance.room_time < Statics.FRAC_32:
+	if GameCore.instance.room_time < Statics.FRAC_32 or shelled:
 		return 0.0
 	var bullet_type:String = ""
 	#region Determine bullet type
