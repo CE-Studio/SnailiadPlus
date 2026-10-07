@@ -66,15 +66,18 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_constants/margin_top = -8
-theme_override_constants/margin_bottom = -2
+theme_override_constants/margin_bottom = -3
 
 [node name="SnailyText" parent="PanelContainer/HBoxContainer/PriKey/MarginContainer" unique_id=697217096 instance=ExtResource("3_atxd7")]
 custom_minimum_size = Vector2(17, 18)
 layout_mode = 2
+offset_transform_enabled = true
+offset_transform_position = Vector2(0, 1)
 text = "[img]res://Assets/Images/UI/ControlIcons/Z.png[/img]"
 autowrap_mode = 0
 horizontal_alignment = 1
 max_width = 17
+shadow_scale = 1
 
 [node name="SecKey" type="PanelContainer" parent="PanelContainer/HBoxContainer" unique_id=1827876995]
 layout_mode = 2
@@ -88,15 +91,18 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_constants/margin_top = -8
-theme_override_constants/margin_bottom = -2
+theme_override_constants/margin_bottom = -3
 
 [node name="SnailyText" parent="PanelContainer/HBoxContainer/SecKey/MarginContainer" unique_id=50223746 instance=ExtResource("3_atxd7")]
 custom_minimum_size = Vector2(17, 18)
 layout_mode = 2
+offset_transform_enabled = true
+offset_transform_position = Vector2(0, 1)
 text = "[img]res://Assets/Images/UI/ControlIcons/K.png[/img]"
 autowrap_mode = 0
 horizontal_alignment = 1
 max_width = 17
+shadow_scale = 1
 
 [node name="PriCon" type="PanelContainer" parent="PanelContainer/HBoxContainer" unique_id=988242342]
 layout_mode = 2
@@ -110,15 +116,18 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_constants/margin_top = -8
-theme_override_constants/margin_bottom = -2
+theme_override_constants/margin_bottom = -3
 
 [node name="SnailyText" parent="PanelContainer/HBoxContainer/PriCon/MarginContainer" unique_id=1367704339 instance=ExtResource("3_atxd7")]
 custom_minimum_size = Vector2(17, 18)
 layout_mode = 2
+offset_transform_enabled = true
+offset_transform_position = Vector2(0, 1)
 text = "[img]res://Assets/Images/UI/ControlIcons/FaceA.png[/img]"
 autowrap_mode = 0
 horizontal_alignment = 1
 max_width = 17
+shadow_scale = 1
 
 [node name="SecCon" type="PanelContainer" parent="PanelContainer/HBoxContainer" unique_id=671384923]
 layout_mode = 2
@@ -132,15 +141,18 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_constants/margin_top = -8
-theme_override_constants/margin_bottom = -2
+theme_override_constants/margin_bottom = -3
 
 [node name="SnailyText" parent="PanelContainer/HBoxContainer/SecCon/MarginContainer" unique_id=1542517347 instance=ExtResource("3_atxd7")]
 custom_minimum_size = Vector2(17, 18)
 layout_mode = 2
+offset_transform_enabled = true
+offset_transform_position = Vector2(0, 1)
 text = "[img]res://Assets/Images/UI/ControlIcons/R1.png[/img]"
 autowrap_mode = 0
 horizontal_alignment = 1
 max_width = 17
+shadow_scale = 1
 
 [node name="AudioGroup" type="Node" parent="." unique_id=43394940]
 

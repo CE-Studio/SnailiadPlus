@@ -115,7 +115,8 @@ func setup_as_child(_parent:SnailyText, _offset:Vector2i) -> void:
 	vertical_alignment = _parent.vertical_alignment
 	line_separation = _parent.line_separation
 	parent_label.add_child(self)
-	position = _offset
+	offset_transform_enabled = true
+	offset_transform_position = _offset
 
 
 ## Sets the displayed text to the new [String]
@@ -150,7 +151,7 @@ func reset_label_size() -> void:
 	for i in sub_text.size():
 		sub_text[i].custom_minimum_size.x = custom_minimum_size.x
 		sub_text[i].size.x = sub_text[i].custom_minimum_size.x
-		sub_text[i].position = sub_text_offsets[i]
+		#sub_text[i].position = sub_text_offsets[i]
 
 
 ## Recalculates the minimum size of the label to match the longest line of text

@@ -15,6 +15,7 @@ var rebind_buffer:InputEvent = null
 
 @onready var layer:MenuLayer = get_parent()
 @onready var panel:ContextPanel = $"../ContextPanel"
+@onready var back_button:ActionSnailyButton = $"Back"
 
 
 func _ready() -> void:
@@ -58,6 +59,13 @@ func _process(delta: float) -> void:
 func _input(event: InputEvent) -> void:
 	if not panel_up or event is InputEventMouse or (suppress_input > 0):
 		return
+	#if back_button.has_focus():
+	#	print(event.is_action_pressed("uiAccept"))
+	#if back_button.has_focus() and event.is_action_pressed("uiAccept"):
+	#	layer.menu.clear_top_layer(0)
+	# No matter what I tried, I couldn't get the back button to register on this particular
+	# menu layer, and I'm not sure what black magic is causing it to fail. Feel free to figure
+	# this out for me if you see this
 	
 	var bind_slot:int = layer.meta_info[0]
 	if ((bind_slot < 2 and event is InputEventKey)

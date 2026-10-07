@@ -122,19 +122,29 @@ layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../Speak")
 focus_neighbor_right = NodePath(".")
-focus_neighbor_bottom = NodePath("../Pause")
-focus_next = NodePath("../Pause")
+focus_neighbor_bottom = NodePath("../Shield")
+focus_next = NodePath("../Shield")
 focus_previous = NodePath("../Speak")
 bind = 8
 
-[node name="Pause" parent="MainVBox/ScrollContainer/VBoxContainer" unique_id=1073305068 instance=ExtResource("4_mugii")]
+[node name="Shield" parent="MainVBox/ScrollContainer/VBoxContainer" unique_id=248408379 instance=ExtResource("4_mugii")]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../Gravity")
 focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../Pause")
+focus_next = NodePath("../Pause")
+focus_previous = NodePath("../Gravity")
+bind = 24
+
+[node name="Pause" parent="MainVBox/ScrollContainer/VBoxContainer" unique_id=1073305068 instance=ExtResource("4_mugii")]
+layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../Shield")
+focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../Map")
 focus_next = NodePath("../Map")
-focus_previous = NodePath("../Gravity")
+focus_previous = NodePath("../Shield")
 bind = 9
 
 [node name="Map" parent="MainVBox/ScrollContainer/VBoxContainer" unique_id=1304076687 instance=ExtResource("4_mugii")]
@@ -142,19 +152,29 @@ layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../Pause")
 focus_neighbor_right = NodePath(".")
-focus_neighbor_bottom = NodePath("../Weapon0")
-focus_next = NodePath("../Weapon0")
+focus_neighbor_bottom = NodePath("../SkipTalking")
+focus_next = NodePath("../SkipTalking")
 focus_previous = NodePath("../Pause")
 bind = 10
 
-[node name="Weapon0" parent="MainVBox/ScrollContainer/VBoxContainer" unique_id=600776615 instance=ExtResource("4_mugii")]
+[node name="SkipTalking" parent="MainVBox/ScrollContainer/VBoxContainer" unique_id=763671579 instance=ExtResource("4_mugii")]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../Map")
 focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../Weapon0")
+focus_next = NodePath("../Weapon0")
+focus_previous = NodePath("../Map")
+bind = 23
+
+[node name="Weapon0" parent="MainVBox/ScrollContainer/VBoxContainer" unique_id=600776615 instance=ExtResource("4_mugii")]
+layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../SkipTalking")
+focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../Weapon1")
 focus_next = NodePath("../Weapon1")
-focus_previous = NodePath("../Map")
+focus_previous = NodePath("../SkipTalking")
 bind = 11
 
 [node name="Weapon1" parent="MainVBox/ScrollContainer/VBoxContainer" unique_id=54151450 instance=ExtResource("4_mugii")]
@@ -242,32 +262,23 @@ layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../UIAccept")
 focus_neighbor_right = NodePath(".")
-focus_neighbor_bottom = NodePath("../SkipTalking")
-focus_next = NodePath("../SkipTalking")
-focus_previous = NodePath("../UIAccept")
-bind = 22
-
-[node name="SkipTalking" parent="MainVBox/ScrollContainer/VBoxContainer" unique_id=763671579 instance=ExtResource("4_mugii")]
-layout_mode = 2
-focus_neighbor_left = NodePath(".")
-focus_neighbor_top = NodePath("../UIBack")
-focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../../../Back")
 focus_next = NodePath("../../../Back")
-focus_previous = NodePath("../UIBack")
-bind = 23
+focus_previous = NodePath("../UIAccept")
+bind = 22
 
 [node name="Back" parent="MainVBox" unique_id=943801779 instance=ExtResource("6_oamqp")]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
-focus_neighbor_top = NodePath("../ScrollContainer/VBoxContainer/SkipTalking")
+focus_neighbor_top = NodePath("../ScrollContainer/VBoxContainer/UIBack")
 focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../ScrollContainer/VBoxContainer/Left")
 focus_next = NodePath("../ScrollContainer/VBoxContainer/Left")
-focus_previous = NodePath("../ScrollContainer/VBoxContainer/SkipTalking")
-button_text = "Back to options"
+focus_previous = NodePath("../ScrollContainer/VBoxContainer/UIBack")
+button_text = "Press bind__ui_back to return"
 back_one_layer = true
+disabled = true
 hide_frame = true
 
 [node name="ContextPanel" parent="." unique_id=106744196 instance=ExtResource("6_26pkv")]

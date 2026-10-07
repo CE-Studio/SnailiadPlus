@@ -17,6 +17,7 @@ match CutsceneController.object_id
 				NPC26: With this "Shell Shield",[wait=0.1] you\nwon't take any damage when you\nhide in your shell!
 			else
 				NPC26: Take this "Shelmet"![wait=0.25]  You can\nhide in it to avoid taking\ndamage!
+			NPC26: To hide,[wait=0.2] {{GlobalText.COL_CTRL}}press toward your\ngravity direction,[wait=0.1] or just\ntap {{SInput.icon_shield}}[/color]![wait=0.3]  It's easy!!
 		else
 			NPC26: Here, take this[speed=0.25]...[speed=1][wait=0.2] thing![wait=0.3]\nI'm not sure what it is,[wait=0.25] but\nsurely it's helpful![wait=0.5]  Right?
 => END

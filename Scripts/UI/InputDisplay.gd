@@ -11,6 +11,7 @@ extends Node
 @export var shoot:SnailySprite2D
 @export var strafe:SnailySprite2D
 @export var gravity:SnailySprite2D
+@export var shield:SnailySprite2D
 
 
 func _process(_delta: float) -> void:
@@ -48,3 +49,7 @@ func _process(_delta: float) -> void:
 	if SInput.check_input(SInput.Inputs.GRAVITY, false):
 		if gravity.animation == "default": gravity.play("press")
 	elif gravity.animation == "press": gravity.play("default")
+	
+	if SInput.check_input(SInput.Inputs.SHIELD, false):
+		if shield.animation == "default": shield.play("press")
+	elif shield.animation == "press": shield.play("default")

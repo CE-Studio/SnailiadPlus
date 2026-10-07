@@ -276,7 +276,41 @@ animations = [{
 "speed": 30.0
 }]
 
-[node name="InputDisplay" type="Node2D" unique_id=368493357 node_paths=PackedStringArray("left", "down", "up", "right", "jump", "shoot", "strafe", "gravity")]
+[sub_resource type="AtlasTexture" id="AtlasTexture_mobn0"]
+atlas = ExtResource("3_ct6f5")
+region = Rect2(64, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qf1is"]
+atlas = ExtResource("3_ct6f5")
+region = Rect2(64, 8, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tbte1"]
+atlas = ExtResource("3_ct6f5")
+region = Rect2(64, 16, 8, 8)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4a0qy"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mobn0")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qf1is")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tbte1")
+}],
+"loop": 0,
+"name": &"press",
+"speed": 30.0
+}]
+
+[node name="InputDisplay" type="Node2D" unique_id=368493357 node_paths=PackedStringArray("left", "down", "up", "right", "jump", "shoot", "strafe", "gravity", "shield")]
 script = ExtResource("1_p4hb2")
 left = NodePath("Left")
 down = NodePath("Down")
@@ -286,6 +320,7 @@ jump = NodePath("Jump")
 shoot = NodePath("Shoot")
 strafe = NodePath("Strafe")
 gravity = NodePath("Gravity")
+shield = NodePath("Shield")
 
 [node name="Left" type="AnimatedSprite2D" parent="." unique_id=1852109488]
 position = Vector2(4, -4)
@@ -339,6 +374,13 @@ metadata/_custom_type_script = "uid://boee2837la0pr"
 [node name="Gravity" type="AnimatedSprite2D" parent="." unique_id=1062289254]
 position = Vector2(40, -4)
 sprite_frames = SubResource("SpriteFrames_gpeg5")
+autoplay = "default"
+script = ExtResource("3_mobn0")
+metadata/_custom_type_script = "uid://boee2837la0pr"
+
+[node name="Shield" type="AnimatedSprite2D" parent="." unique_id=1388605825]
+position = Vector2(49, -4)
+sprite_frames = SubResource("SpriteFrames_4a0qy")
 autoplay = "default"
 script = ExtResource("3_mobn0")
 metadata/_custom_type_script = "uid://boee2837la0pr"

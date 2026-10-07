@@ -571,7 +571,8 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 	var _rel_vectors:Array # Array remapping raw cardinal vectors to match gravity. Index with DirsSurface
 	var remapped_dirs:Array # Array remapping DirsSurface references to match gravity. Index with DirsSurface
 	var _suppress_wall_grab:bool = false # Boolean that forces wall checks to be ignored
-	var aim_vector = SInput.vector_aim()
+	var aim_vector:Vector2 = SInput.vector_aim()
+	var shield_pressed:bool = SInput.check_input(SInput.Inputs.SHIELD, false)
 	#region Set relative
 	match surface:
 		Statics.DirsSurface.FLOOR:
@@ -733,16 +734,16 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 	# Move and slide
 
 	rel_vel.x = rel_axis.x * run_speed[read_i_speed] * speed_mod
-	if SInput.input_pressed(SInput.Inputs.STRAFE):
+	if SInput.input_pressed(SInput.Inputs.STRAFE) or SInput.input_pressed(SInput.Inputs.SHIELD):
 		rel_vel.x = 0.0
-	if rel_axis.x != 0.0 and grounded and current_state != AnimStates.WALK:
+	if rel_vel.x != 0.0 and grounded and current_state != AnimStates.WALK:
 		current_state = AnimStates.WALK
 		_play_anim("idle")
-	if rel_axis.x == 0.0 and grounded and current_state == AnimStates.WALK:
+	if rel_vel.x == 0.0 and grounded and current_state == AnimStates.WALK:
 		current_state = AnimStates.IDLE
 		_play_anim("idle")
-	if ((rel_axis.x < 0.0 and not facing_left) or
-	(rel_axis.x > 0.0 and facing_left)):
+	if ((rel_vel.x < 0.0 and not facing_left) or
+	(rel_vel.x > 0.0 and facing_left)):
 		_set_direction(remapped_dirs[Statics.DirsSurface.FLOOR], not facing_left)
 		_play_anim("shell" if shelled else "idle")
 		#match current_state:
@@ -761,7 +762,7 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 	if grounded:
 		if ((SInput.input_just_pressed(SInput.Inputs.JUMP) or
 		(SInput.input_pressed(SInput.Inputs.JUMP) and (jump_buffer_counter < jump_buffer))) and
-		not _check_ceil_casts()[0]):
+		not _check_ceil_casts()[0] and not SInput.input_pressed(SInput.Inputs.SHIELD)):
 			if shelled:
 				_toggle_shell()
 			rel_vel.y = _jump_decide_state()
@@ -793,11 +794,13 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 				_play_anim("idle")
 				#_play_anim("fall")
 
-	if (shelled and (fire_mode or SInput.input_pressed(SInput.Inputs.STRAFE)
+	if (shelled and not shield_pressed and
+	(fire_mode or SInput.input_pressed(SInput.Inputs.STRAFE)
 	or (rel_axis.x != 0.0 and grounded) or aim_vector != Vector2.ZERO)):
 		_toggle_shell()
-	elif (rel_down_pressed and rel_vel.x == 0 and _check_ability(shellable)
-	and not (fire_mode or SInput.input_pressed(SInput.Inputs.STRAFE) or stunned)):
+	elif (not shelled and (shield_pressed or
+	((rel_down_pressed or shield_pressed) and rel_vel.x == 0 and _check_ability(shellable)
+	and not (fire_mode or SInput.input_pressed(SInput.Inputs.STRAFE)))) and not stunned):
 		_toggle_shell()
 
 	if (body.is_on_wall() and rel_axis.y != 0 and rel_axis.x == (-1 if facing_left else 1)
