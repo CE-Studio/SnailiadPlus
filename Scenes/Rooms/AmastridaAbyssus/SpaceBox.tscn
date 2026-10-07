@@ -165,12 +165,14 @@ direction = 3
 door_type = 2
 lock_type = 1
 required_boss = 2
+ping_on_hit = false
 
 [node name="Door2" parent="GroundLayer" unique_id=1617696405 instance=ExtResource("3_fwhfm")]
 position = Vector2(392, 120)
 door_type = 2
 lock_type = 1
 required_boss = 2
+ping_on_hit = false
 
 [node name="Spacebox" parent="GroundLayer" unique_id=346120159 instance=ExtResource("4_h1u6w")]
 position = Vector2(208, 240)

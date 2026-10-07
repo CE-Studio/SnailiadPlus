@@ -141,12 +141,14 @@ tile_set = ExtResource("2_mqtx5")
 [node name="Door" parent="GroundLayer" unique_id=1487118064 instance=ExtResource("3_hup1u")]
 position = Vector2(808, 88)
 lock_type = 0
+ping_on_hit = false
 
 [node name="Door2" parent="GroundLayer" unique_id=1632900509 instance=ExtResource("3_hup1u")]
 position = Vector2(8, 88)
 direction = 3
 lock_type = 1
 required_boss = 1
+ping_on_hit = false
 
 [node name="StompyRush" parent="GroundLayer" unique_id=1750670965 instance=ExtResource("7_a8pyy")]
 position = Vector2(408, 24)

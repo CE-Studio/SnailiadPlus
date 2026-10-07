@@ -204,6 +204,7 @@ position = Vector2(808, 56)
 door_type = 1
 lock_type = 1
 required_boss = 1
+ping_on_hit = false
 
 [node name="Door2" parent="GroundLayer" unique_id=1049833707 instance=ExtResource("3_e4s7d")]
 position = Vector2(8, 56)
@@ -211,6 +212,7 @@ direction = 3
 door_type = 1
 lock_type = 1
 required_boss = 1
+ping_on_hit = false
 
 [node name="Stompy" parent="GroundLayer" unique_id=1288548393 instance=ExtResource("3_svpxf")]
 position = Vector2(408, 24)

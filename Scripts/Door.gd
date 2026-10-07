@@ -37,6 +37,7 @@ const SPAWN_CLOSE_RADIUS = 70
 ) var required_boss:int
 @export_range(0, 3) var rando_sphere:int
 @export var close_if_unarmed:bool = false
+@export var ping_on_hit:bool = true
 
 var is_open:bool = false
 var is_locked:bool = false
@@ -154,7 +155,8 @@ func _on_bullet_entered(area:Area2D) -> void:
 		return
 	var bullet = area.get_parent()
 	if is_locked:
-		sfx_ping.play()
+		if ping_on_hit:
+			sfx_ping.play()
 	elif not is_open:
 		var hit_hard_enough:bool = false
 		match door_type:
@@ -171,7 +173,7 @@ func _on_bullet_entered(area:Area2D) -> void:
 				hit_hard_enough = true
 		if hit_hard_enough:
 			open()
-		else:
+		elif ping_on_hit:
 			sfx_ping.play()
 
 

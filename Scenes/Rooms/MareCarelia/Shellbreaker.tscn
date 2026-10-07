@@ -136,6 +136,7 @@ tile_set = ExtResource("2_xiyhc")
 position = Vector2(8, 376)
 direction = 3
 lock_type = 1
+ping_on_hit = false
 
 [node name="Shellbreaker" parent="GroundLayer" unique_id=549267409 instance=ExtResource("4_254gw")]
 position = Vector2(280, 312)

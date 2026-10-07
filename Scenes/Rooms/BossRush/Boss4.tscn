@@ -243,6 +243,7 @@ tile_set = ExtResource("2_hvyyy")
 [node name="Door" parent="GroundLayer" unique_id=1487118064 instance=ExtResource("3_pji2y")]
 position = Vector2(392, 120)
 lock_type = 0
+ping_on_hit = false
 
 [node name="MoonsnailRush" parent="GroundLayer" unique_id=1600867824 instance=ExtResource("5_dfxsv")]
 position = Vector2(80, 152)

@@ -133,10 +133,12 @@ tile_set = ExtResource("2_835oc")
 position = Vector2(8, 184)
 direction = 3
 lock_type = 0
+ping_on_hit = false
 
 [node name="Door2" parent="GroundLayer" unique_id=1112895063 instance=ExtResource("3_1cvpg")]
 position = Vector2(488, 184)
 lock_type = 1
+ping_on_hit = false
 
 [node name="RushShellbreaker" parent="GroundLayer" unique_id=618070930 instance=ExtResource("4_m6txg")]
 position = Vector2(248, 152)
