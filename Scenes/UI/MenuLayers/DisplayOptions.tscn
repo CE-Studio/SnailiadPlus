@@ -182,7 +182,7 @@ focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../../../Back")
 focus_next = NodePath("../../../Back")
 focus_previous = NodePath("../DistortShader")
-button_text = "Afterimages start\\nopaque"
+button_text = "Increased\\nafterimage opacity"
 
 [node name="Back" parent="MainVBox" unique_id=1710854172 instance=ExtResource("6_45c1g")]
 self_modulate = Color(1, 1, 1, 0)
