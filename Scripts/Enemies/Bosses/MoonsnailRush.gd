@@ -46,6 +46,7 @@ const DEATH_FADE_COLOR:Color = Color("58f89c")
 const BOOMERANG:PackedScene = preload("uid://d0r1jtwy6e5rq")
 const LIGHT_WAVE:PackedScene = preload("uid://d1ffbp8g0l3jx")
 const DONUT:PackedScene = preload("uid://buae50mtgkrf5")
+const PBULLET_A:float = 0.55
 
 enum BossMode {
 	INTRO,
@@ -152,6 +153,8 @@ func _ready() -> void:
 	
 	if Statics.current_profile["difficulty"] == 2:
 		boss_speed += 0.1
+	
+	PlayerBullet.bullet_a = PBULLET_A
 
 
 func _physics_process(delta: float) -> void:

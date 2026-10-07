@@ -1625,6 +1625,7 @@ func _on_respawn_timeout() -> void:
 	_set_direction(default_gravity, false)
 	reset_position(Statics.load_coords, true)
 	set_deferred("override_box_disable", false)
+	PlayerBullet.bullet_a = 1.0
 #endregion
 
 

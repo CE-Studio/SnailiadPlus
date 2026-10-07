@@ -50,6 +50,9 @@ var afterimage_tick:int = 0
 ## Will be set to [code]true[/code] if this bullet's animation has been previously inferred from
 ## its travel direction
 var has_inferred_once:bool = false
+## A global setting for how opaque or transparent all [EnemyBullet] instances should be
+static var bullet_a:float = 1.0:
+	set(value): bullet_a = clampf(value, 0.0, 1.0)
 
 ## Determines what interactions with any set [PlayerBullet] nodes this bullet should have
 enum PBulletInteractions {
@@ -84,6 +87,7 @@ func _spawn(dir:Vector2, speed:float, play_sound:bool = true) -> void:
 	area.connect("body_exited", _on_body_exited)
 	if light_radius > 0:
 		UICore.instance.darkness_layer.add_source(self, light_radius)
+	modulate.a = bullet_a
 
 
 func _infer_direction_anim(_angle:Vector2 = normalized_dir) -> void:

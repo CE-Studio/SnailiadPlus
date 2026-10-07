@@ -14,6 +14,7 @@ const ATTACK_STOP_TIMEOUT:float = 0.9
 const ATTACK_START_TIMEOUT:float = 0.45
 const SHADOW_BALL_RADIUS:float = 80.0
 const SHADOW_BALL_COUNT:int = 5
+const SHADOW_BALL_AFTIMG_DELAY:float = 0.06
 const DECISION_TABLE:Array[float] = [
 	0.1640168826, 0.3892556902, 0.0336081053, 0.2246864975, 0.5434009453, 0.4227320437, 0.1017472328, 0.2041907897, 0.9950191347, 0.3634705228,
 	0.0779175897, 0.384822732,  0.3284047846, 0.0951552057, 0.1941055446, 0.496359046,  0.2428007567, 0.8280672868, 0.852732986,  0.6928913176,
@@ -46,6 +47,7 @@ const DEATH_FADE_COLOR:Color = Color("00c2f7")
 const BOOMERANG:PackedScene = preload("uid://d0r1jtwy6e5rq")
 const SHADOW_WAVE:PackedScene = preload("uid://to26wfc5ofk5")
 const DONUT:PackedScene = preload("uid://buae50mtgkrf5")
+const PBULLET_A:float = 0.55
 
 enum BossMode {
 	INTRO,
@@ -77,6 +79,7 @@ var gravity:Statics.DirsSurface = Statics.DirsSurface.FLOOR
 var target_gravity:Statics.DirsSurface = Statics.DirsSurface.NONE
 var decision_table_index:int = 0
 var shadowballs:Array[SnailySprite2D] = []
+var shadowball_aftimg_delay:float = 0.0
 var current_weapon:int = 2
 var just_hit_surface:bool = false
 var just_grav_jumped:bool = false
@@ -152,6 +155,8 @@ func _ready() -> void:
 	
 	if Statics.current_profile["difficulty"] == 2:
 		boss_speed += 0.1
+	
+	PlayerBullet.bullet_a = PBULLET_A
 
 
 func _physics_process(delta: float) -> void:
@@ -470,7 +475,7 @@ func _update_move() -> void:
 		_set_mode(BossMode.ATTACK)
 
 
-func _update_teleport() -> void:
+func _update_teleport(delta:float) -> void:
 	var real = self
 	if real is CharacterBody2D:
 		if not mode_initialized:
@@ -482,6 +487,7 @@ func _update_teleport() -> void:
 			for ball in shadowballs:
 				ball.global_position = tele_start
 			shadowball_group.visible = true
+			shadowball_aftimg_delay = 0.0
 			sfx_teleport.play()
 			var particle_state:int = ProjectSettings.get_setting("game/world/particles")
 			if particle_state == Statics.ParticleOptions.ENTITIES_ALL or particle_state == Statics.ParticleOptions.ALL:
@@ -505,6 +511,11 @@ func _update_teleport() -> void:
 				) * ball_radius
 			)
 			i += 1
+		shadowball_aftimg_delay -= delta
+		if shadowball_aftimg_delay <= 0.0:
+			for ball in shadowballs:
+				ball.create_afterimage(0.55, 0.0, 0.25, z_index - 1)
+			shadowball_aftimg_delay = SHADOW_BALL_AFTIMG_DELAY
 		real.velocity = Vector2.ZERO
 		_release_jump()
 		if mode_elapsed / TELEPORT_TIME >= 1.0:
@@ -602,7 +613,7 @@ func _update_ai(delta:float) -> void:
 		BossMode.ATTACK:
 			_update_attack(delta)
 		BossMode.TELEPORT:
-			_update_teleport()
+			_update_teleport(delta)
 		BossMode.STRAFE:
 			pass
 	jump_release_timeout -= delta

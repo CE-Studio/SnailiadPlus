@@ -43,6 +43,9 @@ var velocity_init:float = 0.0
 ## If this bullet is set to create afterimage hitboxes, this value tracks how many frames have passed
 ## since the last one was spawned
 var afterimage_tick:int = 0
+## A global setting for how opaque or transparent all [PlayerBullet] instances should be
+static var bullet_a:float = 1.0:
+	set(value): bullet_a = clampf(value, 0.0, 1.0)
 
 ## The sprite component of the bullet
 @onready var sprite:SnailySprite2D = $"SnailySprite2D"
@@ -76,6 +79,7 @@ func _spawn(dir:Vector2, rapid_shot:float, power_shot:bool) -> float:
 	if light_radius > 0:
 		UICore.instance.darkness_layer.add_source(self, light_radius)
 	afterimage_tick = randi_range(0, TICKS_BETWEEN_AFTERIMAGES - 1)
+	modulate.a = bullet_a
 	return cooldown / rapid_mult
 
 

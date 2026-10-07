@@ -30,6 +30,7 @@ func _ready() -> void:
 		radius = radius.rotated(rot_amount)
 	poly_outer.polygon = vertices
 	poly_inner.polygon = vertices
+	PlayerBullet.bullet_a = 1.0
 
 
 func _process(delta: float) -> void:
