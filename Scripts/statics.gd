@@ -352,22 +352,19 @@ static func save_profile(iprofile:int) -> void:
 	match iprofile:
 		1:
 			if iprofile == current_profile_id:
+				data_profile1 = current_profile.duplicate(true)
 				data_profile1["cutscene_flags"] = CutsceneController.save_flags()
 			file.store_string(JSON.stringify(data_profile1, "\t", false))
-			if current_profile_id == 1:
-				data_profile1 = current_profile.duplicate(true)
 		2:
 			if iprofile == current_profile_id:
+				data_profile2 = current_profile.duplicate(true)
 				data_profile2["cutscene_flags"] = CutsceneController.save_flags()
 			file.store_string(JSON.stringify(data_profile2, "\t", false))
-			if current_profile_id == 2:
-				data_profile2 = current_profile.duplicate(true)
 		3:
 			if iprofile == current_profile_id:
+				data_profile3 = current_profile.duplicate(true)
 				data_profile3["cutscene_flags"] = CutsceneController.save_flags()
 			file.store_string(JSON.stringify(data_profile3, "\t", false))
-			if current_profile_id == 3:
-				data_profile3 = current_profile.duplicate(true)
 	file.close()
 
 
