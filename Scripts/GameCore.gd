@@ -30,6 +30,8 @@ func _ready() -> void:
 	cam_layer.weapon_icons.update(false)
 	cam_layer.configure_for_aspect_ratio(ProjectSettings.get_setting("display/window/size/aspect_ratio"))
 	cam_layer.shake_setting = ProjectSettings.get_setting("game/visuals/screen_shake")
+	if Statics.is_in_boss_rush:
+		add_child(RushManager.new())
 
 
 func _process(delta: float) -> void:

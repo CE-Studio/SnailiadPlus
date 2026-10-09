@@ -139,6 +139,9 @@ func _process(delta: float) -> void:
 			cos(hand_thetas[i])
 		) * hand_radius
 		hands[i].can_be_pierced = hand_radius_target == 0.0
+	
+	if RushManager.instance and not in_death_anim and not intro_delay:
+		RushManager.instance.count_up_boss_time(0, delta)
 
 
 func try_shoot() -> void:

@@ -259,6 +259,9 @@ func _process(delta: float) -> void:
 			FootMode.keys()[mode_l],
 			FootMode.keys()[mode_r]
 		]
+	
+	if RushManager.instance and not in_death_anim and boss_mode != BossMode.INTRO:
+		RushManager.instance.count_up_boss_time(1, delta)
 
 
 func _tick_parts() -> void:

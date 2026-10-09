@@ -1539,9 +1539,16 @@ func adjust_health(amount:int, ignore_defense:bool = false, allow_parry_heal:boo
 			amount = 0
 		elif Statics.check_item(Item.ItemTypes.METAL_SHELL) and not ignore_defense:
 			amount = floori(amount * 0.5)
+	var difference:int = health
 	health += amount
 	health = clampi(health, 0, max_health)
 	UICore.instance.heart_group.update_hearts()
+	difference = health - difference
+	if RushManager.instance:
+		if difference > 0:
+			RushManager.instance.health_gained += abs(difference)
+		elif difference < 0:
+			RushManager.instance.health_lost += abs(difference)
 	if health == 0:
 		tick_death(0.0)
 	elif amount < 0 or shielded:
@@ -1558,6 +1565,8 @@ func adjust_health(amount:int, ignore_defense:bool = false, allow_parry_heal:boo
 		stunned = true
 		stun_timer = MAX_STUN_TIMER
 		if shielded:
+			if RushManager.instance:
+				RushManager.instance.shields += 1
 			if time_since_shell <= PARRY_WINDOW:
 				sfx_parry.play()
 				if allow_parry_heal:
@@ -1565,6 +1574,8 @@ func adjust_health(amount:int, ignore_defense:bool = false, allow_parry_heal:boo
 				if (Statics.get_particle_setting(Statics.ParticleOptions.ENTITIES_ALL)
 				or Statics.get_particle_setting(Statics.ParticleOptions.ALL)):
 					Statics.spawn_particle("Parry", Room.Layers.GROUND, position)
+				if RushManager.instance:
+					RushManager.instance.parries += 1
 				return true
 			else:
 				sfx_ping.play()
@@ -1629,6 +1640,8 @@ func _on_respawn_timeout() -> void:
 	reset_position(Statics.load_coords, true)
 	set_deferred("override_box_disable", false)
 	PlayerBullet.bullet_a = 1.0
+	if RushManager.instance:
+		RushManager.instance.reset()
 #endregion
 
 
@@ -1687,6 +1700,8 @@ func _shoot(_bullet_id:int, normalized_velocity:Vector2, pos:Vector2 = body.posi
 	var powered:bool = Statics.check_item(Item.ItemTypes.DEVASTATOR)
 	if powered and Statics.stack_weapon_mods:
 		rapid_mult = 2.0
+	if RushManager.instance:
+		RushManager.instance.add_bullet(_bullet_id)
 	var this_cooldown := new_bullet._spawn(normalized_velocity, rapid_mult, powered)
 	return this_cooldown
 

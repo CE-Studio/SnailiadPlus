@@ -231,6 +231,7 @@ collision_enabled = false
 z_index = -100
 
 [node name="Map" type="TileMapLayer" parent="BG1Layer" unique_id=1409559763]
+tile_map_data = PackedByteArray("AAAZAAYAAAAKANMAAAAZAAcAAAAKANQAAAAZAAgAAAAKANUAAAAaAAYAAAALANMAAAAaAAcAAAALANQAAAAaAAgAAAALANUAAAAbAAYAAAAMANMAAAAbAAcAAAAMANQAAAAbAAgAAAAMANUAAAA=")
 tile_set = ExtResource("2_hvyyy")
 collision_enabled = false
 
@@ -256,7 +257,6 @@ giga_spawn_pos = Vector2i(200, 120)
 z_index = 100
 
 [node name="Map" type="TileMapLayer" parent="FG1Layer" unique_id=1611616391]
-tile_map_data = PackedByteArray("AAAZAAYAAAAKANMAAAAZAAcAAAAKANQAAAAZAAgAAAAKANUAAAAaAAYAAAALANMAAAAaAAcAAAALANQAAAAaAAgAAAALANUAAAAbAAYAAAAMANMAAAAbAAcAAAAMANQAAAAbAAgAAAAMANUAAAA=")
 tile_set = ExtResource("2_hvyyy")
 collision_enabled = false
 

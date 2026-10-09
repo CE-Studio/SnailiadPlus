@@ -252,6 +252,9 @@ func _physics_process(delta:float) -> void:
 	if (last_state != "stomp" and mode != BossMode.INTRO
 	and position.distance_to(last_afterimage_spawn) >= AFTERIMAGE_MIN_DIST):
 		_spawn_afterimage()
+	
+	if RushManager.instance and not in_death_anim and mode != BossMode.INTRO:
+		RushManager.instance.count_up_boss_time(4, delta)
 
 
 func kill() -> void:
@@ -267,7 +270,7 @@ func kill() -> void:
 		set_timer = true
 		Statics.set_world_flag(Statics.WorldFlags.DEFEATED_BOSS4, true)
 		Statics.spawn_particle("ExplosionBossDefeat",
-			Room.Layers.FG1, position, [true, DEATH_TIME, true, true])
+			Room.Layers.FG1, position, [true, DEATH_TIME - 0.1, true, true])
 		UICore.instance.call_screen_shake_radial([2.0, DEATH_TIME, 2.0, 0.0, 0.0], UICore.ShakeCallMode.OVERWRITE_ALL)
 		GameCore.instance.music_manager.stop_all(true)
 		SInput.read_inputs = false

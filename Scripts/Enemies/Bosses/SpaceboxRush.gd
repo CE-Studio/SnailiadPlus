@@ -103,6 +103,9 @@ func _physics_process(delta: float) -> void:
 	for i in range(babyboxes.size() - 1, -1, -1):
 		if babyboxes[i] == null:
 			babyboxes.remove_at(i)
+	
+	if RushManager.instance and not in_death_anim and not intro_delay:
+		RushManager.instance.count_up_boss_time(2, delta)
 
 
 func play_phase_anim(anim_name:String = "", set_as_current:bool = true) -> String:
