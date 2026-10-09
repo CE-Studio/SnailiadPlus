@@ -18,6 +18,7 @@ var sun_velocity:Vector2 = Vector2(-110.0, -300.0)
 @export var sun:SnailySprite2D
 @export var poly_outer:Polygon2D
 @export var poly_inner:Polygon2D
+@export var header:SnailyText
 #endregion
 
 
@@ -31,6 +32,7 @@ func _ready() -> void:
 	poly_outer.polygon = vertices
 	poly_inner.polygon = vertices
 	PlayerBullet.bullet_a = 1.0
+	header.enable_rainbow_scroll()
 
 
 func _process(delta: float) -> void:

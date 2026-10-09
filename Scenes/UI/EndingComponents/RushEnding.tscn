@@ -5,7 +5,12 @@
 [ext_resource type="Texture2D" uid="uid://dv7mahgbkjte6" path="res://Assets/Images/Entities/Boss4Rush.png" id="3_42gfh"]
 [ext_resource type="Script" uid="uid://boee2837la0pr" path="res://Scripts/Classes/SnailySprite.gd" id="4_x6s00"]
 [ext_resource type="AudioStream" uid="uid://du3qhjd888o6a" path="res://Assets/Sounds/Sfx/SunDeath.ogg" id="5_mjr64"]
+[ext_resource type="Texture2D" uid="uid://dnlvoym7mocsg" path="res://Assets/Images/Endings/EndingBackground.png" id="5_nhij5"]
+[ext_resource type="Texture2D" uid="uid://dkxkef70iyah0" path="res://Assets/Images/Endings/EndingBossRush.png" id="6_6f35k"]
+[ext_resource type="AudioStream" uid="uid://c2r5lkfggrvt4" path="res://Assets/Sounds/Sfx/RushEndingLight.ogg" id="6_42gfh"]
 [ext_resource type="Texture2D" uid="uid://cv67pgk0cf0w4" path="res://Assets/Images/UI/FadeBorder.png" id="6_eaunt"]
+[ext_resource type="AudioStream" uid="uid://bc76x08shmhdw" path="res://Assets/Sounds/Music/BossRushResults.ogg" id="7_x6s00"]
+[ext_resource type="Script" uid="uid://dqt4uo3ejug3v" path="res://Scripts/Classes/SnailyText.gd" id="11_6f35k"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_nqkxp"]
 atlas = ExtResource("3_42gfh")
@@ -153,6 +158,66 @@ tracks/8/keys = {
 "update": 1,
 "values": [true]
 }
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("Light:playing")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("Music:playing")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("EndingBacking:position")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(200, 120)]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("EndingPic:position")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(200, 120)]
+}
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("Header:position")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 16)]
+}
 
 [sub_resource type="Animation" id="Animation_c1sr8"]
 resource_name = "anim"
@@ -283,6 +348,66 @@ tracks/9/keys = {
 "update": 1,
 "values": [false, true]
 }
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("Light:playing")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(5.1),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("Music:playing")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(8),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("EndingBacking:position")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
+"times": PackedFloat32Array(0, 8, 10),
+"transitions": PackedFloat32Array(1, 0.2, 1),
+"update": 0,
+"values": [Vector2(600, 120), Vector2(600, 120), Vector2(200, 120)]
+}
+tracks/13/type = "value"
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/path = NodePath("EndingPic:position")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/keys = {
+"times": PackedFloat32Array(0, 8, 10),
+"transitions": PackedFloat32Array(1, 0.2, 1),
+"update": 0,
+"values": [Vector2(-200, 120), Vector2(-200, 120), Vector2(200, 120)]
+}
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("Header:position")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"times": PackedFloat32Array(0, 9.7, 10.5, 11, 11.900001),
+"transitions": PackedFloat32Array(1, 0.4, 1, -4, 1),
+"update": 0,
+"values": [Vector2(0, 256), Vector2(0, 256), Vector2(0, 112), Vector2(0, 112), Vector2(0, 16)]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_y18ao"]
 _data = {
@@ -290,12 +415,13 @@ _data = {
 &"anim": SubResource("Animation_c1sr8")
 }
 
-[node name="RushEnding" type="Node2D" unique_id=605841645 node_paths=PackedStringArray("sun", "poly_outer", "poly_inner")]
+[node name="RushEnding" type="Node2D" unique_id=605841645 node_paths=PackedStringArray("sun", "poly_outer", "poly_inner", "header")]
 z_index = 110
 script = ExtResource("1_y451y")
 sun = NodePath("Sun")
 poly_outer = NodePath("CenterFlashOuter")
 poly_inner = NodePath("CenterFlashInner")
+header = NodePath("Header")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=486193880]
 modulate = Color(0, 0, 0, 0)
@@ -309,6 +435,33 @@ autoplay = "default"
 script = ExtResource("4_x6s00")
 metadata/_custom_type_script = "uid://boee2837la0pr"
 
+[node name="EndingBacking" type="Sprite2D" parent="." unique_id=117054208]
+position = Vector2(200, 120)
+texture = ExtResource("5_nhij5")
+
+[node name="EndingPic" type="Sprite2D" parent="." unique_id=1772651487]
+position = Vector2(200, 120)
+texture = ExtResource("6_6f35k")
+
+[node name="Header" type="RichTextLabel" parent="." unique_id=670874602]
+custom_minimum_size = Vector2(400, 0)
+custom_maximum_size = Vector2(400, -1)
+clip_contents = false
+offset_top = 16.0
+offset_right = 400.0
+offset_bottom = 55.999863
+mouse_filter = 2
+theme_override_font_sizes/normal_font_size = 24
+bbcode_enabled = true
+text = "Boss Rush complete!!"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 1
+script = ExtResource("11_6f35k")
+text_scale = 3
+border_scale = 1
+metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1780324768]
 libraries/ = SubResource("AnimationLibrary_y18ao")
 autoplay = &"anim"
@@ -316,6 +469,14 @@ autoplay = &"anim"
 [node name="SunDeath" type="AudioStreamPlayer" parent="." unique_id=1596157313]
 stream = ExtResource("5_mjr64")
 bus = &"Sfx"
+
+[node name="Light" type="AudioStreamPlayer" parent="." unique_id=870961382]
+stream = ExtResource("6_42gfh")
+bus = &"Sfx"
+
+[node name="Music" type="AudioStreamPlayer" parent="." unique_id=1648388415]
+stream = ExtResource("7_x6s00")
+bus = &"Music"
 
 [node name="CenterFlashOuter" type="Polygon2D" parent="." unique_id=3521936]
 position = Vector2(200, 120)
