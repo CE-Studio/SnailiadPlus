@@ -51,6 +51,8 @@ func _ready() -> void:
 	if autoplay != "" or autoplay_any_on_spawn:
 		if autoplay_any_on_spawn:
 			play_any_random()
+	if autoplay == "" and not is_playing() and autoplay_next != "":
+		play(autoplay_next)
 	if start_all_on_random_frame or start_on_random_frame.has(animation):
 		_set_random_frame()
 	else:

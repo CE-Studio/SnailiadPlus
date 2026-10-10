@@ -301,6 +301,7 @@ eyelid = NodePath("SpriteGroup/Eyelid")
 max_health = 2000
 max_health_hard = 4000
 defense = 5
+can_die = false
 can_damage = false
 kill_particle_range = Vector2i(0, 0)
 kill_particle_types = Array[String]([])

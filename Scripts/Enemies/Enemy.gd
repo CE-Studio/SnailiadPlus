@@ -30,6 +30,7 @@ const SFX_HIT4:AudioStream = preload("uid://brxaghtx4yim")
 @export var can_be_pierced:bool = true
 @export var make_sound_on_ping:bool = true
 @export var invulnerable:bool = false
+@export var can_die:bool = true
 @export var can_damage:bool = true
 @export var shield_entity:bool = false
 @export var interact_with_environments:bool = true
@@ -265,6 +266,8 @@ func _physics_process(delta) -> void:
 		if was_hit:
 			_spawn_damage_num(max_damage, max_color)
 		if max_damage > 0 and not shield_entity:
+			if RushManager.instance:
+				RushManager.instance.damage += max_damage
 			if health - max_damage <= 0:
 				kill_flag = true
 			else:
@@ -344,7 +347,7 @@ func _damage(health_lost:int, sound:bool = true, allow_kill:bool = false) -> voi
 	damaged_this_tick = true
 	if sound and health > 0:
 		Statics.play_sfx_disconnected(hit_sounds[randi_range(0, 3)])
-	if allow_kill and health <= 0:
+	if allow_kill and health <= 0 and can_die:
 		kill()
 
 

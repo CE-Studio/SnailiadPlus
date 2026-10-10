@@ -282,7 +282,6 @@ func kill() -> void:
 		GameCore.instance.add_child(fade)
 		AchievementCore.instance.check_add(AchievementCore.Achievements.BOSS_RUSH)
 		Statics.add_unlock_condition(Statics.Unlocks.CHAR_SEL)
-		Statics.increment_boss_rush_timer = false
 	else:
 		GameCore.instance.current_room.set_ground_collision(true)
 		boss_environment.despawn()
@@ -488,6 +487,7 @@ func _update_intro() -> void:
 		GameCore.instance.current_room.set_ground_collision(false)
 	if mode_elapsed > INTRO_END:
 		can_damage = true
+		Statics.increment_boss_rush_timer = true
 		_set_mode(BossMode.STOMP)
 
 

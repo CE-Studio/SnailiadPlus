@@ -344,6 +344,7 @@ parry_resist = null
 can_be_pierced = null
 make_sound_on_ping = null
 invulnerable = null
+can_die = false
 can_damage = false
 shield_entity = null
 interact_with_environments = null

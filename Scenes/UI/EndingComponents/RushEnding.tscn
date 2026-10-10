@@ -10,7 +10,10 @@
 [ext_resource type="AudioStream" uid="uid://c2r5lkfggrvt4" path="res://Assets/Sounds/Sfx/RushEndingLight.ogg" id="6_42gfh"]
 [ext_resource type="Texture2D" uid="uid://cv67pgk0cf0w4" path="res://Assets/Images/UI/FadeBorder.png" id="6_eaunt"]
 [ext_resource type="AudioStream" uid="uid://bc76x08shmhdw" path="res://Assets/Sounds/Music/BossRushResults.ogg" id="7_x6s00"]
+[ext_resource type="SpriteFrames" uid="uid://bllesyayiypaa" path="res://Resources/SpriteFrames/item.tres" id="8_broqk"]
 [ext_resource type="Script" uid="uid://dqt4uo3ejug3v" path="res://Scripts/Classes/SnailyText.gd" id="11_6f35k"]
+[ext_resource type="AudioStream" uid="uid://p3bp61rmw7rh" path="res://Assets/Sounds/Sfx/MenuBeep2.ogg" id="12_g0pkf"]
+[ext_resource type="AudioStream" uid="uid://d2mf2pko44ryn" path="res://Assets/Sounds/Sfx/MenuBeep1.ogg" id="13_8s4iv"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_nqkxp"]
 atlas = ExtResource("3_42gfh")
@@ -218,10 +221,154 @@ tracks/13/keys = {
 "update": 0,
 "values": [Vector2(0, 16)]
 }
+tracks/14/type = "value"
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/path = NodePath("BulletStats:position")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(16, 80)]
+}
+tracks/15/type = "value"
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath("BossTimes:position")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(152, 72)]
+}
+tracks/16/type = "value"
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/path = NodePath("MiscStats:position")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(288, 80)]
+}
+tracks/17/type = "value"
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/path = NodePath("Header:visible")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
+tracks/17/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/18/type = "value"
+tracks/18/imported = false
+tracks/18/enabled = true
+tracks/18/path = NodePath("BulletStats:visible")
+tracks/18/interp = 1
+tracks/18/loop_wrap = true
+tracks/18/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/19/type = "value"
+tracks/19/imported = false
+tracks/19/enabled = true
+tracks/19/path = NodePath("BossTimes:visible")
+tracks/19/interp = 1
+tracks/19/loop_wrap = true
+tracks/19/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/20/type = "value"
+tracks/20/imported = false
+tracks/20/enabled = true
+tracks/20/path = NodePath("MiscStats:visible")
+tracks/20/interp = 1
+tracks/20/loop_wrap = true
+tracks/20/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/21/type = "value"
+tracks/21/imported = false
+tracks/21/enabled = true
+tracks/21/path = NodePath("ItemGroup:visible")
+tracks/21/interp = 1
+tracks/21/loop_wrap = true
+tracks/21/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/22/type = "value"
+tracks/22/imported = false
+tracks/22/enabled = true
+tracks/22/path = NodePath("EndingBacking:modulate")
+tracks/22/interp = 1
+tracks/22/loop_wrap = true
+tracks/22/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/23/type = "value"
+tracks/23/imported = false
+tracks/23/enabled = true
+tracks/23/path = NodePath("EndingPic:modulate")
+tracks/23/interp = 1
+tracks/23/loop_wrap = true
+tracks/23/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/24/type = "value"
+tracks/24/imported = false
+tracks/24/enabled = true
+tracks/24/path = NodePath("StatBacking:scale")
+tracks/24/interp = 1
+tracks/24/loop_wrap = true
+tracks/24/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/25/type = "value"
+tracks/25/imported = false
+tracks/25/enabled = true
+tracks/25/path = NodePath("ItemGroup/NewLowest:modulate")
+tracks/25/interp = 1
+tracks/25/loop_wrap = true
+tracks/25/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
 
 [sub_resource type="Animation" id="Animation_c1sr8"]
 resource_name = "anim"
-length = 20.0
+length = 15.0
 step = 0.025
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -254,14 +401,17 @@ tracks/2/path = NodePath(".")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(1, 4),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(1, 4, 11.5),
+"transitions": PackedFloat32Array(1, 1, 1),
 "values": [{
 "args": [],
 "method": &"fade_ui_out"
 }, {
 "args": [],
 "method": &"kill_sun"
+}, {
+"args": [],
+"method": &"start_ticking_items"
 }]
 }
 tracks/3/type = "value"
@@ -408,6 +558,150 @@ tracks/14/keys = {
 "update": 0,
 "values": [Vector2(0, 256), Vector2(0, 256), Vector2(0, 112), Vector2(0, 112), Vector2(0, 16)]
 }
+tracks/15/type = "value"
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/path = NodePath("BulletStats:position")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/keys = {
+"times": PackedFloat32Array(0, 11.400001, 12.400001),
+"transitions": PackedFloat32Array(1, 0.4, 1),
+"update": 0,
+"values": [Vector2(-120, 80), Vector2(-120, 80), Vector2(16, 80)]
+}
+tracks/16/type = "value"
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/path = NodePath("BossTimes:position")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/keys = {
+"times": PackedFloat32Array(0, 11.400001, 12.400001),
+"transitions": PackedFloat32Array(1, 0.4, 1),
+"update": 0,
+"values": [Vector2(152, 264), Vector2(152, 264), Vector2(152, 72)]
+}
+tracks/17/type = "value"
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/path = NodePath("MiscStats:position")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
+tracks/17/keys = {
+"times": PackedFloat32Array(0, 11.400001, 12.400001),
+"transitions": PackedFloat32Array(1, 0.4, 1),
+"update": 0,
+"values": [Vector2(424, 80), Vector2(424, 80), Vector2(288, 80)]
+}
+tracks/18/type = "value"
+tracks/18/imported = false
+tracks/18/enabled = true
+tracks/18/path = NodePath("Header:visible")
+tracks/18/interp = 1
+tracks/18/loop_wrap = true
+tracks/18/keys = {
+"times": PackedFloat32Array(0, 9.7),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/19/type = "value"
+tracks/19/imported = false
+tracks/19/enabled = true
+tracks/19/path = NodePath("BulletStats:visible")
+tracks/19/interp = 1
+tracks/19/loop_wrap = true
+tracks/19/keys = {
+"times": PackedFloat32Array(0, 11.400001),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/20/type = "value"
+tracks/20/imported = false
+tracks/20/enabled = true
+tracks/20/path = NodePath("BossTimes:visible")
+tracks/20/interp = 1
+tracks/20/loop_wrap = true
+tracks/20/keys = {
+"times": PackedFloat32Array(0, 11.400001),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/21/type = "value"
+tracks/21/imported = false
+tracks/21/enabled = true
+tracks/21/path = NodePath("MiscStats:visible")
+tracks/21/interp = 1
+tracks/21/loop_wrap = true
+tracks/21/keys = {
+"times": PackedFloat32Array(0, 11.400001),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/22/type = "value"
+tracks/22/imported = false
+tracks/22/enabled = true
+tracks/22/path = NodePath("ItemGroup:visible")
+tracks/22/interp = 1
+tracks/22/loop_wrap = true
+tracks/22/keys = {
+"times": PackedFloat32Array(0, 11.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/23/type = "value"
+tracks/23/imported = false
+tracks/23/enabled = false
+tracks/23/path = NodePath("EndingBacking:modulate")
+tracks/23/interp = 1
+tracks/23/loop_wrap = true
+tracks/23/keys = {
+"times": PackedFloat32Array(11, 12.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(0.49803922, 0.49803922, 0.49803922, 1)]
+}
+tracks/24/type = "value"
+tracks/24/imported = false
+tracks/24/enabled = false
+tracks/24/path = NodePath("EndingPic:modulate")
+tracks/24/interp = 1
+tracks/24/loop_wrap = true
+tracks/24/keys = {
+"times": PackedFloat32Array(11, 12.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(0.49803922, 0.49803922, 0.49803922, 1)]
+}
+tracks/25/type = "value"
+tracks/25/imported = false
+tracks/25/enabled = true
+tracks/25/path = NodePath("StatBacking:scale")
+tracks/25/interp = 1
+tracks/25/loop_wrap = true
+tracks/25/keys = {
+"times": PackedFloat32Array(0, 11.5, 12.8),
+"transitions": PackedFloat32Array(1, 0.5, 1),
+"update": 0,
+"values": [Vector2(1, 1e-05), Vector2(1, 0), Vector2(1, 1)]
+}
+tracks/26/type = "value"
+tracks/26/imported = false
+tracks/26/enabled = true
+tracks/26/path = NodePath("ItemGroup/NewLowest:modulate")
+tracks/26/interp = 1
+tracks/26/loop_wrap = true
+tracks/26/keys = {
+"times": PackedFloat32Array(0, 13, 13.400001),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_y18ao"]
 _data = {
@@ -415,13 +709,24 @@ _data = {
 &"anim": SubResource("Animation_c1sr8")
 }
 
-[node name="RushEnding" type="Node2D" unique_id=605841645 node_paths=PackedStringArray("sun", "poly_outer", "poly_inner", "header")]
+[node name="RushEnding" type="Node2D" unique_id=605841645 node_paths=PackedStringArray("anim", "sun", "poly_outer", "poly_inner", "header", "bullet_header", "bullet_stats", "time_header", "time_stats", "misc_header", "misc_stats", "item_group", "new_best_time", "new_lowest_items", "continue_prompt")]
 z_index = 110
 script = ExtResource("1_y451y")
+anim = NodePath("AnimationPlayer")
 sun = NodePath("Sun")
 poly_outer = NodePath("CenterFlashOuter")
 poly_inner = NodePath("CenterFlashInner")
 header = NodePath("Header")
+bullet_header = NodePath("BulletStats")
+bullet_stats = NodePath("BulletStats/Numbers")
+time_header = NodePath("BossTimes")
+time_stats = NodePath("BossTimes/Numbers")
+misc_header = NodePath("MiscStats")
+misc_stats = NodePath("MiscStats/Numbers")
+item_group = NodePath("ItemGroup")
+new_best_time = NodePath("BossTimes/NewBest")
+new_lowest_items = NodePath("ItemGroup/NewLowest")
+continue_prompt = NodePath("PressToContinue")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=486193880]
 modulate = Color(0, 0, 0, 0)
@@ -443,13 +748,19 @@ texture = ExtResource("5_nhij5")
 position = Vector2(200, 120)
 texture = ExtResource("6_6f35k")
 
+[node name="StatBacking" type="Polygon2D" parent="." unique_id=1273652875]
+position = Vector2(200, 120)
+color = Color(0, 0, 0, 0.6862745)
+polygon = PackedVector2Array(-224, -64, 224, -64, 224, 64, -224, 64)
+uv = PackedVector2Array(-208, -73, -107, -65, -108, -12, -208, -19)
+
 [node name="Header" type="RichTextLabel" parent="." unique_id=670874602]
 custom_minimum_size = Vector2(400, 0)
 custom_maximum_size = Vector2(400, -1)
 clip_contents = false
 offset_top = 16.0
 offset_right = 400.0
-offset_bottom = 55.999863
+offset_bottom = 55.99994
 mouse_filter = 2
 theme_override_font_sizes/normal_font_size = 24
 bbcode_enabled = true
@@ -459,6 +770,317 @@ scroll_active = false
 horizontal_alignment = 1
 script = ExtResource("11_6f35k")
 text_scale = 3
+quick_load_text = "Boss Rush complete!!"
+border_scale = 1
+metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
+
+[node name="BulletStats" type="RichTextLabel" parent="." unique_id=161130293]
+self_modulate = Color(0.9647059, 0.8039216, 0.70980394, 1)
+custom_maximum_size = Vector2(400, -1)
+clip_contents = false
+offset_left = 16.0
+offset_top = 80.0
+offset_right = 112.0
+offset_bottom = 96.0
+mouse_filter = 2
+theme_override_constants/line_separation = 0
+theme_override_font_sizes/normal_font_size = 8
+bbcode_enabled = true
+text = "Bullets fired"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 1
+script = ExtResource("11_6f35k")
+text_scale = 1
+quick_load_text = "Bullets fired"
+border_scale = 1
+metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
+
+[node name="Numbers" type="RichTextLabel" parent="BulletStats" unique_id=1367756541]
+custom_maximum_size = Vector2(400, -1)
+clip_contents = false
+layout_mode = 0
+offset_left = 56.0
+offset_top = 16.0
+offset_right = 144.0
+offset_bottom = 152.0
+mouse_filter = 2
+theme_override_constants/line_separation = 2
+theme_override_font_sizes/normal_font_size = 8
+bbcode_enabled = true
+text = "0
+0
+0
+0
+0
+0"
+fit_content = true
+scroll_active = false
+script = ExtResource("11_6f35k")
+text_scale = 1
+border_scale = 1
+line_separation = 2
+metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
+
+[node name="BossTimes" type="RichTextLabel" parent="." unique_id=483614994]
+self_modulate = Color(0.6117647, 0.9137255, 0.98039216, 1)
+custom_maximum_size = Vector2(400, -1)
+clip_contents = false
+offset_left = 152.0
+offset_top = 72.0
+offset_right = 248.0
+offset_bottom = 88.0
+mouse_filter = 2
+theme_override_constants/line_separation = 0
+theme_override_font_sizes/normal_font_size = 8
+bbcode_enabled = true
+text = "Time taken"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 1
+script = ExtResource("11_6f35k")
+text_scale = 1
+quick_load_text = "Time taken"
+border_scale = 1
+metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
+
+[node name="Numbers" type="RichTextLabel" parent="BossTimes" unique_id=1808251694]
+custom_maximum_size = Vector2(400, -1)
+clip_contents = false
+layout_mode = 0
+offset_left = -32.0
+offset_top = 16.0
+offset_right = 128.0
+offset_bottom = 32.0
+mouse_filter = 2
+theme_override_constants/line_separation = 2
+theme_override_font_sizes/normal_font_size = 8
+bbcode_enabled = true
+text = "Super Shellbreaker: 00:00.00
+Vis Vires: 00:00.00
+Time Cube: 00:00.00
+Sun Snail: 00:00.00
+Giga Sun Snail: 00:00.00
+Total: 00:00.00"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 1
+script = ExtResource("11_6f35k")
+text_scale = 1
+border_scale = 1
+line_separation = 2
+metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
+
+[node name="NewBest" type="RichTextLabel" parent="BossTimes" unique_id=680738211]
+custom_maximum_size = Vector2(400, -1)
+clip_contents = false
+layout_mode = 0
+offset_left = -32.0
+offset_top = 76.0
+offset_right = 128.0
+offset_bottom = 92.0
+mouse_filter = 2
+theme_override_constants/line_separation = 2
+theme_override_font_sizes/normal_font_size = 8
+bbcode_enabled = true
+text = "New best for Snaily!!"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 1
+script = ExtResource("11_6f35k")
+text_scale = 1
+border_scale = 1
+line_separation = 2
+metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
+
+[node name="MiscStats" type="RichTextLabel" parent="." unique_id=35320088]
+self_modulate = Color(0.7019608, 0.972549, 0.52156866, 1)
+custom_maximum_size = Vector2(400, -1)
+clip_contents = false
+offset_left = 288.0
+offset_top = 80.0
+offset_right = 384.0
+offset_bottom = 96.0
+mouse_filter = 2
+theme_override_constants/line_separation = 0
+theme_override_font_sizes/normal_font_size = 8
+bbcode_enabled = true
+text = "Other stats"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 1
+script = ExtResource("11_6f35k")
+text_scale = 1
+quick_load_text = "Other stats"
+border_scale = 1
+metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
+
+[node name="Numbers" type="RichTextLabel" parent="MiscStats" unique_id=1094571468]
+custom_maximum_size = Vector2(400, -1)
+clip_contents = false
+layout_mode = 0
+offset_left = -32.0
+offset_top = 16.0
+offset_right = 128.0
+offset_bottom = 32.0
+mouse_filter = 2
+theme_override_constants/line_separation = 2
+theme_override_font_sizes/normal_font_size = 8
+bbcode_enabled = true
+text = "Damage dealt: 0
+Times shielded: 0
+Times parried: 0
+Health lost: 0
+Health regained: 0"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 1
+script = ExtResource("11_6f35k")
+text_scale = 1
+border_scale = 1
+line_separation = 2
+metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
+
+[node name="ItemGroup" type="Node2D" parent="." unique_id=106247855]
+position = Vector2(32, 192)
+
+[node name="0" type="AnimatedSprite2D" parent="ItemGroup" unique_id=326935162]
+sprite_frames = ExtResource("8_broqk")
+animation = &"unknown"
+script = ExtResource("4_x6s00")
+start_all_on_random_frame = true
+autoplay_next = "peashooter"
+metadata/_custom_type_script = "uid://boee2837la0pr"
+
+[node name="1" type="AnimatedSprite2D" parent="ItemGroup" unique_id=1187810660]
+position = Vector2(32, 0)
+sprite_frames = ExtResource("8_broqk")
+animation = &"unknown"
+script = ExtResource("4_x6s00")
+start_all_on_random_frame = true
+autoplay_next = "boomerang"
+metadata/_custom_type_script = "uid://boee2837la0pr"
+
+[node name="2" type="AnimatedSprite2D" parent="ItemGroup" unique_id=1426625071]
+position = Vector2(64, 0)
+sprite_frames = ExtResource("8_broqk")
+animation = &"unknown"
+script = ExtResource("4_x6s00")
+start_all_on_random_frame = true
+autoplay_next = "rainbow_wave"
+metadata/_custom_type_script = "uid://boee2837la0pr"
+
+[node name="3" type="AnimatedSprite2D" parent="ItemGroup" unique_id=1834055607]
+position = Vector2(96, 0)
+sprite_frames = ExtResource("8_broqk")
+animation = &"unknown"
+script = ExtResource("4_x6s00")
+start_all_on_random_frame = true
+autoplay_next = "devastator"
+metadata/_custom_type_script = "uid://boee2837la0pr"
+
+[node name="4" type="AnimatedSprite2D" parent="ItemGroup" unique_id=787922768]
+position = Vector2(128, 0)
+sprite_frames = ExtResource("8_broqk")
+animation = &"unknown"
+script = ExtResource("4_x6s00")
+start_all_on_random_frame = true
+autoplay_next = "rapid_fire"
+metadata/_custom_type_script = "uid://boee2837la0pr"
+
+[node name="5" type="AnimatedSprite2D" parent="ItemGroup" unique_id=418109827]
+position = Vector2(160, 0)
+sprite_frames = ExtResource("8_broqk")
+animation = &"unknown"
+script = ExtResource("4_x6s00")
+start_all_on_random_frame = true
+autoplay_next = "shell_shield"
+metadata/_custom_type_script = "uid://boee2837la0pr"
+
+[node name="6" type="AnimatedSprite2D" parent="ItemGroup" unique_id=442222847]
+position = Vector2(192, 0)
+sprite_frames = ExtResource("8_broqk")
+animation = &"unknown"
+script = ExtResource("4_x6s00")
+start_all_on_random_frame = true
+autoplay_next = "high_jump"
+metadata/_custom_type_script = "uid://boee2837la0pr"
+
+[node name="7" type="AnimatedSprite2D" parent="ItemGroup" unique_id=237678956]
+position = Vector2(224, 0)
+sprite_frames = ExtResource("8_broqk")
+animation = &"unknown"
+script = ExtResource("4_x6s00")
+start_all_on_random_frame = true
+autoplay_next = "gravity_shell"
+metadata/_custom_type_script = "uid://boee2837la0pr"
+
+[node name="8" type="AnimatedSprite2D" parent="ItemGroup" unique_id=2113936974]
+position = Vector2(256, 0)
+sprite_frames = ExtResource("8_broqk")
+animation = &"unknown"
+script = ExtResource("4_x6s00")
+start_all_on_random_frame = true
+autoplay_next = "gravity_shock"
+metadata/_custom_type_script = "uid://boee2837la0pr"
+
+[node name="9" type="AnimatedSprite2D" parent="ItemGroup" unique_id=2065064585]
+position = Vector2(288, 0)
+sprite_frames = ExtResource("8_broqk")
+animation = &"unknown"
+script = ExtResource("4_x6s00")
+start_all_on_random_frame = true
+autoplay_next = "heart_container"
+metadata/_custom_type_script = "uid://boee2837la0pr"
+
+[node name="10" type="AnimatedSprite2D" parent="ItemGroup" unique_id=1826180]
+position = Vector2(320, 0)
+sprite_frames = ExtResource("8_broqk")
+animation = &"unknown"
+script = ExtResource("4_x6s00")
+start_all_on_random_frame = true
+autoplay_next = "heart_container"
+metadata/_custom_type_script = "uid://boee2837la0pr"
+
+[node name="NewLowest" type="RichTextLabel" parent="ItemGroup" unique_id=420104740]
+custom_maximum_size = Vector2(400, -1)
+clip_contents = false
+offset_left = 80.0
+offset_top = 16.0
+offset_right = 240.0
+offset_bottom = 32.0
+mouse_filter = 2
+theme_override_constants/line_separation = 2
+theme_override_font_sizes/normal_font_size = 8
+bbcode_enabled = true
+text = "New lowest for Snaily!!"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 1
+script = ExtResource("11_6f35k")
+text_scale = 1
+border_scale = 1
+line_separation = 2
+metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
+
+[node name="PressToContinue" type="RichTextLabel" parent="." unique_id=407260842]
+clip_contents = false
+offset_left = -8.0
+offset_top = 200.0
+offset_right = 392.0
+offset_bottom = 231.0
+mouse_filter = 2
+theme_override_constants/line_separation = 0
+theme_override_font_sizes/normal_font_size = 8
+bbcode_enabled = true
+text = "Press anything to continue"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 2
+vertical_alignment = 2
+script = ExtResource("11_6f35k")
+text_scale = 1
+quick_load_text = "Press anything to save and continue"
 border_scale = 1
 metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
 
@@ -477,6 +1099,14 @@ bus = &"Sfx"
 [node name="Music" type="AudioStreamPlayer" parent="." unique_id=1648388415]
 stream = ExtResource("7_x6s00")
 bus = &"Music"
+
+[node name="Continue" type="AudioStreamPlayer" parent="." unique_id=1431668798]
+stream = ExtResource("12_g0pkf")
+bus = &"Sfx"
+
+[node name="Select" type="AudioStreamPlayer" parent="." unique_id=837358964]
+stream = ExtResource("13_8s4iv")
+bus = &"Sfx"
 
 [node name="CenterFlashOuter" type="Polygon2D" parent="." unique_id=3521936]
 position = Vector2(200, 120)

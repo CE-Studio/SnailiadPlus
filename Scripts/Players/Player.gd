@@ -356,7 +356,7 @@ func _physics_process(delta:float) -> void:
 		position = body.position
 		return
 
-	if not in_death_cutscene and not CutsceneController.instance.running:
+	if not in_death_cutscene and not CutsceneController.instance.running and SInput.read_inputs:
 		idle_timer += delta
 	if idle_timer >= time_until_idle and not is_idling:
 		set_idle_anim(true)
@@ -1701,13 +1701,13 @@ func _shoot(_bullet_id:int, normalized_velocity:Vector2, pos:Vector2 = body.posi
 	if powered and Statics.stack_weapon_mods:
 		rapid_mult = 2.0
 	if RushManager.instance:
-		RushManager.instance.add_bullet(_bullet_id)
+		RushManager.instance.add_bullet((_bullet_id >> 1) - 1)
 	var this_cooldown := new_bullet._spawn(normalized_velocity, rapid_mult, powered)
 	return this_cooldown
 
 
 func _shoot_grav_shock() -> PlayerBullet:
-	var bullet_scene:PackedScene = load("res://Scenes/Entities/Bullets/Player/PlayerBulletGravShock.tscn")
+	var bullet_scene:PackedScene = load("uid://br8mutha632sc")
 	var new_bullet:PlayerBullet = bullet_scene.instantiate()
 	var vel:Vector2
 	match gravity_dir:
@@ -1718,6 +1718,8 @@ func _shoot_grav_shock() -> PlayerBullet:
 	var powered = Statics.check_item(Item.ItemTypes.METAL_SHELL)
 	add_child(new_bullet)
 	new_bullet._spawn(vel, false, powered)
+	if RushManager.instance:
+		RushManager.instance.add_bullet(7)
 	return new_bullet
 
 
@@ -1732,7 +1734,7 @@ func _shoot_shockwaves() -> void:
 
 
 func _instance_shockwave(_position:Vector2, _direction:Vector2) -> void:
-	var bullet_scene:PackedScene = load("res://Scenes/Entities/Bullets/Player/PlayerBulletShockwave.tscn")
+	var bullet_scene:PackedScene = load("uid://l7g3jlavks84")
 	var ground:Node2D = GameCore.instance.current_room.layer_ground
 	
 	var new_wave:PlayerBullet = bullet_scene.instantiate()
