@@ -14,6 +14,7 @@
 [ext_resource type="Script" uid="uid://dqt4uo3ejug3v" path="res://Scripts/Classes/SnailyText.gd" id="11_6f35k"]
 [ext_resource type="AudioStream" uid="uid://p3bp61rmw7rh" path="res://Assets/Sounds/Sfx/MenuBeep2.ogg" id="12_g0pkf"]
 [ext_resource type="AudioStream" uid="uid://d2mf2pko44ryn" path="res://Assets/Sounds/Sfx/MenuBeep1.ogg" id="13_8s4iv"]
+[ext_resource type="Texture2D" uid="uid://bpo6uchb1gs50" path="res://Assets/Images/UI/Panel.png" id="15_8s4iv"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_nqkxp"]
 atlas = ExtResource("3_42gfh")
@@ -56,7 +57,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:modulate")
+tracks/0/path = NodePath("BackingFade:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -356,7 +357,7 @@ tracks/24/keys = {
 tracks/25/type = "value"
 tracks/25/imported = false
 tracks/25/enabled = true
-tracks/25/path = NodePath("ItemGroup/NewLowest:modulate")
+tracks/25/path = NodePath("NewLowest:modulate")
 tracks/25/interp = 1
 tracks/25/loop_wrap = true
 tracks/25/keys = {
@@ -373,7 +374,7 @@ step = 0.025
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:modulate")
+tracks/0/path = NodePath("BackingFade:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -693,7 +694,7 @@ tracks/25/keys = {
 tracks/26/type = "value"
 tracks/26/imported = false
 tracks/26/enabled = true
-tracks/26/path = NodePath("ItemGroup/NewLowest:modulate")
+tracks/26/path = NodePath("NewLowest:modulate")
 tracks/26/interp = 1
 tracks/26/loop_wrap = true
 tracks/26/keys = {
@@ -709,7 +710,18 @@ _data = {
 &"anim": SubResource("Animation_c1sr8")
 }
 
-[node name="RushEnding" type="Node2D" unique_id=605841645 node_paths=PackedStringArray("anim", "sun", "poly_outer", "poly_inner", "header", "bullet_header", "bullet_stats", "time_header", "time_stats", "misc_header", "misc_stats", "item_group", "new_best_time", "new_lowest_items", "continue_prompt")]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wkouj"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+texture = ExtResource("15_8s4iv")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+
+[node name="RushEnding" type="Node2D" unique_id=605841645 node_paths=PackedStringArray("anim", "sun", "poly_outer", "poly_inner", "header", "bullet_header", "bullet_stats", "time_header", "time_stats", "misc_header", "misc_stats", "item_group", "new_best_time", "new_lowest_items", "continue_prompt", "tie_confirm_panel", "tie_confirm_header", "tie_confirm_options", "tie_confirm_items", "music", "sfx_continue", "sfx_select", "front_fade", "fade_timer")]
 z_index = 110
 script = ExtResource("1_y451y")
 anim = NodePath("AnimationPlayer")
@@ -725,10 +737,19 @@ misc_header = NodePath("MiscStats")
 misc_stats = NodePath("MiscStats/Numbers")
 item_group = NodePath("ItemGroup")
 new_best_time = NodePath("BossTimes/NewBest")
-new_lowest_items = NodePath("ItemGroup/NewLowest")
+new_lowest_items = NodePath("NewLowest")
 continue_prompt = NodePath("PressToContinue")
+tie_confirm_panel = NodePath("TieConfirmPanel")
+tie_confirm_header = NodePath("TieConfirmPanel/VBoxContainer/Header")
+tie_confirm_options = NodePath("TieConfirmPanel/VBoxContainer/Options")
+tie_confirm_items = NodePath("TieConfirmPanel/ItemGroup")
+music = NodePath("Music")
+sfx_continue = NodePath("Continue")
+sfx_select = NodePath("Select")
+front_fade = NodePath("FrontFade")
+fade_timer = NodePath("Timer")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=486193880]
+[node name="BackingFade" type="Sprite2D" parent="." unique_id=486193880]
 modulate = Color(0, 0, 0, 0)
 position = Vector2(200, 120)
 scale = Vector2(2, 2)
@@ -1042,13 +1063,13 @@ start_all_on_random_frame = true
 autoplay_next = "heart_container"
 metadata/_custom_type_script = "uid://boee2837la0pr"
 
-[node name="NewLowest" type="RichTextLabel" parent="ItemGroup" unique_id=420104740]
+[node name="NewLowest" type="RichTextLabel" parent="." unique_id=420104740]
 custom_maximum_size = Vector2(400, -1)
 clip_contents = false
-offset_left = 80.0
-offset_top = 16.0
-offset_right = 240.0
-offset_bottom = 32.0
+offset_left = 120.0
+offset_top = 208.0
+offset_right = 280.0
+offset_bottom = 224.0
 mouse_filter = 2
 theme_override_constants/line_separation = 2
 theme_override_font_sizes/normal_font_size = 8
@@ -1123,3 +1144,69 @@ polygon = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 modulate = Color(0, 0, 0, 1)
 position = Vector2(200, 120)
 texture = ExtResource("6_eaunt")
+
+[node name="TieConfirmPanel" type="PanelContainer" parent="." unique_id=587289866]
+custom_maximum_size = Vector2(232, -1)
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 84.0
+offset_top = -152.0
+offset_right = 316.0
+offset_bottom = -52.0
+grow_horizontal = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_wkouj")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TieConfirmPanel" unique_id=831037825]
+layout_mode = 2
+
+[node name="Header" type="RichTextLabel" parent="TieConfirmPanel/VBoxContainer" unique_id=1512323286]
+custom_minimum_size = Vector2(232, 0)
+custom_maximum_size = Vector2(232, -1)
+clip_contents = false
+layout_mode = 2
+mouse_filter = 2
+theme_override_font_sizes/normal_font_size = 8
+bbcode_enabled = true
+text = "Looks like you tied your saved lowest inventory with a new loadout!
+
+
+Would you like to save your current loadout as your new lowest?"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 1
+script = ExtResource("11_6f35k")
+text_scale = 1
+shadow_scale = 1
+metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
+
+[node name="Options" type="RichTextLabel" parent="TieConfirmPanel/VBoxContainer" unique_id=130865040]
+custom_maximum_size = Vector2(232, -1)
+clip_contents = false
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/line_separation = 0
+theme_override_font_sizes/normal_font_size = 16
+bbcode_enabled = true
+text = "> No <
+Yes"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 1
+script = ExtResource("11_6f35k")
+shadow_scale = 1
+metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
+
+[node name="ItemGroup" type="Marker2D" parent="TieConfirmPanel" unique_id=557607760]
+position = Vector2(116, 32)
+
+[node name="FrontFade" type="Sprite2D" parent="." unique_id=238332846]
+modulate = Color(0, 0, 0, 0)
+position = Vector2(200, 120)
+scale = Vector2(2, 2)
+texture = ExtResource("2_eaunt")
+
+[node name="Timer" type="Timer" parent="." unique_id=107861373]
+wait_time = 1.5
+
+[connection signal="timeout" from="Timer" to="." method="_on_fade_timer_timeout"]

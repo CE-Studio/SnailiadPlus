@@ -19,4 +19,4 @@ func _on_quit_no_save(_value) -> void:
 
 func _on_timer_timeout() -> void:
 	Statics.current_profile_id = 0
-	get_tree().change_scene_to_file("res://Scenes/MenuScene.tscn")
+	get_tree().change_scene_to_file("uid://btkfrtgsq6p4g")

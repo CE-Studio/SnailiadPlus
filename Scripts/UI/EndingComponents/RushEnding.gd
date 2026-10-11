@@ -16,6 +16,9 @@ const ITEM_START_Y:float = 112.0
 const ITEM_RAISE_TIME:float = 1.2
 const ITEM_RAISE_EASE:float = 0.2
 const ITEM_RAISE_DELAY:float = 0.15
+const PANEL_ACTIVE_Y:float = 32.0
+const PANEL_LERP_RATE:float = 12.0
+const PANEL_ITEM_SPACING:float = 10.0
 
 var sun_pos:Vector2 = Vector2.ZERO
 var tick_sun:bool = false
@@ -27,11 +30,14 @@ var time_id:String = ""
 var total_time:Array[float] = []
 var is_new_best_time:bool = false
 var old_lowest_inv:Array = []
-var final_inv:Array = []
 var is_new_lowest_items:bool = false
 var is_tied_items:bool = false
 var save_tied_items:bool = false
 var elapsed:float = -PI
+var panel_up:bool = false
+var panel_delay:float = 0.5
+var item_frame_size:Vector2i = Vector2i.ZERO
+var fading_out:bool = false
 
 @export var anim:AnimationPlayer
 @export var sun:SnailySprite2D
@@ -48,8 +54,15 @@ var elapsed:float = -PI
 @export var new_best_time:SnailyText
 @export var new_lowest_items:SnailyText
 @export var continue_prompt:SnailyText
+@export var tie_confirm_panel:PanelContainer
+@export var tie_confirm_header:SnailyText
+@export var tie_confirm_options:SnailyText
+@export var tie_confirm_items:Marker2D
+@export var music:AudioStreamPlayer
 @export var sfx_continue:AudioStreamPlayer
 @export var sfx_select:AudioStreamPlayer
+@export var front_fade:Sprite2D
+@export var fade_timer:Timer
 #endregion
 
 
@@ -62,7 +75,10 @@ func _ready() -> void:
 		radius = radius.rotated(rot_amount)
 	poly_outer.polygon = vertices
 	poly_inner.polygon = vertices
-	PlayerBullet.bullet_a = 1.0
+	item_frame_size = Vector2i(
+		ITEM_SPRITESHEET.get_width() / 8,
+		ITEM_SPRITESHEET.get_height() / 8
+	)
 	header.enable_rainbow_scroll()
 	_setup_bullet_stats()
 	_setup_time_stats()
@@ -82,7 +98,7 @@ func _ready() -> void:
 	#region New lowest items
 	new_lowest_items.set_snaily_text(tr(&"New lowest for %s!!") % char_name)
 	new_lowest_items.enable_rainbow_scroll()
-	var this_inv:Array = Statics.current_profile["inventory"].duplicate()
+	var this_inv:Array = Statics.current_profile["items"].duplicate()
 	var this_count:int = 0
 	for item in this_inv:
 		if item is int:
@@ -99,22 +115,48 @@ func _ready() -> void:
 			new_lowest_items.visible = false
 			if this_count == old_count:
 				is_tied_items = true
+	else:
+		new_lowest_items.visible = false
 	#endregion
+	tie_confirm_panel.visible = false
+	tie_confirm_header.set_snaily_text(
+		tr(&"Looks like you tied your saved lowest inventory with a new loadout!")
+		+ "\n\n\n" +
+		tr(&"Would you like to save your current loadout as your new lowest?")
+	)
+	_set_tie_option_text()
 
 
 func _process(delta: float) -> void:
 	if tick_sun:
 		sun.position += sun_velocity * delta
 		sun_velocity.y += SUN_GRAVITY * delta
+		if sun.position.y >= 1200.0:
+			tick_sun = false
 	if increment_elapsed:
 		item_elapsed += delta
 		_tick_items()
-	if not anim.is_playing():
+	if not anim.is_playing() and not panel_up and not fading_out:
 		elapsed += delta * 4.0
 		continue_prompt.modulate.a = cos(elapsed) + 1.0
-		if SInput.check_any_button():
+		if Input.is_anything_pressed():
 			sfx_continue.play()
-			_try_save_from_any_press()
+			_try_save()
+	else:
+		continue_prompt.modulate.a = 0.0
+	if panel_up and not fading_out:
+		tie_confirm_panel.position.y = lerpf(
+			tie_confirm_panel.position.y, PANEL_ACTIVE_Y, PANEL_LERP_RATE * delta)
+		if panel_delay <= 0.0:
+			if Input.is_action_just_pressed("up") or Input.is_action_just_pressed("down"):
+				save_tied_items = not save_tied_items
+				_set_tie_option_text()
+				sfx_select.play()
+			if Input.is_action_just_pressed("uiAccept"):
+				sfx_continue.play()
+				_try_save(true)
+		else:
+			panel_delay -= delta
 
 
 func set_sun_pos(pos:Vector2) -> void:
@@ -181,8 +223,8 @@ func _add_item_sprite(pos:Vector2, id:int) -> void:
 	bullet_stats.add_child(new_spr)
 	new_spr.position = pos
 	new_spr.texture = ITEM_SPRITESHEET
-	new_spr.hframes = ITEM_SPRITESHEET.get_width() / 8
-	new_spr.vframes = ITEM_SPRITESHEET.get_height() / 8
+	new_spr.hframes = item_frame_size.x
+	new_spr.vframes = item_frame_size.y
 	new_spr.frame = id
 
 
@@ -283,6 +325,39 @@ func start_ticking_items() -> void:
 	increment_elapsed = true
 
 
+func _set_tie_option_text() -> void:
+	var yes:String = tr(&"Yes")
+	var no:String = tr(&"No")
+	if save_tied_items:
+		tie_confirm_options.set_snaily_text("%s\n> %s <" % [no, yes])
+	else:
+		tie_confirm_options.set_snaily_text("> %s <\n%s" % [no, yes])
+
+
+func _setup_tied_item_sprites() -> void:
+	print(old_lowest_inv)
+	if old_lowest_inv.is_empty():
+		return
+	var inv_to_add:Array[int] = []
+	for i in range(old_lowest_inv.size()):
+		for j in range(old_lowest_inv[i]):
+			var this_i = i
+			if this_i == 13: inv_to_add.append(11)
+			else: inv_to_add.append(i)
+	var spr_pos:Vector2 = Vector2.ZERO
+	for i in range(inv_to_add.size()):
+		var new_spr:Sprite2D = Sprite2D.new()
+		new_spr.texture = ITEM_SPRITESHEET
+		new_spr.hframes = item_frame_size.x
+		new_spr.vframes = item_frame_size.y
+		new_spr.frame = inv_to_add[i]
+		tie_confirm_items.add_child(new_spr)
+		new_spr.position = spr_pos
+		spr_pos.x += PANEL_ITEM_SPACING
+		if i > 0:
+			tie_confirm_items.position.x -= PANEL_ITEM_SPACING * 0.5
+
+
 func save_time() -> bool:
 	if is_new_best_time or not Statics.has_time(time_id):
 		Statics.save_time(time_id, total_time)
@@ -291,15 +366,32 @@ func save_time() -> bool:
 
 
 func save_inv() -> bool:
+	print(Statics.current_profile["items"])
 	if is_new_lowest_items or old_lowest_inv.is_empty() or (is_tied_items and save_tied_items):
+		var final_inv:Array = Statics.current_profile["items"].duplicate()
 		Statics.data_records["lowest_rush_inv"][Player.instance.who_i_is] = final_inv.duplicate()
 		return true
 	return false
 
 
-func _try_save_from_any_press() -> void:
-	if is_tied_items and not save_tied_items:
-		pass
+func _try_save(confirmed_tie_state:bool = false) -> void:
+	if is_tied_items and not confirmed_tie_state:
+		tie_confirm_panel.visible = true
+		panel_up = true
+		_setup_tied_item_sprites()
 	else:
-		if save_time() or save_inv():
+		fading_out = true
+		var time:bool = save_time()
+		var inv:bool = save_inv()
+		if time or inv:
 			Statics.save_records()
+		var col_fade:Tween = create_tween()
+		col_fade.tween_property(front_fade, "modulate", Color.BLACK, 1.0)
+		var mus_fade:Tween = create_tween()
+		mus_fade.tween_property(music, "volume_linear", 0.0, 1.0)
+		fade_timer.start()
+
+
+func _on_fade_timer_timeout() -> void:
+	SInput.read_inputs = true
+	get_tree().change_scene_to_file("uid://btkfrtgsq6p4g")
