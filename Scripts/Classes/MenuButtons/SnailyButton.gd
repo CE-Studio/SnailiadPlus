@@ -100,7 +100,7 @@ func relinquish_focus_neighbors() -> void:
 
 ## Called when the mouse rolls over this button
 func _on_mouse_over() -> void:
-	if not parent_layer.menu.read_inputs:
+	if parent_layer and not parent_layer.menu.read_inputs:
 		return
 	mouse_over = true
 	if can_focus and not disabled:
