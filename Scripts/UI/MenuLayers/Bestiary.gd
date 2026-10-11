@@ -274,6 +274,12 @@ func spawn_display_entity(entity:String) -> void:
 			stompy.position = Vector2(48, 0)
 			stompy.foot_r.visible = false
 			stompy.eye_r.visible = false
+		"stompyRush":
+			var stompy = spawn_entity("stompyRush")
+			enemy_spawn.add_child(stompy)
+			stompy.position = Vector2(48, 0)
+			stompy.foot_r.visible = false
+			stompy.eye_r.visible = false
 		_:
 			var general_enemy = spawn_entity(entity)
 			enemy_spawn.add_child(general_enemy)

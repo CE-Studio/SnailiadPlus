@@ -99,21 +99,25 @@ func _ready() -> void:
 	new_lowest_items.set_snaily_text(tr(&"New lowest for %s!!") % char_name)
 	new_lowest_items.enable_rainbow_scroll()
 	var this_inv:Array = Statics.current_profile["items"].duplicate()
+	while this_inv[-1] == 0.0:
+		this_inv.pop_back()
 	var this_count:int = 0
 	for item in this_inv:
-		if item is int:
-			this_count += item
+		if item is int or item is float:
+			this_count += roundi(item)
 	old_lowest_inv = Statics.data_records["lowest_rush_inv"][Player.instance.who_i_is].duplicate()
+	while old_lowest_inv[-1] == 0.0:
+		old_lowest_inv.pop_back()
 	if not old_lowest_inv.is_empty():
 		var old_count:int = 0
 		for item in old_lowest_inv:
-			if item is int:
-				old_count += item
+			if item is int or item is float:
+				old_count += roundi(item)
 		if this_count < old_count:
 			is_new_lowest_items = true
 		else:
 			new_lowest_items.visible = false
-			if this_count == old_count:
+			if this_count == old_count and this_inv != old_lowest_inv:
 				is_tied_items = true
 	else:
 		new_lowest_items.visible = false
@@ -335,7 +339,6 @@ func _set_tie_option_text() -> void:
 
 
 func _setup_tied_item_sprites() -> void:
-	print(old_lowest_inv)
 	if old_lowest_inv.is_empty():
 		return
 	var inv_to_add:Array[int] = []
@@ -366,7 +369,6 @@ func save_time() -> bool:
 
 
 func save_inv() -> bool:
-	print(Statics.current_profile["items"])
 	if is_new_lowest_items or old_lowest_inv.is_empty() or (is_tied_items and save_tied_items):
 		var final_inv:Array = Statics.current_profile["items"].duplicate()
 		Statics.data_records["lowest_rush_inv"][Player.instance.who_i_is] = final_inv.duplicate()
@@ -394,4 +396,5 @@ func _try_save(confirmed_tie_state:bool = false) -> void:
 
 func _on_fade_timer_timeout() -> void:
 	SInput.read_inputs = true
+	PauseLayer.suppress_menuing = false
 	get_tree().change_scene_to_file("uid://btkfrtgsq6p4g")

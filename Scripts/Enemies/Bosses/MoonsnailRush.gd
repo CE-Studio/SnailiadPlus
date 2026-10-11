@@ -248,6 +248,7 @@ func kill() -> void:
 			Room.Layers.GROUND, position, [true, DEATH_TIME, true])
 		mode_elapsed = 0.0
 		Player.instance.do_moon_snail_heal()
+		Statics.increment_boss_rush_timer = false
 	else:
 		var giga:GigasnailRush = load("uid://b4c8tmx5pkyqw").instantiate()
 		giga.position = giga_spawn_pos
