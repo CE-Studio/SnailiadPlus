@@ -51,7 +51,6 @@ func _process(delta: float) -> void:
 			fade_in = false
 			elapsed = 0.0
 			modulate.a = 1.0
-			PlayerBullet.bullet_a = 1.0
 	else:
 		if not started_fade_out:
 			started_fade_out = true

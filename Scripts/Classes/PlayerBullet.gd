@@ -79,7 +79,6 @@ func _spawn(dir:Vector2, rapid_shot:float, power_shot:bool) -> float:
 	if light_radius > 0:
 		UICore.instance.darkness_layer.add_source(self, light_radius)
 	afterimage_tick = randi_range(0, TICKS_BETWEEN_AFTERIMAGES - 1)
-	modulate.a = bullet_a
 	return cooldown / rapid_mult
 
 

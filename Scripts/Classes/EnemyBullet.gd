@@ -87,7 +87,6 @@ func _spawn(dir:Vector2, speed:float, play_sound:bool = true) -> void:
 	area.connect("body_exited", _on_body_exited)
 	if light_radius > 0:
 		UICore.instance.darkness_layer.add_source(self, light_radius)
-	modulate.a = bullet_a
 
 
 func _infer_direction_anim(_angle:Vector2 = normalized_dir) -> void:
