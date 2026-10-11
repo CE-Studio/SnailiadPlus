@@ -57,6 +57,8 @@ func _process(delta: float) -> void:
 
 
 func _input(event: InputEvent) -> void:
+	if event is InputEventJoypadMotion:
+		print(absf(event.axis_value))
 	if not panel_up or event is InputEventMouse or (suppress_input > 0):
 		return
 	#if back_button.has_focus():
@@ -67,9 +69,12 @@ func _input(event: InputEvent) -> void:
 	# menu layer, and I'm not sure what black magic is causing it to fail. Feel free to figure
 	# this out for me if you see this
 	
+	
 	var bind_slot:int = layer.meta_info[0]
+	print(bind_slot)
 	if ((bind_slot < 2 and event is InputEventKey)
-	or (bind_slot >= 2 and (event is InputEventJoypadButton or event is InputEventJoypadMotion))):
+	or (bind_slot >= 2 and (event is InputEventJoypadButton
+	or (event is InputEventJoypadMotion and absf(event.axis_value) >= 0.5)))):
 		rebind_buffer = event
 		suppress_input = SUPPRESS_FRAMES
 		queue_defocus = true
