@@ -16,6 +16,7 @@ func _ready() -> void:
 	if gui_debug:
 		return
 	SInput.rebind_all()
+	SInput.update_all_deadzones()
 	if Minimap.unprocessed_marker_positions.size() == 0:
 		if OS.has_feature("nothreads"):
 			_read_rooms_log_markers()

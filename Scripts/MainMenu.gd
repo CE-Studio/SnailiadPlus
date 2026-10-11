@@ -55,6 +55,7 @@ func _ready() -> void:
 		Statics.active_room.spawn(true)
 		get_tree().paused = false
 		Statics.is_in_boss_rush = false
+		SInput.update_all_deadzones(SInput.MENU_DEADZONE)
 		music = $"MenuLoop"
 		if not Statics.main_menu_booted_once:
 			var saved_ver := Statics.parse_version_to_array(ProjectSettings.get_setting("application/config/old_version"))

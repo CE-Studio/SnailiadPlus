@@ -14,7 +14,9 @@ func _on_face_type_cycled(value:int) -> void:
 
 func _on_move_dz_cycled(value:int) -> void:
 	ProjectSettings.set_setting("game/control/deadzone_move", value * 0.05)
+	SInput.update_all_deadzones()
 
 
 func _on_aim_dz_cycled(value:int) -> void:
 	ProjectSettings.set_setting("game/control/deadzone_aim", value * 0.05)
+	SInput.update_all_deadzones()

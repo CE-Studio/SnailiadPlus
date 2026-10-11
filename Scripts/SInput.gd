@@ -220,6 +220,7 @@ const DEBUG_PRINT_INPUTS:bool = false
 
 const DOUBLE_TAP_THRESHOLD:float = 0.25
 const STICK_DOUBLE_TOLERANCE:float = 0.1
+const MENU_DEADZONE:float = 0.5
 
 var read_inputs:bool = true
 var cutscene_has_control:bool = false
@@ -351,6 +352,8 @@ func vector_move(raw:bool = false) -> Vector2:
 	if not accepting_input():
 		return Vector2.ZERO
 	var deadzone:float = ProjectSettings.get_setting("game/control/deadzone_move")
+	if Statics.is_menu_open:
+		deadzone = clampf(deadzone, 0.5, 1.0)
 	var vector:Vector2 = Input.get_vector("left", "right", "up", "down", deadzone)
 	if raw:
 		return vector
@@ -367,6 +370,8 @@ func vector_aim() -> Vector2:
 	if not accepting_input():
 		return Vector2.ZERO
 	var deadzone:float = ProjectSettings.get_setting("game/control/deadzone_aim")
+	if Statics.is_menu_open:
+		deadzone = clampf(deadzone, 0.5, 1.0)
 	var vector:Vector2 = Input.get_vector("aimL", "aimR", "aimU", "aimD", deadzone).normalized()
 	if not ProjectSettings.get_setting("game/control/omni_stick_aim"):
 		if vector.x < -deadzone: vector.x = -1
@@ -522,10 +527,26 @@ func rebind_all() -> void:
 	for i in range(keys.size() - 1):
 		keys[i] = keys[i].to_camel_case()
 
-	var actions:Array = InputMap.get_actions()
+	var actions:Array[StringName] = InputMap.get_actions()
 	for action in actions:
 		if keys.has(action) and action != "uiClick":
 			rebind_action(action)
+
+
+func update_deadzone(action:StringName, deadzone:float = -1.0) -> void:
+	var this_deadzone:float = deadzone
+	if this_deadzone == -1.0:
+		if [&"aimL", &"aimR", &"aimU", &"aimD"].has(action):
+			this_deadzone = ProjectSettings.get_setting("game/control/deadzone_aim")
+		else:
+			this_deadzone = ProjectSettings.get_setting("game/control/deadzone_move")
+	InputMap.action_set_deadzone(action, this_deadzone)
+
+
+func update_all_deadzones(deadzone:float = -1.0) -> void:
+	var actions:Array[StringName] = InputMap.get_actions()
+	for action in actions:
+		update_deadzone(action, deadzone)
 
 
 func load_from_project_settings() -> void:

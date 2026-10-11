@@ -32,6 +32,7 @@ func _ready() -> void:
 	cam_layer.shake_setting = ProjectSettings.get_setting("game/visuals/screen_shake")
 	if Statics.is_in_boss_rush:
 		add_child(RushManager.new())
+	SInput.update_all_deadzones()
 
 
 func _process(delta: float) -> void:

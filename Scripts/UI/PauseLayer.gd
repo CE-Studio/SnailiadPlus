@@ -41,6 +41,8 @@ func _physics_process(_delta: float) -> void:
 
 func pause_fade_in() -> void:
 	get_tree().paused = true
+	Statics.is_any_game_menu_open = true
+	SInput.update_all_deadzones(SInput.MENU_DEADZONE)
 	cam.color_cover.set_new_fade(cam.color_cover.modulate, Color(0.0, 0.0, 0.0, 0.6), 0.25)
 	cam.popup_layer.visible = false
 	if subscreen:
@@ -49,6 +51,8 @@ func pause_fade_in() -> void:
 
 func pause_no_fade() -> void:
 	get_tree().paused = true
+	Statics.is_any_game_menu_open = true
+	SInput.update_all_deadzones(SInput.MENU_DEADZONE)
 	cam.popup_layer.visible = false
 	if subscreen:
 		subscreen = null
@@ -56,6 +60,8 @@ func pause_no_fade() -> void:
 
 func unpause_fade_out() -> void:
 	get_tree().paused = false
+	Statics.is_any_game_menu_open = false
+	SInput.update_all_deadzones()
 	cam.color_cover.set_new_fade(cam.color_cover.modulate, Color(0.0, 0.0, 0.0, 0.0), 0.25)
 	cam.popup_layer.visible = true
 	cam.set_all_visibility_from_settings()

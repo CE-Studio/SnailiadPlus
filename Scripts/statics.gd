@@ -111,6 +111,7 @@ const DAMAGE_NUMBER:PackedScene = preload("uid://u13oxny8a4rn")
 
 static var main_menu_booted_once:bool = false
 static var is_menu_open:bool = false
+static var is_any_game_menu_open:bool = false
 static var shortcut_load_game_scene:bool = false
 
 static var is_in_boss_rush:bool = false
