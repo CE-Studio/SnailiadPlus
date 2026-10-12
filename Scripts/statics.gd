@@ -393,6 +393,7 @@ static func delete_profile(iprofile:int) -> void:
 static func setup_bossrush_profile(character:int) -> void:
 	current_profile = StaticProcess.template_profile.duplicate(true)
 	current_profile["character"] = character
+	current_profile["difficulty"] = 1
 	current_profile["save_room"] = RUSH_SPAWN[0]
 	current_profile["save_coords"] = Vector2(RUSH_SPAWN[1], RUSH_SPAWN[2])
 
