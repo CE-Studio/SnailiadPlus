@@ -829,7 +829,7 @@ helix_count = NodePath("HelixCount")
 radar = NodePath("Radar")
 anim = NodePath("AnimationPlayer")
 player_sprite = NodePath("InvBody/Content/ItemGroup/Player")
-item_sprites = [NodePath("InvBody/Content/ItemGroup/Peashooter"), NodePath("InvBody/Content/ItemGroup/Boomerang"), NodePath("InvBody/Content/ItemGroup/RainbowWave"), NodePath("InvBody/Content/ItemGroup/Devastator"), NodePath("InvBody/Content/ItemGroup/HighJump"), NodePath("InvBody/Content/ItemGroup/ShellShield"), NodePath("InvBody/Content/ItemGroup/RapidFire"), NodePath("InvBody/Content/ItemGroup/Player"), NodePath("InvBody/Content/ItemGroup/Player"), NodePath("InvBody/Content/ItemGroup/Player"), NodePath("InvBody/Content/ItemGroup/GravityShock"), null, null, null, null, NodePath("InvBody/Content/ItemGroup/RadarShell"), NodePath("InvBody/Content/ItemGroup/Broom")]
+item_sprites = [NodePath("InvBody/Content/ItemGroup/Peashooter"), NodePath("InvBody/Content/ItemGroup/Boomerang"), NodePath("InvBody/Content/ItemGroup/RainbowWave"), NodePath("InvBody/Content/ItemGroup/Devastator"), NodePath("InvBody/Content/ItemGroup/HighJump"), NodePath("InvBody/Content/ItemGroup/ShellShield"), NodePath("InvBody/Content/ItemGroup/RapidFire"), null, null, null, NodePath("InvBody/Content/ItemGroup/GravityShock"), null, null, null, null, NodePath("InvBody/Content/ItemGroup/RadarShell"), NodePath("InvBody/Content/ItemGroup/Broom")]
 item_target = NodePath("InvBody/Content/ItemGroup/ItemTarget")
 
 [node name="InvBody" type="AnimatedSprite2D" parent="." unique_id=1832428136]
@@ -1356,6 +1356,7 @@ position = Vector2(0, 24)
 type = 1
 
 [node name="MapMarker4" parent="MapBody/Content/Legend" unique_id=985311718 instance=ExtResource("17_newu2")]
+modulate = Color(0.95686275, 0.7529412, 0.8784314, 1)
 position = Vector2(0, 32)
 type = 4
 
