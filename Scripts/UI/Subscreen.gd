@@ -157,15 +157,15 @@ func _process(delta: float) -> void:
 	selector_spr.position.x = abs(sin(elapsed * 8)) * -2
 	
 	if active:
-		if map_zoomed and (SInput.check_input(SInput.Inputs.UI_BACK, true)
-		or SInput.check_input(SInput.Inputs.PAUSE, true)
-		or SInput.check_input(SInput.Inputs.STRAFE, true)):
+		if map_zoomed and (SInput.check_primary_input(SInput.Inputs.UI_BACK, true)
+		or SInput.check_primary_input(SInput.Inputs.PAUSE, true)
+		or SInput.check_primary_input(SInput.Inputs.STRAFE, true)):
 			sfx_select.play()
 			zoomed_map.queue_free()
 			map_zoomed = false
 			return
 		if (selection_depth == 0 and not map_zoomed
-		and SInput.check_input(SInput.Inputs.STRAFE, true)):
+		and SInput.check_primary_input(SInput.Inputs.STRAFE, true)):
 			sfx_select.play()
 			map_zoomed = true
 			zoomed_map = ZOOMED_SCENE.instantiate()
@@ -176,12 +176,12 @@ func _process(delta: float) -> void:
 		
 		var close_flag:bool = false
 		if selection_depth == 0 and elapsed >= 0.125:
-			if (SInput.check_input(SInput.Inputs.MAP, true)
-			or SInput.check_input(SInput.Inputs.PAUSE, true)
-			or SInput.check_input(SInput.Inputs.UI_BACK, true)):
+			if (SInput.check_primary_input(SInput.Inputs.MAP, true)
+			or SInput.check_primary_input(SInput.Inputs.PAUSE, true)
+			or SInput.check_primary_input(SInput.Inputs.UI_BACK, true)):
 				close_flag = true
 		elif selection_depth == 1:
-			if SInput.check_input(SInput.Inputs.PAUSE, true):
+			if SInput.check_primary_input(SInput.Inputs.PAUSE, true):
 				close_flag = true
 		if close_flag:
 			if zoomed_map:
@@ -203,7 +203,7 @@ func _process(delta: float) -> void:
 		
 		position = position.lerp(Vector2.ZERO, SUBSCREEN_ENTER_SPEED * delta)
 		
-		if selection_depth == 0 and SInput.check_input(SInput.Inputs.SPEAK, true):
+		if selection_depth == 0 and SInput.check_primary_input(SInput.Inputs.SPEAK, true):
 			if map_focused:
 				anim.play("swap", -1, SUBSCREEN_SWITCH_SPEED)
 			else:
@@ -449,22 +449,22 @@ func _test_for_selection_events() -> void:
 	if map_focused:
 		match selection_depth:
 			0:
-				if SInput.check_input(SInput.Inputs.UI_ACCEPT, true):
+				if SInput.check_primary_input(SInput.Inputs.UI_ACCEPT, true):
 					selection_depth += 1
 					sfx_select.play()
 					map_selector.visible = true
 					map_selector.position = map_sel_origin + (map_selection * 8)
 			1:
-				if SInput.check_input(SInput.Inputs.UI_ACCEPT, true):
+				if SInput.check_primary_input(SInput.Inputs.UI_ACCEPT, true):
 					sfx_select.play()
 					map.update_p_marker_at_cell(map_selection)
-				elif SInput.check_input(SInput.Inputs.UI_BACK, true):
+				elif SInput.check_primary_input(SInput.Inputs.UI_BACK, true):
 					sfx_select.play()
 					map_selector.visible = false
 					selection_depth -= 1
 		_set_map_prompts()
 	
-	elif SInput.check_input(SInput.Inputs.UI_ACCEPT, true):
+	elif SInput.check_primary_input(SInput.Inputs.UI_ACCEPT, true):
 		match selection_depth:
 			0:
 				selection_depth += 1

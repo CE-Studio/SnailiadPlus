@@ -1356,7 +1356,7 @@ position = Vector2(0, 24)
 type = 1
 
 [node name="MapMarker4" parent="MapBody/Content/Legend" unique_id=985311718 instance=ExtResource("17_newu2")]
-modulate = Color(0.95686275, 0.7529412, 0.8784314, 1)
+modulate = Color(0.9882353, 0.8784314, 0.7058824, 1)
 position = Vector2(0, 32)
 type = 4
 

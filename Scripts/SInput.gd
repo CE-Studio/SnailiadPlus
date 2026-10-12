@@ -31,6 +31,13 @@ enum Inputs {
 	SHIELD,
 }
 
+var input_strings:PackedStringArray = [
+	"left", "right", "up", "down", "jump", "shoot", "strafe", "speak",
+	"gravity", "pause", "map", "weapon0", "weapon1", "weapon2", "weapon3",
+	"aimL", "aimR", "aimU", "aimD", "debug", "uiClick", "uiAccept", "uiBack",
+	"skipTalking", "shield"
+]
+
 var input_tr_strings:PackedStringArray = [
 	tr(&"Move left"), tr(&"Move right"), tr(&"Move up"), tr(&"Move down"), tr(&"Jump"),
 	tr(&"Shoot"), tr(&"Strafe"), tr(&"Speak"), tr(&"Gravity jump"), tr(&"Open menu"),
@@ -334,6 +341,52 @@ func check_any_button() -> bool:
 	or check_input(Inputs.MAP, true) or check_input(Inputs.UI_CLICK, true)
 	or check_input(Inputs.WEAPON0, true) or check_input(Inputs.WEAPON1, true)
 	or check_input(Inputs.WEAPON2, true) or check_input(Inputs.WEAPON3, true))
+
+
+func check_primary_input(action:Inputs, just:bool, accept_con_echo:bool = false) -> bool:
+	var raw_state:bool = check_input(action, just, accept_con_echo)
+	print("--New--")
+	print(raw_state)
+	print("----------")
+	if not raw_state:
+		return false
+	var slot_states:int = INPUT_SLOTS[action as int]
+	print(slot_states)
+	print("----------")
+	if slot_states != 0b00001111:
+		return raw_state
+	var inputs:Array = InputMap.action_get_events(input_strings[action as int])
+	print(inputs)
+	if inputs.size() == 2:
+		inputs = [inputs[0], inputs[0], inputs[1], inputs[1]].duplicate()
+	elif inputs.size() == 3:
+		if inputs[1] is InputEventKey:
+			inputs = [inputs[0], inputs[1], inputs[2], inputs[2]].duplicate()
+		elif inputs[1] is InputEventJoypadButton or inputs[1] is InputEventJoypadMotion:
+			inputs = [inputs[0], inputs[0], inputs[1], inputs[2]].duplicate()
+	if inputs.size() == 4:
+		var prikey:bool = false
+		var seckey:bool = false
+		var pricon:bool = false
+		var seccon:bool = false
+		if inputs[0] is InputEventKey:
+			prikey = Input.is_key_pressed(inputs[0].keycode)
+		if inputs[1] is InputEventKey:
+			seckey = Input.is_key_pressed(inputs[1].keycode)
+		if inputs[2] is InputEventJoypadButton:
+			pricon = Input.is_joy_button_pressed(0, inputs[2].button_index)
+		elif inputs[2] is InputEventJoypadMotion:
+			pricon = Input.get_joy_axis(0, inputs[2].axis) != 0.0
+		if inputs[3] is InputEventJoypadButton:
+			seccon = Input.is_joy_button_pressed(0, inputs[3].button_index)
+		elif inputs[3] is InputEventJoypadMotion:
+			seccon = Input.get_joy_axis(0, inputs[3].axis) != 0.0
+		if seckey and (inputs[0] == inputs[1]):
+			seckey = false
+		if seccon and (inputs[2] == inputs[3]):
+			seccon = false
+		return (prikey or pricon) and not seckey and not seccon
+	return raw_state
 
 
 func input_pressed(action:Inputs) -> bool:
