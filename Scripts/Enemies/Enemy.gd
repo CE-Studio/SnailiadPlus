@@ -215,6 +215,8 @@ func _physics_process(delta) -> void:
 				parry_damage = floori(attack * PARRY_DAMAGE_MULT)
 				parry_damage *= floori(1.0 + (Statics.get_shell_level() * 0.2))
 				parry_damage = roundi(lerpf(parry_damage, 0, parry_resist))
+		if Player.instance.grav_shock_state == 2 and shield_entity:
+			Player.instance.exit_grav_shock(true)
 
 	damaged_this_tick = false
 	if not stun_invul and (not vis or vis.is_on_screen()) and not invulnerable:
@@ -263,7 +265,7 @@ func _physics_process(delta) -> void:
 					ping_played  = true
 				if (not can_be_pierced and not bullet.always_pierce) or bullet.single_hit:
 					ebullets_to_despawn.append(bullet)
-		if was_hit:
+		if was_hit and not shield_entity:
 			_spawn_damage_num(max_damage, max_color)
 		if max_damage > 0 and not shield_entity:
 			if RushManager.instance:

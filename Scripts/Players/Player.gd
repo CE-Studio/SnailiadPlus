@@ -1740,6 +1740,16 @@ func _instance_shockwave(_position:Vector2, _direction:Vector2) -> void:
 	ground.add_child(new_wave)
 	new_wave.position = position + _position
 	new_wave._spawn(_direction, 1.0, Statics.check_item(Item.ItemTypes.DEVASTATOR))
+
+
+func exit_grav_shock(zero_velocity:bool = false) -> void:
+	grav_shock_bullet.despawn()
+	grav_shock_bullet = null
+	grav_shock_state = 0
+	sprite.visible = true
+	_play_anim("idle")
+	if zero_velocity:
+		velocity = Vector2.ZERO
 #endregion
 
 
