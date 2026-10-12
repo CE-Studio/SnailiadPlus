@@ -1,0 +1,60 @@
+[gd_scene format=3 uid="uid://sxajxtvjbkr5"]
+
+[ext_resource type="Script" uid="uid://ctjp7bvs7a7gg" path="res://Scripts/UI/MenuLayer.gd" id="1_cbmmi"]
+[ext_resource type="Script" uid="uid://dgecttpnx4wwm" path="res://Scripts/UI/MenuLayers/NewGameMods.gd" id="2_cbmmi"]
+[ext_resource type="PackedScene" uid="uid://cethpj66nvp1o" path="res://Scenes/UI/ActionSnailyButton.tscn" id="3_ltp56"]
+[ext_resource type="PackedScene" uid="uid://cm0i4dyk1srik" path="res://Scenes/UI/ToggleSnailyButton.tscn" id="4_fxndk"]
+
+[node name="NewGameMods" type="Node2D" unique_id=1837853876]
+script = ExtResource("1_cbmmi")
+
+[node name="MainVBox" type="VBoxContainer" parent="." unique_id=671092005]
+custom_minimum_size = Vector2(400, 0)
+offset_top = 70.0
+offset_right = 400.0
+offset_bottom = 220.0
+alignment = 1
+script = ExtResource("2_cbmmi")
+
+[node name="Header" parent="MainVBox" unique_id=1009625063 instance=ExtResource("3_ltp56")]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+button_text = "Customize your game!!"
+disabled = true
+hide_frame = true
+
+[node name="HSeparator" type="HSeparator" parent="MainVBox" unique_id=952366075]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="OpenMap" parent="MainVBox" unique_id=622407168 instance=ExtResource("4_fxndk")]
+layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../Back")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../Back")
+focus_next = NodePath("../Back")
+focus_previous = NodePath("../Back")
+button_text = "Open map"
+grab_focus_on_load = true
+
+[node name="Back" parent="MainVBox" unique_id=944994603 instance=ExtResource("3_ltp56")]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../OpenMap")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../OpenMap")
+focus_next = NodePath("../OpenMap")
+focus_previous = NodePath("../OpenMap")
+button_text = "Back to new game"
+back_one_layer = true
+hide_frame = true
+
+[node name="Timer" type="Timer" parent="MainVBox" unique_id=1048669485]
+wait_time = 0.75
+one_shot = true
+
+[connection signal="button_toggled" from="MainVBox/OpenMap" to="MainVBox" method="_on_open_map_toggled"]
+[connection signal="timeout" from="MainVBox/Timer" to="MainVBox" method="_on_timer_timeout"]

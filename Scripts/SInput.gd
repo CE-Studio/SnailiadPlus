@@ -345,18 +345,12 @@ func check_any_button() -> bool:
 
 func check_primary_input(action:Inputs, just:bool, accept_con_echo:bool = false) -> bool:
 	var raw_state:bool = check_input(action, just, accept_con_echo)
-	print("--New--")
-	print(raw_state)
-	print("----------")
 	if not raw_state:
 		return false
 	var slot_states:int = INPUT_SLOTS[action as int]
-	print(slot_states)
-	print("----------")
 	if slot_states != 0b00001111:
 		return raw_state
 	var inputs:Array = InputMap.action_get_events(input_strings[action as int])
-	print(inputs)
 	if inputs.size() == 2:
 		inputs = [inputs[0], inputs[0], inputs[1], inputs[1]].duplicate()
 	elif inputs.size() == 3:

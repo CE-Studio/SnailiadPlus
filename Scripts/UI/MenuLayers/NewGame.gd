@@ -19,6 +19,7 @@ func _ready() -> void:
 		3: Statics.data_profile3 = StaticProcess._load_json_to_dict(
 			"res://SaveTemplates/ProfileData.json")
 	call_deferred("_clear_locked_buttons")
+	add_child(NewGameData.new())
 
 
 func _clear_locked_buttons() -> void:
@@ -81,6 +82,11 @@ func _on_start_pressed(_value) -> void:
 	Statics.current_profile["difficulty"] = difficulty
 	Statics.current_profile["character"] = character
 	Statics.current_profile["map_tiles"] = Minimap.DEFAULT_MAP.duplicate()
+	if NewGameData.instance.open_map:
+		for i in range(Statics.current_profile["map_tiles"].size()):
+			var this_cell:int = Statics.current_profile["map_tiles"][i]
+			if this_cell == 0 or this_cell == 2:
+				Statics.current_profile["map_tiles"][i] = this_cell + 1
 	layer.menu.save_profile(pro_id)
 	Statics.load_room = Statics.ROOM_PATH % world_spawn[0]
 	Statics.load_coords = Vector2i(world_spawn[1], world_spawn[2])
