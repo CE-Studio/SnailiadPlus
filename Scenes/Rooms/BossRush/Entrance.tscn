@@ -153,6 +153,8 @@ func _ready() -> void:
 		Statics.set_world_flag(Statics.WorldFlags.SEEN_BOSS_RUSH_INTRO, true)
 		SInput.read_inputs = false
 		play(\"start\")
+	else:
+		UICore.instance.rush_igt_text.set_snaily_text(\"0:00.00\")
 	if not Statics.check_achievement(AchievementCore.Achievements.GRAVITY_SHOCK):
 		shock.queue_free()
 
