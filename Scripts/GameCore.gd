@@ -33,6 +33,7 @@ func _ready() -> void:
 	if Statics.is_in_boss_rush:
 		add_child(RushManager.new())
 	SInput.update_all_deadzones()
+	_resolve_stacking()
 
 
 func _process(delta: float) -> void:
@@ -41,6 +42,11 @@ func _process(delta: float) -> void:
 		inc_game_time(delta)
 	room_time += delta
 	handle_cheats()
+
+
+func _resolve_stacking() -> void:
+	Statics.stack_weapon_mods = not (Statics.is_in_boss_rush or Statics.is_random_game)
+	Statics.stack_shells = not Statics.is_random_game
 
 
 func inc_game_time(delta:float) -> void:

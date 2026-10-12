@@ -1,4 +1,5 @@
 ~ start
+do RushManager.instance.bullets.clear()
 do CutsceneController.lock_input()
 do CutsceneController.trigger_animation("IntroDefault", true)
 do wait(2.25)
