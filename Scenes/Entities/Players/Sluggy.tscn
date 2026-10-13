@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dt2f017mhof4h"]
 
 [ext_resource type="Script" uid="uid://dox1ooj0v1ofk" path="res://Scripts/Players/Sluggy.gd" id="1_vix7a"]
-[ext_resource type="SpriteFrames" uid="uid://dduivh26hbk0y" path="res://Resources/SpriteFrames/snaily.tres" id="2_r0122"]
+[ext_resource type="SpriteFrames" uid="uid://phwftlboa47f" path="res://Resources/SpriteFrames/sluggy.tres" id="2_vix7a"]
 [ext_resource type="Script" uid="uid://boee2837la0pr" path="res://Scripts/Classes/SnailySprite.gd" id="3_v71rg"]
 [ext_resource type="Texture2D" uid="uid://4hfg0yjpmlpa" path="res://Assets/Images/Players/Sluggy.png" id="4_vix7a"]
 [ext_resource type="PackedScene" uid="uid://n33i7arxa7t6" path="res://Scenes/internals/EmoteLayer.tscn" id="5_lms8h"]
@@ -43,7 +43,7 @@ position = Vector2(-3, 1.5)
 shape = SubResource("RectangleShape2D_k1sr1")
 
 [node name="SnailySprite2D" type="AnimatedSprite2D" parent="." unique_id=670986890]
-sprite_frames = ExtResource("2_r0122")
+sprite_frames = ExtResource("2_vix7a")
 animation = &"00.floor.right.idle"
 autoplay = "00.floor.right.idle"
 script = ExtResource("3_v71rg")
