@@ -24,7 +24,9 @@ const SFX_HIT4:AudioStream = preload("uid://brxaghtx4yim")
 @export var attack:int
 @export var defense:int
 @export var weaknesses:Array[int] = []  # Enemies take double damage from bullet types in this list
+@export var weaknesses_weak:Array[int] = [] # Above, but enemies only take 1.5x damage
 @export var resistances:Array[int] = [] # Enemies take half damage from bullet types in this list
+@export var resistances_weak:Array[int] = [] # Above, but enemies only take 75% damage
 @export var immunities:Array[int] = []  # Enemies resist all damage from bullet types in this list
 @export_range(0, 1, 0.01) var parry_resist:float = 0.0
 @export var can_be_pierced:bool = true
@@ -239,9 +241,15 @@ func _physics_process(delta) -> void:
 				if weaknesses.has(bullet.type):
 					this_damage *= 2
 					this_color = Statics.get_color(Vector2i(2, 3))
+				elif weaknesses_weak.has(bullet.type):
+					this_damage *= floori(this_damage * 1.5)
+					this_color = Statics.get_color(Vector2i(3, 3))
 				if resistances.has(bullet.type):
 					this_damage = floori(this_damage * 0.5)
 					this_color = Statics.get_color(Vector2i(2, 10))
+				elif resistances_weak.has(bullet.type):
+					this_damage = floori(this_damage * 0.75)
+					this_color = Statics.get_color(Vector2i(3, 10))
 				if this_damage > max_damage:
 					max_damage = this_damage
 					max_color = this_color

@@ -253,6 +253,7 @@ phase_changes = Array[float]([0.3])
 max_health = 5100
 attack = 4
 defense = 9
+weaknesses_weak = Array[int]([14])
 light_radius = 128
 col = NodePath("BodyBox")
 body = NodePath(".")
