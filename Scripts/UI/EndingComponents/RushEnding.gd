@@ -106,9 +106,9 @@ func _ready() -> void:
 		if item is int or item is float:
 			this_count += roundi(item)
 	old_lowest_inv = Statics.data_records["lowest_rush_inv"][Player.instance.who_i_is].duplicate()
-	while old_lowest_inv[-1] == 0.0:
-		old_lowest_inv.pop_back()
 	if not old_lowest_inv.is_empty():
+		while old_lowest_inv[-1] == 0.0:
+			old_lowest_inv.pop_back()
 		var old_count:int = 0
 		for item in old_lowest_inv:
 			if item is int or item is float:
