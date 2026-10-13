@@ -40,7 +40,7 @@ func _ready():
 	grav_shock_charge_mult = 0.5
 	grav_shock_speed = 640.0
 	grav_shock_steering = 50.0
-	damage_multiplier = 1.3333
+	damage_multiplier = 1.5
 	shield_particle_offset = Vector2i(-3, 3)
 	health_gain_from_parry = 4
 	light_radius = 48
