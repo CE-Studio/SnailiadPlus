@@ -798,8 +798,8 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 	(fire_mode or SInput.input_pressed(SInput.Inputs.STRAFE)
 	or (rel_axis.x != 0.0 and grounded) or aim_vector != Vector2.ZERO)):
 		_toggle_shell()
-	elif (not shelled and (shield_pressed or
-	((rel_down_pressed or shield_pressed) and rel_vel.x == 0 and _check_ability(shellable)
+	elif (not shelled and _check_ability(shellable) and (shield_pressed or
+	((rel_down_pressed or shield_pressed) and rel_vel.x == 0
 	and not (fire_mode or SInput.input_pressed(SInput.Inputs.STRAFE)))) and not stunned):
 		_toggle_shell()
 
@@ -1523,7 +1523,7 @@ func adjust_health(amount:int, ignore_defense:bool = false, allow_parry_heal:boo
 
 	var shielded:bool = false
 	if amount < 0:
-		amount = floori(amount * damage_multiplier)
+		amount = ceili(amount * damage_multiplier)
 		if grav_shock_state == 1:
 			grav_shock_state = 0
 			if grav_shock_charge:
