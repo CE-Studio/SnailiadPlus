@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://ctjp7bvs7a7gg" path="res://Scripts/UI/MenuLayer.gd" id="1_5j63t"]
 [ext_resource type="Script" uid="uid://dv2vqc3ogof47" path="res://Scripts/UI/MenuLayers/BossRush.gd" id="2_hae35"]
 [ext_resource type="PackedScene" uid="uid://cethpj66nvp1o" path="res://Scenes/UI/ActionSnailyButton.tscn" id="3_hae35"]
+[ext_resource type="PackedScene" uid="uid://b2te0qs40rba4" path="res://Scenes/UI/ScrollingSnailyButton.tscn" id="4_5vr5a"]
 [ext_resource type="Texture2D" uid="uid://cr0jsmlvl76vh" path="res://Assets/Images/BayerDither.png" id="4_vda6x"]
 [ext_resource type="Texture2D" uid="uid://dmaptufh7rsw2" path="res://Assets/Images/UI/ScreenCover.png" id="5_ctfpw"]
 [ext_resource type="AudioStream" uid="uid://p3bp61rmw7rh" path="res://Assets/Sounds/Sfx/MenuBeep2.ogg" id="6_ctfpw"]
@@ -63,7 +64,7 @@ _data = {
 [node name="BossRush" type="Node2D" unique_id=1415419949]
 script = ExtResource("1_5j63t")
 
-[node name="MainVBox" type="VBoxContainer" parent="." unique_id=337386258 node_paths=PackedStringArray("anim", "sfx_select", "sfx_start")]
+[node name="MainVBox" type="VBoxContainer" parent="." unique_id=337386258 node_paths=PackedStringArray("anim", "sfx_select", "sfx_start", "char_scroller")]
 custom_minimum_size = Vector2(400, 0)
 offset_top = 70.0
 offset_right = 400.0
@@ -73,8 +74,9 @@ script = ExtResource("2_hae35")
 anim = NodePath("../AnimationPlayer")
 sfx_select = NodePath("../Select")
 sfx_start = NodePath("../Start")
+char_scroller = NodePath("Character")
 
-[node name="Header1" parent="MainVBox" unique_id=56127056 instance=ExtResource("3_hae35")]
+[node name="Header" parent="MainVBox" unique_id=56127056 instance=ExtResource("3_hae35")]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 button_text = "Are you sure?\\nBoss Rush is really hard!!"
@@ -86,15 +88,27 @@ modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="Yes" parent="MainVBox" unique_id=414475534 instance=ExtResource("3_hae35")]
-self_modulate = Color(1, 1, 1, 0)
+[node name="Character" parent="MainVBox" unique_id=2045842375 instance=ExtResource("4_5vr5a")]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../No")
 focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../Yes")
+focus_next = NodePath("../Yes")
+focus_previous = NodePath("../No")
+header_text = "Character"
+cycle_option_text = "Snaily|Sluggy"
+auto_select_mode = true
+
+[node name="Yes" parent="MainVBox" unique_id=414475534 instance=ExtResource("3_hae35")]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../Character")
+focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../No")
 focus_next = NodePath("../No")
-focus_previous = NodePath("../No")
+focus_previous = NodePath("../Character")
 button_text = "Yes, I'm ready!!"
 hide_frame = true
 
@@ -104,8 +118,8 @@ layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../Yes")
 focus_neighbor_right = NodePath(".")
-focus_neighbor_bottom = NodePath("../Yes")
-focus_next = NodePath("../Yes")
+focus_neighbor_bottom = NodePath("../Character")
+focus_next = NodePath("../Character")
 focus_previous = NodePath("../Yes")
 button_text = "No, I'm afraid :("
 back_one_layer = true
@@ -241,4 +255,5 @@ bus = &"Sfx"
 stream = ExtResource("7_5vr5a")
 bus = &"Sfx"
 
+[connection signal="option_cycled" from="MainVBox/Character" to="MainVBox" method="_on_char_cycled"]
 [connection signal="button_pressed" from="MainVBox/Yes" to="MainVBox" method="on_yes_pressed"]

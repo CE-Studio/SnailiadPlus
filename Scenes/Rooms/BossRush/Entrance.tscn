@@ -137,6 +137,7 @@ script/source = "# Copyright 2026 CE-Studio: AGPL-3.0-only
 extends AnimationPlayer
 
 
+@export var shield:Item
 @export var shock:Item
 
 
@@ -157,6 +158,9 @@ func _ready() -> void:
 		UICore.instance.rush_igt_text.set_snaily_text(\"0:00.00\")
 	if not Statics.check_achievement(AchievementCore.Achievements.GRAVITY_SHOCK):
 		shock.queue_free()
+	if (Statics.current_profile[\"character\"] == Player.Players.SLUGGY
+	or Statics.current_profile[\"character\"] == Player.Players.LEECHY):
+		shield.queue_free()
 
 
 func enable_input() -> void:
@@ -443,9 +447,10 @@ position = Vector2(231.99998, 120)
 scale = Vector2(1.24, 1.1333333)
 texture = ExtResource("9_8fgm4")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=543685597 node_paths=PackedStringArray("shock")]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=543685597 node_paths=PackedStringArray("shield", "shock")]
 libraries/ = SubResource("AnimationLibrary_i165k")
 script = SubResource("GDScript_8fgm4")
+shield = NodePath("../GroundLayer/ItemShelf/Item4")
 shock = NodePath("../GroundLayer/ItemShelf/Item8")
 
 [node name="SnailyText" type="RichTextLabel" parent="." unique_id=1189105645]
