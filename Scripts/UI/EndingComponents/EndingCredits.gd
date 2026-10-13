@@ -252,6 +252,10 @@ func _create_credits() -> void:
 					_add_sprite("uid://dduivh26hbk0y", "00.floor.right.idle",
 					Vector2(0, 8))
 					_add_label(tr(&"Snaily Snail"))
+				Player.Players.SLUGGY:
+					_add_sprite("uid://phwftlboa47f", "00.floor.right.idle",
+					Vector2(0, 8))
+					_add_label(tr(&"Sluggy Slug"))
 			_add_y(PIXEL_PEOPLE_SPACING_Y)
 		33:
 			_add_pixel_person("newstarshipsmell")
