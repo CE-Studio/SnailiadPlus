@@ -479,14 +479,13 @@ func _test_for_selection_events() -> void:
 				else:
 					var id:int = selectable_items[selection.x][selection.y][1]
 					_set_desc(id)
-					selected_item = item_sprites[id]
+					selected_item = player_sprite
 					match id:
 						Item.ItemTypes.ICE_SHELL: player_sprite.frame_coords.x = 1
 						Item.ItemTypes.GRAVITY_SHELL: player_sprite.frame_coords.x = 2
 						Item.ItemTypes.METAL_SHELL: player_sprite.frame_coords.x = 4
-						Item.ItemTypes.NONE:
-							player_sprite.frame_coords.x = 0
-							selected_item = player_sprite
+						Item.ItemTypes.NONE: player_sprite.frame_coords.x = 0
+						_: selected_item = item_sprites[id]
 				desc_panel.size.y = 16
 				selected_item.z_index = 1
 			1:

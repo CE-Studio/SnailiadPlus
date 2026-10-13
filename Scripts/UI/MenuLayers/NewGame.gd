@@ -97,6 +97,7 @@ func _on_start_pressed(_value) -> void:
 			var this_cell:int = Statics.current_profile["map_tiles"][i]
 			if this_cell == 0 or this_cell == 2:
 				Statics.current_profile["map_tiles"][i] = this_cell + 1
+	_resolve_present_items()
 	layer.menu.save_profile(pro_id)
 	Statics.load_room = Statics.ROOM_PATH % world_spawn[0]
 	Statics.load_coords = Vector2i(world_spawn[1], world_spawn[2])
@@ -113,3 +114,11 @@ func _on_start_pressed(_value) -> void:
 		intro.setup_player(character as Player.Players)
 		layer.can_focus = false
 		layer.menu.read_inputs = false
+
+
+func _resolve_present_items() -> void:
+	for i in range(Item.all_diff_reqs.size()):
+		var diff_check:bool = Item.all_diff_reqs[i] & (1 << difficulty) > 0
+		var char_check:bool = Item.all_char_reqs[i] & (1 << character) > 0
+		if not (char_check and diff_check):
+			Statics.mark_item_location(i)

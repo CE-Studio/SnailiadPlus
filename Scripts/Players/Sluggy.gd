@@ -27,7 +27,6 @@ func _ready():
 	jump_floatiness = [ 4, 4, 4, 4, 4, 4, 4, 4 ]
 	surface_jump_power = 140
 	weapon_cooldown_mod = 0.75
-	defense_mod = 1.3333
 	apply_rapid_fire_multiplier = true
 	time_until_idle = 30.0
 	hitbox_size_normal = Vector2(24, 13)
@@ -40,8 +39,8 @@ func _ready():
 	grav_shock_charge_time = 0.75
 	grav_shock_charge_mult = 0.5
 	grav_shock_speed = 640.0
-	grav_shock_steering = 40.0
-	damage_multiplier = 1
+	grav_shock_steering = 50.0
+	damage_multiplier = 1.3333
 	shield_particle_offset = Vector2i(-3, 3)
 	health_gain_from_parry = 4
 	light_radius = 48

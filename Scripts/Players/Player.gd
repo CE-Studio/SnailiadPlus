@@ -147,8 +147,6 @@ var jump_floatiness:Array[float]
 var surface_jump_power:float
 ## A multiplier added to the weapon cooldowns returned by the shoot function
 var weapon_cooldown_mod:float
-## A multiplier added to all damage received
-var defense_mod:float
 ## Determines if collecting Rapid Fire affects bullet velocity
 var apply_rapid_fire_multiplier:bool
 ## Determines how long the player must remain idle before playing an idle animation
@@ -1525,7 +1523,7 @@ func adjust_health(amount:int, ignore_defense:bool = false, allow_parry_heal:boo
 
 	var shielded:bool = false
 	if amount < 0:
-		amount = floori(amount * defense_mod)
+		amount = floori(amount * damage_multiplier)
 		if grav_shock_state == 1:
 			grav_shock_state = 0
 			if grav_shock_charge:

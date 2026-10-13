@@ -70,6 +70,7 @@ position = Vector2(1224, 120)
 position = Vector2(128, 112)
 type = 5
 location_id = 18
+character_reqs = 29
 
 [node name="NPC26" parent="GroundLayer" unique_id=1628948476 instance=ExtResource("5_gcet2")]
 position = Vector2(208, 120)

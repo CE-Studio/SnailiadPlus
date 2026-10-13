@@ -57,6 +57,9 @@ var name_str:String = ""
 var collected:bool = false
 var elapsed:float = 0.0
 
+static var all_diff_reqs:Array[int] = []
+static var all_char_reqs:Array[int] = []
+
 const HOVER_DIS:int = 24
 const HOVER_EASE:float = 12.5
 #endregion

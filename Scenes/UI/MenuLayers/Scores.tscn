@@ -36,7 +36,7 @@ focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../Back")
 focus_next = NodePath("../Back")
 focus_previous = NodePath("../Back")
-cycle_option_text = "Snaily"
+cycle_option_text = "Snaily|Sluggy"
 auto_select_mode = true
 grab_focus_on_load = true
 
@@ -241,3 +241,5 @@ metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
 
 [node name="ItemGroup" type="Marker2D" parent="Rush" unique_id=523965552]
 position = Vector2(0, 42)
+
+[connection signal="option_cycled" from="MainVBox/Character" to="MainVBox" method="_on_char_cycled"]

@@ -284,7 +284,8 @@ func kill() -> void:
 			AchievementCore.instance.check_add(AchievementCore.Achievements.WIN_ABSURD)
 		if Statics.is_random_game:
 			AchievementCore.instance.check_add(AchievementCore.Achievements.WIN_RANDOMIZER)
-		match Statics.current_profile["character"]:
+		print(Statics.current_profile["character"])
+		match roundi(Statics.current_profile["character"]):
 			Player.Players.SLUGGY:
 				AchievementCore.instance.check_add(AchievementCore.Achievements.WIN_SLUGGY)
 			Player.Players.UPSIDE:

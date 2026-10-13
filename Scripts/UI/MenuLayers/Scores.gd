@@ -78,11 +78,11 @@ func _rate_str(rate:float) -> String:
 
 
 func _setup_rush_inv(inventory:Array) -> String:
-	if inventory.is_empty():
-		return "[color=#777f83]-NA-"
 	rush_item_group.position.x = 0.0
 	for child in rush_item_group.get_children():
 		child.queue_free()
+	if inventory.is_empty():
+		return "[color=#777f83]-NA-"
 	var inv_to_add:Array[int] = []
 	for i in range(inventory.size()):
 		for j in range(inventory[i]):
@@ -102,3 +102,14 @@ func _setup_rush_inv(inventory:Array) -> String:
 		if i > 0:
 			rush_item_group.position.x -= ITEM_SPACING * 0.5
 	return ""
+
+
+func _on_char_cycled(value:int) -> void:
+	var ch_str:String = "snaily"
+	match value:
+		1: ch_str = "sluggy"
+		2: ch_str = "upside"
+		3: ch_str = "leggy"
+		4: ch_str = "blobby"
+		5: ch_str = "leechy"
+	_print_info(ch_str, value as Player.Players)

@@ -60,6 +60,7 @@ func _read_rooms_log_markers() -> void:
 						unprocessed_marker_positions[array_i] = [ Minimap.MarkerTypes.ITEM, child.location_id ]
 						if child.type == Item.ItemTypes.NONE:
 							Minimap.empty_locations.append(child.location_id)
+						_add_item_reqs(child)
 					if child is Boss:
 						unprocessed_marker_positions[array_i] = Minimap.MarkerTypes.BOSS
 		room_scene.queue_free()
@@ -81,3 +82,11 @@ func _grab_nodes_recursive(root:Node, nodes:Array = []) -> Array:
 		if node.get_child_count() > 0:
 			nodes.append_array(_grab_nodes_recursive(node))
 	return nodes
+
+
+func _add_item_reqs(item:Item) -> void:
+	while Item.all_diff_reqs.size() <= item.location_id:
+		Item.all_diff_reqs.append(0)
+		Item.all_char_reqs.append(0)
+	Item.all_diff_reqs[item.location_id] = item.difficulty_reqs
+	Item.all_char_reqs[item.location_id] = item.character_reqs
