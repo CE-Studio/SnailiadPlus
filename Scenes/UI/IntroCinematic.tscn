@@ -671,9 +671,10 @@ _data = {
 &"RESET": SubResource("Animation_vwgsn")
 }
 
-[node name="IntroCinematic" type="Node2D" unique_id=1550962951 node_paths=PackedStringArray("text", "pattern_group", "story4", "sfx_text", "sfx_page", "sfx_advance", "cover", "anim", "advance_prompt")]
+[node name="IntroCinematic" type="Node2D" unique_id=1550962951 node_paths=PackedStringArray("text", "skip_text", "pattern_group", "story4", "sfx_text", "sfx_page", "sfx_advance", "cover", "anim", "advance_prompt")]
 script = ExtResource("1_8dgki")
 text = NodePath("StoryText")
+skip_text = NodePath("SkipText")
 pattern_group = NodePath("PatternGroup")
 story4 = NodePath("StoryGroup/Story4")
 sfx_text = NodePath("Text")
