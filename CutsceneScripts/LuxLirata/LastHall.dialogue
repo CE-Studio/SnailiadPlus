@@ -5,7 +5,7 @@ do CutsceneController.set_textbox_frame(0)
 do CutsceneController.show_textbox()
 match CutsceneController.object_id
 	when "30"
-		if not Statics.check_item(Item.ItemTypes.METAL_SHELL) or not Statics.check_item(Item.ItemTypes.RAPID_FIRE)
+		if not Statics.check_item(Item.ItemTypes.METAL_SHELL) or not Statics.check_item(Item.ItemTypes.DEVASTATOR)
 			NPC30: Be careful, {{Player.player_name}}![wait=0.25]  With only\nthe powers you have now,[wait=0.1] {{GlobalText.COL_MOON}}Moon\nSnail[/color] will eat you for lunch!!
 		elif not Statics.get_world_flag(Statics.WorldFlags.DEFEATED_BOSS4)
 			NPC30: {{Player.player_name}},[wait=0.1] {{GlobalText.COL_MOON}}Moon Snail[/color]'s just ahead![wait=0.2]\nHe brought us here!![wait=0.15]  He's gone\nbad!![wait=0.15]  You need to defeat him!!
@@ -19,10 +19,9 @@ match CutsceneController.object_id
 		elif Statics.check_item(Item.ItemTypes.HELIX_FRAGMENT) < 30 or not Statics.get_world_flag(Statics.WorldFlags.TALKED_TO_IRIS)
 			NPC31: I've heard that the {{GlobalText.COL_IRIS}}Shrine of\nIris[/color] is not marked on any map![wait=0.25]\nHave you found it yet?
 		else
-			# ShakeHere SfxHere
 			NPC31: Don't moon snails live in the\nocean?[wait=0.35]  {{GlobalText.EFF_SHAKE}}HEY,[wait=0.2][/shake] THIS GAME ISN'T\nREALISTIC!![wait=0.2]  WHAT GIVES??
 	when "32"
-		if not Statics.check_item(Item.ItemTypes.METAL_SHELL) or not Statics.check_item(Item.ItemTypes.RAPID_FIRE)
+		if not Statics.check_item(Item.ItemTypes.METAL_SHELL) or not Statics.check_item(Item.ItemTypes.DEVASTATOR)
 			NPC32: Watch out, {{Player.player_name}}![wait=0.2]  You're not\nstrong enough to fight {{GlobalText.COL_MOON}}Moon\nSnail[/color] yet!![wait=0.15]  Turn back!!
 		elif not Statics.get_world_flag(Statics.WorldFlags.DEFEATED_BOSS4)
 			if Statics.check_item(Item.ItemTypes.HELIX_FRAGMENT) < 30
