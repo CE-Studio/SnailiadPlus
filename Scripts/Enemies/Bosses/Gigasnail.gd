@@ -295,6 +295,8 @@ func kill() -> void:
 				AchievementCore.instance.check_add(AchievementCore.Achievements.WIN_BLOBBY)
 			Player.Players.LEECHY:
 				AchievementCore.instance.check_add(AchievementCore.Achievements.WIN_LEECHY)
+		if Statics.current_profile["character"] != Player.Players.SNAILY:
+			Statics.add_unlock_condition(Statics.Unlocks.SIX_HUNDO)
 		if Statics.check_item(Item.ItemTypes.HELIX_FRAGMENT) >= 30:
 			AchievementCore.instance.check_add(AchievementCore.Achievements.SUN_SNAIL)
 		if Statics.compare_times(Statics.current_profile["game_time"], [0, 30, 0.0]) < 0:
