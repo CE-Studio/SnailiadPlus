@@ -209,7 +209,7 @@ func get_player_name(id:Player.Players, full:bool = false) -> StringName:
 func get_item_name(id:Item.ItemTypes, specify_shell:bool = false) -> StringName:
 	var character:int = 0
 	if GameCore.instance:
-		int(Statics.current_profile["character"])
+		character = int(Statics.current_profile["character"])
 	match id:
 		Item.ItemTypes.PEASHOOTER:
 			return tr(&"Peashooter")

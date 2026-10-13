@@ -12,6 +12,8 @@ const MOVE_RATE = 20.0
 @export var hide_global_menu_assets:bool = false
 @export_range(0.0, 1.0, 0.01) var selector_opacity:float = 1.0
 
+signal layer_focused
+
 var menu:MainMenu
 var meta_info:Array = []
 
@@ -37,6 +39,7 @@ func _ready() -> void:
 		if child is SnailyButton:
 			buttons.append(child)
 			child.parent_layer = self
+	layer_focused.emit()
 
 
 func _process(delta: float) -> void:

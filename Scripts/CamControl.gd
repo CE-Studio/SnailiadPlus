@@ -83,6 +83,8 @@ func set_cam_mode(_state:CamStates = CamStates.NONE, _target:Variant = null) -> 
 
 
 func _process(delta):
+	if not GameCore.instance.good_to_go:
+		return
 	last_pos = pos
 	match state:
 		CamStates.FOLLOW_FLASH:

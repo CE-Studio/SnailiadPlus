@@ -6,12 +6,14 @@ extends Node2D
 
 static var instance:GameCore
 
+var good_to_go:bool = false
 
 var current_room:Room
 var current_room_name:String
 var current_area:int = -1
 var room_time:float = 0.0
 @export var player:Player
+@export var player_spawner:PlayerSpawner
 @export var cam_layer:UICore
 @export var sfx_group:Node
 @export var music_manager:MusicManager
@@ -21,7 +23,11 @@ var room_time:float = 0.0
 
 func _ready() -> void:
 	instance = self
+	#await player_spawner.player_created
+	#player.reparent(self)
+	player_spawner.spawn().reparent(self)
 	cam_layer.instantiate()
+	good_to_go = true
 	if current_room == null:
 		spawn_room(Statics.load_room)
 		player.reset_position(Statics.load_coords)

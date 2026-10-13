@@ -2,15 +2,15 @@
 
 [ext_resource type="Script" uid="uid://2jmosr6mcjwx" path="res://Scripts/GameCore.gd" id="1_x87qo"]
 [ext_resource type="PackedScene" uid="uid://ctodnm477yhmh" path="res://Scenes/internals/CameraLayer.tscn" id="2_3mbwn"]
-[ext_resource type="PackedScene" uid="uid://dgd76ibvdfk3c" path="res://Scenes/Entities/Players/Snaily.tscn" id="2_4bvgx"]
+[ext_resource type="Script" uid="uid://b7rd41o1a47mt" path="res://Scripts/Classes/PlayerSpawner.gd" id="3_kilg5"]
 [ext_resource type="PackedScene" uid="uid://b051o8jm6et2f" path="res://Scenes/internals/MusicManager.tscn" id="4_jwv4s"]
 [ext_resource type="PackedScene" uid="uid://d2376pjd403n3" path="res://Scenes/internals/LimitedSoundHandler.tscn" id="5_lohlh"]
 [ext_resource type="Script" uid="uid://o7gmlfvapbjh" path="res://Scripts/Classes/RoomLoader.gd" id="6_kilg5"]
 
-[node name="GameScene" type="Node2D" unique_id=549691468 node_paths=PackedStringArray("player", "cam_layer", "sfx_group", "music_manager", "lim_sfx_handler", "room_loader")]
+[node name="GameScene" type="Node2D" unique_id=549691468 node_paths=PackedStringArray("player_spawner", "cam_layer", "sfx_group", "music_manager", "lim_sfx_handler", "room_loader")]
 process_mode = 1
 script = ExtResource("1_x87qo")
-player = NodePath("Snaily")
+player_spawner = NodePath("PlayerSpawner")
 cam_layer = NodePath("CameraLayer")
 sfx_group = NodePath("SfxGroup")
 music_manager = NodePath("MusicManager")
@@ -19,10 +19,13 @@ room_loader = NodePath("RoomLoader")
 
 [node name="SfxGroup" type="Node" parent="." unique_id=757531976]
 
-[node name="CameraLayer" parent="." unique_id=805642933 instance=ExtResource("2_3mbwn")]
-
-[node name="Snaily" parent="." unique_id=782782552 instance=ExtResource("2_4bvgx")]
+[node name="PlayerSpawner" type="Node2D" parent="." unique_id=1318108840 node_paths=PackedStringArray("gamecore")]
 position = Vector2(64, 96)
+script = ExtResource("3_kilg5")
+gamecore = NodePath("..")
+metadata/_custom_type_script = "uid://b7rd41o1a47mt"
+
+[node name="CameraLayer" parent="." unique_id=805642933 instance=ExtResource("2_3mbwn")]
 
 [node name="MusicManager" parent="." unique_id=1382594556 instance=ExtResource("4_jwv4s")]
 

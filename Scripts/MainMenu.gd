@@ -88,8 +88,7 @@ func _ready() -> void:
 
 	else:
 		title.position.y = TITLE_REST_Y
-		selectors[0].play(str(int(Statics.current_profile["character"])))
-		selectors[1].play(str(int(Statics.current_profile["character"])))
+		set_selector_anim(Statics.current_profile["character"])
 		if Statics.is_in_boss_rush:
 			create_layer("RushPause")
 		else:
@@ -175,6 +174,11 @@ func _process(delta: float) -> void:
 		read_esc = true
 
 
+func set_selector_anim(id:int) -> void:
+	selectors[0].play(str(id))
+	selectors[1].play(str(id))
+
+
 func spawn_menu() -> void:
 	if is_main_menu:
 		if click_play_text:
@@ -242,6 +246,7 @@ func clear_top_layer(_value) -> MenuLayer:
 		focus_button.grab_focus()
 		#endregion
 		active_layer = second_top_layer
+		second_top_layer.layer_focused.emit()
 		return second_top_layer
 	elif active_layers == 1 and not is_main_menu:
 		UICore.instance.pause_layer.unpause_fade_out()

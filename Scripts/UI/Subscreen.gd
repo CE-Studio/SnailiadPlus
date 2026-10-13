@@ -132,6 +132,10 @@ func _ready() -> void:
 	desc_panel_origin = desc_panel.position
 	desc_panel.modulate.a = 0.0
 	sfx_open.play()
+	if (this_char == Player.Players.SLUGGY
+	or this_char == Player.Players.LEECHY
+	or this_char == Player.Players.BLOBBY):
+		header_shell.set_snaily_text(tr(&"Body"))
 	info_text.set_snaily_text(info_text.text % [
 		GlobalText.get_player_name(this_char),
 		GlobalText.difficulties[Statics.current_profile["difficulty"] as int]

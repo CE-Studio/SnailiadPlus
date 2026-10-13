@@ -145,8 +145,10 @@ var terminal_velocity:Array[float]
 var jump_floatiness:Array[float]
 ## How much power should be applied when jumping from a wall
 var surface_jump_power:float
-## Contains the cooldown in seconds of each weapon. The second half of the array assumes Rapid Fire
-var weapon_cooldowns:Array[float]
+## A multiplier added to the weapon cooldowns returned by the shoot function
+var weapon_cooldown_mod:float
+## A multiplier added to all damage received
+var defense_mod:float
 ## Determines if collecting Rapid Fire affects bullet velocity
 var apply_rapid_fire_multiplier:bool
 ## Determines how long the player must remain idle before playing an idle animation
@@ -328,7 +330,7 @@ func _ready():
 #region Movement
 # This function is called once every frame
 func _process(_delta):
-	if not process:
+	if not process or not GameCore.instance.good_to_go:
 		return
 
 	if stun_timer > 0:
@@ -341,7 +343,7 @@ func _process(_delta):
 # This function is called on a fixed interval of
 # 60 times per second, regardless of framerate
 func _physics_process(delta:float) -> void:
-	if not process:
+	if not process or not GameCore.instance.good_to_go:
 		return
 
 	if Statics.noclip_mode:
@@ -908,7 +910,7 @@ func _case_default(delta:float, surface:Statics.DirsSurface):
 		body.position -= vel * ((1.0 / 20.0) * 60.0 * delta)
 		position = body.position
 
-	if (GameCore.instance.current_room.collision_enabled and
+	if (GameCore.instance.current_room and GameCore.instance.current_room.collision_enabled and
 	GameCore.instance.current_room.map_ground.get_cell_tile_data(Vector2i(position * Statics.FRAC_16))):
 		match surface:
 			Statics.DirsSurface.FLOOR:
@@ -1523,6 +1525,7 @@ func adjust_health(amount:int, ignore_defense:bool = false, allow_parry_heal:boo
 
 	var shielded:bool = false
 	if amount < 0:
+		amount = floori(amount * defense_mod)
 		if grav_shock_state == 1:
 			grav_shock_state = 0
 			if grav_shock_charge:
@@ -1702,7 +1705,7 @@ func _shoot(_bullet_id:int, normalized_velocity:Vector2, pos:Vector2 = body.posi
 	if RushManager.instance:
 		RushManager.instance.add_bullet((_bullet_id >> 1) - 1)
 	var this_cooldown := new_bullet._spawn(normalized_velocity, rapid_mult, powered)
-	return this_cooldown
+	return this_cooldown * weapon_cooldown_mod
 
 
 func _shoot_grav_shock() -> PlayerBullet:

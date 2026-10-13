@@ -50,6 +50,7 @@ func _ready() -> void:
 	panel.modulate.a = 0
 	panel.call_deferred("add_button", tr(&"No"), _on_panel_no, false)
 	panel.call_deferred("add_button", tr(&"Yes"), _on_panel_yes, false)
+	layer.layer_focused.connect(_on_layer_focused)
 
 
 func _process(delta: float) -> void:
@@ -133,6 +134,10 @@ func _update_profile_buttons() -> void:
 			button.set_text(tr(&"Empty profile"))
 			button.set_subtext(tr(&"Select to start a new one!"))
 			marker.visible = false
+
+
+func _on_layer_focused() -> void:
+	layer.menu.set_selector_anim(0)
 
 
 func focus_panel() -> void:

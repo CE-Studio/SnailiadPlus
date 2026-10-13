@@ -84,6 +84,9 @@ func instantiate() -> void:
 
 
 func _process(delta: float) -> void:
+	if not instance:
+		return
+	
 	# Framerate
 	var fps_int = int(Engine.get_frames_per_second())
 	var fps_setting = ProjectSettings.get_setting("game/visuals/frame_limit")

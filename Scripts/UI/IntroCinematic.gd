@@ -48,6 +48,8 @@ var menu:MainMenu
 
 ## The text node that displays the story strings
 @export var text:SnailyText
+## The text node that prompts the player to skip
+@export var skip_text:SnailyText
 ## The parent node that holds all background pattern sprites as children
 @export var pattern_group:Node2D
 ## The parent node for the fourth story page, which shows the player character
@@ -73,6 +75,10 @@ func _ready() -> void:
 	_create_bg()
 	clear_text()
 	advance_prompt.visible = false
+	if SInput.last_input_was_con:
+		skip_text.set_snaily_text(tr(&"Menu to skip"))
+	else:
+		skip_text.set_snaily_text(tr(&"Esc to skip"))
 
 
 func setup_player(player:Player.Players) -> void:

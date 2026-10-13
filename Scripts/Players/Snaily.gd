@@ -26,14 +26,14 @@ func _ready():
 	terminal_velocity = [ 500, 500, 500, 500, 500, 500, 500, 500 ]
 	jump_floatiness = [ 4, 4, 4, 4, 4, 4, 4, 4 ]
 	surface_jump_power = 120
-	#weapon_cooldowns
+	weapon_cooldown_mod = 1.0
+	defense_mod = 1.0
 	apply_rapid_fire_multiplier = true
 	time_until_idle = 30.0
 	hitbox_size_normal = Vector2(24, 13)
 	hitbox_offset_normal = Vector2(0, 1.5)
 	hitbox_offset_shell = Vector2(12, 13)
 	hitbox_offset_shell = Vector2(-3, 1.5)
-	#unshell_adjust
 	shell_turnaround_adjust = 0.1667
 	coyote_time = 0.125
 	jump_buffer = 0.125

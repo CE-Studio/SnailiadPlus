@@ -26,28 +26,67 @@ hide_frame = true
 [node name="HSeparator" type="HSeparator" parent="MainVBox" unique_id=952366075]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 2
-theme_override_constants/separation = 12
+theme_override_constants/separation = 8
 
 [node name="OpenMap" parent="MainVBox" unique_id=622407168 instance=ExtResource("4_fxndk")]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../Back")
 focus_neighbor_right = NodePath(".")
-focus_neighbor_bottom = NodePath("../Back")
-focus_next = NodePath("../Back")
+focus_neighbor_bottom = NodePath("../Rando")
+focus_next = NodePath("../Rando")
 focus_previous = NodePath("../Back")
 button_text = "Open map"
 grab_focus_on_load = true
 
-[node name="Back" parent="MainVBox" unique_id=944994603 instance=ExtResource("3_ltp56")]
+[node name="Rando" parent="MainVBox" unique_id=1748040070 instance=ExtResource("3_ltp56")]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../OpenMap")
 focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../Gamemodes")
+focus_next = NodePath("../Gamemodes")
+focus_previous = NodePath("../OpenMap")
+button_text = "???"
+disabled = true
+hide_frame = true
+
+[node name="Gamemodes" parent="MainVBox" unique_id=1559311867 instance=ExtResource("3_ltp56")]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../Rando")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../Speedrun")
+focus_next = NodePath("../Speedrun")
+focus_previous = NodePath("../Rando")
+button_text = "???"
+disabled = true
+hide_frame = true
+
+[node name="Speedrun" parent="MainVBox" unique_id=870430582 instance=ExtResource("3_ltp56")]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../Gamemodes")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../Back")
+focus_next = NodePath("../Back")
+focus_previous = NodePath("../Gamemodes")
+button_text = "???"
+disabled = true
+hide_frame = true
+
+[node name="Back" parent="MainVBox" unique_id=944994603 instance=ExtResource("3_ltp56")]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../Speedrun")
+focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../OpenMap")
 focus_next = NodePath("../OpenMap")
-focus_previous = NodePath("../OpenMap")
+focus_previous = NodePath("../Speedrun")
 button_text = "Back to new game"
 back_one_layer = true
 hide_frame = true

@@ -51,6 +51,14 @@ func _clear_locked_buttons() -> void:
 	
 	if not Statics.has_unlock(Statics.Unlocks.ABSURD_DIFF):
 		$"HBoxContainer/Difficulty".cycle_options.pop_back()
+	
+	#region Temp
+	# Clearing unimplemented characters from the menu
+	$"HBoxContainer/Character".cycle_options.pop_back() # Clear Leechy
+	$"HBoxContainer/Character".cycle_options.pop_back() # Clear Blobby
+	$"HBoxContainer/Character".cycle_options.pop_back() # Clear Leggy
+	$"HBoxContainer/Character".cycle_options.pop_back() # Clear Upside
+	#endregion
 
 
 func _on_difficulty_changed(new_diff:int) -> void:
@@ -67,6 +75,8 @@ func _on_character_changed(new_char:int) -> void:
 		2: Statics.data_profile2["character"] = new_char
 		3: Statics.data_profile3["character"] = new_char
 	character = new_char
+	if layer:
+		layer.menu.set_selector_anim(new_char)
 
 
 func _on_start_pressed(_value) -> void:

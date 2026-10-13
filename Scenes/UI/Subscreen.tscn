@@ -967,6 +967,7 @@ offset_bottom = 37.0
 
 [node name="Name" parent="InvBody/Content/GroupName/Box" unique_id=1376708755 instance=ExtResource("5_ndsvi")]
 custom_minimum_size = Vector2(124, 0)
+custom_maximum_size = Vector2(300, -1)
 layout_mode = 2
 text = "Snaily Snail"
 quick_load_text = "subscreen_header_name"
@@ -1356,7 +1357,7 @@ position = Vector2(0, 24)
 type = 1
 
 [node name="MapMarker4" parent="MapBody/Content/Legend" unique_id=985311718 instance=ExtResource("17_newu2")]
-modulate = Color(0.9882353, 0.8784314, 0.7058824, 1)
+modulate = Color(0.78431374, 0.7529412, 0.7529412, 1)
 position = Vector2(0, 32)
 type = 4
 
