@@ -28,8 +28,20 @@ match CutsceneController.object_id
 			NPC0: I hope the next game has more\nweapons.[wait=0.25]  This game could have\nused a {{GlobalText.EFF_WAVE}}flame whip!
 	
 	when "1"
-		if not Statics.check_item(Item.ItemTypes.PEASHOOTER) and not Statics.check_item(Item.ItemTypes.RAINBOW_WAVE)
+		if not Statics.check_item(Item.ItemTypes.HIGH_JUMP) and not Statics.check_item(Item.ItemTypes.SECRET_BOOMERANG) and not Statics.get_world_flag(Statics.WorldFlags.TALKED_TO_GUIDE_SNAIL)
 			NPC1: {{Player.player_name}},[wait=0.125] some snails are missing![wait=0.25]\nDo you think you could go look\nfor them?[wait=0.25]  I'm getting worried!
+			NPC1: Oh, you're the best, {{Player.player_name}}!![wait=0.15]\nI'd try to help out, but...\n[wait=0.1]y'know...
+			NPC1: It's not that I'm scared or\nanything!!  [wait=0.2]You're just better\nat this than me!
+			NPC1: Although...[wait=0.15] I think I know\nsomeone who can help!
+			do CutsceneController.set_actor("2")
+			do CutsceneController.set_camera_focus_actor()
+			NPC1: If you ever get lost or stuck,\n[wait=0.15]try talking to [color=#b9b8f7]Psychic Snail[/color]!!
+			NPC1: They love predicting things and\nseeing the future.[wait=0.1]  It's a little\ncreepy,[wait=0.1] but super handy!!
+			do CutsceneController.set_camera_focus_player()
+			NPC1: Anyway, I think that's about\nall I can do right now.[wait=0.2]  Good\nluck out there, {{Player.player_name}}!!
+			do Statics.set_world_flag(Statics.WorldFlags.TALKED_TO_GUIDE_SNAIL, true)
+		elif not Statics.check_item(Item.ItemTypes.PEASHOOTER) and not Statics.check_item(Item.ItemTypes.RAINBOW_WAVE)
+			NPC1: Good luck, {{Player.player_name}}!![wait=0.15]  We'll be\nhere.[wait=0.25]  ...Hopefully.
 		elif Statics.get_item_percentage() < 100.0
 			NPC1: I have a goal in life.[wait=0.25]  One day,\nI will eat a pizza.[wait=0.4]  I mean it!![wait=0.4][speed=0.4]\nJust you watch, [wait=0.0625]{{Player.player_name}}!!
 		else

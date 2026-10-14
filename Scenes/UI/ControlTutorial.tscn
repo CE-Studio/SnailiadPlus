@@ -1,0 +1,283 @@
+[gd_scene format=3 uid="uid://braq3nkfu5ic3"]
+
+[ext_resource type="Script" uid="uid://dqt4uo3ejug3v" path="res://Scripts/Classes/SnailyText.gd" id="1_dlyxl"]
+[ext_resource type="Script" uid="uid://cifew1rqxadoj" path="res://Scripts/UI/ControlTutorial.gd" id="1_lovs3"]
+[ext_resource type="Texture2D" uid="uid://b2y6ujfn618hq" path="res://Assets/Images/UI/Info.png" id="2_0xms7"]
+
+[node name="ControlTutorial" type="Node2D" unique_id=1358763429 node_paths=PackedStringArray("tut_start", "tut_shoot")]
+script = ExtResource("1_lovs3")
+tut_start = NodePath("Start")
+tut_shoot = NodePath("Shoot")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1529184695]
+offset_top = -64.0
+offset_right = 104.0
+color = Color(0, 0, 0, 0.49803922)
+
+[node name="Info" type="Sprite2D" parent="." unique_id=313554122]
+position = Vector2(8, -56)
+texture = ExtResource("2_0xms7")
+
+[node name="Start" type="Control" parent="." unique_id=232074539]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Up" type="RichTextLabel" parent="Start" unique_id=2144090412]
+clip_contents = false
+layout_mode = 0
+offset_left = 24.0
+offset_top = -56.0
+offset_right = 64.0
+offset_bottom = -16.0
+mouse_filter = 2
+bbcode_enabled = true
+text = "W"
+fit_content = true
+scroll_active = false
+script = ExtResource("1_dlyxl")
+quick_load_text = "bind__up"
+border_scale = 1
+metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
+
+[node name="Left" type="RichTextLabel" parent="Start" unique_id=2092011645]
+clip_contents = false
+layout_mode = 0
+offset_left = 8.0
+offset_top = -40.0
+offset_right = 48.0
+mouse_filter = 2
+theme_override_constants/line_separation = 0
+theme_override_font_sizes/normal_font_size = 16
+bbcode_enabled = true
+text = "A"
+fit_content = true
+scroll_active = false
+script = ExtResource("1_dlyxl")
+quick_load_text = "bind__left"
+border_scale = 1
+metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
+
+[node name="Down" type="RichTextLabel" parent="Start" unique_id=1488468140]
+clip_contents = false
+layout_mode = 0
+offset_left = 24.0
+offset_top = -40.0
+offset_right = 64.0
+mouse_filter = 2
+theme_override_constants/line_separation = 0
+theme_override_font_sizes/normal_font_size = 16
+bbcode_enabled = true
+text = "S"
+fit_content = true
+scroll_active = false
+script = ExtResource("1_dlyxl")
+quick_load_text = "bind__down"
+border_scale = 1
+metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
+
+[node name="Right" type="RichTextLabel" parent="Start" unique_id=1021039793]
+clip_contents = false
+layout_mode = 0
+offset_left = 40.0
+offset_top = -40.0
+offset_right = 80.0
+mouse_filter = 2
+theme_override_constants/line_separation = 0
+theme_override_font_sizes/normal_font_size = 16
+bbcode_enabled = true
+text = "D"
+fit_content = true
+scroll_active = false
+script = ExtResource("1_dlyxl")
+quick_load_text = "bind__right"
+border_scale = 1
+metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
+
+[node name="Jump" type="RichTextLabel" parent="Start" unique_id=273623648]
+clip_contents = false
+layout_mode = 0
+offset_left = 72.0
+offset_top = -40.0
+offset_right = 112.0
+mouse_filter = 2
+theme_override_constants/line_separation = 0
+theme_override_font_sizes/normal_font_size = 16
+bbcode_enabled = true
+text = "Z"
+fit_content = true
+scroll_active = false
+script = ExtResource("1_dlyxl")
+quick_load_text = "bind__jump"
+border_scale = 1
+metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
+
+[node name="LabelMove" type="RichTextLabel" parent="Start" unique_id=50085031]
+clip_contents = false
+layout_mode = 0
+offset_left = 12.0
+offset_top = -20.0
+offset_right = 52.0
+offset_bottom = 20.0
+mouse_filter = 2
+theme_override_constants/line_separation = 0
+theme_override_font_sizes/normal_font_size = 8
+bbcode_enabled = true
+text = "Move"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 1
+script = ExtResource("1_dlyxl")
+text_scale = 1
+quick_load_text = "Move"
+border_scale = 1
+metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
+
+[node name="LabelJump" type="RichTextLabel" parent="Start" unique_id=591545467]
+clip_contents = false
+layout_mode = 0
+offset_left = 60.0
+offset_top = -20.0
+offset_right = 100.0
+offset_bottom = 20.0
+mouse_filter = 2
+theme_override_constants/line_separation = 0
+theme_override_font_sizes/normal_font_size = 8
+bbcode_enabled = true
+text = "Jump"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 1
+script = ExtResource("1_dlyxl")
+text_scale = 1
+quick_load_text = "Jump"
+border_scale = 1
+metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
+
+[node name="Shoot" type="Control" parent="." unique_id=109509843]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Shoot" type="RichTextLabel" parent="Shoot" unique_id=210325500]
+clip_contents = false
+layout_mode = 0
+offset_left = 16.0
+offset_top = -48.0
+offset_right = 56.0
+offset_bottom = -8.0
+mouse_filter = 2
+theme_override_constants/line_separation = 0
+theme_override_font_sizes/normal_font_size = 16
+bbcode_enabled = true
+text = "X"
+fit_content = true
+scroll_active = false
+script = ExtResource("1_dlyxl")
+quick_load_text = "bind__shoot"
+border_scale = 1
+metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
+
+[node name="Weapon0" type="RichTextLabel" parent="Shoot" unique_id=1947363750]
+clip_contents = false
+layout_mode = 0
+offset_left = 22.0
+offset_top = -48.0
+offset_right = 86.0
+offset_bottom = -8.0
+mouse_filter = 2
+theme_override_constants/line_separation = 0
+theme_override_font_sizes/normal_font_size = 16
+bbcode_enabled = true
+text = "1"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 1
+script = ExtResource("1_dlyxl")
+quick_load_text = "bind__weapon1"
+border_scale = 1
+metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
+
+[node name="Weapon1" type="RichTextLabel" parent="Shoot" unique_id=713445858]
+clip_contents = false
+layout_mode = 0
+offset_left = 40.0
+offset_top = -48.0
+offset_right = 104.0
+offset_bottom = -8.0
+mouse_filter = 2
+theme_override_constants/line_separation = 0
+theme_override_font_sizes/normal_font_size = 16
+bbcode_enabled = true
+text = "2"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 1
+script = ExtResource("1_dlyxl")
+quick_load_text = "bind__weapon2"
+border_scale = 1
+metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
+
+[node name="Weapon#" type="RichTextLabel" parent="Shoot" unique_id=1359618048]
+clip_contents = false
+layout_mode = 0
+offset_left = 58.0
+offset_top = -48.0
+offset_right = 122.0
+offset_bottom = -8.0
+mouse_filter = 2
+theme_override_constants/line_separation = 0
+theme_override_font_sizes/normal_font_size = 16
+bbcode_enabled = true
+text = "..."
+fit_content = true
+scroll_active = false
+horizontal_alignment = 1
+script = ExtResource("1_dlyxl")
+quick_load_text = "..."
+border_scale = 1
+metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
+
+[node name="LabelShoot" type="RichTextLabel" parent="Shoot" unique_id=1554093858]
+clip_contents = false
+layout_mode = 0
+offset_left = 4.0
+offset_top = -28.0
+offset_right = 44.0
+offset_bottom = 12.0
+mouse_filter = 2
+theme_override_constants/line_separation = 0
+theme_override_font_sizes/normal_font_size = 8
+bbcode_enabled = true
+text = "Shoot"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 1
+script = ExtResource("1_dlyxl")
+text_scale = 1
+quick_load_text = "Shoot"
+border_scale = 1
+metadata/_custom_type_script = "uid://dqt4uo3ejug3v"
+
+[node name="LabelWeapon" type="RichTextLabel" parent="Shoot" unique_id=1393959544]
+clip_contents = false
+layout_mode = 0
+offset_left = 40.0
+offset_top = -28.0
+offset_right = 104.0
+offset_bottom = 12.0
+mouse_filter = 2
+theme_override_constants/line_separation = 0
+theme_override_font_sizes/normal_font_size = 8
+bbcode_enabled = true
+text = "Toggle weapons"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 1
+script = ExtResource("1_dlyxl")
+text_scale = 1
+quick_load_text = "Toggle weapons"
+border_scale = 1
+metadata/_custom_type_script = "uid://dqt4uo3ejug3v"

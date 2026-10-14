@@ -12,6 +12,7 @@ const MINIMAL_SHAKE_MOD:float = 0.4
 const FLASHY_POPUP:PackedScene = preload("uid://cst46kauimrf6")
 const COLOR_POPUP:PackedScene = preload("uid://b84helaw7ial0")
 const BOSS_BAR:PackedScene = preload("uid://d0moh826bija1")
+const CTRL_TUTORIAL:PackedScene = preload("uid://braq3nkfu5ic3")
 
 var active_area_label:Node
 var active_boss_bar:BossHealthBar
@@ -344,3 +345,10 @@ func fade_ui(to_a:float, duration:float) -> void:
 	fade_col.a = to_a
 	var fade:Tween = create_tween()
 	fade.tween_property(self, "modulate", fade_col, duration)
+
+
+func show_tutorial(id:int) -> void:
+	var new_tut:ControlTutorial = CTRL_TUTORIAL.instantiate()
+	new_tut.position = Vector2(48.0, -24.0)
+	_bl.add_child(new_tut)
+	new_tut.set_active_tutorial(id)

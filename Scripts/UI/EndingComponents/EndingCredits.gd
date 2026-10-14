@@ -310,7 +310,7 @@ func _create_credits() -> void:
 		43:
 			_add_pixel_person("helispark")
 			_add_label(tr(&"Helispark"))
-			_add_label(tr(&"Playtesting and flavor text"), 1)
+			_add_label(tr(&"Helped me playtest, balance things, and solidify what I wanted to make into real dev plans"), 1)
 			_add_y(PIXEL_PEOPLE_SPACING_Y)
 		44:
 			_add_pixel_person("goldguy")
@@ -318,28 +318,33 @@ func _create_credits() -> void:
 			_add_label(tr(&"Drew a handful of new tiles for me"), 1)
 			_add_y(PIXEL_PEOPLE_SPACING_Y)
 		45:
+			_add_pixel_person("lasagnabones")
+			_add_label(tr(&"LasagnaBones"))
+			_add_label(tr(&"Wrote a few shaders for me"), 1)
+			_add_y(PIXEL_PEOPLE_SPACING_Y)
+		46:
 			_add_pixel_person("xander")
 			_add_label(tr(&"They Call Me Xander"))
 			_add_label(tr(&"Call him an entomologist the way he discovers those bugs"), 1)
 			_add_y(PIXEL_PEOPLE_SPACING_Y)
-		46:
+		47:
 			_add_pixel_person("ehseezed")
 			_add_label(tr(&"Ehseezed"))
 			_add_label(tr(&"Heading official Archipelago integration for me"), 1)
 			_add_y(PIXEL_PEOPLE_SPACING_Y)
-		47:
+		48:
 			_add_pixel_person("discord")
 			_add_label(tr(&"The Snailiad Discord"))
 			_add_label(tr(&"Testing, feedback, ideas, memes, encouragement, and being patient. Seriously, y'all are amazing and I'm happy to be a part of this community _@_V!!"), 1)
 			_add_y(PIXEL_PEOPLE_SPACING_Y)
-		48:
+		49:
 			if randf() <= 0.125:
 				_add_sprite("uid://qt0amyc7q4m2", "default", Vector2(0, 16), 32)
 				_add_y(PIXEL_PEOPLE_SPACING_Y)
-		49:
+		50:
 			_add_label(tr(&"And you\n\n\nBecause seriously, why not\n\n\nAll the other games put \"And You\" in the credits, so I figure, \"And You\" must be someone pretty cool\n\n\nThanks, And You!!"))
 			_add_y(PIXEL_PEOPLE_SPACING_Y + 32)
-		50:
+		51:
 			_add_sprite("uid://m7h6tnoxysr3", "default", Vector2i(0, 61), 61)
 			stop_y = -spawn_y + 120
 		_:

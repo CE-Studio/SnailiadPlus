@@ -376,6 +376,11 @@ static func set_camera_focus_node(_node:Node2D) -> void:
 	UICore.instance.cam.set_cam_mode(CamControl.CamStates.TARGET_ENTITY, _node)
 
 
+## Focuses the camera on the active actor
+static func set_camera_focus_actor() -> void:
+	UICore.instance.cam.set_cam_mode(CamControl.CamStates.TARGET_ENTITY, get_actor(active_object_id))
+
+
 ## Focuses the camera on the player, returning it to default follow behavior
 static func set_camera_focus_player() -> void:
 	UICore.instance.cam.set_cam_mode()

@@ -221,14 +221,17 @@ func _add_to_inventory() -> bool:
 			if Statics.stack_weapons or (GameCore.instance.player.selected_weapon < 2):
 				if not Player.instance.is_equipped(1):
 					GameCore.instance.player._toggle_weapon(1)
+			_try_show_weapon_tutorial()
 		ItemTypes.BOOMERANG:
 			if Statics.stack_weapons or (GameCore.instance.player.selected_weapon < 4):
 				if not Player.instance.is_equipped(2):
 					GameCore.instance.player._toggle_weapon(2)
+			_try_show_weapon_tutorial()
 		ItemTypes.RAINBOW_WAVE:
 			if Statics.stack_weapons or (GameCore.instance.player.selected_weapon < 8):
 				if not Player.instance.is_equipped(3):
 					GameCore.instance.player._toggle_weapon(3)
+			_try_show_weapon_tutorial()
 		#ItemTypes.DEVASTATOR:
 		#ItemTypes.HIGH_JUMP:
 		#ItemTypes.SHELL_SHIELD:
@@ -267,11 +270,13 @@ func _add_to_inventory() -> bool:
 			if Statics.stack_weapons or (GameCore.instance.player.selected_weapon < 4):
 				if not Player.instance.is_equipped(2):
 					GameCore.instance.player._toggle_weapon(2)
+			_try_show_weapon_tutorial()
 			AchievementCore.instance.check_add(AchievementCore.Achievements.SECRET_BOOMERANG)
 		ItemTypes.DEBUG_WAVE:
 			if Statics.stack_weapons or (GameCore.instance.player.selected_weapon < 8):
 				if not Player.instance.is_equipped(3):
 					GameCore.instance.player._toggle_weapon(3)
+			_try_show_weapon_tutorial()
 		ItemTypes.HEART_CONTAINER:
 			if not Statics.is_in_boss_rush:
 				name_str = tr(&"Heart Container #%d") % Statics.check_item(Item.ItemTypes.HEART_CONTAINER)
@@ -348,3 +353,14 @@ func _remove_from_inventory() -> void:
 
 func _on_collect_timer_timeout() -> void:
 	queue_free()
+
+
+func _try_show_weapon_tutorial() -> void:
+	if (Statics.check_item(ItemTypes.PEASHOOTER)
+	+ Statics.check_item(ItemTypes.BOOMERANG)
+	+ Statics.check_item(ItemTypes.RAINBOW_WAVE)
+	+ Statics.check_item(ItemTypes.SECRET_BOOMERANG)
+	+ Statics.check_item(ItemTypes.DEBUG_WAVE) == 1
+	and not Statics.get_world_flag(Statics.WorldFlags.SHOWN_WEAPON_TUTORIAL)):
+		UICore.instance.show_tutorial(1)
+		Statics.set_world_flag(Statics.WorldFlags.SHOWN_WEAPON_TUTORIAL, true)
