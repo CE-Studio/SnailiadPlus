@@ -28,7 +28,7 @@ match CutsceneController.object_id
 			NPC0: I hope the next game has more\nweapons.[wait=0.25]  This game could have\nused a {{GlobalText.EFF_WAVE}}flame whip!
 	
 	when "1"
-		if not Statics.check_item(Item.ItemTypes.HIGH_JUMP) and not Statics.check_item(Item.ItemTypes.SECRET_BOOMERANG) and (not Statics.get_world_flag(Statics.WorldFlags.TALKED_TO_GUIDE_SNAIL) or not Statics.get_world_flag(Statics.WorldFlags.DEFEATED_BOSS1) or not Statics.get_world_flag(Statics.WorldFlags.DEFEATED_BOSS2))
+		if not Statics.check_item(Item.ItemTypes.HIGH_JUMP) and not Statics.check_item(Item.ItemTypes.SECRET_BOOMERANG) and not Statics.get_world_flag(Statics.WorldFlags.TALKED_TO_GUIDE_SNAIL) and not Statics.get_world_flag(Statics.WorldFlags.DEFEATED_BOSS1) and not Statics.get_world_flag(Statics.WorldFlags.DEFEATED_BOSS2)
 			NPC1: {{Player.player_name}},[wait=0.125] some snails are missing![wait=0.25]\nDo you think you could go look\nfor them?[wait=0.25]  I'm getting worried!
 			NPC1: Oh, you're the best, {{Player.player_name}}!![wait=0.15]\nI'd try to help out, but...\n[wait=0.1]y'know...
 			NPC1: It's not that I'm scared or\nanything!!  [wait=0.2]You're just better\nat this than me!
