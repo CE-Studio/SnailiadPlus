@@ -264,7 +264,6 @@ script = ExtResource("3_iredl")
 metadata/_custom_type_script = "uid://boee2837la0pr"
 
 [node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="." unique_id=63932753]
-rect = Rect2(-8, -8, 16, 16)
 
 [node name="MarkerSprite" type="Sprite2D" parent="." unique_id=1670093833]
 z_index = 100
