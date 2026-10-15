@@ -348,6 +348,8 @@ func fade_ui(to_a:float, duration:float) -> void:
 
 
 func show_tutorial(id:int) -> void:
+	if Statics.is_in_boss_rush:
+		return
 	var new_tut:ControlTutorial = CTRL_TUTORIAL.instantiate()
 	new_tut.position = Vector2(48.0, -24.0)
 	_bl.add_child(new_tut)
