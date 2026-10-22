@@ -4,27 +4,49 @@
 [ext_resource type="Script" uid="uid://cplypknugk22t" path="res://Scripts/UI/MenuLayers/SoundOptions.gd" id="2_0h43h"]
 [ext_resource type="PackedScene" uid="uid://b2te0qs40rba4" path="res://Scenes/UI/ScrollingSnailyButton.tscn" id="2_p25fg"]
 [ext_resource type="PackedScene" uid="uid://cethpj66nvp1o" path="res://Scenes/UI/ActionSnailyButton.tscn" id="3_0h43h"]
+[ext_resource type="StyleBox" uid="uid://cu8hefgxulc2b" path="res://Resources/ScrollStylebox.tres" id="3_tyqu8"]
 
 [node name="SoundOptions" type="Node2D" unique_id=1226639279]
 script = ExtResource("1_4efbj")
 save_general_on_close = true
 
-[node name="MainVBox" type="VBoxContainer" parent="." unique_id=1472635082]
+[node name="MainVBox" type="VBoxContainer" parent="." unique_id=1472635082 node_paths=PackedStringArray("master", "sound", "music", "dialogue")]
 custom_minimum_size = Vector2(400, 0)
 offset_top = 70.0
 offset_right = 400.0
 offset_bottom = 220.0
 alignment = 1
 script = ExtResource("2_0h43h")
+master = NodePath("ScrollContainer/VBoxContainer/Master")
+sound = NodePath("ScrollContainer/VBoxContainer/Sound")
+music = NodePath("ScrollContainer/VBoxContainer/Music")
+dialogue = NodePath("ScrollContainer/VBoxContainer/Dialogue")
 
-[node name="Master" parent="MainVBox" unique_id=1538879454 instance=ExtResource("2_p25fg")]
+[node name="ScrollContainer" type="ScrollContainer" parent="MainVBox" unique_id=260074313]
+custom_minimum_size = Vector2(0, 140)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_styles/panel = ExtResource("3_tyqu8")
+follow_focus = true
+scroll_horizontal_custom_step = 1.0
+scroll_vertical_custom_step = 1.0
+horizontal_scroll_mode = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainVBox/ScrollContainer" unique_id=1739786130]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="Master" parent="MainVBox/ScrollContainer/VBoxContainer" unique_id=1538879454 instance=ExtResource("2_p25fg")]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
-focus_neighbor_top = NodePath("../Back")
+focus_neighbor_top = NodePath("../../../Back")
 focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../Sound")
 focus_next = NodePath("../Sound")
-focus_previous = NodePath("../Back")
+focus_previous = NodePath("../../../Back")
 header_text = "Master volume"
 auto_select_mode = true
 cycle_options = Array[String](["....................", "I...................", "II..................", "III.................", "IIII................", "IIIII...............", "IIIIII..............", "IIIIIII.............", "IIIIIIII............", "IIIIIIIII...........", "IIIIIIIIII..........", "IIIIIIIIIII.........", "IIIIIIIIIIII........", "IIIIIIIIIIIII.......", "IIIIIIIIIIIIII......", "IIIIIIIIIIIIIII.....", "IIIIIIIIIIIIIIII....", "IIIIIIIIIIIIIIIII...", "IIIIIIIIIIIIIIIIII..", "IIIIIIIIIIIIIIIIIII.", "IIIIIIIIIIIIIIIIIIII"])
@@ -32,7 +54,7 @@ focus_option = 15
 loop = false
 grab_focus_on_load = true
 
-[node name="Sound" parent="MainVBox" unique_id=1408340578 instance=ExtResource("2_p25fg")]
+[node name="Sound" parent="MainVBox/ScrollContainer/VBoxContainer" unique_id=1408340578 instance=ExtResource("2_p25fg")]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../Master")
@@ -46,15 +68,29 @@ cycle_options = Array[String](["....................", "I...................", "
 focus_option = 15
 loop = false
 
-[node name="Music" parent="MainVBox" unique_id=1090977405 instance=ExtResource("2_p25fg")]
+[node name="Music" parent="MainVBox/ScrollContainer/VBoxContainer" unique_id=1090977405 instance=ExtResource("2_p25fg")]
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../Sound")
 focus_neighbor_right = NodePath(".")
-focus_neighbor_bottom = NodePath("../Back")
-focus_next = NodePath("../Back")
+focus_neighbor_bottom = NodePath("../Dialogue")
+focus_next = NodePath("../Dialogue")
 focus_previous = NodePath("../Sound")
 header_text = "Music volume"
+auto_select_mode = true
+cycle_options = Array[String](["....................", "I...................", "II..................", "III.................", "IIII................", "IIIII...............", "IIIIII..............", "IIIIIII.............", "IIIIIIII............", "IIIIIIIII...........", "IIIIIIIIII..........", "IIIIIIIIIII.........", "IIIIIIIIIIII........", "IIIIIIIIIIIII.......", "IIIIIIIIIIIIII......", "IIIIIIIIIIIIIII.....", "IIIIIIIIIIIIIIII....", "IIIIIIIIIIIIIIIII...", "IIIIIIIIIIIIIIIIII..", "IIIIIIIIIIIIIIIIIII.", "IIIIIIIIIIIIIIIIIIII"])
+focus_option = 15
+loop = false
+
+[node name="Dialogue" parent="MainVBox/ScrollContainer/VBoxContainer" unique_id=2045842375 instance=ExtResource("2_p25fg")]
+layout_mode = 2
+focus_neighbor_left = NodePath(".")
+focus_neighbor_top = NodePath("../Music")
+focus_neighbor_right = NodePath(".")
+focus_neighbor_bottom = NodePath("../../../Back")
+focus_next = NodePath("../../../Back")
+focus_previous = NodePath("../Music")
+header_text = "Dialogue volume"
 auto_select_mode = true
 cycle_options = Array[String](["....................", "I...................", "II..................", "III.................", "IIII................", "IIIII...............", "IIIIII..............", "IIIIIII.............", "IIIIIIII............", "IIIIIIIII...........", "IIIIIIIIII..........", "IIIIIIIIIII.........", "IIIIIIIIIIII........", "IIIIIIIIIIIII.......", "IIIIIIIIIIIIII......", "IIIIIIIIIIIIIII.....", "IIIIIIIIIIIIIIII....", "IIIIIIIIIIIIIIIII...", "IIIIIIIIIIIIIIIIII..", "IIIIIIIIIIIIIIIIIII.", "IIIIIIIIIIIIIIIIIIII"])
 focus_option = 15
@@ -69,15 +105,16 @@ theme_override_constants/separation = 4
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
-focus_neighbor_top = NodePath("../Music")
+focus_neighbor_top = NodePath("../ScrollContainer/VBoxContainer/Dialogue")
 focus_neighbor_right = NodePath(".")
-focus_neighbor_bottom = NodePath("../Master")
-focus_next = NodePath("../Master")
-focus_previous = NodePath("../Music")
+focus_neighbor_bottom = NodePath("../ScrollContainer/VBoxContainer/Master")
+focus_next = NodePath("../ScrollContainer/VBoxContainer/Master")
+focus_previous = NodePath("../ScrollContainer/VBoxContainer/Dialogue")
 button_text = "Back to options"
 back_one_layer = true
 hide_frame = true
 
-[connection signal="option_cycled" from="MainVBox/Master" to="MainVBox" method="_on_master_cycled"]
-[connection signal="option_cycled" from="MainVBox/Sound" to="MainVBox" method="_on_sound_cycled"]
-[connection signal="option_cycled" from="MainVBox/Music" to="MainVBox" method="_on_music_cycled"]
+[connection signal="option_cycled" from="MainVBox/ScrollContainer/VBoxContainer/Master" to="MainVBox" method="_on_master_cycled"]
+[connection signal="option_cycled" from="MainVBox/ScrollContainer/VBoxContainer/Sound" to="MainVBox" method="_on_sound_cycled"]
+[connection signal="option_cycled" from="MainVBox/ScrollContainer/VBoxContainer/Music" to="MainVBox" method="_on_music_cycled"]
+[connection signal="option_cycled" from="MainVBox/ScrollContainer/VBoxContainer/Dialogue" to="MainVBox" method="_on_dialogue_cycled"]

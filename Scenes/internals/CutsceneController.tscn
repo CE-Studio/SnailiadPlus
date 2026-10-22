@@ -406,6 +406,7 @@ mouse_filter = 2
 texture = ExtResource("5_xegkh")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=2146576682]
+bus = &"Dialogue"
 
 [node name="warning" type="AnimationPlayer" parent="." unique_id=1689516820]
 libraries/ = SubResource("AnimationLibrary_fv03o")

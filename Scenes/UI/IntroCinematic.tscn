@@ -671,6 +671,11 @@ _data = {
 &"RESET": SubResource("Animation_vwgsn")
 }
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_opako"]
+random_pitch = 1.122462
+streams_count = 1
+stream_0/stream = ExtResource("7_5aua4")
+
 [node name="IntroCinematic" type="Node2D" unique_id=1550962951 node_paths=PackedStringArray("text", "skip_text", "pattern_group", "story4", "sfx_text", "sfx_page", "sfx_advance", "cover", "anim", "advance_prompt")]
 script = ExtResource("1_8dgki")
 text = NodePath("StoryText")
@@ -795,8 +800,8 @@ libraries/ = SubResource("AnimationLibrary_4kevk")
 autoplay = &"Intro"
 
 [node name="Text" type="AudioStreamPlayer" parent="." unique_id=441665944]
-stream = ExtResource("7_5aua4")
-bus = &"Sfx"
+stream = SubResource("AudioStreamRandomizer_opako")
+bus = &"Dialogue"
 
 [node name="Page" type="AudioStreamPlayer" parent="." unique_id=970925823]
 stream = ExtResource("8_ys0g1")

@@ -12,6 +12,8 @@ enum Status {
 
 
 const MIN_SOUND_ELAPSED:float = 0.0333
+const SOUND_PITCH_VARIANCE:float = 0.025
+const SOUND_PITCH_STEPS:int = 2
 const DEFAULT_NEXT_TIMEOUT:float = 3.0
 
 
@@ -435,6 +437,7 @@ static func set_next_timeout(time:float) -> void:
 func _on_dialogue_label_spoke(_letter: String, _letter_index: int, _speed: float) -> void:
 	if _sound_elapsed < MIN_SOUND_ELAPSED or _letter == "\n" or _letter == " ":
 		return
+	sound.pitch_scale = 1.0 + randi_range(-SOUND_PITCH_STEPS, SOUND_PITCH_STEPS) * SOUND_PITCH_VARIANCE
 	sound.play()
 	_sound_elapsed = 0.0
 
