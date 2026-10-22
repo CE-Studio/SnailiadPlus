@@ -21,9 +21,11 @@ config/old_version="b0.0.0"
 
 [audio]
 
+buses/default_bus_layout="uid://clk0ljik22db"
 volume/master=15
 volume/music=15
 volume/sound=15
+volume/dialogue=15
 
 [autoload]
 
