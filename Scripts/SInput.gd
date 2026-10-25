@@ -248,6 +248,8 @@ var double_tapped:bool = false
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
+	rebind_all()
+	update_all_deadzones()
 
 
 func _process(delta: float) -> void:
