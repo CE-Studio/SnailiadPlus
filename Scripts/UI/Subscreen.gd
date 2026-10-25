@@ -110,7 +110,9 @@ var map_zoomed:bool = false
 
 
 func _ready() -> void:
-	var this_char = int(Statics.current_profile["character"])
+	var this_char:int = 0
+	if Statics.current_profile.has("character"):
+		this_char = int(Statics.current_profile["character"])
 	body_map.play(str(this_char))
 	body_inv.play(str(this_char))
 	player_icon.play(str(this_char))
@@ -120,7 +122,9 @@ func _ready() -> void:
 	selector.position = selector_target
 	map_selector.visible = false
 	map_sel_origin = Vector2i(map.position) + map.MARKER_ZERO
-	map_selection = UICore.instance.minimap.last_player_pos
+	if is_instance_valid(UICore.instance):
+		map_selection = UICore.instance.minimap.last_player_pos
+		UICore.instance.heart_group.z_index = 30
 	_init_item_slots()
 	if selectable_items[0].size() == 0: # If weapon list is empty,
 		selection.x = 1 # force selection to shell list to select normal shell
@@ -136,14 +140,16 @@ func _ready() -> void:
 	or this_char == Player.Players.LEECHY
 	or this_char == Player.Players.BLOBBY):
 		header_shell.set_snaily_text(tr(&"Body"))
-	info_text.set_snaily_text(info_text.text % [
-		GlobalText.get_player_name(this_char),
-		GlobalText.difficulties[Statics.current_profile["difficulty"] as int]
+	if Statics.current_profile.has("difficulty"):
+		info_text.set_snaily_text(info_text.text % [
+			GlobalText.get_player_name(this_char),
+			GlobalText.difficulties[Statics.current_profile["difficulty"] as int]
 		])
+	else:
+		info_text.set_snaily_text("DATA MISSING")
 	map_text.set_snaily_text(map_text.text % Minimap.get_map_rate())
 	item_text.set_snaily_text(item_text.text % Statics.get_item_percentage())
 	time_text.set_snaily_text(time_text.text % Statics.get_igt_str())
-	UICore.instance.heart_group.z_index = 30
 	helix_count.set_snaily_text("x " + str(Statics.check_item(Item.ItemTypes.HELIX_FRAGMENT)))
 	if Statics.get_world_flag(Statics.WorldFlags.DEFEATED_BOSS4):
 		var ratio:Vector2i = Statics.get_area_item_ratio(GameCore.instance.current_area)
@@ -159,7 +165,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	elapsed += delta
 	selector_spr.position.x = abs(sin(elapsed * 8)) * -2
-	
+
 	if active:
 		if map_zoomed and (SInput.check_primary_input(SInput.Inputs.UI_BACK, true)
 		or SInput.check_primary_input(SInput.Inputs.PAUSE, true)
@@ -177,7 +183,7 @@ func _process(delta: float) -> void:
 			zoomed_map.position = Statics.VECTOR_CENTER
 			zoomed_map.init(map)
 			return
-		
+
 		var close_flag:bool = false
 		if selection_depth == 0 and elapsed >= 0.125:
 			if (SInput.check_primary_input(SInput.Inputs.MAP, true)
@@ -187,7 +193,7 @@ func _process(delta: float) -> void:
 		elif selection_depth == 1:
 			if SInput.check_primary_input(SInput.Inputs.PAUSE, true):
 				close_flag = true
-		if close_flag:
+		if close_flag and is_instance_valid(UICore.instance):
 			if zoomed_map:
 				zoomed_map.queue_free()
 			UICore.instance.pause_layer.unpause_fade_out()
@@ -197,16 +203,16 @@ func _process(delta: float) -> void:
 			UICore.instance.heart_group.z_index = 0
 			sfx_close.play()
 			return
-		
+
 		if selection_depth < 0:
 			selection_depth = 0
-		
+
 		_test_for_move_selection()
 		selector.position = selector.position.lerp(selector_target, SELECTOR_SPEED * delta)
 		_test_for_selection_events()
-		
+
 		position = position.lerp(Vector2.ZERO, SUBSCREEN_ENTER_SPEED * delta)
-		
+
 		if selection_depth == 0 and SInput.check_primary_input(SInput.Inputs.SPEAK, true):
 			if map_focused:
 				anim.play("swap", -1, SUBSCREEN_SWITCH_SPEED)
@@ -214,7 +220,7 @@ func _process(delta: float) -> void:
 				anim.play("swap", -1, -SUBSCREEN_SWITCH_SPEED, true)
 			map_focused = not map_focused
 			sfx_switch.play()
-		
+
 		var panel_y:float = desc_panel_origin.y
 		var panel_a:float = 0.0
 		if selection_depth == 1 and not map_focused:
@@ -230,7 +236,7 @@ func _process(delta: float) -> void:
 			panel_a,
 			DESC_PANEL_SPEED * delta
 		)
-		
+
 		_update_item_sprites(delta)
 	else:
 		position.y += exit_speed
@@ -243,7 +249,7 @@ func _process(delta: float) -> void:
 func _init_item_slots() -> void:
 	var total:int = 0
 	var spr_offset:int = 0
-	
+
 	for i in ITEMS_WEAPON:
 		var count:int = _get_item_count(i)
 		if count > 0:
@@ -254,7 +260,7 @@ func _init_item_slots() -> void:
 		total += count
 	if total == 0:
 		header_weapon.set_snaily_text(tr(&"?????"))
-	
+
 	total = 0
 	spr_offset = 0
 	for i in ITEMS_SHELL:
@@ -267,7 +273,7 @@ func _init_item_slots() -> void:
 		total += count
 	if total == 0:
 		header_shell.set_snaily_text(tr(&"?????"))
-	
+
 	total = 0
 	spr_offset = 0
 	for i in ITEMS_ABILITY:
@@ -315,14 +321,15 @@ func _init_item_sprites() -> void:
 	if Statics.stack_shells and player_shell == 3:
 		player_shell = 4
 	player_sprite.frame_coords.x = player_shell
-	match Player.instance.who_i_is:
-		Player.Players.BLOBBY:
-			player_sprite.frame_coords.y = 5 if Statics.check_item(Item.ItemTypes.SHELL_SHIELD) else 4
-		Player.Players.LEECHY:
-			player_sprite.frame_coords.y = 6
-		_:
-			player_sprite.frame_coords.y = Player.instance.who_i_is as int
-	
+	if is_instance_valid(Player.instance):
+		match Player.instance.who_i_is:
+			Player.Players.BLOBBY:
+				player_sprite.frame_coords.y = 5 if Statics.check_item(Item.ItemTypes.SHELL_SHIELD) else 4
+			Player.Players.LEECHY:
+				player_sprite.frame_coords.y = 6
+			_:
+				player_sprite.frame_coords.y = Player.instance.who_i_is as int
+
 	for i in range(item_sprites.size()):
 		if item_sprites[i] != null:
 			item_origins.append(item_sprites[i].position)
@@ -334,7 +341,7 @@ func _init_item_sprites() -> void:
 ## Updates the position and modulate of all item sprites based on if they're selected or not
 func _update_item_sprites(delta:float) -> void:
 	var weight:float = DESC_PANEL_SPEED * delta
-	
+
 	var player_target:Vector2 = player_origin
 	var player_color:Color = Color.WHITE
 	if selected_item == player_sprite:
@@ -346,7 +353,7 @@ func _update_item_sprites(delta:float) -> void:
 		lerpf(player_sprite.position.y, player_target.y, weight)
 	)
 	player_sprite.modulate = player_sprite.modulate.lerp(player_color, weight)
-	
+
 	for i in item_sprites.size():
 		if item_sprites[i] != null and item_sprites[i] != player_sprite:
 			var spr:Sprite2D = item_sprites[i]
@@ -380,10 +387,10 @@ func _get_item_count(id:Item.ItemTypes) -> int:
 func _test_for_move_selection() -> void:
 	if map_zoomed:
 		return
-	
+
 	var move_mode:MoveMode = MoveMode.NONE
 	var grid_move:Vector2i = Vector2i.ZERO
-	
+
 	if map_focused: # Map panel focused
 		if selection_depth == 1:
 			if SInput.check_input(SInput.Inputs.LEFT, true):
@@ -422,7 +429,7 @@ func _test_for_move_selection() -> void:
 			if selection.y >= selectable_items[selection.x].size():
 				selection.y = selectable_items[selection.x].size() - 1
 			move_mode = MoveMode.LIST
-	
+
 	if move_mode != MoveMode.NONE:
 		sfx_move.play()
 	match move_mode:
@@ -449,7 +456,7 @@ func _test_for_move_selection() -> void:
 func _test_for_selection_events() -> void:
 	if map_zoomed:
 		return
-	
+
 	if map_focused:
 		match selection_depth:
 			0:
@@ -467,7 +474,7 @@ func _test_for_selection_events() -> void:
 					map_selector.visible = false
 					selection_depth -= 1
 		_set_map_prompts()
-	
+
 	elif SInput.check_primary_input(SInput.Inputs.UI_ACCEPT, true):
 		match selection_depth:
 			0:
@@ -537,7 +544,9 @@ func _set_inv_prompts() -> void:
 func _set_desc(id:int) -> void:
 	desc_name.visible = true
 	desc_name.set_snaily_text(GlobalText.get_item_name(id, true))
-	var player = int(Statics.current_profile["character"])
+	var player:int = 0
+	if Statics.current_profile.has("character"):
+		player = int(Statics.current_profile["character"])
 	var stacked_shells:StringName = tr(&"")
 	match id:
 		Item.ItemTypes.PEASHOOTER:

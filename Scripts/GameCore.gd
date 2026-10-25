@@ -61,7 +61,7 @@ func _resolve_stacking() -> void:
 func inc_game_time(delta:float) -> void:
 	if get_tree().paused:
 		return
-	
+
 	var cur_time = Statics.current_profile["game_time"].duplicate()
 	cur_time[2] += delta
 	if cur_time[2] >= 60.0:
@@ -71,7 +71,7 @@ func inc_game_time(delta:float) -> void:
 		cur_time[1] -= 60
 		cur_time[0] += 1
 	Statics.current_profile["game_time"] = cur_time.duplicate()
-	
+
 	if UICore.instance:
 		var time_str:String = Statics.get_igt_str()
 		UICore.instance.igt_text.set_snaily_text(time_str)
@@ -87,7 +87,7 @@ func spawn_room(path:String, entrance:int = -1, offset:Vector2 = Vector2.ZERO) -
 		despawn_room(current_room)
 	Statics.clear_cam_synced_particles()
 	player.reset_position(Vector2(-999999, -999999))
-	
+
 	#var new_room:Room = load(path).instantiate()
 	var new_room:Room = GameCore.instance.room_loader.get_room(path).instantiate()
 	add_child(new_room)
@@ -96,7 +96,7 @@ func spawn_room(path:String, entrance:int = -1, offset:Vector2 = Vector2.ZERO) -
 	Statics.active_room = current_room
 	player.reparent(new_room.layer_ground)
 	new_room.layer_ground.move_child(player, 1)
-	
+
 	player.reset_position(new_room.default_spawn.position + offset)
 	if entrance != -1:
 		for child in new_room.get_children():
@@ -104,7 +104,7 @@ func spawn_room(path:String, entrance:int = -1, offset:Vector2 = Vector2.ZERO) -
 				if child.my_id == entrance:
 					player.reset_position(child.exit_marker.global_position + offset)
 	cam_layer.cam.set_layer_position(player.position)
-	
+
 	new_room.spawn(true)
 	player.set_box_disable_override.call_deferred(false)
 	if SInput.cutscene_has_control:

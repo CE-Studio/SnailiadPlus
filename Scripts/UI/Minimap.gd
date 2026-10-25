@@ -104,7 +104,7 @@ var player_marker_sprites:Array = []
 
 
 func _ready() -> void:
-	if Statics.current_profile["map_tiles"].size() == 0:
+	if (not Statics.current_profile.has("map_tiles")) or (Statics.current_profile["map_tiles"].size() == 0):
 		Statics.current_profile["map_tiles"] = DEFAULT_MAP.duplicate()
 	#panel.action = "idle"
 	#map.action = "minimap"
@@ -116,7 +116,10 @@ func _ready() -> void:
 		#map.action = "subscreen"
 		panel.queue_free()
 		name_text.queue_free()
-		room_offset = UICore.instance.minimap.room_offset
+		if is_instance_valid(UICore.instance):
+			room_offset = UICore.instance.minimap.room_offset
+		else:
+			room_offset = Vector2.ZERO
 		tick_minimap(1, true, true)
 
 
@@ -264,9 +267,11 @@ func _process(delta: float) -> void:
 
 
 func tick_minimap(move_group_mode:int, tick_player:bool = true, force_update:bool = false) -> void:
-	var player = GameCore.instance.player
-	# Converts the player position into coordinates on the "screen grid"
-	var converted_player_pos = world_position_to_screen_coordinate(player.position + Vector2(8, 8))
+	var converted_player_pos := Vector2i.ZERO
+	if is_instance_valid(GameCore.instance):
+		var player := GameCore.instance.player
+		# Converts the player position into coordinates on the "screen grid"
+		converted_player_pos = world_position_to_screen_coordinate(player.position + Vector2(8, 8))
 	if move_group_mode > 0:
 		if move_group_mode > 1:
 			map_group.position = (converted_player_pos * -8) + TL_OFFSET + (room_offset * -8)
@@ -362,7 +367,7 @@ func fill_cell(coords:Vector2i) -> int:
 	if cell >= P_MARKER_ID_OFFSET - 1:
 		cell -= P_MARKER_ID_OFFSET
 		player_marked = true
-	
+
 	if cell == CellTypes.UNEXPLORED:
 		Statics.current_profile["map_tiles"][cell_index] = CellTypes.EXPLORED
 		if player_marked:
@@ -371,11 +376,11 @@ func fill_cell(coords:Vector2i) -> int:
 		Statics.current_profile["map_tiles"][cell_index] = CellTypes.SECRET_EXPLORED
 		if player_marked:
 			Statics.current_profile["map_tiles"][cell_index] += P_MARKER_ID_OFFSET
-	
+
 	if get_map_rate() >= 100.0:
 		AchievementCore.instance.check_add(AchievementCore.Achievements.MAP_100)
 		Statics.add_unlock_condition(Statics.Unlocks.OPEN_MAP)
-	
+
 	return true_cell
 
 

@@ -214,9 +214,9 @@ static func format_game_time(time:Array) -> String:
 
 
 static func get_item_percentage(_profile:int = 0, _snap:bool = false, _only_counted:bool = false) -> float:
-	var inventory:Array
-	var _player:int
-	var difficulty:int
+	var inventory:Array = []
+	var _player:int = 0
+	var difficulty:int = 0
 	match _profile:
 		1:
 			inventory = data_profile1["items"]
@@ -230,10 +230,13 @@ static func get_item_percentage(_profile:int = 0, _snap:bool = false, _only_coun
 			inventory = data_profile3["items"]
 			_player = data_profile3["character"]
 			difficulty = data_profile3["difficulty"]
-		_:
+		_ when current_profile.has("items"):
 			inventory = current_profile["items"]
 			_player = current_profile["character"]
 			difficulty = current_profile["difficulty"]
+		_:
+			push_warning("getting item info when not ready")
+			pass
 	var collected_items:int = 0 # Counted items the player has collected and saved to ["items"]
 	var max_items:int = 0 # Maximum item count for 100% as dictated by COUNTED_INVENTORY
 	var total_items:int = 0 # Complete collection of items, counted or not, saved to ["items"]
@@ -269,7 +272,7 @@ static func get_area_item_ratio(area:int) -> Vector2i:
 	var check_locations:Array = AREA_LOCATIONS[area]
 	var total_locations:int = 0
 	var collected_locations:int = 0
-	
+
 	for i in check_locations[0]:
 		total_locations += 1
 		if check_location_collected(i):
@@ -282,7 +285,7 @@ static func get_area_item_ratio(area:int) -> Vector2i:
 		if check_location_collected(i):
 			total_locations += 1
 			collected_locations += 1
-	
+
 	return Vector2(collected_locations, total_locations)
 
 
@@ -295,10 +298,14 @@ static func get_igt_str(_profile:int = 0) -> String:
 			time = data_profile2["game_time"]
 		3:
 			time = data_profile3["game_time"]
-		_:
+		_ when current_profile.has("game_time"):
 			time = current_profile["game_time"]
-	var time_str:String = ""
-	if time[0] > 0:
+		_:
+			pass
+	var time_str:String = "ERR:ERR:ERR"
+	if time.size() < 3:
+		pass
+	elif time[0] > 0:
 		time_str = "%d:%02d:%05.2f" % [ time[0], time[1], time[2] ]
 	else:
 		time_str = "%d:%05.2f" % [ time[1], time[2] ]
@@ -328,6 +335,9 @@ static func set_item(id:int, count:int) -> void:
 
 
 static func check_item(id:int) -> int:
+	if not current_profile.has("items"):
+		push_warning("checking items when not ready")
+		return 0
 	if id < len(current_profile["items"]):
 		return current_profile["items"][id]
 	return 0
@@ -482,6 +492,9 @@ static func set_world_flag(id:WorldFlags, value:Variant) -> void:
 
 
 static func get_world_flag(id:WorldFlags) -> Variant:
+	if not current_profile.has("world_flags"):
+		push_warning("checking worlds when not ready")
+		return false
 	if id < len(current_profile["world_flags"]):
 		if current_profile["world_flags"][id] == null:
 			return false
