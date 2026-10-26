@@ -2896,55 +2896,58 @@ animations = [{
 "speed": 1.0
 }]
 
-[node name="CameraLayer" type="Node2D" unique_id=1777678961 node_paths=PackedStringArray("_tl", "_tr", "_bl", "_br", "cam", "heart_group", "color_cover", "save_icon", "bestiary_icon", "minimap", "border", "darkness_layer", "popup_layer", "pause_layer", "particle_layer", "achievement_core", "weapon_icons", "igt", "igt_text", "fps", "fps_text", "rush_igt", "rush_igt_text", "input_display")]
+[node name="CameraLayer" type="Node2D" unique_id=1777678961 node_paths=PackedStringArray("_tl", "_tr", "_bl", "_br", "cam", "canvas", "heart_group", "color_cover", "save_icon", "bestiary_icon", "minimap", "border", "darkness_layer", "popup_layer", "pause_layer", "particle_layer", "achievement_core", "weapon_icons", "igt", "igt_text", "fps", "fps_text", "rush_igt", "rush_igt_text", "input_display")]
 z_index = 1000
 z_as_relative = false
 script = ExtResource("1_vjeh6")
-_tl = NodePath("TL")
-_tr = NodePath("TR")
-_bl = NodePath("BL")
-_br = NodePath("BR")
+_tl = NodePath("CanvasLayer/TL")
+_tr = NodePath("CanvasLayer/TR")
+_bl = NodePath("CanvasLayer/BL")
+_br = NodePath("CanvasLayer/BR")
 cam = NodePath("Camera2D")
-heart_group = NodePath("TL/Hearts")
-color_cover = NodePath("ColorCover")
-save_icon = NodePath("BR/SaveIcon")
-bestiary_icon = NodePath("BR/BestiaryIcon")
-minimap = NodePath("TR/Minimap")
-border = NodePath("Border")
-darkness_layer = NodePath("DarknessLayer")
-popup_layer = NodePath("PopupLayer")
-pause_layer = NodePath("PauseLayer")
-particle_layer = NodePath("CamAlignedParticleLayer")
-achievement_core = NodePath("TL/AchivementPanel")
-weapon_icons = NodePath("BR/WeaponIcons")
-igt = NodePath("BL/InGameTime")
-igt_text = NodePath("BL/InGameTime/Text")
-fps = NodePath("BL/Framerate")
-fps_text = NodePath("BL/Framerate/Text")
-rush_igt = NodePath("TR/BossRushTime")
-rush_igt_text = NodePath("TR/BossRushTime/Text")
-input_display = NodePath("BL/InputDisplay")
+canvas = NodePath("CanvasLayer")
+heart_group = NodePath("CanvasLayer/TL/Hearts")
+color_cover = NodePath("CanvasLayer/ColorCover")
+save_icon = NodePath("CanvasLayer/BR/SaveIcon")
+bestiary_icon = NodePath("CanvasLayer/BR/BestiaryIcon")
+minimap = NodePath("CanvasLayer/TR/Minimap")
+border = NodePath("CanvasLayer/Border")
+darkness_layer = NodePath("CanvasLayer/DarknessLayer")
+popup_layer = NodePath("CanvasLayer/PopupLayer")
+pause_layer = NodePath("CanvasLayer/PauseLayer")
+particle_layer = NodePath("CanvasLayer/CamAlignedParticleLayer")
+achievement_core = NodePath("CanvasLayer/TL/AchivementPanel")
+weapon_icons = NodePath("CanvasLayer/BR/WeaponIcons")
+igt = NodePath("CanvasLayer/BL/InGameTime")
+igt_text = NodePath("CanvasLayer/BL/InGameTime/Text")
+fps = NodePath("CanvasLayer/BL/Framerate")
+fps_text = NodePath("CanvasLayer/BL/Framerate/Text")
+rush_igt = NodePath("CanvasLayer/TR/BossRushTime")
+rush_igt_text = NodePath("CanvasLayer/TR/BossRushTime/Text")
+input_display = NodePath("CanvasLayer/BL/InputDisplay")
 area_bookend_frames = SubResource("SpriteFrames_umg6w")
-
-[node name="DarknessLayer" parent="." unique_id=1667535732 instance=ExtResource("18_adkld")]
-position = Vector2(200, 120)
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1724479086]
 position = Vector2(200, 120)
 script = ExtResource("1_gi4g0")
 
-[node name="CamAlignedParticleLayer" type="Node2D" parent="." unique_id=1391776281]
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=191872457]
 
-[node name="BL" type="Node2D" parent="." unique_id=786240395]
+[node name="DarknessLayer" parent="CanvasLayer" unique_id=1667535732 instance=ExtResource("18_adkld")]
+position = Vector2(200, 120)
+
+[node name="CamAlignedParticleLayer" type="Node2D" parent="CanvasLayer" unique_id=1391776281]
+
+[node name="BL" type="Node2D" parent="CanvasLayer" unique_id=786240395]
 position = Vector2(0, 240)
 
-[node name="InGameTime" type="HBoxContainer" parent="BL" unique_id=815931184]
+[node name="InGameTime" type="HBoxContainer" parent="CanvasLayer/BL" unique_id=815931184]
 offset_left = 3.0
 offset_top = -12.0
 offset_right = 49.0
 offset_bottom = 28.0
 
-[node name="Text" parent="BL/InGameTime" unique_id=298069678 instance=ExtResource("3_bgnuu")]
+[node name="Text" parent="CanvasLayer/BL/InGameTime" unique_id=298069678 instance=ExtResource("3_bgnuu")]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 theme_override_font_sizes/normal_font_size = 8
@@ -2952,13 +2955,13 @@ text = "00:00:00.00"
 text_scale = 1
 border_scale = 1
 
-[node name="Framerate" type="HBoxContainer" parent="BL" unique_id=348355963]
+[node name="Framerate" type="HBoxContainer" parent="CanvasLayer/BL" unique_id=348355963]
 offset_left = 3.0
 offset_top = -20.0
 offset_right = 49.0
 offset_bottom = 20.0
 
-[node name="Text" parent="BL/Framerate" unique_id=1171561691 instance=ExtResource("3_bgnuu")]
+[node name="Text" parent="CanvasLayer/BL/Framerate" unique_id=1171561691 instance=ExtResource("3_bgnuu")]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 theme_override_font_sizes/normal_font_size = 8
@@ -2966,15 +2969,15 @@ text = "00 FPS"
 text_scale = 1
 border_scale = 1
 
-[node name="InputDisplay" parent="BL" unique_id=1184225206 instance=ExtResource("4_22ldm")]
+[node name="InputDisplay" parent="CanvasLayer/BL" unique_id=1184225206 instance=ExtResource("4_22ldm")]
 position = Vector2(4, -4)
 
-[node name="BR" type="Node2D" parent="." unique_id=521013137]
+[node name="BR" type="Node2D" parent="CanvasLayer" unique_id=521013137]
 position = Vector2(400, 240)
 
-[node name="WeaponIcons" parent="BR" unique_id=1784227947 instance=ExtResource("6_snbsl")]
+[node name="WeaponIcons" parent="CanvasLayer/BR" unique_id=1784227947 instance=ExtResource("6_snbsl")]
 
-[node name="SaveIcon" type="AnimatedSprite2D" parent="BR" unique_id=2110732020]
+[node name="SaveIcon" type="AnimatedSprite2D" parent="CanvasLayer/BR" unique_id=2110732020]
 visible = false
 position = Vector2(-16, -16)
 sprite_frames = SubResource("SpriteFrames_4p8rf")
@@ -2982,7 +2985,7 @@ script = ExtResource("15_cac8p")
 hide_on_finish = true
 metadata/_custom_type_script = "uid://boee2837la0pr"
 
-[node name="BestiaryIcon" type="AnimatedSprite2D" parent="BR" unique_id=1798755364]
+[node name="BestiaryIcon" type="AnimatedSprite2D" parent="CanvasLayer/BR" unique_id=1798755364]
 visible = false
 position = Vector2(-16, -16)
 sprite_frames = SubResource("SpriteFrames_wkouj")
@@ -2990,27 +2993,27 @@ script = ExtResource("15_cac8p")
 hide_on_finish = true
 metadata/_custom_type_script = "uid://boee2837la0pr"
 
-[node name="TL" type="Node2D" parent="." unique_id=1964127339]
+[node name="TL" type="Node2D" parent="CanvasLayer" unique_id=1964127339]
 
-[node name="Hearts" type="Node2D" parent="TL" unique_id=1450619440]
+[node name="Hearts" type="Node2D" parent="CanvasLayer/TL" unique_id=1450619440]
 script = ExtResource("10_f6kcx")
 heart_sprite_frames = SubResource("SpriteFrames_f6kcx")
 
-[node name="AchivementPanel" parent="TL" unique_id=431099442 instance=ExtResource("6_f5gkc")]
+[node name="AchivementPanel" parent="CanvasLayer/TL" unique_id=431099442 instance=ExtResource("6_f5gkc")]
 position = Vector2(39, 36)
 
-[node name="TR" type="Node2D" parent="." unique_id=1755624991]
+[node name="TR" type="Node2D" parent="CanvasLayer" unique_id=1755624991]
 position = Vector2(400, 0)
 
-[node name="Minimap" parent="TR" unique_id=408040295 instance=ExtResource("8_g8fv5")]
+[node name="Minimap" parent="CanvasLayer/TR" unique_id=408040295 instance=ExtResource("8_g8fv5")]
 position = Vector2(-32, 24)
 
-[node name="BossRushTime" type="HBoxContainer" parent="TR" unique_id=2090096409]
+[node name="BossRushTime" type="HBoxContainer" parent="CanvasLayer/TR" unique_id=2090096409]
 offset_left = -304.0
 offset_right = -4.0
 offset_bottom = 96.0
 
-[node name="Text" parent="TR/BossRushTime" unique_id=326553468 instance=ExtResource("3_bgnuu")]
+[node name="Text" parent="CanvasLayer/TR/BossRushTime" unique_id=326553468 instance=ExtResource("3_bgnuu")]
 custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
 theme_override_constants/line_separation = 0
@@ -3019,15 +3022,15 @@ horizontal_alignment = 2
 max_width = 300
 border_scale = 1
 
-[node name="PopupLayer" type="Node2D" parent="." unique_id=412208806]
+[node name="PopupLayer" type="Node2D" parent="CanvasLayer" unique_id=412208806]
 
-[node name="ColorCover" parent="." unique_id=283330542 instance=ExtResource("7_ygllc")]
+[node name="ColorCover" parent="CanvasLayer" unique_id=283330542 instance=ExtResource("7_ygllc")]
 process_mode = 3
 modulate = Color(1, 1, 1, 0)
 position = Vector2(-200, -120)
 scale = Vector2(2, 2)
 
-[node name="Border" type="Sprite2D" parent="." unique_id=1849696945]
+[node name="Border" type="Sprite2D" parent="CanvasLayer" unique_id=1849696945]
 modulate = Color(0, 0, 0, 1)
 z_index = 10
 position = Vector2(200, 120)
@@ -3035,7 +3038,7 @@ texture = ExtResource("4_ygllc")
 hframes = 2
 vframes = 3
 
-[node name="PauseLayer" type="Node2D" parent="." unique_id=894734366]
+[node name="PauseLayer" type="Node2D" parent="CanvasLayer" unique_id=894734366]
 process_mode = 3
 z_index = 15
 script = ExtResource("9_qjw3k")

@@ -22,6 +22,7 @@ var shake_dir:Vector2 = Vector2.ZERO
 var flip_shake_dir:bool = false
 var shake_elapsed:float = 0.0
 var current_shake_offset:Vector2 = Vector2.ZERO
+var canvas_offset:Vector2 = Vector2.ZERO
 enum ShakeCallMode {
 	APPEND,
 	OVERWRITE_ALL,
@@ -46,6 +47,7 @@ static var instance:UICore
 @export var _br:Node2D
 
 @export var cam:CamControl
+@export var canvas:CanvasLayer
 @export var heart_group:HeartGroup
 @export var color_cover:ColorCover
 @export var save_icon:SnailySprite2D
@@ -138,6 +140,8 @@ func configure_for_aspect_ratio(ratio_id:int) -> void:
 	_bl.position = Vector2(-offset.x, 240 + offset.y)
 	_br.position = Vector2(400 + offset.x, 240 + offset.y)
 	set_border_anim(ratio_id)
+	canvas.offset = offset
+	canvas_offset = offset
 
 
 func set_all_visibility_from_settings() -> void:

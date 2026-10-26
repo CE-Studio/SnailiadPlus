@@ -124,6 +124,7 @@ func _process(delta):
 	if do_screen_shake:
 		if shake_cam_only:
 			position += shake_offset
+			UICore.instance.canvas.offset = UICore.instance.canvas_offset + shake_offset
 		else:
 			UICore.instance.position += shake_offset
 			var global_center:Vector2 = UICore.instance.position + Statics.VECTOR_CENTER
