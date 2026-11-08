@@ -92,8 +92,8 @@ func on_opaque_afterimages_toggled(value) -> void:
 func set_window_size(_scale:int, _ratio:Vector2i) -> void:
 	var new_size:Vector2i = _ratio * (_scale + 1)
 	var window = get_window()
-	ProjectSettings.set_setting("display/window/size/viewport_width", new_size.x)
-	ProjectSettings.set_setting("display/window/size/viewport_height", new_size.y)
+	#ProjectSettings.set_setting("display/window/size/viewport_width", new_size.x)
+	#ProjectSettings.set_setting("display/window/size/viewport_height", new_size.y)
 	ProjectSettings.set_setting("display/window/size/window_width_override", new_size.x)
 	ProjectSettings.set_setting("display/window/size/window_height_override", new_size.y)
 	ProjectSettings.set_setting("display/window/stretch/scale", _scale + 1)

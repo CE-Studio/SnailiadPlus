@@ -59,14 +59,14 @@ layout_mode = 2
 focus_neighbor_left = NodePath(".")
 focus_neighbor_top = NodePath("../Controls")
 focus_neighbor_right = NodePath(".")
-focus_neighbor_bottom = NodePath("../AssetPacks")
-focus_next = NodePath("../AssetPacks")
+focus_neighbor_bottom = NodePath("../Mods")
+focus_next = NodePath("../Mods")
 focus_previous = NodePath("../Controls")
 button_text = "Gameplay options"
 quick_load_layer = "GameplayOptions"
 hide_frame = true
 
-[node name="AssetPacks" parent="MainVBox" unique_id=658868804 instance=ExtResource("2_ubp5x")]
+[node name="Mods" parent="MainVBox" unique_id=658868804 instance=ExtResource("2_ubp5x")]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
@@ -75,7 +75,7 @@ focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../Back")
 focus_next = NodePath("../Back")
 focus_previous = NodePath("../Gameplay")
-button_text = "Asset packs"
+button_text = "Mods"
 disabled = true
 hide_frame = true
 
@@ -88,11 +88,11 @@ theme_override_constants/separation = 4
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 focus_neighbor_left = NodePath(".")
-focus_neighbor_top = NodePath("../AssetPacks")
+focus_neighbor_top = NodePath("../Mods")
 focus_neighbor_right = NodePath(".")
 focus_neighbor_bottom = NodePath("../Sound")
 focus_next = NodePath("../Sound")
-focus_previous = NodePath("../AssetPacks")
+focus_previous = NodePath("../Mods")
 button_text = "Back to main menu"
 back_one_layer = true
 hide_frame = true
