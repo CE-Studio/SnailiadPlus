@@ -64,6 +64,7 @@ tile_set = ExtResource("2_v80hh")
 
 [node name="Door" parent="GroundLayer" unique_id=1883718754 instance=ExtResource("3_huquc")]
 position = Vector2(808, 136)
+door_type = 1
 
 [node name="Item" parent="GroundLayer" unique_id=355240453 instance=ExtResource("4_1414l")]
 position = Vector2(592, 144)
