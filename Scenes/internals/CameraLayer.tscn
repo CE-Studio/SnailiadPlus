@@ -2934,6 +2934,7 @@ script = ExtResource("1_gi4g0")
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=191872457]
 
 [node name="DarknessLayer" parent="CanvasLayer" unique_id=1667535732 instance=ExtResource("18_adkld")]
+z_index = 0
 position = Vector2(200, 120)
 
 [node name="CamAlignedParticleLayer" type="Node2D" parent="CanvasLayer" unique_id=1391776281]
