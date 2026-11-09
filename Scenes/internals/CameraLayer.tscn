@@ -2915,7 +2915,7 @@ border = NodePath("CanvasLayer/Border")
 darkness_layer = NodePath("CanvasLayer/DarknessLayer")
 popup_layer = NodePath("CanvasLayer/PopupLayer")
 pause_layer = NodePath("CanvasLayer/PauseLayer")
-particle_layer = NodePath("CanvasLayer/CamAlignedParticleLayer")
+particle_layer = NodePath("CamAlignedParticleLayer")
 achievement_core = NodePath("CanvasLayer/TL/AchivementPanel")
 weapon_icons = NodePath("CanvasLayer/BR/WeaponIcons")
 igt = NodePath("CanvasLayer/BL/InGameTime")
@@ -2927,6 +2927,8 @@ rush_igt_text = NodePath("CanvasLayer/TR/BossRushTime/Text")
 input_display = NodePath("CanvasLayer/BL/InputDisplay")
 area_bookend_frames = SubResource("SpriteFrames_umg6w")
 
+[node name="CamAlignedParticleLayer" type="Node2D" parent="." unique_id=1391776281]
+
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1724479086]
 position = Vector2(200, 120)
 script = ExtResource("1_gi4g0")
@@ -2936,8 +2938,6 @@ script = ExtResource("1_gi4g0")
 [node name="DarknessLayer" parent="CanvasLayer" unique_id=1667535732 instance=ExtResource("18_adkld")]
 z_index = 0
 position = Vector2(200, 120)
-
-[node name="CamAlignedParticleLayer" type="Node2D" parent="CanvasLayer" unique_id=1391776281]
 
 [node name="BL" type="Node2D" parent="CanvasLayer" unique_id=786240395]
 position = Vector2(0, 240)
