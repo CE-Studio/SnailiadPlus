@@ -64,6 +64,9 @@ func _set_game_settings() -> void:
 	var music_index = AudioServer.get_bus_index("Music")
 	var music_vol = ProjectSettings.get_setting("audio/volume/music") / 20.0
 	AudioServer.set_bus_volume_db(music_index, linear_to_db(music_vol))
+	var dialogue_index = AudioServer.get_bus_index("Dialogue")
+	var dialogue_vol = ProjectSettings.get_setting("audio/volume/dialogue") / 20.0
+	AudioServer.set_bus_volume_db(dialogue_index, linear_to_db(dialogue_vol))
 	#endregion
 
 	#region Gameplay settings

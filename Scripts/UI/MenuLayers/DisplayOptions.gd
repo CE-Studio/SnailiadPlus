@@ -3,7 +3,7 @@ extends VBoxContainer
 
 
 func _ready() -> void:
-	$"ScrollContainer/VBoxContainer/Scale".remote_set_option(int(ProjectSettings.get_setting("display/window/stretch/scale") - 1))
+	$"ScrollContainer/VBoxContainer/Scale".remote_set_option(int(ProjectSettings.get_setting("display/window/size/scale_factor") - 1))
 	$"ScrollContainer/VBoxContainer/Ratio".remote_set_option(ProjectSettings.get_setting("display/window/size/aspect_ratio"))
 	$"ScrollContainer/VBoxContainer/Fullscreen".toggled_on = get_window().mode == Window.MODE_FULLSCREEN
 	$"ScrollContainer/VBoxContainer/Minimap".remote_set_option(ProjectSettings.get_setting("game/ui/minimap"))
@@ -24,7 +24,7 @@ func on_scale_cycled(value) -> void:
 
 func on_ratio_cycled(value) -> void:
 	var this_ratio = Statics.ASPECT_RATIOS[value]
-	set_window_size(ProjectSettings.get_setting("display/window/stretch/scale") - 1, this_ratio)
+	set_window_size(ProjectSettings.get_setting("display/window/size/scale_factor") - 1, this_ratio)
 	ProjectSettings.set_setting("display/window/size/aspect_ratio", value)
 	if UICore.instance != null:
 		UICore.instance.configure_for_aspect_ratio(value)
@@ -44,7 +44,7 @@ func on_fullscreen_toggled(value) -> void:
 		var ratio_idx = ProjectSettings.get("display/window/size/aspect_ratio")
 		var ratio = Statics.ASPECT_RATIOS[ratio_idx]
 		
-		var window_scale = ProjectSettings.get("display/window/stretch/scale") - 1
+		var window_scale = ProjectSettings.get("display/window/size/scale_factor") - 1
 		
 		set_window_size(window_scale, ratio)
 
@@ -96,7 +96,8 @@ func set_window_size(_scale:int, _ratio:Vector2i) -> void:
 	#ProjectSettings.set_setting("display/window/size/viewport_height", new_size.y)
 	ProjectSettings.set_setting("display/window/size/window_width_override", new_size.x)
 	ProjectSettings.set_setting("display/window/size/window_height_override", new_size.y)
-	ProjectSettings.set_setting("display/window/stretch/scale", 1)#_scale + 1)
+	#ProjectSettings.set_setting("display/window/stretch/scale", 1)#_scale + 1)
+	ProjectSettings.set_setting("display/window/size/scale_factor", _scale + 1)
 	window.size = new_size
 	window.content_scale_factor = _scale + 1
 	window.content_scale_size = new_size

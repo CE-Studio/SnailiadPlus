@@ -51,6 +51,7 @@ window/stretch/mode="viewport"
 window/stretch/aspect="ignore"
 mouse_cursor/custom_image="uid://btlcuqewcs61t"
 window/size/aspect_ratio=0
+window/size/scale_factor=2
 
 [editor]
 
