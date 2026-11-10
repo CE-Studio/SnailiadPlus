@@ -99,8 +99,8 @@ func set_window_size(_scale:int, _ratio:Vector2i) -> void:
 	#ProjectSettings.set_setting("display/window/stretch/scale", 1)#_scale + 1)
 	ProjectSettings.set_setting("display/window/size/scale_factor", _scale + 1)
 	window.size = new_size
-	window.content_scale_factor = _scale + 1
-	window.content_scale_size = new_size
+	window.content_scale_factor = 1#_scale + 1
+	window.content_scale_size = _ratio#new_size
 	
 	if GameCore.instance:
 		UICore.instance.configure_for_aspect_ratio(ProjectSettings.get_setting("display/window/size/aspect_ratio"))
