@@ -5,7 +5,7 @@ extends Node2D
 
 #region Variables
 var thread:Thread = Thread.new()
-var unprocessed_marker_positions:Array = []
+var unprocessed_marker_positions:Array[Array] = []
 @export var gui_debug := false
 @onready var file_label:Label = %FileLabel
 @onready var progress_bar:ProgressBar = %ProgressBar
@@ -36,7 +36,7 @@ func _read_rooms_log_markers() -> void:
 	base_path = base_path.split("%s")[0]
 	var all_rooms:Array = _grab_files_recursive(base_path)
 	unprocessed_marker_positions.resize(Minimap.DEFAULT_MAP.size())
-	unprocessed_marker_positions.fill(Minimap.MarkerTypes.NONE)
+	unprocessed_marker_positions.fill([])
 	var count_max := all_rooms.size()
 	var count:int = 0
 	progress_bar.set_thread_safe(&"max_value", count_max)
@@ -52,15 +52,17 @@ func _read_rooms_log_markers() -> void:
 					var screen_pos = Minimap.world_position_to_screen_coordinate(child.position)
 					screen_pos += room_scene.minimap_offset
 					var array_i = screen_pos.x + (screen_pos.y * Minimap.MAP_SIZE.x)
+					var data_array:Array = unprocessed_marker_positions[array_i].duplicate()
 					if child is SavePoint:
-						unprocessed_marker_positions[array_i] = Minimap.MarkerTypes.SAVE
+						data_array.append(Minimap.MarkerTypes.SAVE)
 					if child is Item:
-						unprocessed_marker_positions[array_i] = [ Minimap.MarkerTypes.ITEM, child.location_id ]
+						data_array.append([ Minimap.MarkerTypes.ITEM, child.location_id ])
 						if child.type == Item.ItemTypes.NONE:
 							Minimap.empty_locations.append(child.location_id)
 						_add_item_reqs(child)
 					if child is Boss:
-						unprocessed_marker_positions[array_i] = Minimap.MarkerTypes.BOSS
+						data_array.append([ Minimap.MarkerTypes.BOSS, child.boss_id ])
+					unprocessed_marker_positions[array_i] = data_array.duplicate()
 		room_scene.queue_free()
 
 

@@ -1087,6 +1087,7 @@ z_index = 120
 collision_layer = 0
 collision_mask = 3
 script = ExtResource("1_ynigk")
+boss_id = 4
 battle_music = 12
 phase_changes = Array[float]([0.4])
 death_wiggle_mult = 1.25

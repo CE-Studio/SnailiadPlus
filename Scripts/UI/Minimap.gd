@@ -37,6 +37,12 @@ const FADE_SPEED:float = 3.5
 const P_MARKER_ID_OFFSET:int = 100
 const MARKER_SCENE:PackedScene = preload("uid://dlaal46coilv7")
 
+const MARKER_NO_SAVE:int = 0
+const MARKER_NO_BOSS:int = 0
+const MARKER_NO_ITEM:int = -1
+const MARKER_NO_UNKNOWN:int = 0
+const MARKER_NO_PMARKER:Color = Color.TRANSPARENT
+
 const DEFAULT_MAP:Array = [
 #	 0   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15  16  17  18  19  20  21  22  23  24  25
 	-1,  0,  0, -1, -1,  2,  0, -1, -1, -1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, #   0   0
@@ -74,18 +80,18 @@ var update_player_flag:bool = false
 var room_offset:Vector2i = Vector2i.ZERO
 
 var active_markers:Array[MapMarker] = []
-var organized_markers:Dictionary = {
+var organized_markers:Dictionary[StringName, Array] = {
 	"saves": [],
 	"bosses": [],
 	"items": [],
 	"unknowns": [],
 	"p_markers": []
 }
-static var unprocessed_marker_positions:Array = [] # Set up in Preloader.gd
+static var unprocessed_marker_positions:Array[Array] = [] # Set up in Preloader.gd
 static var empty_locations:Array[int] = [] # Set up in Preloader.gd
 static var hide_empty_locations:bool = true
-var marker_positions:Array = []
-var player_marker_sprites:Array = []
+var marker_positions:Array[Array] = []
+#var player_marker_sprites:Array[MapMarker] = []
 @export var subscreen_mode:bool = false
 #var subscreen_target:Vector2 = Vector2.ZERO
 #var subscreen_target_mod:float = 0.0
@@ -111,7 +117,8 @@ func _ready() -> void:
 	player_marker.play("default")
 	create_cell_mask()
 	log_markers()
-	update_p_marker_layer()
+	update_markers()
+	#update_p_marker_layer()
 	if subscreen_mode:
 		#map.action = "subscreen"
 		panel.queue_free()
@@ -150,39 +157,65 @@ func create_cell_mask() -> void:
 
 
 func log_markers() -> void:
+	if subscreen_mode:
+		marker_positions = UICore.instance.minimap.marker_positions
+		organized_markers = UICore.instance.minimap.organized_markers
+		active_markers.resize(marker_positions.size())
+		return
+	
 	marker_positions = unprocessed_marker_positions.duplicate()
+	organized_markers["saves"].resize(marker_positions.size())
+	organized_markers["saves"].fill(MARKER_NO_SAVE)
+	organized_markers["bosses"].resize(marker_positions.size())
+	organized_markers["bosses"].fill(MARKER_NO_BOSS)
+	organized_markers["items"].resize(marker_positions.size())
+	organized_markers["items"].fill(MARKER_NO_ITEM)
+	organized_markers["unknowns"].resize(marker_positions.size())
+	organized_markers["unknowns"].fill(MARKER_NO_UNKNOWN)
+	organized_markers["p_markers"].resize(marker_positions.size())
+	organized_markers["p_markers"].fill(MARKER_NO_PMARKER)
+	active_markers.resize(marker_positions.size())
 	var screen_pos:Vector2i = Vector2i.ZERO
 	for i in range(marker_positions.size()):
-		if ((marker_positions[i] is Array and marker_positions[i][0] > MarkerTypes.NONE)
-		or marker_positions[i] > MarkerTypes.NONE):
-			var new_marker:MapMarker = MARKER_SCENE.instantiate()
-			marker_group.add_child(new_marker)
-			new_marker.position = screen_pos * 8
-			if marker_positions[i] is Array:
-				match marker_positions[i][0]:
-					MarkerTypes.ITEM:
-						new_marker.type = MarkerTypes.ITEM
-						new_marker.data.append(marker_positions[i][1])
-						new_marker.sprite.play("item_normal")
-						organized_markers["items"].append(new_marker)
-			else:
-				match marker_positions[i]:
-					MarkerTypes.SAVE:
-						new_marker.type = MarkerTypes.SAVE
-						new_marker.sprite.play("save")
-						organized_markers["saves"].append(new_marker)
-					MarkerTypes.BOSS:
-						new_marker.type = MarkerTypes.BOSS
-						new_marker.sprite.play("boss")
-						organized_markers["bosses"].append(new_marker)
-					MarkerTypes.UNKNOWN:
-						new_marker.type = MarkerTypes.UNKNOWN
-						new_marker.sprite.play("unknown")
-						organized_markers["unknowns"].append(new_marker)
-			marker_positions[i] = active_markers.size()
-			active_markers.append(new_marker)
-		else:
-			marker_positions[i] = -1
+		#if ((marker_positions[i] is Array and marker_positions[i][0] > MarkerTypes.NONE)
+		#or marker_positions[i] > MarkerTypes.NONE):
+		if not marker_positions[i].is_empty():
+			#var new_marker:MapMarker = MARKER_SCENE.instantiate()
+			#marker_group.add_child(new_marker)
+			#new_marker.position = screen_pos * 8
+			for type in marker_positions[i]:
+				if type is Array:
+					match type[0]:
+						MarkerTypes.ITEM:
+							#new_marker.type = MarkerTypes.ITEM
+							#new_marker.data.append(type[1])
+							#new_marker.sprite.play("item_normal")
+							#organized_markers["items"].append(new_marker)
+							#new_marker.item_location = type[1]
+							organized_markers["items"][i] = type[1]
+						MarkerTypes.BOSS:
+							#new_marker.type = MarkerTypes.BOSS
+							#new_marker.sprite.play("boss")
+							#organized_markers["bosses"].append(new_marker)
+							organized_markers["bosses"][i] = type[1]
+				else:
+					match type:
+						MarkerTypes.SAVE:
+							#new_marker.type = MarkerTypes.SAVE
+							#new_marker.sprite.play("save")
+							#organized_markers["saves"].append(new_marker)
+							organized_markers["saves"][i] = 1
+						MarkerTypes.UNKNOWN:
+							#new_marker.type = MarkerTypes.UNKNOWN
+							#new_marker.sprite.play("unknown")
+							#organized_markers["unknowns"].append(new_marker)
+							organized_markers["unknowns"][i] = 1
+			#marker_positions[i] = active_markers.size()
+			#active_markers[i] = new_marker
+		#else:
+		#	marker_positions[i] = -1
+		if Statics.current_profile["map_tiles"][i] >= P_MARKER_ID_OFFSET:
+			organized_markers["p_markers"][i] = Color.WHITE
 		screen_pos.x += 1
 		if screen_pos.x >= MAP_SIZE.x:
 			screen_pos = Vector2i(0, screen_pos.y + 1)
@@ -192,38 +225,42 @@ func update_p_marker_at_cell(cell:Vector2i) -> void:
 	var index = (cell.y * MAP_SIZE.x) + cell.x
 	if Statics.current_profile["map_tiles"][index] < P_MARKER_ID_OFFSET - 1:
 		Statics.current_profile["map_tiles"][index] += P_MARKER_ID_OFFSET
+		organized_markers["p_markers"][index] = Color.WHITE
 	else:
 		Statics.current_profile["map_tiles"][index] -= P_MARKER_ID_OFFSET
-	update_p_marker_layer()
+		organized_markers["p_markers"][index] = MARKER_NO_PMARKER
+	#update_p_marker_layer()
+	update_markers()
 	if cell == last_player_pos:
 		update_player()
 		tick_minimap(0)
 
 
 func update_p_marker_layer() -> void:
-	while player_marker_sprites.size() < DEFAULT_MAP.size():
-		player_marker_sprites.append(null)
-	var cur_map:Array = Statics.current_profile["map_tiles"]
-	var cell_coords:Vector2i = Vector2i.ZERO
-	for i in cur_map.size():
-		if cur_map[i] >= P_MARKER_ID_OFFSET - 1 and player_marker_sprites[i] == null:
-			var new_marker:MapMarker = MARKER_SCENE.instantiate()
-			p_marker_group.add_child(new_marker)
-			new_marker.position = cell_coords * 8
-			new_marker.type = MarkerTypes.P_MARKER
-			new_marker.sprite.play("marker")
-			organized_markers["p_markers"].append(new_marker)
-			player_marker_sprites[i] = new_marker
-		elif cur_map[i] < P_MARKER_ID_OFFSET - 1 and player_marker_sprites[i] != null:
-			var spr = player_marker_sprites[i]
-			organized_markers["p_markers"].remove_at(organized_markers["p_markers"].find(spr))
-			spr.queue_free()
-			player_marker_sprites[i] = null
-
-		cell_coords.x += 1
-		if cell_coords.x >= MAP_SIZE.x:
-			cell_coords.x = 0
-			cell_coords.y += 1
+	print("update_p_marker_layer called. Change this as soon as the subscreen is done being edited")
+#	while player_marker_sprites.size() < DEFAULT_MAP.size():
+#		player_marker_sprites.append(null)
+#	var cur_map:Array = Statics.current_profile["map_tiles"]
+#	var cell_coords:Vector2i = Vector2i.ZERO
+#	for i in cur_map.size():
+#		if cur_map[i] >= P_MARKER_ID_OFFSET - 1 and player_marker_sprites[i] == null:
+#			var new_marker:MapMarker = MARKER_SCENE.instantiate()
+#			p_marker_group.add_child(new_marker)
+#			new_marker.position = cell_coords * 8
+#			new_marker.type = MarkerTypes.P_MARKER
+#			new_marker.sprite.play("marker")
+#			organized_markers["p_markers"].append(new_marker)
+#			player_marker_sprites[i] = new_marker
+#		elif cur_map[i] < P_MARKER_ID_OFFSET - 1 and player_marker_sprites[i] != null:
+#			var spr = player_marker_sprites[i]
+#			organized_markers["p_markers"].remove_at(organized_markers["p_markers"].find(spr))
+#			spr.queue_free()
+#			player_marker_sprites[i] = null
+#
+#		cell_coords.x += 1
+#		if cell_coords.x >= MAP_SIZE.x:
+#			cell_coords.x = 0
+#			cell_coords.y += 1
 
 
 static func world_position_to_screen_coordinate(_position:Vector2) -> Vector2i:
@@ -305,8 +342,9 @@ func tick_minimap(move_group_mode:int, tick_player:bool = true, force_update:boo
 			#	Statics.current_profile["map_tiles"][array_pos] = CellTypes.EXPLORED
 			#if cell == CellTypes.SECRET_UNEXPLORED:
 			#	Statics.current_profile["map_tiles"][array_pos] = CellTypes.SECRET_EXPLORED
-			var cell = fill_cell(player_cell)
-			var p_marked_cell = cell > P_MARKER_ID_OFFSET - 1
+			#var cell = fill_cell(player_cell)
+			fill_cell(player_cell)
+			#var p_marked_cell = cell > P_MARKER_ID_OFFSET - 1
 			if not subscreen_mode:
 				update_cell_mask(map_local_center)
 				update_markers(last_drawn_cells)
@@ -316,14 +354,16 @@ func tick_minimap(move_group_mode:int, tick_player:bool = true, force_update:boo
 			if marker_positions.size() > 0:
 				var highlight:bool = false
 
-				if p_marked_cell:
-					highlight = true
-				elif marker_positions[array_pos] >= 0:
-					var marker = active_markers[marker_positions[array_pos]]
-					if (marker.type != MarkerTypes.ITEM
-					or (marker.type == MarkerTypes.ITEM and not Statics.check_location_collected(marker.data[0]) and
-					(not empty_locations.has(marker.data[0]) or not hide_empty_locations))):
-						highlight = true
+				if active_markers[array_pos]:
+					highlight = active_markers[array_pos].player_should_highlight
+				#if p_marked_cell:
+				#	highlight = true
+				#elif not marker_positions[array_pos].is_empty():
+				#	var marker = active_markers[array_pos]
+				#	if (marker.type != MarkerTypes.ITEM
+				#	or (marker.type == MarkerTypes.ITEM and not Statics.check_location_collected(marker.data[0]) and
+				#	(not empty_locations.has(marker.data[0]) or not hide_empty_locations))):
+				#		highlight = true
 
 				if highlight and player_marker.animation == "default":
 					player_marker.play("highlight")
@@ -389,42 +429,75 @@ func update_markers(target_cells:Array = []) -> void:
 		for i in range(marker_positions.size()):
 			target_cells.append(i)
 
+	#for p in player_marker_sprites:
+	#	if p:
+	#		p.modulate.a = 0.0
+
 	for i in range(marker_positions.size()):
-		var array_i = marker_positions[i]
+		#var array_i = marker_positions[i]
 		var tile = Statics.current_profile["map_tiles"][i]
-		var player_tile:bool = false
+		#var player_tile:bool = false
 		if tile >= P_MARKER_ID_OFFSET - 1:
 			tile -= P_MARKER_ID_OFFSET
-			player_tile = true
+			#player_tile = true
 		var tile_visible:bool = (tile == CellTypes.EXPLORED
 			or (ProjectSettings.get_setting("game/ui/secret_map_tiles")
 			and tile == CellTypes.SECRET_EXPLORED))
 
-		if array_i >= 0:
+		if i >= 0:#array_i
 			var cell_pos = Vector2i.ZERO
 			var working_i = i
 			while working_i >= MAP_SIZE.x:
 				cell_pos.y += 1
 				working_i -= MAP_SIZE.x
 			cell_pos.x = working_i
-			var marker = active_markers[array_i]
+			var marker = active_markers[i]#array_i
+			if marker != null and not _should_cell_be_marked(i):
+				marker.queue_free()
+				active_markers[i] = null
+				continue
+			if marker == null and _should_cell_be_marked(i):
+				marker = _add_marker(i, cell_pos)
+			if marker:
+				marker.update(tile_visible and target_cells.has(i))
 
-			marker.modulate.a = 0.0
-			if target_cells.has(i) and tile_visible:
-				marker.modulate.a = 1.0
+			#marker.modulate.a = 0.0
+			#if target_cells.has(i) and tile_visible:
+			#	marker.modulate.a = 1.0
 
-			if marker.type == MarkerTypes.ITEM:
-				marker.visible = not empty_locations.has(marker.data[0]) or not hide_empty_locations
-				var collected:bool = Statics.check_location_collected(marker.data[0])
-				if marker.sprite.animation == "item_normal" and collected:
-					marker.sprite.play("item_collected")
-				elif marker.sprite.animation == "item_collected" and not collected:
-					marker.sprite.play("item_normal")
+			#if marker.type == MarkerTypes.ITEM:
+			#	marker.visible = not empty_locations.has(marker.data[0]) or not hide_empty_locations
+			#	var collected:bool = Statics.check_location_collected(marker.data[0])
+			#	if marker.sprite.animation == "item_normal" and collected:
+			#		marker.sprite.play("item_collected")
+			#	elif marker.sprite.animation == "item_collected" and not collected:
+			#		marker.sprite.play("item_normal")
 
-		if player_marker_sprites[i]:
-			player_marker_sprites[i].modulate.a = 0.0
-			if target_cells.has(i) and player_tile:
-				player_marker_sprites[i].modulate.a = 1.0
+		#if player_marker_sprites[i]:
+		#	if target_cells.has(i) and player_tile:
+		#		player_marker_sprites[i].modulate.a = 1.0
+
+
+func _add_marker(i:int, cell_pos:Vector2i) -> MapMarker:
+	var new_marker:MapMarker = MARKER_SCENE.instantiate()
+	marker_group.add_child(new_marker)
+	new_marker.position = cell_pos * 8
+	active_markers[i] = new_marker
+	new_marker.save_location = organized_markers["saves"][i]
+	new_marker.boss_id = organized_markers["bosses"][i]
+	new_marker.item_location = organized_markers["items"][i]
+	new_marker.player_col = organized_markers["p_markers"][i]
+	return new_marker
+
+
+func _should_cell_be_marked(cell_i:int) -> bool:
+	return not (
+		organized_markers["saves"][cell_i] == MARKER_NO_SAVE and
+		organized_markers["bosses"][cell_i] == MARKER_NO_BOSS and
+		organized_markers["items"][cell_i] == MARKER_NO_ITEM and 
+		organized_markers["unknowns"][cell_i] == MARKER_NO_UNKNOWN and
+		organized_markers["p_markers"][cell_i] == MARKER_NO_PMARKER
+	)
 
 
 func set_room_name(_name:String):

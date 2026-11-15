@@ -33,22 +33,25 @@ func init(minimap:Minimap) -> void:
 	p_marker.play(minimap.player_marker.animation)
 	
 	for this_marker in minimap.active_markers:
+		if not this_marker or not this_marker.visible:
+			continue
 		var draw_marker:bool = true
 		if this_marker.type == minimap.MarkerTypes.ITEM:
-			draw_marker = not minimap.empty_locations.has(this_marker.data[0])
+			draw_marker = not minimap.empty_locations.has(this_marker.item_location)
 		if draw_marker and this_marker.modulate.a == 1.0:
 			var new_marker:MapMarker = MARKER_SCENE.instantiate()
 			new_marker.type = this_marker.type
 			marker_group.add_child(new_marker)
+			new_marker.copy_marker(this_marker)
 			new_marker.sprite.play("zoom_" + this_marker.sprite.animation)
 			new_marker.position = this_marker.position * 2.0
-	for this_marker in minimap.player_marker_sprites:
-		if this_marker != null:
-			var new_marker:MapMarker = MARKER_SCENE.instantiate()
-			new_marker.type = this_marker.type
-			marker_group.add_child(new_marker)
-			new_marker.sprite.play("zoom_marker")
-			new_marker.position = this_marker.position * 2.0
+	#for this_marker in minimap.player_marker_sprites:
+	#	if this_marker != null:
+	#		var new_marker:MapMarker = MARKER_SCENE.instantiate()
+	#		new_marker.type = this_marker.type
+	#		marker_group.add_child(new_marker)
+	#		new_marker.sprite.play("zoom_marker")
+	#		new_marker.position = this_marker.position * 2.0
 
 
 func _process(delta: float) -> void:

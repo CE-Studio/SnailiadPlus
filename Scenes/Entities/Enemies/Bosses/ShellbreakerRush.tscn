@@ -148,6 +148,7 @@ z_index = 120
 script = ExtResource("1_c6csd")
 eyes = NodePath("Eyes")
 hand_group = NodePath("HandGroup")
+boss_id = 1
 phase_changes = Array[float]([0.667, 0.333])
 max_health = 13000
 attack = 2

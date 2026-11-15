@@ -10,6 +10,7 @@
 [node name="StompyRush" type="Node2D" unique_id=1750670965]
 z_index = 125
 script = ExtResource("1_1orog")
+boss_id = 2
 battle_music = 9
 phase_changes = Array[float]([0.66, 0.28])
 max_health = 10000

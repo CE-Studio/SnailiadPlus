@@ -280,6 +280,7 @@ z_index = 120
 collision_layer = 64
 collision_mask = 3
 script = ExtResource("1_yb2y1")
+boss_id = 3
 battle_music = 10
 phase_changes = Array[float]([0.3])
 max_health = 11000
