@@ -13,7 +13,7 @@ enum Status {
 
 const MIN_SOUND_ELAPSED:float = 0.0333
 const SOUND_PITCH_VARIANCE:float = 0.025
-const SOUND_PITCH_STEPS:int = 2
+const SOUND_PITCH_STEPS:int = 0
 const DEFAULT_NEXT_TIMEOUT:float = 3.0
 
 

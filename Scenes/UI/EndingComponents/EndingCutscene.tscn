@@ -646,7 +646,6 @@ sampling_rate = 44100.0
 packet_sequence = SubResource("OggPacketSequence_ginrr")
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_y4q6a"]
-random_pitch = 1.122462
 streams_count = 1
 stream_0/stream = SubResource("AudioStreamOggVorbis_7865d")
 

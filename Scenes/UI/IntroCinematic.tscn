@@ -672,7 +672,6 @@ _data = {
 }
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_opako"]
-random_pitch = 1.122462
 streams_count = 1
 stream_0/stream = ExtResource("7_5aua4")
 
