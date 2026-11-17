@@ -219,6 +219,7 @@ process_mode = 3
 script = ExtResource("1_ssxem")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1705075541]
+layer = 2
 
 [node name="Control" type="Control" parent="CanvasLayer" unique_id=1121460318]
 z_index = 1
